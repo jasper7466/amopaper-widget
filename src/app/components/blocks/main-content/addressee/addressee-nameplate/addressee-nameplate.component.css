@@ -1,0 +1,65 @@
+:host {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-areas:
+    "avatar name remove-button"
+    "avatar vat-id remove-button";
+  grid-auto-rows: auto 1fr;
+  grid-template-columns: auto 1fr;
+  column-gap: 16px;
+  row-gap: 2px;
+  height: 70px;
+  padding: 14px 16px;
+  border: 1px solid var(--line-color-gray);
+  border-radius: 4px;
+
+  font-size: 14px;
+  line-height: 20px;
+}
+
+:host > .addressee__remove-button {
+  display: none;
+}
+
+:host:hover {
+  --this-bg-color: var(--bg-color-row-hover);
+  background-color: var(--this-bg-color);
+  cursor: pointer;
+}
+
+:host:hover > .addressee__remove-button {
+  display: block;
+}
+
+.addressee__avatar {
+  grid-area: avatar;
+  width: 32px;
+  height: 32px;
+  margin: 0;
+}
+
+.addressee__name {
+  grid-area: name;
+  margin: 0;
+}
+
+.addressee__vat-id {
+  grid-area: vat-id;
+  margin: 0;
+  color: var(--txt-color-tertiary);
+}
+
+.addressee__remove-button {
+  grid-area: remove-button;
+  --this-main-color: var(--icon-color-secondary);
+  --this-border-hover-color: var(--primary-color-accent);
+  --this-border-active-color: var(--stroke-color-danger);
+}
+
+.addressee__remove-button:hover {
+  cursor: pointer;
+}
+/* .addressee__remove-button:hover {
+  --this-main-color: var(--primary-color-accent);
+  cursor: pointer;
+} */

@@ -1,1 +1,63 @@
-/* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap");
+
+:root {
+  /* colors */
+  --bg-color-main: #fff;
+  --bg-color-underlay: #f9f5f2;
+  --bg-color-row-hover: #f6f8f9;
+  --bg-color-error: #fff6f6;
+  --icon-color-secondary: #babfcb;
+  --txt-color-tertiary: #868a95;
+  --txt-color-primary: #222835;
+  --txt-color-secondary: #434854;
+  --line-color-gray: #e7ebf4;
+  --line-color-line-border: #cfd8e1;
+  --label-color-draft: var(--line-color-line-border);
+  --label-color-pending: #e8d7fe;
+  --label-color-signed: #c0ebd9;
+  --label-color-signed-single: #dcf89f;
+  --primary-color-regular: #2e62d9;
+  --primary-color-regular-hover: #5585e6;
+  --primary-color-regular-active: #1d45b3;
+  --primary-color-accent: #fc5454;
+  --primary-color-accent-hover: #ef4f4f;
+  --primary-color-accent-active: #e34b4b;
+  --stroke-color-regular: #c0e3ff;
+  --stroke-color-regular-hover: #b0d0ff;
+  --stroke-color-regular-active: #80aaf2;
+  --stroke-color-danger: #fecccc;
+  --padding-side: 12.5%;
+  --padding-bottom: 12.4%;
+
+  /* spacing */
+  --spacing-xs-4px: 4px;
+  --spacing-s-8px: 8px;
+  --spacing-m-12px: 12px;
+  --spacing-l-16px: 16px;
+  --spacing-xl-24px: 24px;
+  --spacing-2xl-32px: 32px;
+  --spacing-3xl-40px: 40px;
+  --spacing-4xl-48px: 48px;
+  --spacing-5xl-56px: 56px;
+  --spacing-6xl-64px: 64px;
+  --spacing-7xl-96px: 96px;
+  --spacing-8xl-128px: 128px;
+
+  /* base font */
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  color: var(--txt-color-primary);
+}
+
+* {
+  font-family: inherit;
+  font-style: inherit;
+  font-weight: inherit;
+  color: inherit;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}

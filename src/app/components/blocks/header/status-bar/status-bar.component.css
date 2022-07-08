@@ -1,0 +1,9 @@
+:host {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 56px;
+
+  padding: 0 var(--padding-side) 0;
+  background-color: var(--bg-color-main);
+}

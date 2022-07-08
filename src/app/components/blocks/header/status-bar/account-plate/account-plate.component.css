@@ -1,0 +1,8 @@
+:host {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  gap: var(--spacing-m-12px);
+  padding-left: var(--spacing-xl-24px);
+  border-left: 1px solid var(--line-color-gray);
+}

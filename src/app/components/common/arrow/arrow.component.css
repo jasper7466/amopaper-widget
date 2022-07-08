@@ -1,0 +1,38 @@
+:host {
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.arrow {
+  margin: 0;
+  padding: 0;
+}
+
+.arrow > path {
+  stroke: #babfcb;
+}
+
+.arrow_color_gray > path {
+  stroke: #babfcb;
+}
+
+.arrow_color_black > path {
+  stroke: var(--txt-color-primary);
+}
+
+.arrow_color_primary > path {
+  stroke: var(--primary-color-regular);
+}
+
+.arrow_direction_left {
+  transform: rotate(90deg);
+}
+
+.arrow_direction_up {
+  transform: rotate(180deg);
+}
+
+.arrow_direction_right {
+  transform: rotate(270deg);
+}

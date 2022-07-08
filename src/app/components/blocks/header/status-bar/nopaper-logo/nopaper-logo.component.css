@@ -1,0 +1,6 @@
+:host {
+  margin: 0;
+  padding-right: var(--spacing-2xl-32px);
+  width: fit-content;
+  height: 30px;
+}

@@ -1,0 +1,169 @@
+:host {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+:host(.opened) {
+  display: block;
+}
+
+:host .sign-info__underlay {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  background-color: black;
+  opacity: 0.2;
+}
+
+.sign-info__close-button {
+  padding: 0;
+  position: absolute;
+  right: var(--spacing-m-12px);
+  top: var(--spacing-m-12px);
+  background-color: var(--this-bg-color);
+  border-style: none;
+}
+
+.sign-info__close-button:hover > svg > path {
+  stroke: var(--stroke-color-regular);
+}
+
+.sign-info__container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 720px;
+  background-color: var(--bg-color-main);
+  opacity: 1;
+}
+
+.sign-info__main-content {
+  padding: var(--spacing-xl-24px) var(--spacing-2xl-32px);
+}
+
+.sign-info__header {
+  box-sizing: border-box;
+  margin: 0;
+  padding-bottom: var(--spacing-xl-24px);
+
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+  color: var(--txt-color-primary);
+}
+
+.sign-info__status-plate {
+  display: grid;
+  align-items: center;
+  grid-template-areas:
+    "signer-name status-label fold-button"
+    "signer-vat-id . .";
+  grid-template-columns: 1fr min-content min-content;
+  grid-template-rows: min-content min-content;
+  column-gap: var(--spacing-xl-24px);
+  row-gap: var(--spacing-s-8px);
+  min-height: 80px;
+  padding-top: var(--spacing-l-16px);
+  padding-right: var(--spacing-m-12px);
+  border-top: 1px solid var(--line-color-gray);
+}
+
+.sign-info__signer-name {
+  grid-area: signer-name;
+  margin: 0;
+
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--txt-color-secondary);
+}
+
+.sign-info__signer-vat-id {
+  grid-area: signer-vat-id;
+  margin: 0;
+
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--txt-color-tertiary);
+}
+
+.sign-info__status-label {
+  grid-area: status-label;
+}
+
+.sign-info__fold-button {
+  grid-area: fold-button;
+}
+
+.sign-info__fold-area {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-l-16px);
+}
+
+.sign-info__table {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.sign-info__table-row {
+  min-height: 46px;
+}
+
+.sign-info__table-cell {
+  width: 50%;
+  padding: var(--spacing-m-12px) var(--spacing-l-16px);
+  border: 1px solid var(--line-color-gray);
+  border-left: none;
+  border-bottom: none;
+  word-wrap: break-word;
+  text-align: left;
+  vertical-align: top;
+
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.sign-info__table-cell:last-child {
+  border-right: none;
+}
+
+.sign-info__table-cell_header {
+  font-weight: 400;
+  color: var(--txt-color-secondary);
+}
+
+.sign-info__table-cell_data {
+  font-weight: 500;
+}
+
+.sign-info__technical-data {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-m-12px);
+  height: 46px;
+  padding: 0 var(--spacing-m-12px);
+  border: 1px solid var(--line-color-gray);
+  border-radius: 4px;
+
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--primary-color-regular);
+  cursor: pointer;
+}
+
+.sing-info__footer {
+  margin-top: 10px;
+  padding: var(--spacing-xl-24px) var(--spacing-2xl-32px);
+  border-top: 1px solid var(--line-color-gray);
+}

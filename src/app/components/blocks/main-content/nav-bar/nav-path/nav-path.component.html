@@ -1,0 +1,6 @@
+<ul class="nav-path">
+  <li class="nav-path__item" *ngFor="let part of path">
+    <app-arrow class="nav-path__item-arrow" direction="left" color="gray"></app-arrow>
+    <a class="nav-path__item-link" href="#">{{part}}</a>
+  </li>
+</ul>
