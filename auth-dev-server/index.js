@@ -45,7 +45,9 @@ async function ping(URI) {
     if (response.status === 200) {
       return console.log("Ping successful");
     }
-    if (response.status === 400) {
+    if (response.status >= 300) {
+      console.log(`Ping failed, status: ${response.status}`);
+      console.log("Attempting to refresh tokens...");
       refresh(oAuthURI);
     } else {
       throw new Error(response.status);
