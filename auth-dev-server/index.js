@@ -2,6 +2,7 @@ const express = require("express");
 const fse = require("fs-extra");
 const path = require("path");
 const fetch = require("node-fetch");
+const cors = require("cors");
 
 const secretsPath = path.resolve(__dirname, "./secrets.json");
 const secrets = fse.readJSONSync(secretsPath);
@@ -95,9 +96,10 @@ if (secrets.code) {
   ping(pingURI);
 }
 
+app.use(cors());
 app.use(express.json());
 
-app.get("/access_token", (req, res) => {
+app.post("/access_token", (req, res) => {
   const body = req.body;
 
   if (
