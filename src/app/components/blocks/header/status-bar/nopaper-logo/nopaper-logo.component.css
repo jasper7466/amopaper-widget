@@ -1,6 +1,16 @@
 :host {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin: 0;
-  padding-right: var(--spacing-2xl-32px);
   width: fit-content;
   height: 30px;
+  width: inherit;
+}
+
+.nopaper-logo__image {
+  /* height: inherit;
+  width: inherit; */
+  width: inherit;
+  height: inherit;
 }
