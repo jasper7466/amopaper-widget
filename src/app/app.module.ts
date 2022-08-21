@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { StatusBarComponent } from './components/blocks/header/status-bar/status-bar.component';
@@ -30,6 +31,11 @@ import { BannerAwaitingComponent } from './components/blocks/main-content/banner
 import { BannerSigningComponent } from './components/blocks/main-content/banner-signing/banner-signing.component';
 import { ModalSignInfoComponent } from './components/blocks/main-content/modal-sign-info/modal-sign-info.component';
 import { AccountPlateComponent } from './components/blocks/header/status-bar/account-plate/account-plate.component';
+import { AppRoutingModule } from './app-routing.module';
+import { StartupPageComponent } from './pages/startup-page/startup-page.component';
+import { LandingPageComponent } from './pages/landing-page/landing-page.component';
+import { WidgetPageComponent } from './pages/widget-page/widget-page.component';
+import { NotificationPageComponent } from './pages/notification-page/notification-page.component';
 
 @NgModule({
   declarations: [
@@ -62,8 +68,12 @@ import { AccountPlateComponent } from './components/blocks/header/status-bar/acc
     BannerSigningComponent,
     ModalSignInfoComponent,
     AccountPlateComponent,
+    StartupPageComponent,
+    LandingPageComponent,
+    WidgetPageComponent,
+    NotificationPageComponent,
   ],
-  imports: [BrowserModule],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule],
   providers: [],
   bootstrap: [AppComponent],
 })
