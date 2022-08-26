@@ -9,7 +9,7 @@ const secrets = fse.readJSONSync(secretsPath);
 const port = 5200;
 
 const oAuthURI = `https://${secrets.accountDomain}/oauth2/access_token`;
-const pingURI = "https://www.amocrm.ru/oauth2/account/subdomain";
+const pingURI = `https://${secrets.accountDomain}/api/v4/companies`;
 
 const app = express();
 
