@@ -30,7 +30,6 @@ import { PreloaderComponent } from './components/common/preloader/preloader.comp
 import { BannerAwaitingComponent } from './components/blocks/main-content/banner-awaiting/banner-awaiting.component';
 import { BannerSigningComponent } from './components/blocks/main-content/banner-signing/banner-signing.component';
 import { ModalSignInfoComponent } from './components/blocks/main-content/modal-sign-info/modal-sign-info.component';
-import { AccountPlateComponent } from './components/blocks/header/status-bar/account-plate/account-plate.component';
 import { AppRoutingModule } from './app-routing.module';
 import { StartupPageComponent } from './pages/startup-page/startup-page.component';
 import { LandingPageComponent } from './pages/landing-page/landing-page.component';
@@ -67,7 +66,6 @@ import { NotificationPageComponent } from './pages/notification-page/notificatio
     BannerAwaitingComponent,
     BannerSigningComponent,
     ModalSignInfoComponent,
-    AccountPlateComponent,
     StartupPageComponent,
     LandingPageComponent,
     WidgetPageComponent,
