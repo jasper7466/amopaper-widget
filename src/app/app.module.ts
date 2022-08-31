@@ -35,6 +35,13 @@ import { StartupPageComponent } from './pages/startup-page/startup-page.componen
 import { LandingPageComponent } from './pages/landing-page/landing-page.component';
 import { WidgetPageComponent } from './pages/widget-page/widget-page.component';
 import { NotificationPageComponent } from './pages/notification-page/notification-page.component';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { reducers, metaReducers } from './reducers';
+import { AppEffects } from './app.effects';
 
 @NgModule({
   declarations: [
@@ -71,7 +78,21 @@ import { NotificationPageComponent } from './pages/notification-page/notificatio
     WidgetPageComponent,
     NotificationPageComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    StoreModule.forRoot({}, {}),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production,
+    }),
+    EffectsModule.forRoot([AppEffects]),
+    StoreRouterConnectingModule.forRoot(),
+    StoreModule.forRoot(reducers, {
+      metaReducers
+    }),
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
