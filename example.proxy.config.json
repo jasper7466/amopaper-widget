@@ -1,0 +1,8 @@
+{
+  "/api/*": {
+    "target": "https://subdomain.amocrm.ru",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}

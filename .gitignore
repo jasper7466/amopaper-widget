@@ -43,3 +43,6 @@ Thumbs.db
 
 # Auth dev-server credentials
 /auth-dev-server/secrets.json
+
+# Dev-server proxy config
+proxy.config.json
