@@ -1,3 +1,4 @@
+import { ModalComponent } from './components/blocks/main-content/modal/modal.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
@@ -40,8 +41,11 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
-import { reducers, metaReducers } from './reducers';
+import { reducers, metaReducers } from './store';
 import { AppEffects } from './app.effects';
+import { NgxMaskModule } from 'ngx-mask';
+import { AddAddresseeFormComponent } from './components/blocks/main-content/addressee/add-addressee-form/add-addressee-form.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -77,6 +81,8 @@ import { AppEffects } from './app.effects';
     LandingPageComponent,
     WidgetPageComponent,
     NotificationPageComponent,
+    ModalComponent,
+    AddAddresseeFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -90,8 +96,10 @@ import { AppEffects } from './app.effects';
     EffectsModule.forRoot([AppEffects]),
     StoreRouterConnectingModule.forRoot(),
     StoreModule.forRoot(reducers, {
-      metaReducers
+      metaReducers,
     }),
+    NgxMaskModule.forRoot(),
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

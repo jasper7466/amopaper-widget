@@ -1,7 +1,7 @@
 :host {
   box-sizing: border-box;
   padding-top: 24px;
-  padding-bottom: 40px;
+  /* padding-bottom: 40px; */
   border-top: 2px solid var(--line-color-gray);
 }
 
@@ -9,7 +9,5 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-}
-
-.addressee__add-button {
+  margin-bottom: var(--spacing-xl-24px);
 }

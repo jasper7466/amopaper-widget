@@ -26,8 +26,11 @@
   --stroke-color-regular-hover: #b0d0ff;
   --stroke-color-regular-active: #80aaf2;
   --stroke-color-danger: #fecccc;
+
+  /* paddings */
   --padding-side: 12.5%;
-  --padding-bottom: 12.4%;
+  /* --padding-bottom: 12.4%; */
+  --padding-bottom: 4%;
 
   /* spacing */
   --spacing-xs-4px: 4px;

@@ -1,7 +1,7 @@
 :host {
   display: flex;
   flex-direction: column;
-  padding-bottom: 32px;
+  /* padding-bottom: var(--spacing-xl-24px); */
 }
 
 .stage-header__title {
@@ -16,5 +16,9 @@
 }
 
 .stage-header__status-label {
-  margin: 16px 0 24px;
+  margin: var(--spacing-l-16px) 0px;
+}
+
+.stage-header__span {
+  margin-top: var(--spacing-xl-24px);
 }

@@ -1,12 +1,19 @@
 <div class="addressee__header">
-  <app-subtitle caption="Получатель"></app-subtitle>
+  <app-subtitle>Получатель</app-subtitle>
   <app-button
+    [isEnabled]="!(isAddresseeAdded$ | async)"
     class="addressee__add-button"
-    caption="Добавить"
     styleOption="skeleton"
     colorOption="regular"
     iconOption="plus"
     sizeOption="custom"
-  ></app-button>
+    (onClick)="modal?.open()"
+    >Добавить</app-button
+  >
 </div>
-<app-addressee-nameplate></app-addressee-nameplate>
+<app-addressee-nameplate
+  *ngIf="isAddresseeAdded$ | async"
+></app-addressee-nameplate>
+<app-modal isOpened="isModalOpened">
+  <app-add-addressee-form (onSubmit)="modal?.close()"></app-add-addressee-form>
+</app-modal>

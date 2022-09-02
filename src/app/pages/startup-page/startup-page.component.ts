@@ -1,13 +1,12 @@
-import { NopaperApiService } from './../../services/nopaper-api.service';
+import { updateAccessTokenAction } from './../../store/access-token/actions';
+import { updateCrmContextAction } from './../../store/crm-context/actions';
+import { AmoApiService } from './../../services/api/amo/amo-api.service';
+import { NopaperApiService } from '../../services/api/nopaper/nopaper-api.service';
 import { CrmService } from '../../services/crm.service';
-import {
-  OutboxRequests,
-  InboxResponses,
-} from '../../../types/crm-messages.types';
-import { PostMessageService } from '../../services/post-message.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { delay, flatMap, switchMap } from 'rxjs';
+import { Router } from '@angular/router';
+import { switchMap, tap } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-startup-page',
@@ -18,19 +17,31 @@ export class StartupPageComponent implements OnInit {
   constructor(
     private crmService: CrmService,
     private nopaperApiService: NopaperApiService,
-    private router: Router
+    private router: Router,
+    private store: Store
   ) {}
 
   ngOnInit(): void {
-    if (this.crmService.isTopWindow()) {
-      this.router.navigate(['landing']);
-    } else {
-      this.crmService.getCrmContext$
-        .pipe(
-          switchMap(() => this.nopaperApiService.getAmoToken$),
-          delay(800)
-        )
-        .subscribe(() => this.router.navigate(['widget']));
+    if (window.location === window.parent.location) {
+      // this.router.navigate(['landing'])
+      // return;
     }
+
+    this.crmService.getCrmContext$
+      .pipe(
+        tap((context) => {
+          this.store.dispatch(updateCrmContextAction(context));
+        }),
+        switchMap(() => this.nopaperApiService.getAmoToken$())
+      )
+      .pipe(
+        tap((accessToken) =>
+          this.store.dispatch(updateAccessTokenAction({ token: accessToken }))
+        )
+      )
+      .subscribe({
+        next: () => this.router.navigate(['widget']),
+        error: (err) => console.log(err),
+      });
   }
 }

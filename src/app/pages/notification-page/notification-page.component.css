@@ -1,0 +1,31 @@
+:host {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.notification-page__wrapper {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 3%;
+}
+
+.notification-page__wrapper_info {
+  background-color: var(--primary-color-regular);
+  color: var(--bg-color-main);
+}
+
+.notification-page__wrapper_error {
+  background-color: palevioletred;
+  color: var(--txt-color-primary);
+}
+
+.notification-page__title {
+  font-size: 64px;
+}

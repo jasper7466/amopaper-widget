@@ -1,4 +1,7 @@
 <button
+  (click)="clickHandler()"
+  [disabled]="!isEnabled"
+  [type]="typeOption"
   class="
     button
     button_color_{{ colorOption }}
@@ -92,5 +95,5 @@
       stroke-linejoin="round"
     />
   </svg>
-  {{ caption }}
+  <ng-content></ng-content>
 </button>

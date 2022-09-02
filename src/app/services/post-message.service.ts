@@ -16,30 +16,40 @@ export class PostMessageService<Requests, Responses> {
     console.log(event);
   }
 
-  postMessage<K extends keyof Requests>(
-    subject: K,
-    payload: Requests[K]
-  ): void {
-    window.parent.postMessage({ subject, payload }, '*');
+  postMessage<K extends keyof Requests>(action: K, payload: Requests[K]): void {
+    window.parent.postMessage({ action, payload }, '*');
+  }
+
+  request$<Req extends keyof Requests, Res extends keyof Responses>(
+    requestAction: Req,
+    responseAction: Res,
+    payload: Requests[Req]
+  ): Observable<Responses[Res]> {
+    return defer(() => {
+      this.postMessage(requestAction, payload);
+      return this.subscribe$(responseAction).pipe(first());
+    });
   }
 
   requestWithTimeout$<Req extends keyof Requests, Res extends keyof Responses>(
-    requestSubject: Req,
-    responseSubject: Res,
+    requestAction: Req,
+    responseAction: Res,
     payload: Requests[Req],
-    t: number
+    msTimeout: number
   ): Observable<Responses[Res]> {
     return defer(() => {
-      this.postMessage(requestSubject, payload);
-      return this.subscribe$(responseSubject).pipe(first(), timeout(t));
+      return this.request$(requestAction, responseAction, payload).pipe(
+        first(),
+        timeout(msTimeout)
+      );
     });
   }
 
   subscribe$<Res extends keyof Responses>(
-    subject: Res
+    action: Res
   ): Observable<Responses[Res]> {
     return this.inbox$.pipe(
-      filter((event) => event.data.subject === subject),
+      filter((event) => event.data.action === action),
       map((event) => event.data.payload)
     );
   }

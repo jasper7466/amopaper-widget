@@ -7,6 +7,10 @@
   border-top: 2px solid var(--line-color-gray);
 }
 
+.documents__title {
+  margin-bottom: var(--spacing-xl-24px);
+}
+
 .documents__drop-area {
   display: flex;
   align-items: center;

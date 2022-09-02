@@ -10,6 +10,7 @@
   row-gap: 2px;
   height: 70px;
   padding: 14px 16px;
+  margin-bottom: var(--spacing-3xl-40px);
   border: 1px solid var(--line-color-gray);
   border-radius: 4px;
 
@@ -32,10 +33,16 @@
 }
 
 .addressee__avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   grid-area: avatar;
   width: 32px;
   height: 32px;
   margin: 0;
+  border-radius: 100%;
+  border: 1px solid var(--label-color-pending);
+  background-color: var(--bg-color-error);
 }
 
 .addressee__name {

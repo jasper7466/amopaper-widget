@@ -29,4 +29,11 @@ export const notifications: { [key: string]: notification } = {
     details: '',
     hint: '',
   },
+  packetIdFieldMissing: {
+    type: 'info',
+    title: 'У сущностей "сделка" отсутствует поле "packedId"',
+    details:
+      'Это поле используется для хранения служебной информации и необходимо для работы виджета',
+    hint: 'Добавьте поле с именем "packedId", типом "Число" и доступом "Только из API" (требуются права администратора)',
+  },
 };

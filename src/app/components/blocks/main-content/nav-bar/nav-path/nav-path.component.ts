@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-const dummyPath = ['Главная', 'Добавление документа', 'test'];
+const dummyPath = [''];
 
 @Component({
   selector: 'app-nav-path',

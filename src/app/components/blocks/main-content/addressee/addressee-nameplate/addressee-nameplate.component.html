@@ -1,10 +1,15 @@
-<img
-  class="addressee__avatar"
-  src="../../../../assets/images/company-avatar.svg"
-/>
-<p class="addressee__name">ПАО «Уральская калийная компания»</p>
-<p class="addressee__vat-id">6670348115</p>
+<div class="addressee__avatar">{{ (addressee$ | async)!.name[0] }}</div>
+
+<p class="addressee__name">{{ (addressee$ | async)?.name }}</p>
+<p class="addressee__vat-id">
+  {{
+    (addressee$ | async)?.vatId
+      ? (addressee$ | async)?.vatId
+      : ((addressee$ | async)?.phone || "" | mask: "+0 (000) 000-00-00")
+  }}
+</p>
 <app-button
+  (onClick)="addresseeRemove()"
   class="addressee__remove-button"
   styleOption="skeleton"
   colorOption="custom"

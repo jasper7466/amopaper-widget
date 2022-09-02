@@ -1,0 +1,49 @@
+:host {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+:host(.opened) {
+  display: block;
+}
+
+:host .modal__underlay {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  background-color: black;
+  opacity: 0.2;
+}
+
+.modal__close-button {
+  padding: 0;
+  position: absolute;
+  right: var(--spacing-m-12px);
+  top: var(--spacing-m-12px);
+  background-color: var(--this-bg-color);
+  border-style: none;
+}
+
+.modal__close-button:hover > svg > path {
+  stroke: var(--stroke-color-regular);
+}
+
+.modal__container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 720px;
+  background-color: var(--bg-color-main);
+  opacity: 1;
+}
+
+.modal__main-content {
+  padding: var(--spacing-xl-24px) var(--spacing-2xl-32px);
+}

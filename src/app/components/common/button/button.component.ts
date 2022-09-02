@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 
 type style = 'solid' | 'blank' | 'skeleton';
 type color = 'regular' | 'danger' | 'custom';
@@ -11,13 +11,21 @@ type size = 'medium' | 'custom';
   styleUrls: ['./button.component.css'],
 })
 export class ButtonComponent implements OnInit {
-  @Input() caption?: string;
   @Input() styleOption: style = 'solid';
   @Input() colorOption: color = 'regular';
   @Input() iconOption: icon = '';
   @Input() sizeOption: size = 'medium';
+  @Input() isEnabled: boolean = true;
+  @Input() typeOption: string = '';
+
+  @Output()
+  onClick = new EventEmitter<void>();
 
   constructor() {}
 
   ngOnInit(): void {}
+
+  clickHandler() {
+    this.onClick.emit();
+  }
 }

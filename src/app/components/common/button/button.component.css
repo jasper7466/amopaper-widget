@@ -16,6 +16,7 @@
 }
 
 .button:disabled {
+  pointer-events: none;
   --this-main-color: var(--label-color-draft);
 }
 
@@ -35,9 +36,6 @@
   --this-main-active-color: var(--primary-color-accent-active);
   --this-border-hover-color: var(--primary-color-accent);
   --this-border-active-color: var(--primary-color-accent);
-}
-
-.button_color_custom {
 }
 
 .button_style_solid {
