@@ -1,0 +1,19 @@
+.documents-drop-area {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  margin-bottom: var(--spacing-2xl-32px);
+  padding-left: var(--spacing-l-16px);
+  border-radius: 4px;
+  border: 2px solid var(--stroke-color-regular);
+  color: var(--txt-color-tertiary);
+
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.documents-drop-area_file-over {
+  --this-bg-color: var(--stroke-color-regular-hover);
+  background-color: var(--this-bg-color);
+  border-color: var(--primary-color-regular-hover);
+}

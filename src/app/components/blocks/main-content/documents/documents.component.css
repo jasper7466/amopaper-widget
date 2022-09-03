@@ -11,20 +11,6 @@
   margin-bottom: var(--spacing-xl-24px);
 }
 
-.documents__drop-area {
-  display: flex;
-  align-items: center;
-  height: 40px;
-  margin-bottom: var(--spacing-2xl-32px);
-  padding-left: var(--spacing-l-16px);
-  border-radius: 4px;
-  border: 2px solid var(--stroke-color-regular);
-  color: var(--txt-color-tertiary);
-
-  font-size: 14px;
-  line-height: 20px;
-}
-
 .documents__list {
   padding-bottom: var(--spacing-2xl-32px);
 }

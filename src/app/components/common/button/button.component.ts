@@ -16,7 +16,7 @@ export class ButtonComponent implements OnInit {
   @Input() iconOption: icon = '';
   @Input() sizeOption: size = 'medium';
   @Input() isEnabled: boolean = true;
-  @Input() typeOption: string = '';
+  @Input() typeOption: string = 'button';
 
   @Output()
   onClick = new EventEmitter<void>();

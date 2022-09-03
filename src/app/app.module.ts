@@ -46,6 +46,8 @@ import { AppEffects } from './app.effects';
 import { NgxMaskModule } from 'ngx-mask';
 import { AddAddresseeFormComponent } from './components/blocks/main-content/addressee/add-addressee-form/add-addressee-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DocumentsDropAreaComponent } from './components/blocks/main-content/documents/documents-drop-area/documents-drop-area.component';
+import { DragAndDropDirective } from './directives/drag-and-drop.directive';
 
 @NgModule({
   declarations: [
@@ -83,6 +85,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     NotificationPageComponent,
     ModalComponent,
     AddAddresseeFormComponent,
+    DocumentsDropAreaComponent,
+    DragAndDropDirective,
   ],
   imports: [
     BrowserModule,

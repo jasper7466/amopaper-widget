@@ -1,0 +1,25 @@
+<form
+  class="documents-drop-area"
+  appDragAndDrop
+  (fileDropped)="fileDropHandler($event)"
+>
+  <label for="fileInputId" #fileLabelRef>
+    <input
+      hidden
+      type="file"
+      multiple
+      id="fileInputId"
+      #fileInputRef
+      (change)="fileBrowserHandler($event)"
+    />
+  </label>
+  <app-button
+    class="documents__upload-button"
+    iconOption="upload"
+    styleOption="skeleton"
+    sizeOption="custom"
+    (onClick)="fileInputRef.click()"
+    >Загрузите</app-button
+  >
+  &nbsp;или перенесите сюда
+</form>
