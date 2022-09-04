@@ -3,6 +3,7 @@ import {
   EventEmitter,
   HostBinding,
   HostListener,
+  Input,
   Output,
 } from '@angular/core';
 
@@ -10,8 +11,13 @@ import {
   selector: '[appDragAndDrop]',
 })
 export class DragAndDropDirective {
-  @HostBinding('class.documents-drop-area_file-over') fileOver: boolean;
+  @Input() fileOverClass: string = '';
+  @HostBinding('class') get class() {
+    return this.fileOver ? this.fileOverClass : '';
+  }
   @Output() fileDropped = new EventEmitter<FileList>();
+
+  fileOver: boolean = false;
 
   constructor() {}
 

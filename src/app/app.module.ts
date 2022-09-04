@@ -12,7 +12,7 @@ import { MainContentComponent } from './components/blocks/main-content/main-cont
 import { ArrowComponent } from './components/common/arrow/arrow.component';
 import { BackButtonComponent } from './components/blocks/main-content/nav-bar/back-button/back-button.component';
 import { NavPathComponent } from './components/blocks/main-content/nav-bar/nav-path/nav-path.component';
-import { StatusLabelComponent } from './components/blocks/main-content/stage-header/status-label/status-label.component';
+import { StatusLabelComponent } from './components/common/status-label/status-label.component';
 import { StageHeaderComponent } from './components/blocks/main-content/stage-header/stage-header.component';
 import { DocumentCountLabelComponent } from './components/blocks/main-content/stage-header/document-count-label/document-count-label.component';
 import { StatusBannerComponent } from './components/blocks/main-content/stage-header/status-banner/status-banner.component';
@@ -48,6 +48,7 @@ import { AddAddresseeFormComponent } from './components/blocks/main-content/addr
 import { ReactiveFormsModule } from '@angular/forms';
 import { DocumentsDropAreaComponent } from './components/blocks/main-content/documents/documents-drop-area/documents-drop-area.component';
 import { DragAndDropDirective } from './directives/drag-and-drop.directive';
+import { FileBrowserDirective } from './directives/file-browser.directive';
 
 @NgModule({
   declarations: [
@@ -87,6 +88,7 @@ import { DragAndDropDirective } from './directives/drag-and-drop.directive';
     AddAddresseeFormComponent,
     DocumentsDropAreaComponent,
     DragAndDropDirective,
+    FileBrowserDirective,
   ],
   imports: [
     BrowserModule,

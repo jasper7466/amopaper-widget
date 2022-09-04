@@ -1,19 +1,38 @@
 import { initialFileRecord, initialState } from './index';
 import { createReducer, on } from '@ngrx/store';
-import { addFilesAction, clearFilesListAction } from './actions';
+import {
+  clearFilesListAction,
+  addFilesAction,
+  loadFileCompleteAction,
+} from './actions';
 
-export const widgetContextReducer = createReducer(
+export const filesReducer = createReducer(
   initialState,
-  on(addFilesAction, (state, payload) => {
-    const newFiles = Array.from(payload.files).map((file) => ({
-      ...initialFileRecord,
-      file,
-    }));
+  on(addFilesAction, (state, { files }) => {
+    return {
+      ...state,
+      files: [...state.files, ...files],
+      totalCount: state.files.length + files.length,
+    };
+  }),
+  on(loadFileCompleteAction, (state, { id, base64 }) => {
+    const fileIndex = state.files.findIndex((file) => file.id === id);
+
+    if (fileIndex === -1) {
+      throw new Error(`File with id ${id} does not exist`);
+    }
+
+    const filesCopy = [...state.files];
+    filesCopy[fileIndex] = { ...filesCopy[fileIndex], base64, isLoaded: true };
 
     return {
       ...state,
-      files: [...state.files, ...newFiles],
+      files: [...filesCopy],
+      loadedCount: state.loadedCount + 1,
     };
   }),
-  on(clearFilesListAction, () => ({ ...initialState }))
+  on(clearFilesListAction, (state) => {
+    // state.files.forEach((file) => file.onLoadSubscription?.unsubscribe());
+    return { ...initialState };
+  })
 );

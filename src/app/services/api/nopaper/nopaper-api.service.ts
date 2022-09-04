@@ -7,16 +7,15 @@ import {
   subdomainSelector,
   xApiKeySelector,
 } from 'src/app/store/crm-context/selectors';
+import { environment } from 'src/environments/environment';
 
-const SCHEME = 'https://';
-const BASE_URL = 'nopaper-demo.abanking.ru/lk-api/external/api';
+const BASE_URL = environment.nopaperBaseUrl;
 
 @Injectable({
   providedIn: 'root',
 })
 export class NopaperApiService {
   private headers: HttpHeaders;
-  readonly baseURL: string = `${SCHEME}${BASE_URL}`;
 
   // TODO: только для отладки с локальным сервером авторизации
   private xApiKey?: string;
@@ -40,7 +39,7 @@ export class NopaperApiService {
     path: string,
     body: Request
   ): Observable<Response> {
-    return this.http.post<Response>(`${this.baseURL}${path}`, body, {
+    return this.http.post<Response>(`${BASE_URL}${path}`, body, {
       headers: this.headers,
     });
   }

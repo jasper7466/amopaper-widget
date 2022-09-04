@@ -7,3 +7,13 @@ export const filesSelector = createSelector(
   featureSelector,
   (state) => state.files
 );
+
+export const totalCountSelector = createSelector(
+  featureSelector,
+  (state) => state.totalCount
+);
+
+export const loadedCountSelector = createSelector(
+  featureSelector,
+  (state) => state.loadedCount
+);

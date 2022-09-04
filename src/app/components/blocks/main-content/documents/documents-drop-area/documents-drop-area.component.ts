@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FilesService } from 'src/app/services/files.service';
 
 @Component({
   selector: 'app-documents-drop-area',
@@ -6,25 +7,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
   styleUrls: ['./documents-drop-area.component.css'],
 })
 export class DocumentsDropAreaComponent implements OnInit {
-  @ViewChild('fileInputRef', { static: false }) fileInput: ElementRef;
-  constructor() {}
+  constructor(public filesService: FilesService) {}
 
   ngOnInit(): void {}
-
-  fileDropHandler(files: FileList) {
-    this.filesProcessor(files);
-  }
-
-  fileBrowserHandler(event: Event) {
-    event.preventDefault();
-    event.stopPropagation();
-    const files = (<HTMLInputElement>event.target).files;
-    this.filesProcessor(files);
-  }
-
-  filesProcessor(files: FileList | null) {
-    if (!files) {
-      return;
-    }
-  }
 }

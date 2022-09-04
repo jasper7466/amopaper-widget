@@ -1,14 +1,11 @@
 import { domainSelector } from './../../../store/crm-context/selectors';
 import { GetCustomFieldsResponse, customField } from './amo-api.types';
 import { map, Observable, tap, expand, EMPTY, reduce } from 'rxjs';
-import { Nullable } from '../../../../types/common';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { accessTokenSelector } from 'src/app/store/access-token/selectors';
-
-const SCHEME = 'https://';
-const API_VERSION = 'v4';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -25,9 +22,7 @@ export class AmoApiService {
       });
     });
     this.store.select(domainSelector).subscribe((domain) => {
-      // TODO: для работы через прокси в режиме разработки
-      // this.baseURL = `${SCHEME}${domain}/api/${API_VERSION}`;
-      this.baseURL = `/api/${API_VERSION}`;
+      this.baseURL = environment.getAmoBaseUrl(domain!);
     });
   }
 

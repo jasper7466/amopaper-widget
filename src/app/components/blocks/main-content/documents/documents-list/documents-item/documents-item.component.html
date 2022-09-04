@@ -14,13 +14,14 @@
       fill="#2E62D9"
     />
   </svg>
-  <p class="documents-item__filename">Договор оказания услуг № 65643578.doc</p>
+  <p class="documents-item__filename">{{ fileName }}</p>
   <app-status-label
+    *ngIf="signStatus"
     class="documents-item__status-label"
-    status="signed"
+    [status]="signStatus"
   ></app-status-label>
 </div>
-<button class="documents-item__details-button">
+<button class="documents-item__details-button" *ngIf="signStatus === 'signed'">
   Информация о подписи
   <app-arrow direction="right" color="primary"></app-arrow>
 </button>
