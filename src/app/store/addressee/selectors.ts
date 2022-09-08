@@ -1,6 +1,5 @@
 import { IAddresseeState, WIDGET_CONTEXT_KEY } from './index';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { state } from '@angular/animations';
 
 export const featureSelector =
   createFeatureSelector<IAddresseeState>(WIDGET_CONTEXT_KEY);

@@ -4,14 +4,14 @@ export interface IAddresseeState {
   isAdded: boolean;
   isExists: boolean;
   name: string;
-  vatId: string;
-  phone: string;
+  vatId: string | null;
+  phone: string | null;
 }
 
 export const initialState: IAddresseeState = {
   isAdded: false,
   isExists: false,
   name: 'Получатель',
-  vatId: '',
-  phone: '',
+  vatId: null,
+  phone: null,
 };

@@ -8,12 +8,15 @@ import { ActionReducerMap, MetaReducer } from '@ngrx/store';
 import { crmContextReducer } from './crm-context/reducers';
 import { FILES_KEY, IFilesState } from './files';
 import { filesReducer } from './files/reducers';
+import { INopaperState, NOPAPER_KEY } from './nopaper';
+import { nopaperReducer } from './nopaper/reducers';
 
 export interface State {
   [CONTEXT_KEY]: ICrmContextState;
   [TOKEN_KEY]: ITokenState;
   [WIDGET_CONTEXT_KEY]: IAddresseeState;
   [FILES_KEY]: IFilesState;
+  [NOPAPER_KEY]: INopaperState;
 }
 
 export const reducers: ActionReducerMap<State> = {
@@ -21,6 +24,7 @@ export const reducers: ActionReducerMap<State> = {
   [TOKEN_KEY]: accessTokenReducer,
   [WIDGET_CONTEXT_KEY]: widgetContextReducer,
   [FILES_KEY]: filesReducer,
+  [NOPAPER_KEY]: nopaperReducer,
 };
 
 export const metaReducers: MetaReducer<State>[] = !environment.production

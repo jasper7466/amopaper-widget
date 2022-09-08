@@ -1,10 +1,24 @@
-<app-button styleOption="blank" colorOption="regular"
-  >Сохранить черновик</app-button
->
-<app-button styleOption="blank" colorOption="danger">Удалить</app-button>
 <app-button
+  [isEnabled]="
+    !(isDraft$ | async) &&
+    !!(isAddresseeAdded$ | async) &&
+    !!(isAllFilesLoaded$ | async)
+  "
+  (onClick)="nopaperService.createDraft()"
+  styleOption="blank"
+  colorOption="regular"
+  >Создать пакет документов</app-button
+>
+<app-button
+  *ngIf="isDraft$ | async"
+  (onClick)="crmService.resetPacketId$().subscribe()"
+  styleOption="blank"
+  colorOption="danger"
+  >Удалить</app-button
+>
+<!-- <app-button
   class="footer__cancel-button"
   styleOption="skeleton"
   colorOption="regular"
   >Отмена</app-button
->
+> -->

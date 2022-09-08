@@ -13,11 +13,13 @@ export const widgetContextReducer = createReducer(
     ...state,
     isAdded: true,
     phone,
+    vatId: null,
   })),
   on(addAddresseeByVatIdAction, (state, { vatId }) => ({
     ...state,
     isAdded: true,
     vatId,
+    phone: null,
   })),
   on(setAddresseeExistenceAction, (state) => ({
     ...state,

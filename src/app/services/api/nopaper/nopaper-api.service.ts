@@ -1,5 +1,10 @@
-import { CheckByPhoneResponse, CheckByPhoneRequest } from './nopaper-api.types';
-import { Observable, map } from 'rxjs';
+import {
+  CheckByPhoneResponse,
+  CheckByPhoneRequest,
+  PostDraftRequest,
+  PostDaftResponse,
+} from './nopaper-api.types';
+import { Observable, map, tap } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Store } from '@ngrx/store';
@@ -8,6 +13,7 @@ import {
   xApiKeySelector,
 } from 'src/app/store/crm-context/selectors';
 import { environment } from 'src/environments/environment';
+import { updateAccessTokenAction } from 'src/app/store/access-token/actions';
 
 const BASE_URL = environment.nopaperBaseUrl;
 
@@ -35,11 +41,8 @@ export class NopaperApiService {
       .subscribe((subdomain) => (this.subdomain = subdomain));
   }
 
-  private post$<Request, Response>(
-    path: string,
-    body: Request
-  ): Observable<Response> {
-    return this.http.post<Response>(`${BASE_URL}${path}`, body, {
+  private post$<T>(path: string, body: any): Observable<T> {
+    return this.http.post<T>(`${BASE_URL}${path}`, body, {
       headers: this.headers,
     });
   }
@@ -51,13 +54,21 @@ export class NopaperApiService {
         x_api_key: this.xApiKey,
         subdomain: this.subdomain,
       })
-      .pipe(map((response) => response.access_token));
+      .pipe(
+        map((response) => response.access_token),
+        tap((accessToken) =>
+          this.store.dispatch(updateAccessTokenAction({ token: accessToken }))
+        )
+      );
   }
 
-  checkByPhone(phone: string): Observable<CheckByPhoneResponse> {
-    return this.post$<CheckByPhoneRequest, CheckByPhoneResponse>(
-      `/profile/fl/check-by-phone-v2`,
-      { phonenumber: phone }
-    );
+  postDraft$(body: PostDraftRequest) {
+    return this.post$<PostDaftResponse>('/document/create-for-client', body);
+  }
+
+  checkByPhone$(phone: string): Observable<CheckByPhoneResponse> {
+    return this.post$<CheckByPhoneResponse>(`/profile/fl/check-by-phone-v2`, {
+      phonenumber: phone,
+    });
   }
 }

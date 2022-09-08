@@ -18,3 +18,8 @@ export const subdomainSelector = createSelector(
   featureSelector,
   (state) => state.context?.system.subdomain
 );
+
+export const leadIdSelector = createSelector(
+  featureSelector,
+  (state) => state.context?.cardId
+);

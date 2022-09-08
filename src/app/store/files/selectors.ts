@@ -17,3 +17,8 @@ export const loadedCountSelector = createSelector(
   featureSelector,
   (state) => state.loadedCount
 );
+
+export const isCompleteSelector = createSelector(
+  featureSelector,
+  (state) => state.isComplete
+);

@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { switchMap, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
+import { leadIdSelector } from 'src/app/store/crm-context/selectors';
 
 @Component({
   selector: 'app-startup-page',
@@ -27,18 +28,12 @@ export class StartupPageComponent implements OnInit {
       // return;
     }
 
-    this.crmService.getCrmContext$
-      .pipe(
-        tap((context) => {
-          this.store.dispatch(updateCrmContextAction(context));
-        }),
-        switchMap(() => this.nopaperApiService.getAmoToken$())
-      )
-      .pipe(
-        tap((accessToken) =>
-          this.store.dispatch(updateAccessTokenAction({ token: accessToken }))
-        )
-      )
+    this.crmService
+      .getCrmContext$()
+      .pipe(switchMap(() => this.nopaperApiService.getAmoToken$()))
+      .pipe(switchMap(() => this.crmService.getPacketFieldId$()))
+      // .pipe(switchMap(() => this.crmService.setPacketId$(111)))
+      .pipe(switchMap(() => this.crmService.getPacketId$()))
       .subscribe({
         next: () => this.router.navigate(['widget']),
         error: (err) => console.log(err),

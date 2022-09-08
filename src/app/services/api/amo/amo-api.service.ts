@@ -1,5 +1,11 @@
 import { domainSelector } from './../../../store/crm-context/selectors';
-import { GetCustomFieldsResponse, customField } from './amo-api.types';
+import {
+  GetCustomFieldsResponse,
+  customField,
+  PatchLeadRequestBody,
+  PatchLeadResponse,
+  GetLeadByIdResponse,
+} from './amo-api.types';
 import { map, Observable, tap, expand, EMPTY, reduce } from 'rxjs';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -32,9 +38,14 @@ export class AmoApiService {
     });
   }
 
-  get getCompaniesCustomFieldsAll(): Observable<customField[]> {
+  private patch$<T>(path: string, body: any): Observable<T> {
+    return this.http.patch<T>(`${this.baseURL}${path}`, body, {
+      headers: this.headers,
+    });
+  }
+
+  get getCompaniesCustomFieldsAll$(): Observable<customField[]> {
     return this.get$<GetCustomFieldsResponse>('/companies/custom_fields').pipe(
-      tap((res) => console.log(res)),
       expand((response) =>
         response._links.next
           ? // TODO: для работы через прокси в режиме разработки
@@ -47,5 +58,29 @@ export class AmoApiService {
       map((response) => response._embedded.custom_fields),
       reduce((acc, current) => acc.concat(current))
     );
+  }
+
+  get getLeadsCustomFieldsAll$(): Observable<customField[]> {
+    return this.get$<GetCustomFieldsResponse>('/leads/custom_fields').pipe(
+      expand((response) =>
+        response._links.next
+          ? // TODO: для работы через прокси в режиме разработки
+            // ? this.get$<GetCustomFieldsResponse>(response._links.next.href)
+            this.get$<GetCustomFieldsResponse>(
+              `/companies/custom_fields?page=${++response._page}`
+            )
+          : EMPTY
+      ),
+      map((response) => response._embedded.custom_fields),
+      reduce((acc, current) => acc.concat(current))
+    );
+  }
+
+  patchLeadById(id: number, data: Partial<PatchLeadRequestBody>) {
+    return this.patch$<PatchLeadResponse>(`/leads/${id}`, data);
+  }
+
+  getLeadById$(id: number): Observable<GetLeadByIdResponse> {
+    return this.get$(`/leads/${id}`);
   }
 }

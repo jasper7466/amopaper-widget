@@ -14,12 +14,14 @@ export interface IFilesState {
   files: FileRecord[];
   totalCount: number;
   loadedCount: number;
+  isComplete: boolean;
 }
 
 export const initialState: IFilesState = {
   files: [],
   totalCount: 0,
   loadedCount: 0,
+  isComplete: false,
 };
 
 export const initialFileRecord: Omit<FileRecord, 'file' | 'id'> = {

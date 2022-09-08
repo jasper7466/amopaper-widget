@@ -7,8 +7,10 @@ export const CONTEXT_KEY = 'context';
 
 export interface ICrmContextState {
   context: Nullable<CrmContext>;
+  documentsPacketIdCustomFieldId: number;
 }
 
 export const initialState: ICrmContextState = {
   context: null,
+  documentsPacketIdCustomFieldId: -1,
 };

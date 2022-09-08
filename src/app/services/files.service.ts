@@ -44,7 +44,8 @@ export class FilesService {
 
     return new Observable<string>((observer: Observer<string>) => {
       fileReader.onload = () => {
-        observer.next(fileReader.result as string);
+        const result = fileReader.result as string;
+        observer.next(result.replace('data:', '').replace(/^.+,/, ''));
         observer.complete();
       };
 
