@@ -1,27 +1,36 @@
 # AmopaperWidget
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.0.
+## Назначение
 
-## Development server
+SPA-виджет для интеграции сервиса Nopaper в интерфейс amoCRM. Работает в паре с [обёрткой](https://github.com/jasper7466/Boilerplate-amoCRM-Widget)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Режим разработки
 
-## Code scaffolding
+- В директории `./auth-dev-server` скопировать и переименовать файл `example.secrets.json` -> `secrets.json`
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Заполнить параметры в соответствии с используемым амо-аккаунтом и приватной интеграцией:
 
-## Build
+  `accountDomain` - домен аккаунта
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+  `subdomain` - поддомен аккаунта
 
-## Running unit tests
+  `code` - временный ключ интеграции для получения первой пары токенов
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+  `x_api_key` - nopaper-api-key
 
-## Running end-to-end tests
+  `client_id` - id интеграции
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+  `client_secret` - секрет интеграции
 
-## Further help
+  `redirect_uri` - адрес для веб-хука о подключении интеграции
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+- В корне проекта скопировать и переименовать файл `example.proxy.config.json` -> `proxy.config.json`
+- Заполнить параметр `target` в соответствии с используемым амо-аккаунтом
+
+- Запустить локальный сервер авторизации:
+
+        npm run auth-dev-server
+
+- Запустить приложение:
+
+        npm start
