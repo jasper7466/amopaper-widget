@@ -19,6 +19,36 @@ export interface PostDraftRequest {
   files: File[];
 }
 
-export interface PostDaftResponse {
+export interface PostDraftResponse {
   documentId: string;
+}
+
+export type StepName =
+  | 'new'
+  | 'nopaperPrepareFiles'
+  | 'nopaperPreview'
+  | 'nopaperPreviewBeforeOferta'
+  | 'nopaperOfertaSenderPreview'
+  | 'nopaperSenderSign'
+  | 'nopaperReceiverPreview'
+  | 'nopaperReceiverPreviewBeforeOferta'
+  | 'nopaperOfertaReceiverPreview'
+  | 'nopaperReceiverSigning'
+  | 'nopaperEnd'
+  | 'nopaperEndRead'
+  | 'nopaperError'
+  | 'nopaperErrorEnd'
+  | 'nopaperDelete'
+  | 'nopaperSenderCancel'
+  | 'nopaperSenderCancelEnd'
+  | 'nopaperSignRefused'
+  | 'nopaperSignRefusedEnd'
+  | 'nopaperSignRefusedRead';
+export interface GetStatusResponse {
+  stepName: StepName;
+}
+
+export interface PostStepNameRequest {
+  documentId: number;
+  stepSystemName: string;
 }

@@ -8,3 +8,8 @@ export const packetIdSelector = createSelector(
   featureSelector,
   (state) => state.packetId
 );
+
+export const stepNameSelector = createSelector(
+  featureSelector,
+  (state) => state.stepName
+);

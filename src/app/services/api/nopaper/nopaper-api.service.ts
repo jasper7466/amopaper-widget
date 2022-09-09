@@ -2,7 +2,10 @@ import {
   CheckByPhoneResponse,
   CheckByPhoneRequest,
   PostDraftRequest,
-  PostDaftResponse,
+  PostDraftResponse,
+  GetStatusResponse,
+  StepName,
+  PostStepNameRequest,
 } from './nopaper-api.types';
 import { Observable, map, tap } from 'rxjs';
 import { Injectable } from '@angular/core';
@@ -41,8 +44,14 @@ export class NopaperApiService {
       .subscribe((subdomain) => (this.subdomain = subdomain));
   }
 
-  private post$<T>(path: string, body: any): Observable<T> {
-    return this.http.post<T>(`${BASE_URL}${path}`, body, {
+  private post$<Req, Res>(path: string, body: Req): Observable<Res> {
+    return this.http.post<Res>(`${BASE_URL}${path}`, body, {
+      headers: this.headers,
+    });
+  }
+
+  private get$<T>(path: string): Observable<T> {
+    return this.http.get<T>(`${BASE_URL}${path}`, {
       headers: this.headers,
     });
   }
@@ -63,12 +72,29 @@ export class NopaperApiService {
   }
 
   postDraft$(body: PostDraftRequest) {
-    return this.post$<PostDaftResponse>('/document/create-for-client', body);
+    return this.post$<PostDraftRequest, PostDraftResponse>(
+      '/document/create-for-client',
+      body
+    );
   }
 
-  checkByPhone$(phone: string): Observable<CheckByPhoneResponse> {
-    return this.post$<CheckByPhoneResponse>(`/profile/fl/check-by-phone-v2`, {
-      phonenumber: phone,
+  checkByPhone$(phone: string) {
+    return this.post$<CheckByPhoneRequest, CheckByPhoneResponse>(
+      `/profile/fl/check-by-phone-v2`,
+      {
+        phonenumber: phone,
+      }
+    );
+  }
+
+  getStepName$(packetId: number) {
+    return this.get$<GetStatusResponse>(`/document/status/${packetId}`);
+  }
+
+  setStepName$(packetId: number, stepName: StepName) {
+    return this.post$<PostStepNameRequest, any>('/document/changestep', {
+      documentId: packetId,
+      stepSystemName: stepName,
     });
   }
 }

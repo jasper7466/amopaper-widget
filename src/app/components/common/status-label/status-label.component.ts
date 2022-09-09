@@ -1,16 +1,18 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-export type statusLabelStatus =
+export type StatusLabelStatus =
   | 'draft'
   | 'pending'
   | 'signed'
-  | 'signed-single';
+  | 'signed-single'
+  | '';
 
-const statusCaptions: { [key in statusLabelStatus]: string } = {
+const statusCaptions: { [key in StatusLabelStatus]: string } = {
   draft: 'Черновик',
   pending: 'Ожидают подписи',
   signed: 'Подписаны',
   'signed-single': 'Подписано',
+  '': 'Undefined',
 };
 
 @Component({
@@ -19,7 +21,7 @@ const statusCaptions: { [key in statusLabelStatus]: string } = {
   styleUrls: ['./status-label.component.css'],
 })
 export class StatusLabelComponent implements OnInit {
-  @Input() status: statusLabelStatus = 'draft';
+  @Input() status: StatusLabelStatus = '';
 
   public caption: string | undefined;
 

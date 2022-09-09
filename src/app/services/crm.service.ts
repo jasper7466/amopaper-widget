@@ -102,6 +102,9 @@ export class CrmService {
       map((fields) => fields?.pop()),
       map((field) => field?.values.pop()?.value),
       tap((packetId) => {
+        if (!packetId) {
+          packetId = null;
+        }
         this.store.dispatch(setPacketIdAction({ packetId }));
       })
     );

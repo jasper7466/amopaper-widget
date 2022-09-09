@@ -1,10 +1,10 @@
-<h1 class="stage-header__title">{{ caption }}</h1>
-<app-document-count-label
+<h1 class="stage-header__title"><ng-content></ng-content></h1>
+<!-- <app-document-count-label
   class="stage-header__count-label"
   count="1"
-></app-document-count-label>
+></app-document-count-label> -->
 <app-status-label
   class="stage-header__status-label"
-  status="draft"
+  [status]="statusLabelStatus"
 ></app-status-label>
 <!-- <app-status-banner status="pending"></app-status-banner> -->

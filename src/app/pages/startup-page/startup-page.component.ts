@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { switchMap, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { leadIdSelector } from 'src/app/store/crm-context/selectors';
+import { NopaperService } from 'src/app/services/nopaper.service';
 
 @Component({
   selector: 'app-startup-page',
@@ -18,6 +19,7 @@ export class StartupPageComponent implements OnInit {
   constructor(
     private crmService: CrmService,
     private nopaperApiService: NopaperApiService,
+    private nopaperService: NopaperService,
     private router: Router,
     private store: Store
   ) {}
@@ -30,10 +32,12 @@ export class StartupPageComponent implements OnInit {
 
     this.crmService
       .getCrmContext$()
-      .pipe(switchMap(() => this.nopaperApiService.getAmoToken$()))
-      .pipe(switchMap(() => this.crmService.getPacketFieldId$()))
-      // .pipe(switchMap(() => this.crmService.setPacketId$(111)))
-      .pipe(switchMap(() => this.crmService.getPacketId$()))
+      .pipe(
+        switchMap(() => this.nopaperApiService.getAmoToken$()),
+        switchMap(() => this.crmService.getPacketFieldId$()),
+        switchMap(() => this.crmService.getPacketId$()),
+        switchMap(() => this.nopaperService.getStepName$())
+      )
       .subscribe({
         next: () => this.router.navigate(['widget']),
         error: (err) => console.log(err),

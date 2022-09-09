@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { statusLabelStatus } from 'src/app/components/common/status-label/status-label.component';
+import { StatusLabelStatus } from 'src/app/components/common/status-label/status-label.component';
 
 @Component({
   selector: 'app-documents-item',
@@ -8,7 +8,7 @@ import { statusLabelStatus } from 'src/app/components/common/status-label/status
 })
 export class DocumentsItemComponent implements OnInit {
   @Input() fileName: string = '';
-  @Input() signStatus: statusLabelStatus | null = null;
+  @Input() signStatus: StatusLabelStatus = '';
 
   constructor() {}
 

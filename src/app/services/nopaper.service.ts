@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
-import { tick } from '@angular/core/testing';
 import { Store } from '@ngrx/store';
-import { response } from 'express';
-import { map, switchMap, tap } from 'rxjs';
+import { EMPTY, map, of, switchMap, tap } from 'rxjs';
 import { addresseeSelector } from '../store/addressee/selectors';
 import { filesSelector } from '../store/files/selectors';
-import { setPacketIdAction } from '../store/nopaper/actions';
+import {
+  resetStepNameAction,
+  setPacketIdAction,
+  setStepNameAction,
+} from '../store/nopaper/actions';
+import { packetIdSelector } from '../store/nopaper/selectors';
 import { NopaperApiService } from './api/nopaper/nopaper-api.service';
 import { File } from './api/nopaper/nopaper-api.types';
 import { CrmService } from './crm.service';
@@ -14,14 +17,17 @@ import { CrmService } from './crm.service';
   providedIn: 'root',
 })
 export class NopaperService {
+  private packetId: number | null;
+
   constructor(
     private store: Store,
     private nopaperApiService: NopaperApiService,
     private crmService: CrmService
-  ) {}
+  ) {
+    this.store.select(packetIdSelector).subscribe((id) => (this.packetId = id));
+  }
 
   createDraft() {
-    console.log('creating draft');
     let clientFlPhoneNumber: string | null = null;
     let clientUlInn: string | null = null;
     let files: File[] = [];
@@ -50,17 +56,13 @@ export class NopaperService {
             contact = { clientUlInn };
           }
 
-          console.log(files);
-
           return {
             title: '',
             files,
             ...contact,
           };
         }),
-        switchMap((body) => {
-          return this.nopaperApiService.postDraft$(body);
-        }),
+        switchMap((body) => this.nopaperApiService.postDraft$(body)),
         tap((response) =>
           this.store.dispatch(
             setPacketIdAction({ packetId: parseInt(response.documentId) })
@@ -68,9 +70,31 @@ export class NopaperService {
         ),
         switchMap((response) =>
           this.crmService.setPacketId$(parseInt(response.documentId))
-        )
-        // tap(console.log)
+        ),
+        switchMap(() => this.getStepName$())
       )
       .subscribe();
+  }
+
+  removeDraft() {
+    if (!this.packetId) {
+      return;
+    }
+    this.nopaperApiService
+      .setStepName$(this.packetId, 'nopaperDelete')
+      .subscribe();
+    this.crmService.resetPacketId$().subscribe();
+    this.store.dispatch(resetStepNameAction());
+  }
+
+  getStepName$() {
+    if (!this.packetId) {
+      return of(null);
+    }
+
+    return this.nopaperApiService.getStepName$(this.packetId).pipe(
+      tap((response) => this.store.dispatch(setStepNameAction(response))),
+      tap(console.log)
+    );
   }
 }

@@ -1,4 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { map } from 'rxjs';
+import { StatusLabelStatus } from 'src/app/components/common/status-label/status-label.component';
+import { stepNameSelector } from 'src/app/store/nopaper/selectors';
 
 @Component({
   selector: 'app-stage-header',
@@ -6,9 +10,27 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./stage-header.component.css'],
 })
 export class StageHeaderComponent implements OnInit {
-  @Input() caption: string = 'Untitled stage';
+  statusLabelStatus: StatusLabelStatus = '';
 
-  constructor() {}
+  constructor(private store: Store) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.store.select(stepNameSelector).subscribe((stepName) => {
+      let labelStatus: StatusLabelStatus;
+
+      switch (stepName) {
+        case null:
+        case 'new':
+        case 'nopaperPreview':
+        case 'nopaperPreviewBeforeOferta':
+        case 'nopaperOfertaSenderPreview':
+          labelStatus = 'draft';
+          break;
+        default:
+          labelStatus = '';
+      }
+
+      this.statusLabelStatus = labelStatus;
+    });
+  }
 }
