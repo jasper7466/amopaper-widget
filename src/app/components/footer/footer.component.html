@@ -1,0 +1,21 @@
+<app-button
+  *ngIf="this.isCreateButtonVisible"
+  [isEnabled]="this.isCreateButtonEnabled"
+  (onClick)="createDraft()"
+  styleOption="blank"
+  colorOption="regular"
+  >Создать пакет документов</app-button
+>
+<app-button
+  *ngIf="isDraft$ | async"
+  (onClick)="removeDraft()"
+  styleOption="blank"
+  colorOption="danger"
+  >Удалить</app-button
+>
+<!-- <app-button
+  class="footer__cancel-button"
+  styleOption="skeleton"
+  colorOption="regular"
+  >Отмена</app-button
+> -->

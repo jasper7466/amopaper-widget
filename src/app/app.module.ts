@@ -1,36 +1,36 @@
-import { ModalComponent } from './components/blocks/main-content/modal/modal.component';
-import { NgModule } from '@angular/core';
+import { ModalComponent } from './components/modal/modal.component';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
+import { registerLocaleData } from '@angular/common';
+import localeRu from '@angular/common/locales/ru';
 
 import { AppComponent } from './app.component';
-import { StatusBarComponent } from './components/blocks/header/status-bar/status-bar.component';
-import { NavBarComponent } from './components/blocks/main-content/nav-bar/nav-bar.component';
-import { NopaperLogoComponent } from './components/blocks/header/status-bar/nopaper-logo/nopaper-logo.component';
-import { HeaderComponent } from './components/blocks/header/header.component';
-import { MainContentComponent } from './components/blocks/main-content/main-content.component';
+import { StatusBarComponent } from './components/status-bar/status-bar.component';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { NopaperLogoComponent } from './components/nopaper-logo/nopaper-logo.component';
+import { HeaderComponent } from './components/header/header.component';
 import { ArrowComponent } from './components/common/arrow/arrow.component';
-import { BackButtonComponent } from './components/blocks/main-content/nav-bar/back-button/back-button.component';
-import { NavPathComponent } from './components/blocks/main-content/nav-bar/nav-path/nav-path.component';
+import { BackButtonComponent } from './components/back-button/back-button.component';
+import { NavPathComponent } from './components/nav-path/nav-path.component';
 import { StatusLabelComponent } from './components/common/status-label/status-label.component';
-import { StageHeaderComponent } from './components/blocks/main-content/stage-header/stage-header.component';
-import { DocumentCountLabelComponent } from './components/blocks/main-content/stage-header/document-count-label/document-count-label.component';
-import { StatusBannerComponent } from './components/blocks/main-content/stage-header/status-banner/status-banner.component';
+import { StageHeaderComponent } from './components/stage-header/stage-header.component';
+import { DocumentCountLabelComponent } from './components/document-count-label/document-count-label.component';
+import { StatusBannerComponent } from './components/status-banner/status-banner.component';
 import { ButtonComponent } from './components/common/button/button.component';
-import { FooterComponent } from './components/blocks/main-content/footer/footer.component';
-import { AddresseeComponent } from './components/blocks/main-content/addressee/addressee.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { AddresseeComponent } from './components/addressee/addressee.component';
 import { SubtitleComponent } from './components/common/subtitle/subtitle.component';
-import { AddresseeNameplateComponent } from './components/blocks/main-content/addressee/addressee-nameplate/addressee-nameplate.component';
-import { DocumentsComponent } from './components/blocks/main-content/documents/documents.component';
+import { AddresseeNameplateComponent } from './components/addressee-nameplate/addressee-nameplate.component';
+import { DocumentsComponent } from './components/documents/documents.component';
 import { TooltipComponent } from './components/common/tooltip/tooltip.component';
 import { InputComponent } from './components/common/input/input.component';
-import { DocumentsListComponent } from './components/blocks/main-content/documents/documents-list/documents-list.component';
-import { DocumentsItemComponent } from './components/blocks/main-content/documents/documents-list/documents-item/documents-item.component';
-import { BannerPreparingComponent } from './components/blocks/main-content/banner-preparing/banner-preparing.component';
+import { DocumentsListComponent } from './components/documents-list/documents-list.component';
+import { BannerPreparingComponent } from './components/banner-preparing/banner-preparing.component';
 import { PreloaderComponent } from './components/common/preloader/preloader.component';
-import { BannerAwaitingComponent } from './components/blocks/main-content/banner-awaiting/banner-awaiting.component';
-import { BannerSigningComponent } from './components/blocks/main-content/banner-signing/banner-signing.component';
-import { ModalSignInfoComponent } from './components/blocks/main-content/modal-sign-info/modal-sign-info.component';
+import { BannerAwaitingComponent } from './components/banner-awaiting/banner-awaiting.component';
+import { BannerSigningComponent } from './components/banner-signing/banner-signing.component';
+import { ModalSignInfoComponent } from './components/modal-sign-info/modal-sign-info.component';
 import { AppRoutingModule } from './app-routing.module';
 import { StartupPageComponent } from './pages/startup-page/startup-page.component';
 import { LandingPageComponent } from './pages/landing-page/landing-page.component';
@@ -44,12 +44,15 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { reducers, metaReducers } from './store';
 import { AppEffects } from './app.effects';
 import { NgxMaskModule } from 'ngx-mask';
-import { AddAddresseeFormComponent } from './components/blocks/main-content/addressee/add-addressee-form/add-addressee-form.component';
+import { AddAddresseeFormComponent } from './components/add-addressee-form/add-addressee-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { DocumentsDropAreaComponent } from './components/blocks/main-content/documents/documents-drop-area/documents-drop-area.component';
+import { DocumentsDropAreaComponent } from './components/documents-drop-area/documents-drop-area.component';
 import { DragAndDropDirective } from './directives/drag-and-drop.directive';
 import { FileBrowserDirective } from './directives/file-browser.directive';
+import { SignedPageComponent } from './pages/signed-page/signed-page.component';
+import { DocumentsListItemComponent } from './components/documents-list-item/documents-list-item.component';
 
+registerLocaleData(localeRu, 'ru');
 @NgModule({
   declarations: [
     AppComponent,
@@ -57,7 +60,6 @@ import { FileBrowserDirective } from './directives/file-browser.directive';
     NavBarComponent,
     NopaperLogoComponent,
     HeaderComponent,
-    MainContentComponent,
     ArrowComponent,
     BackButtonComponent,
     NavPathComponent,
@@ -74,7 +76,6 @@ import { FileBrowserDirective } from './directives/file-browser.directive';
     TooltipComponent,
     InputComponent,
     DocumentsListComponent,
-    DocumentsItemComponent,
     BannerPreparingComponent,
     PreloaderComponent,
     BannerAwaitingComponent,
@@ -89,6 +90,8 @@ import { FileBrowserDirective } from './directives/file-browser.directive';
     DocumentsDropAreaComponent,
     DragAndDropDirective,
     FileBrowserDirective,
+    SignedPageComponent,
+    DocumentsListItemComponent,
   ],
   imports: [
     BrowserModule,
@@ -107,7 +110,7 @@ import { FileBrowserDirective } from './directives/file-browser.directive';
     NgxMaskModule.forRoot(),
     ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [{ provide: LOCALE_ID, useValue: 'ru' }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -52,3 +52,59 @@ export interface PostStepNameRequest {
   documentId: number;
   stepSystemName: string;
 }
+
+export interface GetFilesIdentifiersRequest {
+  documentId: number;
+}
+
+type DocumentListItem = {
+  documentFileId: number;
+  SourceDocumentFileId: number;
+  fileName: string;
+  size: number;
+};
+
+type DocumentListItemShortened = Omit<DocumentListItem, 'SourceDocumentFileId'>;
+
+export interface IGetFilesIdentifiersResponse {
+  signDocumentList: DocumentListItem[];
+  stampDocumentList: DocumentListItem[];
+  ofertaOriginal?: DocumentListItemShortened[];
+  ofertaWithStamp?: DocumentListItemShortened[];
+  procuratoryOriginalList: DocumentListItemShortened[];
+  procuratoryWithStampList: DocumentListItemShortened[];
+}
+
+export interface GetFileSignatureRequest {
+  documentFileId: number;
+}
+
+type Snapshot = {
+  companyInn: string;
+  companyName: string;
+  companyNameOpf: string;
+  signerIsHead: boolean;
+  headPosition: string;
+  employeePosition: string;
+  procuratoryId: number;
+  procuratoryIssueDateTimeUtc: string;
+  procuratoryRevokeDateTimeUtc: string;
+};
+
+type SignatureInfo = {
+  certificateId: number;
+  certificateOwner: string;
+  confirmCode: string;
+  cryptoProviderUserIdentifer: string;
+  documentFileId: number;
+  signature: string;
+  signingDateTime: string;
+  userGuid: string;
+  signatureInfoFileTxt: string;
+  isUl: boolean;
+  snapshot: Snapshot;
+};
+export interface IGetFileSignatureResponse {
+  [0]: SignatureInfo;
+  [1]: SignatureInfo;
+}

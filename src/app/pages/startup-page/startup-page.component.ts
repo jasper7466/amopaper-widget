@@ -26,8 +26,8 @@ export class StartupPageComponent implements OnInit {
 
   ngOnInit(): void {
     if (window.location === window.parent.location) {
-      // this.router.navigate(['landing'])
-      // return;
+      this.router.navigate(['landing']);
+      return;
     }
 
     this.crmService

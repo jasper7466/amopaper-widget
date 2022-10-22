@@ -6,6 +6,10 @@ import {
   GetStatusResponse,
   StepName,
   PostStepNameRequest,
+  GetFilesIdentifiersRequest,
+  IGetFilesIdentifiersResponse,
+  GetFileSignatureRequest,
+  IGetFileSignatureResponse,
 } from './nopaper-api.types';
 import { Observable, map, tap } from 'rxjs';
 import { Injectable } from '@angular/core';
@@ -96,5 +100,19 @@ export class NopaperApiService {
       documentId: packetId,
       stepSystemName: stepName,
     });
+  }
+
+  getFilesIdentifiers(packetId: number) {
+    return this.post$<GetFilesIdentifiersRequest, IGetFilesIdentifiersResponse>(
+      '/document/file-description-v2',
+      { documentId: packetId }
+    );
+  }
+
+  getFileSignatures(fileId: number) {
+    return this.post$<GetFileSignatureRequest, IGetFileSignatureResponse>(
+      '/file/signatures',
+      { documentFileId: fileId }
+    );
   }
 }

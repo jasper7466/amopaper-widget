@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { EMPTY, map, of, switchMap, tap } from 'rxjs';
+import { EMPTY, map, Observable, of, switchMap, tap } from 'rxjs';
 import { addresseeSelector } from '../store/addressee/selectors';
 import { filesSelector } from '../store/files/selectors';
 import {
@@ -9,8 +9,15 @@ import {
   setStepNameAction,
 } from '../store/nopaper/actions';
 import { packetIdSelector } from '../store/nopaper/selectors';
+import {
+  setFilesIdentifiersAction,
+  setFileSignatureAction,
+} from '../store/signatures/actions';
 import { NopaperApiService } from './api/nopaper/nopaper-api.service';
-import { File } from './api/nopaper/nopaper-api.types';
+import {
+  File,
+  IGetFilesIdentifiersResponse,
+} from './api/nopaper/nopaper-api.types';
 import { CrmService } from './crm.service';
 
 @Injectable({
@@ -95,6 +102,26 @@ export class NopaperService {
     return this.nopaperApiService.getStepName$(this.packetId).pipe(
       tap((response) => this.store.dispatch(setStepNameAction(response))),
       tap(console.log)
+    );
+  }
+
+  public getFilesIdentifiers(): Observable<IGetFilesIdentifiersResponse | null> {
+    if (!this.packetId) {
+      return of(null);
+    }
+
+    return this.nopaperApiService.getFilesIdentifiers(this.packetId).pipe(
+      tap((response) =>
+        this.store.dispatch(setFilesIdentifiersAction(response))
+      ),
+      tap(console.log)
+    );
+  }
+
+  public getFileSignature(fileId: number) {
+    return this.nopaperApiService.getFileSignatures(fileId).pipe(
+      tap(console.log),
+      tap((response) => this.store.dispatch(setFileSignatureAction(response)))
     );
   }
 }

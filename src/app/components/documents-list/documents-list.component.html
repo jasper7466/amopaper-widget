@@ -1,0 +1,57 @@
+<div *ngIf="(documentsTotalCount$ | async) || !(isEditable$ | async)">
+  <span *ngIf="isEditable$ | async" class="documents-list__status">
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle cx="12" cy="12" r="10" fill="#42C28C" />
+      <path d="M7 11L10.8 15L18 8" stroke="white" stroke-width="2" />
+    </svg>
+    <button class="documents-list__fold-button" (click)="onFold()">
+      <p>
+        Загружено {{ documentsLoadedCount$ | async }} из
+        {{ documentsTotalCount$ | async }}
+      </p>
+      <svg
+        class="documents-list__fold-arrow"
+        [ngClass]="{ 'documents-list__fold-arrow_folded': isFolded }"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path d="M8 10L12 14L16 10" stroke="#BABFCB" stroke-width="2" />
+      </svg>
+    </button>
+    <app-button
+      class="documents-list__remove-all-button"
+      colorOption="custom"
+      styleOption="skeleton"
+      sizeOption="custom"
+      (onClick)="clearFilesList()"
+      >Удалить все</app-button
+    >
+  </span>
+  <div
+    class="documents__fold-content"
+    [ngClass]="{ 'documents__fold-content_folded': isFolded }"
+  >
+    <ul class="documents-list__list">
+      <li
+        class="documents-list__list-item"
+        *ngFor="let document of documentsSource$ | async"
+      >
+        <app-documents-list-item
+          (onShowSignInfo)="showSignInfo()"
+          [fileName]="document.fileName"
+          [signStatus]="document.signStatus"
+          [fileId]="document.fileId"
+        ></app-documents-list-item>
+      </li>
+    </ul>
+  </div>
+</div>

@@ -1,1 +1,28 @@
-<app-header></app-header> <app-main-content></app-main-content>
+<app-header></app-header>
+<div class="main-content">
+  <app-nav-bar></app-nav-bar>
+  <div class="content">
+    <div class="content__wrapper">
+      <app-stage-header
+        *ngIf="(stepName$ | async) === null"
+        class="content__stage-header"
+        >Добавление документа</app-stage-header
+      >
+      <app-stage-header
+        *ngIf="(stepName$ | async) !== null"
+        class="content__stage-header"
+        >Документы на подпись</app-stage-header
+      >
+      <app-addressee *ngIf="isAddresseeShown"></app-addressee>
+      <app-documents
+        *ngIf="isDocumentsShown"
+        (onShowSignInfo)="showSignInfo()"
+      ></app-documents>
+    </div>
+    <app-banner-awaiting *ngIf="isAwaitingBannerShown"></app-banner-awaiting>
+    <app-banner-preparing *ngIf="isPreparingBannerShown"></app-banner-preparing>
+    <app-banner-signing *ngIf="isSigningBannerShown"></app-banner-signing>
+    <app-footer *ngIf="isFooterShown" class="content__footer"></app-footer>
+    <app-modal-sign-info></app-modal-sign-info>
+  </div>
+</div>
