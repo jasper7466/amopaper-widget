@@ -2,8 +2,7 @@
   display: flex;
   gap: 5px;
   flex-wrap: wrap;
-}
-
-.footer__cancel-button {
-  margin-left: auto;
+  padding-top: 40px;
+  margin-top: auto;
+  border-top: 2px solid var(--line-color-gray);
 }

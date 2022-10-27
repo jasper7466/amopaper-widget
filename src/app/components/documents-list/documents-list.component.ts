@@ -21,7 +21,7 @@ import { StatusLabelStatus } from '../common/status-label/status-label.component
 
 type Item = {
   fileName: string;
-  signStatus: StatusLabelStatus;
+  signStatus?: StatusLabelStatus;
   fileId?: number;
 };
 
@@ -42,7 +42,6 @@ export class DocumentsListComponent implements OnInit, OnDestroy {
       map((files) =>
         files.map((item) => ({
           fileName: item.file.name,
-          signStatus: '',
         }))
       )
     );

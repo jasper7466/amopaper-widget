@@ -1,14 +1,22 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { EMPTY, map, Observable, of, switchMap, tap } from 'rxjs';
+import {
+  filter,
+  map,
+  Observable,
+  retry,
+  share,
+  Subject,
+  switchMap,
+  takeUntil,
+  tap,
+  timer,
+} from 'rxjs';
+import { StatusLabelStatus } from '../components/common/status-label/status-label.component';
 import { addresseeSelector } from '../store/addressee/selectors';
 import { filesSelector } from '../store/files/selectors';
-import {
-  resetStepNameAction,
-  setPacketIdAction,
-  setStepNameAction,
-} from '../store/nopaper/actions';
-import { packetIdSelector } from '../store/nopaper/selectors';
+import { setStepNameAction } from '../store/nopaper/actions';
+import { setPacketStepAction } from '../store/packets-list/actions';
 import {
   setFilesIdentifiersAction,
   setFileSignatureAction,
@@ -17,6 +25,7 @@ import { NopaperApiService } from './api/nopaper/nopaper-api.service';
 import {
   File,
   IGetFilesIdentifiersResponse,
+  StepName,
 } from './api/nopaper/nopaper-api.types';
 import { CrmService } from './crm.service';
 
@@ -24,15 +33,14 @@ import { CrmService } from './crm.service';
   providedIn: 'root',
 })
 export class NopaperService {
-  private packetId: number | null;
+  private stepPollingBreakerById = new Subject<number>();
+  private stepPollingBreakerAll = new Subject<void>();
 
   constructor(
     private store: Store,
     private nopaperApiService: NopaperApiService,
     private crmService: CrmService
-  ) {
-    this.store.select(packetIdSelector).subscribe((id) => (this.packetId = id));
-  }
+  ) {}
 
   createDraft() {
     let clientFlPhoneNumber: string | null = null;
@@ -69,59 +77,73 @@ export class NopaperService {
             ...contact,
           };
         }),
-        switchMap((body) => this.nopaperApiService.postDraft$(body)),
-        tap((response) =>
-          this.store.dispatch(
-            setPacketIdAction({ packetId: parseInt(response.documentId) })
-          )
-        ),
-        switchMap((response) =>
-          this.crmService.setPacketId$(parseInt(response.documentId))
-        ),
-        switchMap(() => this.getStepName$())
+        switchMap((body) => this.nopaperApiService.postDraft$(body))
+        // tap((response) =>
+        //   this.store.dispatch(
+        //     setPacketsIdsAction({ packetId: parseInt(response.documentId) })
+        //   )
+        // ),
+        // switchMap((response) =>
+        //   this.crmService.setPacketIds$(parseInt(response.documentId))
+        // ),
+        // switchMap(() => this.getStepName$())
       )
       .subscribe();
   }
 
-  removeDraft() {
-    if (!this.packetId) {
-      return;
-    }
-    this.nopaperApiService
-      .setStepName$(this.packetId, 'nopaperDelete')
-      .subscribe();
-    this.crmService.resetPacketId$().subscribe();
-    this.store.dispatch(resetStepNameAction());
+  public removeDraft(packetId: number) {
+    return this.nopaperApiService.setStepName(packetId, 'nopaperDelete');
   }
 
-  getStepName$() {
-    if (!this.packetId) {
-      return of(null);
-    }
-
-    return this.nopaperApiService.getStepName$(this.packetId).pipe(
-      tap((response) => this.store.dispatch(setStepNameAction(response))),
-      tap(console.log)
-    );
+  public getStepName$(packetId: number) {
+    return this.nopaperApiService
+      .getStepName(packetId)
+      .pipe(
+        tap((response) =>
+          this.store.dispatch(setPacketStepAction({ ...response, packetId }))
+        )
+      );
   }
 
-  public getFilesIdentifiers(): Observable<IGetFilesIdentifiersResponse | null> {
-    if (!this.packetId) {
-      return of(null);
-    }
-
-    return this.nopaperApiService.getFilesIdentifiers(this.packetId).pipe(
-      tap((response) =>
-        this.store.dispatch(setFilesIdentifiersAction(response))
-      ),
-      tap(console.log)
-    );
+  public getFilesIdentifiers(
+    packetId: number
+  ): Observable<IGetFilesIdentifiersResponse | null> {
+    return this.nopaperApiService
+      .getFilesIdentifiers(packetId)
+      .pipe(
+        tap((response) =>
+          this.store.dispatch(setFilesIdentifiersAction(response))
+        )
+      );
   }
 
   public getFileSignature(fileId: number) {
-    return this.nopaperApiService.getFileSignatures(fileId).pipe(
-      tap(console.log),
-      tap((response) => this.store.dispatch(setFileSignatureAction(response)))
-    );
+    return this.nopaperApiService
+      .getFileSignatures(fileId)
+      .pipe(
+        tap((response) => this.store.dispatch(setFileSignatureAction(response)))
+      );
+  }
+
+  public startPacketStepPolling(packetId: number): void {
+    this.stopPacketStepPollingById(packetId);
+    timer(1, 3000)
+      .pipe(
+        switchMap(() => this.getStepName$(packetId)),
+        retry(),
+        takeUntil(
+          this.stepPollingBreakerById.pipe(filter((id) => id === packetId))
+        ),
+        takeUntil(this.stepPollingBreakerAll)
+      )
+      .subscribe();
+  }
+
+  private stopPacketStepPollingById(id: number): void {
+    this.stepPollingBreakerById.next(id);
+  }
+
+  public stopPacketsStepPollingAll(): void {
+    this.stepPollingBreakerAll.next();
   }
 }

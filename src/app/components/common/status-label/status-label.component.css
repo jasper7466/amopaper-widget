@@ -11,6 +11,11 @@
   line-height: 18px;
 }
 
+.label_unknown {
+  border: 1px solid var(--txt-color-primary);
+  background-color: var(--bg-color-main);
+}
+
 .label_draft {
   background-color: var(--label-color-draft);
 }

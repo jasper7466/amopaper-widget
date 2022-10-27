@@ -3,19 +3,19 @@ import { createReducer, on } from '@ngrx/store';
 import {
   resetPacketIdAction,
   resetStepNameAction,
-  setPacketIdAction,
+  // setPacketsIdsAction,
   setStepNameAction,
 } from './actions';
 
 export const nopaperReducer = createReducer(
   initialState,
-  on(setPacketIdAction, (state, { packetId }) => ({
-    ...state,
-    packetId,
-  })),
+  // on(setPacketsIdsAction, (state, { packetsIds }) => ({
+  //   ...state,
+  //   packetsIds,
+  // })),
   on(resetPacketIdAction, (state) => ({
     ...state,
-    packetId: initialState.packetId,
+    packetId: initialState.packetsIds,
   })),
   on(setStepNameAction, (state, { stepName }) => ({ ...state, stepName })),
 

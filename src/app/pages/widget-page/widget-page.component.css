@@ -28,6 +28,7 @@
   background-color: var(--this-bg-color);
 }
 
+/* TODO: удалить */
 .content__wrapper {
   box-sizing: border-box;
   display: flex;

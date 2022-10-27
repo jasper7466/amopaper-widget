@@ -1,0 +1,23 @@
+:host {
+  border: 1px solid lightseagreen;
+  border-radius: 4px;
+  padding: 3px;
+}
+
+:host:hover {
+  cursor: pointer;
+  background-color: lightseagreen;
+}
+
+:host:active {
+  background-color: aquamarine;
+}
+
+.item {
+  display: flex;
+  flex-direction: row;
+}
+
+.item__status-label {
+  margin-left: auto;
+}

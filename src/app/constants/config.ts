@@ -1,1 +1,1 @@
-export const documentPacketIdCrmFieldName = 'ID пакета документов';
+export const documentPacketsIdCrmFieldName = 'nopaperIdList';

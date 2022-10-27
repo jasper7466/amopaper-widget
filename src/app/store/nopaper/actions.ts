@@ -1,10 +1,10 @@
 import { createAction, props } from '@ngrx/store';
 import { StepName } from 'src/app/services/api/nopaper/nopaper-api.types';
 
-export const setPacketIdAction = createAction(
-  '[NOPAPER] set packed id',
-  props<{ packetId: number }>()
-);
+// export const setPacketsIdsAction = createAction(
+//   '[NOPAPER] set packed id',
+//   props<{ packetsIds: number[] }>()
+// );
 
 export const setStepNameAction = createAction(
   '[NOPAPER] set status',

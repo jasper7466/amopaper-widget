@@ -1,4 +1,4 @@
-import { Nullable } from 'src/types/common';
+import { Nullable } from 'src/app/types/common';
 
 export const TOKEN_KEY = 'token';
 

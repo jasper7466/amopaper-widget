@@ -9,7 +9,7 @@ import { StatusLabelStatus } from '../common/status-label/status-label.component
 })
 export class DocumentsListItemComponent implements OnInit {
   @Input() fileId?: number = 0;
-  @Input() signStatus: StatusLabelStatus = '';
+  @Input() signStatus: StatusLabelStatus | null = null;
   @Input() fileName: string = 'unnamed';
   @Output() onShowSignInfo = new EventEmitter<void>();
 

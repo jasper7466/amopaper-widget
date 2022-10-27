@@ -48,7 +48,7 @@
         <app-documents-list-item
           (onShowSignInfo)="showSignInfo()"
           [fileName]="document.fileName"
-          [signStatus]="document.signStatus"
+          [signStatus]="document.signStatus || null"
           [fileId]="document.fileId"
         ></app-documents-list-item>
       </li>

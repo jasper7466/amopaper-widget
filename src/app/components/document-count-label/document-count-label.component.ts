@@ -13,14 +13,14 @@ const captionVariants: [string, string, string] = [
   styleUrls: ['./document-count-label.component.css'],
 })
 export class DocumentCountLabelComponent implements OnInit {
-  @Input() count: string = '0';
+  @Input() count: number | null = null;
   public caption: string = 'untitled';
-  public parsed: number = 0;
 
   constructor() {}
 
   ngOnInit(): void {
-    this.parsed = parseInt(this.count);
-    this.caption = declension(this.parsed, ...captionVariants);
+    if (this.count !== null) {
+      this.caption = declension(this.count, ...captionVariants);
+    }
   }
 }

@@ -12,6 +12,8 @@ import { INopaperState, NOPAPER_KEY } from './nopaper';
 import { nopaperReducer } from './nopaper/reducers';
 import { ISignaturesState, SIGNATURES_KEY } from './signatures';
 import { signaturesReducer } from './signatures/reducers';
+import { IPacketsState, PACKETS_KEY } from './packets-list';
+import { packetsReducer } from './packets-list/reducers';
 
 export interface State {
   [CONTEXT_KEY]: ICrmContextState;
@@ -20,6 +22,7 @@ export interface State {
   [FILES_KEY]: IFilesState;
   [NOPAPER_KEY]: INopaperState;
   [SIGNATURES_KEY]: ISignaturesState;
+  [PACKETS_KEY]: IPacketsState;
 }
 
 export const reducers: ActionReducerMap<State> = {
@@ -29,6 +32,7 @@ export const reducers: ActionReducerMap<State> = {
   [FILES_KEY]: filesReducer,
   [NOPAPER_KEY]: nopaperReducer,
   [SIGNATURES_KEY]: signaturesReducer,
+  [PACKETS_KEY]: packetsReducer,
 };
 
 export const metaReducers: MetaReducer<State>[] = !environment.production

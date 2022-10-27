@@ -1,13 +1,15 @@
 <h1 class="stage-header__title"><ng-content></ng-content></h1>
-<!-- <app-document-count-label
+<app-document-count-label
+  *ngIf="documentsCount !== null"
   class="stage-header__count-label"
-  count="1"
-></app-document-count-label> -->
+  [count]="documentsCount"
+></app-document-count-label>
 <app-status-label
+  *ngIf="statusLabelStatus !== null"
   class="stage-header__status-label"
   [status]="statusLabelStatus"
 ></app-status-label>
 <app-status-banner
-  *ngIf="statusBannerStatus !== ''"
+  *ngIf="statusBannerStatus !== null"
   [status]="statusBannerStatus"
 ></app-status-banner>

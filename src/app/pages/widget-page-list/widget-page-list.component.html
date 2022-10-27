@@ -1,0 +1,16 @@
+<app-main-content-wrapper>
+  <h1>Сделка #{{ leadId$ | async }}</h1>
+
+  <ul class="packets-list">
+    <app-packets-list-item
+      *ngFor="let item of packets$ | async | keyvalue"
+      [packetId]="+item.key"
+      [status]="item.value.stepName | toLabelStatus"
+    >
+      Пакет #{{ item.key }}
+    </app-packets-list-item>
+  </ul>
+</app-main-content-wrapper>
+<app-footer class="footer"
+  ><app-button iconOption="plus">Создать</app-button></app-footer
+>

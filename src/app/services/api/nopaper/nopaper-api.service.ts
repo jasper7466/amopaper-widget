@@ -91,11 +91,11 @@ export class NopaperApiService {
     );
   }
 
-  getStepName$(packetId: number) {
+  getStepName(packetId: number) {
     return this.get$<GetStatusResponse>(`/document/status/${packetId}`);
   }
 
-  setStepName$(packetId: number, stepName: StepName) {
+  public setStepName(packetId: number, stepName: StepName) {
     return this.post$<PostStepNameRequest, any>('/document/changestep', {
       documentId: packetId,
       stepSystemName: stepName,

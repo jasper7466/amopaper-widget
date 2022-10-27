@@ -77,7 +77,7 @@ export class WidgetPageComponent implements OnInit, OnDestroy {
             break;
           case 'nopaperEnd':
             this.isDocumentsShown = true;
-            this.nopaperService.getFilesIdentifiers().subscribe();
+            // this.nopaperService.getFilesIdentifiers().subscribe();
             break;
           default:
             this.isAddresseeShown = true;

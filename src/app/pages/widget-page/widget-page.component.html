@@ -2,7 +2,8 @@
 <div class="main-content">
   <app-nav-bar></app-nav-bar>
   <div class="content">
-    <div class="content__wrapper">
+    <router-outlet class="router"></router-outlet>
+    <!-- <div class="content__wrapper">
       <app-stage-header
         *ngIf="(stepName$ | async) === null"
         class="content__stage-header"
@@ -18,11 +19,11 @@
         *ngIf="isDocumentsShown"
         (onShowSignInfo)="showSignInfo()"
       ></app-documents>
-    </div>
+    </div> -->
     <app-banner-awaiting *ngIf="isAwaitingBannerShown"></app-banner-awaiting>
     <app-banner-preparing *ngIf="isPreparingBannerShown"></app-banner-preparing>
     <app-banner-signing *ngIf="isSigningBannerShown"></app-banner-signing>
-    <app-footer *ngIf="isFooterShown" class="content__footer"></app-footer>
+    <!-- <app-footer *ngIf="isFooterShown" class="content__footer"></app-footer> -->
     <app-modal-sign-info></app-modal-sign-info>
   </div>
 </div>

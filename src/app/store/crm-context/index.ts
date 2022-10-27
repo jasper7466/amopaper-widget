@@ -1,5 +1,5 @@
-import { Nullable } from 'src/types/common';
-import { PostMessageResponses } from 'src/types/crm-messages.types';
+import { Nullable } from 'src/app/types/common';
+import { PostMessageResponses } from 'src/app/types/crm-messages.types';
 
 export type CrmContext = PostMessageResponses['getCrmContextResponse'];
 

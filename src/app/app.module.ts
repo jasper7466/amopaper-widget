@@ -49,13 +49,20 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DocumentsDropAreaComponent } from './components/documents-drop-area/documents-drop-area.component';
 import { DragAndDropDirective } from './directives/drag-and-drop.directive';
 import { FileBrowserDirective } from './directives/file-browser.directive';
-import { SignedPageComponent } from './pages/signed-page/signed-page.component';
 import { DocumentsListItemComponent } from './components/documents-list-item/documents-list-item.component';
+import { WidgetPageListComponent } from './pages/widget-page-list/widget-page-list.component';
+import { MainContentWrapperComponent } from './components/main-content-wrapper/main-content-wrapper.component';
+import { WidgetPageNewComponent } from './pages/widget-page-new/widget-page-new.component';
+import { WidgetPagePacketComponent } from './pages/widget-page-packet/widget-page-packet.component';
+import { PacketPageDraftComponent } from './pages/packet-page-draft/packet-page-draft.component';
+import { PacketsListItemComponent } from './components/packets-list-item/packets-list-item.component';
+import { StepToLabelStatusPipe } from './pipes/step-label-status.pipe';
 
 registerLocaleData(localeRu, 'ru');
 @NgModule({
   declarations: [
     AppComponent,
+    StepToLabelStatusPipe,
     StatusBarComponent,
     NavBarComponent,
     NopaperLogoComponent,
@@ -90,8 +97,13 @@ registerLocaleData(localeRu, 'ru');
     DocumentsDropAreaComponent,
     DragAndDropDirective,
     FileBrowserDirective,
-    SignedPageComponent,
     DocumentsListItemComponent,
+    WidgetPageListComponent,
+    MainContentWrapperComponent,
+    WidgetPageNewComponent,
+    WidgetPagePacketComponent,
+    PacketPageDraftComponent,
+    PacketsListItemComponent,
   ],
   imports: [
     BrowserModule,

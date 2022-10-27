@@ -4,10 +4,10 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 export const featureSelector =
   createFeatureSelector<INopaperState>(NOPAPER_KEY);
 
-export const packetIdSelector = createSelector(
-  featureSelector,
-  (state) => state.packetId
-);
+// export const packetsIdsSelector = createSelector(
+//   featureSelector,
+//   (state) => state.packetsIds
+// );
 
 export const stepNameSelector = createSelector(
   featureSelector,

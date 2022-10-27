@@ -8,7 +8,7 @@ export type StatusBannerStatus = 'pending' | 'signed' | '';
   styleUrls: ['./status-banner.component.css'],
 })
 export class StatusBannerComponent implements OnInit {
-  @Input() status: StatusBannerStatus = '';
+  @Input() status: StatusBannerStatus | null = null;
   constructor() {}
 
   ngOnInit(): void {}
