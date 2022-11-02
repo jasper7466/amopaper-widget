@@ -4,14 +4,9 @@ import { Injectable } from '@angular/core';
 import { PostMessageRequests } from '../types/crm-messages.types';
 import { Store } from '@ngrx/store';
 import {
-  distinctUntilChanged,
-  filter,
   map,
   Observable,
-  retry,
-  share,
   Subject,
-  Subscription,
   switchMap,
   takeUntil,
   tap,
@@ -22,6 +17,7 @@ import { documentPacketsIdCrmFieldName } from '../constants/config';
 import { updateCrmContextAction } from '../store/crm-context/actions';
 import { resetPacketIdAction } from '../store/nopaper/actions';
 import { setPacketsIdsAction } from '../store/packets-list/actions';
+import { PatchLeadResponse } from './api/amo/amo-api.types';
 
 @Injectable({
   providedIn: 'root',
@@ -31,7 +27,7 @@ export class CrmService {
   private packetIdFieldId: number;
   private leadId: number;
 
-  private packetIdsPollingBreaker = new Subject<void>();
+  private packetsIdsPollingBreaker = new Subject<void>();
 
   constructor(
     private postMessageService: PostMessageService<
@@ -72,7 +68,7 @@ export class CrmService {
       );
   }
 
-  getPacketFieldId$() {
+  public getPacketsFieldId() {
     return this.amoApiService.getLeadsCustomFieldsAll$.pipe(
       map((fields) =>
         fields.filter((field) => field.name === documentPacketsIdCrmFieldName)
@@ -90,23 +86,23 @@ export class CrmService {
     );
   }
 
-  public startPacketsPolling(): void {
-    this.stopPacketsPolling();
+  public startPacketsIdsPolling(): void {
+    this.stopPacketsIdsPolling();
 
     console.log('start packets id polling from crm');
     timer(1, 3000)
       .pipe(
-        switchMap(() => this.getPacketsIdList()),
-        takeUntil(this.packetIdsPollingBreaker)
+        switchMap(() => this.getLeadPacketsIds()),
+        takeUntil(this.packetsIdsPollingBreaker)
       )
       .subscribe();
   }
 
-  public stopPacketsPolling(): void {
-    this.packetIdsPollingBreaker.next();
+  public stopPacketsIdsPolling(): void {
+    this.packetsIdsPollingBreaker.next();
   }
 
-  setPacketIds$(idList: number[] | null) {
+  private setLeadPacketsIds(idList: number[] | null) {
     const value = idList ? JSON.stringify(idList) : idList;
 
     return this.amoApiService.patchLeadById(this.leadId, {
@@ -121,10 +117,18 @@ export class CrmService {
 
   resetPacketId$() {
     this.store.dispatch(resetPacketIdAction());
-    return this.setPacketIds$(null);
+    return this.setLeadPacketsIds(null);
   }
 
-  private getPacketsIdList(): Observable<number[]> {
+  public attachPacketToLead(packetId: number): Observable<PatchLeadResponse> {
+    return this.getLeadPacketsIds().pipe(
+      switchMap((packetsIds) =>
+        this.setLeadPacketsIds(packetsIds.concat(packetId))
+      )
+    );
+  }
+
+  private getLeadPacketsIds(): Observable<number[]> {
     return this.amoApiService.getLeadById$(this.leadId).pipe(
       map((lead) => lead.custom_fields_values),
       map((fields) =>
@@ -132,10 +136,9 @@ export class CrmService {
       ),
       map((fields) => fields?.pop()),
       map((field) => field?.values.pop()?.value),
-      map((stringified) => JSON.parse(stringified)),
+      map((stringified) => JSON.parse(stringified || '[]')),
       tap((packetsIds) => {
-        const parsed = packetsIds || [];
-        this.store.dispatch(setPacketsIdsAction({ packetsIds: parsed }));
+        this.store.dispatch(setPacketsIdsAction({ packetsIds: packetsIds }));
       })
     );
   }

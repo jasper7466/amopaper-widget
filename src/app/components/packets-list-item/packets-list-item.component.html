@@ -1,7 +1,8 @@
 <div class="item" (click)="navigatePacketPage()">
-  <ng-content></ng-content>
+  Пакет
   <app-status-label
-    [status]="status"
+    *ngIf="packet$ | async"
+    [status]="(packet$ | async)?.stepName || null | toLabelStatus"
     class="item__status-label"
   ></app-status-label>
 </div>

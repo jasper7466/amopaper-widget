@@ -1,0 +1,20 @@
+<app-main-content-wrapper>
+  <h1>Сделка #{{ leadId$ | async }}</h1>
+
+  <app-packets-list
+    *ngIf="isPacketsIdsTouched$ | async"
+    [packetsIds]="(packetsIds$ | async) || []"
+  ></app-packets-list>
+
+  <app-preloader
+    *ngIf="!(isPacketsIdsTouched$ | async)"
+    class="preloader"
+    animationOption="rotation"
+  ></app-preloader>
+</app-main-content-wrapper>
+
+<app-footer
+  ><app-button iconOption="plus" (onClick)="clickCreateNewButtonHandler()"
+    >Создать</app-button
+  ></app-footer
+>

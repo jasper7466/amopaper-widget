@@ -1,16 +1,17 @@
 export const WIDGET_CONTEXT_KEY = 'widgetContext';
 
+export type AddresseeType = 'phone' | 'vatId' | null;
 export interface IAddresseeState {
-  isAdded: boolean;
-  isExists: boolean;
+  isExists: boolean | null;
+  type: AddresseeType;
   name: string;
   vatId: string | null;
   phone: string | null;
 }
 
 export const initialState: IAddresseeState = {
-  isAdded: false,
-  isExists: false,
+  isExists: null,
+  type: null,
   name: 'Получатель',
   vatId: null,
   phone: null,

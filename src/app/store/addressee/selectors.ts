@@ -6,7 +6,7 @@ export const featureSelector =
 
 export const isAddresseeAddedSelector = createSelector(
   featureSelector,
-  (state) => state.isAdded
+  (state) => state.type !== null
 );
 
 export const addresseePhoneSelector = createSelector(

@@ -1,4 +1,10 @@
-import { initialPacketState, initialState, Packet, Packets } from './index';
+import {
+  initialPacketState,
+  initialState,
+  IPacketsState,
+  IPacket,
+  Packets,
+} from './index';
 import { createReducer, on } from '@ngrx/store';
 import { setPacketsIdsAction, setPacketStepAction } from './actions';
 
@@ -14,10 +20,11 @@ export const packetsReducer = createReducer(
     ) {
       return {
         ...state,
+        isPacketsIdsTouched: true,
       };
     }
 
-    const justAdded: { [key: number]: Packet } = {};
+    const justAdded: { [key: number]: IPacket } = {};
 
     for (const packetId of packetsIds) {
       if (packetId in state.packets) {
@@ -45,6 +52,7 @@ export const packetsReducer = createReducer(
       packets: {
         ...update,
       },
+      isPacketsIdsTouched: true,
     };
   }),
   on(setPacketStepAction, (state, { packetId, stepName }) => {

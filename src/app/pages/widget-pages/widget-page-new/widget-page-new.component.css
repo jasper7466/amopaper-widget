@@ -1,0 +1,24 @@
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  animation: fadeIn 0.2s ease;
+}
+
+.preloader {
+  margin: auto;
+}
+
+.cancel-button {
+  margin-left: auto;
+}

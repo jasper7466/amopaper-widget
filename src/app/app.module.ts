@@ -32,10 +32,10 @@ import { BannerAwaitingComponent } from './components/banner-awaiting/banner-awa
 import { BannerSigningComponent } from './components/banner-signing/banner-signing.component';
 import { ModalSignInfoComponent } from './components/modal-sign-info/modal-sign-info.component';
 import { AppRoutingModule } from './app-routing.module';
-import { StartupPageComponent } from './pages/startup-page/startup-page.component';
-import { LandingPageComponent } from './pages/landing-page/landing-page.component';
-import { WidgetPageComponent } from './pages/widget-page/widget-page.component';
-import { NotificationPageComponent } from './pages/notification-page/notification-page.component';
+import { StartupPageComponent } from './pages/main-pages/startup-page/startup-page.component';
+import { LandingPageComponent } from './pages/main-pages/landing-page/landing-page.component';
+import { WidgetPageComponent } from './pages/main-pages/widget-page/widget-page.component';
+import { NotificationPageComponent } from './pages/main-pages/notification-page/notification-page.component';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
@@ -50,13 +50,14 @@ import { DocumentsDropAreaComponent } from './components/documents-drop-area/doc
 import { DragAndDropDirective } from './directives/drag-and-drop.directive';
 import { FileBrowserDirective } from './directives/file-browser.directive';
 import { DocumentsListItemComponent } from './components/documents-list-item/documents-list-item.component';
-import { WidgetPageListComponent } from './pages/widget-page-list/widget-page-list.component';
+import { WidgetPageListComponent } from './pages/widget-pages/widget-page-list/widget-page-list.component';
 import { MainContentWrapperComponent } from './components/main-content-wrapper/main-content-wrapper.component';
-import { WidgetPageNewComponent } from './pages/widget-page-new/widget-page-new.component';
-import { WidgetPagePacketComponent } from './pages/widget-page-packet/widget-page-packet.component';
-import { PacketPageDraftComponent } from './pages/packet-page-draft/packet-page-draft.component';
+import { WidgetPageNewComponent } from './pages/widget-pages/widget-page-new/widget-page-new.component';
+import { WidgetPagePacketComponent } from './pages/widget-pages/widget-page-packet/widget-page-packet.component';
+import { PacketPageDraftComponent } from './pages/packet-pages/packet-page-draft/packet-page-draft.component';
 import { PacketsListItemComponent } from './components/packets-list-item/packets-list-item.component';
 import { StepToLabelStatusPipe } from './pipes/step-label-status.pipe';
+import { PacketsListComponent } from './components/packets-list/packets-list.component';
 
 registerLocaleData(localeRu, 'ru');
 @NgModule({
@@ -104,6 +105,7 @@ registerLocaleData(localeRu, 'ru');
     WidgetPagePacketComponent,
     PacketPageDraftComponent,
     PacketsListItemComponent,
+    PacketsListComponent,
   ],
   imports: [
     BrowserModule,

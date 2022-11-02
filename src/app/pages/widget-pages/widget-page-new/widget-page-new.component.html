@@ -1,0 +1,33 @@
+<app-main-content-wrapper>
+  <app-stage-header class="content__stage-header" statusLabelStatus="draft"
+    >Добавление документа
+  </app-stage-header>
+
+  <ng-container *ngIf="!isAwaiting">
+    <app-addressee></app-addressee>
+    <app-documents></app-documents>
+  </ng-container>
+
+  <app-preloader
+    *ngIf="isAwaiting"
+    class="preloader"
+    animationOption="rotation"
+  ></app-preloader>
+</app-main-content-wrapper>
+
+<app-footer *ngIf="!isAwaiting">
+  <app-button
+    [isEnabled]="this.isCreateButtonEnabled"
+    (onClick)="clickCreateDraftButtonHandler()"
+    styleOption="blank"
+    colorOption="regular"
+    >Сохранить черновик</app-button
+  >
+  <app-button
+    class="cancel-button"
+    (onClick)="clickCancelButtonHandler()"
+    styleOption="skeleton"
+    colorOption="regular"
+    >Отмена</app-button
+  >
+</app-footer>

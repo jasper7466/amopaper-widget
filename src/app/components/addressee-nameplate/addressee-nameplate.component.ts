@@ -1,4 +1,4 @@
-import { removeAddresseeAction } from 'src/app/store/addressee/actions';
+import { resetAddresseeAction } from 'src/app/store/addressee/actions';
 import { addresseeSelector } from 'src/app/store/addressee/selectors';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
@@ -16,6 +16,6 @@ export class AddresseeNameplateComponent implements OnInit {
   ngOnInit(): void {}
 
   addresseeRemove() {
-    this.store.dispatch(removeAddresseeAction());
+    this.store.dispatch(resetAddresseeAction());
   }
 }

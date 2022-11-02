@@ -14,6 +14,8 @@ import { ISignaturesState, SIGNATURES_KEY } from './signatures';
 import { signaturesReducer } from './signatures/reducers';
 import { IPacketsState, PACKETS_KEY } from './packets-list';
 import { packetsReducer } from './packets-list/reducers';
+import { IMiscState, MISC_KEY } from './misc';
+import { miscReducer } from './misc/reducers';
 
 export interface State {
   [CONTEXT_KEY]: ICrmContextState;
@@ -23,6 +25,7 @@ export interface State {
   [NOPAPER_KEY]: INopaperState;
   [SIGNATURES_KEY]: ISignaturesState;
   [PACKETS_KEY]: IPacketsState;
+  [MISC_KEY]: IMiscState;
 }
 
 export const reducers: ActionReducerMap<State> = {
@@ -33,6 +36,7 @@ export const reducers: ActionReducerMap<State> = {
   [NOPAPER_KEY]: nopaperReducer,
   [SIGNATURES_KEY]: signaturesReducer,
   [PACKETS_KEY]: packetsReducer,
+  [MISC_KEY]: miscReducer,
 };
 
 export const metaReducers: MetaReducer<State>[] = !environment.production

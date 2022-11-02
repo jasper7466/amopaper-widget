@@ -1,22 +1,47 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { NopaperService } from 'src/app/services/nopaper.service';
-import { StatusLabelStatus } from '../common/status-label/status-label.component';
+import { RoutingService } from 'src/app/services/routing.service';
+import { IPacket } from 'src/app/store/packets-list';
+import { packetSelector } from 'src/app/store/packets-list/selectors';
 
 @Component({
   selector: 'app-packets-list-item',
   templateUrl: './packets-list-item.component.html',
   styleUrls: ['./packets-list-item.component.css'],
 })
-export class PacketsListItemComponent implements OnInit {
-  @Input() packetId: number;
-  @Input() status: StatusLabelStatus = 'unknown';
+export class PacketsListItemComponent implements OnInit, OnDestroy, OnChanges {
+  @Input() packetId: number = 0;
 
-  constructor(private router: Router, private nopaperService: NopaperService) {}
+  public packet$: Observable<IPacket>;
+
+  constructor(
+    private routingService: RoutingService,
+    private nopaperService: NopaperService,
+    private store: Store
+  ) {}
 
   ngOnInit(): void {}
 
+  ngOnChanges(changes: SimpleChanges): void {
+    this.nopaperService.startPacketStepPolling(this.packetId);
+    this.packet$ = this.store.select(packetSelector(this.packetId));
+  }
+
+  ngOnDestroy(): void {
+    this.nopaperService.stopPacketStepPolling(this.packetId);
+  }
+
   public navigatePacketPage(): void {
-    this.router.navigate(['widget/packet', this.packetId]);
+    console.log('navigating to packet id', this.packetId);
+    this.routingService.goPacketPage(this.packetId);
   }
 }

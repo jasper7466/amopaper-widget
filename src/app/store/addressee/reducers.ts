@@ -3,7 +3,7 @@ import { createReducer, on } from '@ngrx/store';
 import {
   addAddresseeByPhoneAction,
   addAddresseeByVatIdAction,
-  removeAddresseeAction,
+  resetAddresseeAction,
   setAddresseeExistenceAction,
 } from './actions';
 
@@ -11,13 +11,13 @@ export const widgetContextReducer = createReducer(
   initialState,
   on(addAddresseeByPhoneAction, (state, { phone }) => ({
     ...state,
-    isAdded: true,
+    type: 'phone',
     phone,
     vatId: null,
   })),
   on(addAddresseeByVatIdAction, (state, { vatId }) => ({
     ...state,
-    isAdded: true,
+    type: 'vatId',
     vatId,
     phone: null,
   })),
@@ -25,7 +25,7 @@ export const widgetContextReducer = createReducer(
     ...state,
     isExists: true,
   })),
-  on(removeAddresseeAction, () => ({
+  on(resetAddresseeAction, () => ({
     ...initialState,
   }))
 );

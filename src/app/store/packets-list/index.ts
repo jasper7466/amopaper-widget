@@ -2,22 +2,24 @@ import { StepName } from 'src/app/services/api/nopaper/nopaper-api.types';
 
 export const PACKETS_KEY = 'packets';
 
-export type Packet = {
+export interface IPacket {
   stepName: StepName | null;
-};
+}
 
-export type Packets = { [key: number]: Packet };
+export type Packets = { [key: number]: IPacket };
 
 export interface IPacketsState {
   packetsIds: number[];
   packets: Packets;
+  isPacketsIdsTouched: boolean;
 }
 
-export const initialPacketState: Packet = {
+export const initialPacketState: IPacket = {
   stepName: null,
 };
 
 export const initialState: IPacketsState = {
   packetsIds: [],
   packets: {},
+  isPacketsIdsTouched: false,
 };

@@ -14,6 +14,6 @@ export const setAddresseeExistenceAction = createAction(
   '[WIDGET-CONTEXT] set addressee existence'
 );
 
-export const removeAddresseeAction = createAction(
+export const resetAddresseeAction = createAction(
   '[WIDGET-CONTEXT] remove addressee'
 );

@@ -8,15 +8,15 @@ export interface CheckByPhoneResponse {
   errorText?: string;
 }
 
-export interface File {
+export type PostDraftRequestFileField = {
   fileName: string;
   filebase64: string;
-}
-export interface PostDraftRequest {
+};
+export interface IPostDraftRequest {
   title?: string;
   clientFlPhoneNumber?: string;
   clientUlInn?: string;
-  files: File[];
+  files: PostDraftRequestFileField[];
 }
 
 export interface PostDraftResponse {
@@ -44,11 +44,11 @@ export type StepName =
   | 'nopaperSignRefused'
   | 'nopaperSignRefusedEnd'
   | 'nopaperSignRefusedRead';
-export interface GetStatusResponse {
+export interface IGetStepNameResponse {
   stepName: StepName;
 }
 
-export interface PostStepNameRequest {
+export interface IPostStepNameRequest {
   documentId: number;
   stepSystemName: string;
 }

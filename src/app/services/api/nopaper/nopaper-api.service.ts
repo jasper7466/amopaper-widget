@@ -1,11 +1,11 @@
 import {
   CheckByPhoneResponse,
   CheckByPhoneRequest,
-  PostDraftRequest,
+  IPostDraftRequest,
   PostDraftResponse,
-  GetStatusResponse,
+  IGetStepNameResponse,
   StepName,
-  PostStepNameRequest,
+  IPostStepNameRequest,
   GetFilesIdentifiersRequest,
   IGetFilesIdentifiersResponse,
   GetFileSignatureRequest,
@@ -61,7 +61,7 @@ export class NopaperApiService {
   }
 
   // TODO: только для отладки с локальным сервером авторизации
-  getAmoToken$(): Observable<string> {
+  public getAmoToken(): Observable<string> {
     return this.http
       .post<{ access_token: string }>('http://localhost:5200/access_token', {
         x_api_key: this.xApiKey,
@@ -75,8 +75,8 @@ export class NopaperApiService {
       );
   }
 
-  postDraft$(body: PostDraftRequest) {
-    return this.post$<PostDraftRequest, PostDraftResponse>(
+  postDraft$(body: IPostDraftRequest) {
+    return this.post$<IPostDraftRequest, PostDraftResponse>(
       '/document/create-for-client',
       body
     );
@@ -92,11 +92,11 @@ export class NopaperApiService {
   }
 
   getStepName(packetId: number) {
-    return this.get$<GetStatusResponse>(`/document/status/${packetId}`);
+    return this.get$<IGetStepNameResponse>(`/document/status/${packetId}`);
   }
 
   public setStepName(packetId: number, stepName: StepName) {
-    return this.post$<PostStepNameRequest, any>('/document/changestep', {
+    return this.post$<IPostStepNameRequest, any>('/document/changestep', {
       documentId: packetId,
       stepSystemName: stepName,
     });

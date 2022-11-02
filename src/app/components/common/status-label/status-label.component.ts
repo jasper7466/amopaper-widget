@@ -1,4 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 
 export type StatusLabelStatus =
   | 'unknown'
@@ -20,14 +26,14 @@ const statusCaptions: { [key in StatusLabelStatus]: string } = {
   templateUrl: './status-label.component.html',
   styleUrls: ['./status-label.component.css'],
 })
-export class StatusLabelComponent implements OnInit {
+export class StatusLabelComponent implements OnChanges {
   @Input() status: StatusLabelStatus = 'unknown';
 
   public caption: string = 'Undefined';
 
   constructor() {}
 
-  ngOnInit(): void {
+  ngOnChanges(changes: SimpleChanges): void {
     this.caption = statusCaptions[this.status];
   }
 }
