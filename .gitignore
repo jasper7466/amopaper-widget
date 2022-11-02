@@ -46,3 +46,7 @@ Thumbs.db
 
 # Dev-server proxy config
 proxy.config.json
+
+# Local npm-packages
+local_modules/*
+!local_modules/.gitkeep
