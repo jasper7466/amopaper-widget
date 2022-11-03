@@ -1,25 +1,29 @@
-export interface CheckByPhoneRequest {
+export interface IBadResponse {
+  errorCode: number;
+  errorText: string;
+}
+
+export interface ICheckByPhoneRequest {
   phonenumber: string;
 }
 
-export interface CheckByPhoneResponse {
-  userGuid?: string;
-  errorCode?: number;
-  errorText?: string;
+export interface ICheckByPhoneResponse {
+  userGuid: string;
 }
 
-export type PostDraftRequestFileField = {
+export type PostDraftRequestFileItem = {
   fileName: string;
   filebase64: string;
 };
+
 export interface IPostDraftRequest {
   title?: string;
   clientFlPhoneNumber?: string;
   clientUlInn?: string;
-  files: PostDraftRequestFileField[];
+  files: PostDraftRequestFileItem[];
 }
 
-export interface PostDraftResponse {
+export interface IPostDraftResponse {
   documentId: string;
 }
 
@@ -53,7 +57,7 @@ export interface IPostStepNameRequest {
   stepSystemName: string;
 }
 
-export interface GetFilesIdentifiersRequest {
+export interface IGetFilesIdsRequest {
   documentId: number;
 }
 
@@ -75,7 +79,7 @@ export interface IGetFilesIdentifiersResponse {
   procuratoryWithStampList: DocumentListItemShortened[];
 }
 
-export interface GetFileSignatureRequest {
+export interface IGetFileSignatureRequest {
   documentFileId: number;
 }
 
@@ -107,4 +111,18 @@ type SignatureInfo = {
 export interface IGetFileSignatureResponse {
   [0]: SignatureInfo;
   [1]: SignatureInfo;
+}
+
+type DocumentData = {
+  name: string;
+  data: { [key: string]: any };
+};
+export interface IGetPacketInfoResponse {
+  documentData: DocumentData[];
+  isOwner: boolean;
+  title: string;
+  stepId: number;
+  workflowId: number;
+  dateCreate: string;
+  availableStatuses: any[];
 }

@@ -10,3 +10,8 @@ export const setPacketStepAction = createAction(
   '[PACKETS_LIST] update packet step',
   props<{ packetId: number; stepName: StepName }>()
 );
+
+export const setPacketInfoAction = createAction(
+  '[PACKETS_LIST] set packet info',
+  props<{ packetId: number; title: string; creationDate: string }>()
+);

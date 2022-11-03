@@ -22,7 +22,7 @@ export class WidgetPagePacketComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.packetId = this.route.snapshot.params['id'];
-    this.nopaperService.startPacketStepPolling(this.packetId);
+    this.nopaperService.startPacketPolling(this.packetId);
 
     this.store
       .select(packetStepNameSelector(this.packetId))

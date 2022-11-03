@@ -6,7 +6,6 @@ import {
   map,
   Observable,
   of,
-  retry,
   Subject,
   switchMap,
   takeUntil,
@@ -26,16 +25,17 @@ import {
   IGetFilesIdentifiersResponse,
   IGetStepNameResponse,
   IPostDraftRequest,
-  PostDraftRequestFileField,
+  PostDraftRequestFileItem,
 } from './api/nopaper/nopaper-api.types';
 import { CrmService } from './crm.service';
 
+const POLLING_INTERVAL_MS = 3000;
 @Injectable({
   providedIn: 'root',
 })
 export class NopaperService {
-  private stepPollingBreakerById = new Subject<number>();
-  private stepPollingBreakerAll = new Subject<void>();
+  private packetPollingBreakerById = new Subject<number>();
+  private packetPollingBreakerAll = new Subject<void>();
 
   private addressee$ = this.store.select(addresseeSelector);
   private uploadedFiles$ = this.store.select(filesSelector);
@@ -60,26 +60,28 @@ export class NopaperService {
     return this.nopaperApiService.setStepName(packetId, 'nopaperDelete');
   }
 
-  public startPacketStepPolling(packetId: number): void {
-    this.stopPacketStepPolling(packetId);
-    timer(1, 3000)
+  public startPacketPolling(packetId: number): void {
+    this.stopPacketPolling(packetId);
+    timer(1, POLLING_INTERVAL_MS)
       .pipe(
-        switchMap(() => this.getStepName(packetId)),
-        retry(),
+        tap(() => {
+          this.getStepName(packetId).subscribe();
+          this.getPacketInfo(packetId).subscribe();
+        }),
         takeUntil(
-          this.stepPollingBreakerById.pipe(filter((id) => id === packetId))
+          this.packetPollingBreakerById.pipe(filter((id) => id === packetId))
         ),
-        takeUntil(this.stepPollingBreakerAll)
+        takeUntil(this.packetPollingBreakerAll)
       )
       .subscribe();
   }
 
-  public stopPacketStepPolling(id: number): void {
-    this.stepPollingBreakerById.next(id);
+  public stopPacketPolling(id: number): void {
+    this.packetPollingBreakerById.next(id);
   }
 
   public stopPacketsStepPollingAll(): void {
-    this.stepPollingBreakerAll.next();
+    this.packetPollingBreakerAll.next();
   }
 
   private getStepName(packetId: number): Observable<IGetStepNameResponse> {
@@ -112,9 +114,15 @@ export class NopaperService {
       );
   }
 
+  public getPacketInfo(packetId: number) {
+    return this.nopaperApiService
+      .getPacketInfo(packetId)
+      .pipe(tap((response) => this.store.dispatch));
+  }
+
   private composePostDraftRequestBody(): Observable<IPostDraftRequest> {
     let contact = {};
-    let files: PostDraftRequestFileField[] = [];
+    let files: PostDraftRequestFileItem[] = [];
     let title = '';
 
     this.addressee$
@@ -146,20 +154,6 @@ export class NopaperService {
       .subscribe((result) => (files = result));
 
     this.packetTitle$.pipe(first()).subscribe((value) => (title = value));
-
-    // switch (this.addresseeType) {
-    //   case 'phone':
-    //     contact = { clientFlPhoneNumber: this.clientFlPhoneNumber! };
-    //     break;
-    //   case 'vatId':
-    //     contact = { clientUlInn: this.clientUlInn! };
-    //     break;
-    // }
-
-    // let files = this.files.map((file) => ({
-    //   fileName: file.file.name,
-    //   filebase64: file.base64,
-    // }));
 
     return of({
       title: title,

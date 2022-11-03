@@ -1,5 +1,6 @@
 <div class="item" (click)="navigatePacketPage()">
-  Пакет
+  {{ (packet$ | async)?.title }}
+  Создан: {{ (packet$ | async)?.creationDate | date }}
   <app-status-label
     *ngIf="packet$ | async"
     [status]="(packet$ | async)?.stepName || null | toLabelStatus"

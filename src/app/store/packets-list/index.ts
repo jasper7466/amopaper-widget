@@ -3,6 +3,8 @@ import { StepName } from 'src/app/services/api/nopaper/nopaper-api.types';
 export const PACKETS_KEY = 'packets';
 
 export interface IPacket {
+  title: string;
+  creationDate: string | null;
   stepName: StepName | null;
 }
 
@@ -15,6 +17,8 @@ export interface IPacketsState {
 }
 
 export const initialPacketState: IPacket = {
+  title: 'Без названия',
+  creationDate: null,
   stepName: null,
 };
 

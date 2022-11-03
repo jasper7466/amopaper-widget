@@ -1,15 +1,16 @@
 import {
-  CheckByPhoneResponse,
-  CheckByPhoneRequest,
+  ICheckByPhoneResponse,
+  ICheckByPhoneRequest,
   IPostDraftRequest,
-  PostDraftResponse,
+  IPostDraftResponse,
   IGetStepNameResponse,
   StepName,
   IPostStepNameRequest,
-  GetFilesIdentifiersRequest,
+  IGetFilesIdsRequest,
   IGetFilesIdentifiersResponse,
-  GetFileSignatureRequest,
+  IGetFileSignatureRequest,
   IGetFileSignatureResponse,
+  IGetPacketInfoResponse,
 } from './nopaper-api.types';
 import { Observable, map, tap } from 'rxjs';
 import { Injectable } from '@angular/core';
@@ -48,14 +49,14 @@ export class NopaperApiService {
       .subscribe((subdomain) => (this.subdomain = subdomain));
   }
 
-  private post$<Req, Res>(path: string, body: Req): Observable<Res> {
+  private post<Req, Res>(path: string, body: Req): Observable<Res> {
     return this.http.post<Res>(`${BASE_URL}${path}`, body, {
       headers: this.headers,
     });
   }
 
-  private get$<T>(path: string): Observable<T> {
-    return this.http.get<T>(`${BASE_URL}${path}`, {
+  private get<Res>(path: string): Observable<Res> {
+    return this.http.get<Res>(`${BASE_URL}${path}`, {
       headers: this.headers,
     });
   }
@@ -75,15 +76,15 @@ export class NopaperApiService {
       );
   }
 
-  postDraft$(body: IPostDraftRequest) {
-    return this.post$<IPostDraftRequest, PostDraftResponse>(
+  public postDraft$(body: IPostDraftRequest) {
+    return this.post<IPostDraftRequest, IPostDraftResponse>(
       '/document/create-for-client',
       body
     );
   }
 
-  checkByPhone$(phone: string) {
-    return this.post$<CheckByPhoneRequest, CheckByPhoneResponse>(
+  public checkByPhone$(phone: string) {
+    return this.post<ICheckByPhoneRequest, ICheckByPhoneResponse>(
       `/profile/fl/check-by-phone-v2`,
       {
         phonenumber: phone,
@@ -91,28 +92,32 @@ export class NopaperApiService {
     );
   }
 
-  getStepName(packetId: number) {
-    return this.get$<IGetStepNameResponse>(`/document/status/${packetId}`);
+  public getStepName(packetId: number) {
+    return this.get<IGetStepNameResponse>(`/document/status/${packetId}`);
   }
 
   public setStepName(packetId: number, stepName: StepName) {
-    return this.post$<IPostStepNameRequest, any>('/document/changestep', {
+    return this.post<IPostStepNameRequest, any>('/document/changestep', {
       documentId: packetId,
       stepSystemName: stepName,
     });
   }
 
-  getFilesIdentifiers(packetId: number) {
-    return this.post$<GetFilesIdentifiersRequest, IGetFilesIdentifiersResponse>(
+  public getFilesIdentifiers(packetId: number) {
+    return this.post<IGetFilesIdsRequest, IGetFilesIdentifiersResponse>(
       '/document/file-description-v2',
       { documentId: packetId }
     );
   }
 
-  getFileSignatures(fileId: number) {
-    return this.post$<GetFileSignatureRequest, IGetFileSignatureResponse>(
+  public getFileSignatures(fileId: number) {
+    return this.post<IGetFileSignatureRequest, IGetFileSignatureResponse>(
       '/file/signatures',
       { documentFileId: fileId }
     );
+  }
+
+  public getPacketInfo(packetId: number) {
+    return this.get<IGetPacketInfoResponse>(`/document/details/${packetId}`);
   }
 }

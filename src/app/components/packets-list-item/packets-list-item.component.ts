@@ -32,12 +32,12 @@ export class PacketsListItemComponent implements OnInit, OnDestroy, OnChanges {
   ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.nopaperService.startPacketStepPolling(this.packetId);
+    this.nopaperService.startPacketPolling(this.packetId);
     this.packet$ = this.store.select(packetSelector(this.packetId));
   }
 
   ngOnDestroy(): void {
-    this.nopaperService.stopPacketStepPolling(this.packetId);
+    this.nopaperService.stopPacketPolling(this.packetId);
   }
 
   public navigatePacketPage(): void {
