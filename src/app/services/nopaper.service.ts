@@ -47,17 +47,20 @@ export class NopaperService {
     private crmService: CrmService
   ) {}
 
-  public postDraft(): Observable<any> {
-    return this.composePostDraftRequestBody().pipe(
-      switchMap((body) => this.nopaperApiService.postDraft$(body)),
-      switchMap((response) =>
-        this.crmService.attachPacketToLead(parseInt(response.documentId))
-      )
-    );
+  public postPacket(): Observable<any> {
+    const packetBody = this.composePostDraftRequestBody();
+
+    return this.nopaperApiService
+      .postPacket(packetBody)
+      .pipe(
+        switchMap((response) =>
+          this.crmService.attachPacketToLead(parseInt(response.documentId))
+        )
+      );
   }
 
   public removeDraft(packetId: number) {
-    return this.nopaperApiService.setStepName(packetId, 'nopaperDelete');
+    return this.nopaperApiService.setPacketStepName(packetId, 'nopaperDelete');
   }
 
   public startPacketPolling(packetId: number): void {
@@ -86,7 +89,7 @@ export class NopaperService {
 
   private getStepName(packetId: number): Observable<IGetStepNameResponse> {
     return this.nopaperApiService
-      .getStepName(packetId)
+      .getPacketStepName(packetId)
       .pipe(
         tap((response) =>
           this.store.dispatch(setPacketStepAction({ ...response, packetId }))
@@ -94,7 +97,7 @@ export class NopaperService {
       );
   }
 
-  public getFilesIdentifiers(
+  public getPacketFilesIds(
     packetId: number
   ): Observable<IGetFilesIdentifiersResponse | null> {
     return this.nopaperApiService
@@ -120,7 +123,7 @@ export class NopaperService {
       .pipe(tap((response) => this.store.dispatch));
   }
 
-  private composePostDraftRequestBody(): Observable<IPostDraftRequest> {
+  private composePostDraftRequestBody(): IPostDraftRequest {
     let contact = {};
     let files: PostDraftRequestFileItem[] = [];
     let title = '';
@@ -155,10 +158,10 @@ export class NopaperService {
 
     this.packetTitle$.pipe(first()).subscribe((value) => (title = value));
 
-    return of({
+    return {
       title: title,
       files: files,
       ...contact,
-    });
+    };
   }
 }

@@ -28,7 +28,7 @@ export class WidgetPageNewComponent implements OnInit, OnDestroy {
 
   public clickCreateDraftButtonHandler(): void {
     this.isAwaiting = true;
-    this.nopaperService.postDraft().subscribe(() => {
+    this.nopaperService.postPacket().subscribe(() => {
       this.isAwaiting = false;
       this.routingService.goPacketsListPage();
     });

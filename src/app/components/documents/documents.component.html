@@ -1,6 +1,6 @@
 <app-subtitle class="documents__title">Документы</app-subtitle>
 
-<app-documents-drop-area *ngIf="isEditable$ | async"></app-documents-drop-area>
+<app-documents-drop-area></app-documents-drop-area>
 
 <app-documents-list
   (onShowSignInfo)="showSignInfo()"
@@ -9,7 +9,6 @@
 ></app-documents-list>
 
 <app-input
-  *ngIf="isEditable$ | async"
   class="documents__input"
   label="Название пакета документов"
 ></app-input>

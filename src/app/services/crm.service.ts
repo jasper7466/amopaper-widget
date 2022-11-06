@@ -15,7 +15,6 @@ import {
 import { AmoApiService } from './api/amo/amo-api.service';
 import { documentPacketsIdCrmFieldName } from '../constants/config';
 import { updateCrmContextAction } from '../store/crm-context/actions';
-import { resetPacketIdAction } from '../store/nopaper/actions';
 import { setPacketsIdsAction } from '../store/packets-list/actions';
 import { PatchLeadResponse } from './api/amo/amo-api.types';
 
@@ -116,7 +115,6 @@ export class CrmService {
   }
 
   resetPacketId$() {
-    this.store.dispatch(resetPacketIdAction());
     return this.setLeadPacketsIds(null);
   }
 

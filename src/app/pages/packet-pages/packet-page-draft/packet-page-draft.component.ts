@@ -25,6 +25,7 @@ export class PacketPageDraftComponent implements OnInit {
     }
 
     this.id = +id;
+    this.nopaperService.getPacketFilesIds(this.id).subscribe();
   }
 
   public clickBackButtonHandler(): void {

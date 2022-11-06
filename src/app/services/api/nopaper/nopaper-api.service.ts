@@ -76,14 +76,14 @@ export class NopaperApiService {
       );
   }
 
-  public postDraft$(body: IPostDraftRequest) {
+  public postPacket(body: IPostDraftRequest) {
     return this.post<IPostDraftRequest, IPostDraftResponse>(
       '/document/create-for-client',
       body
     );
   }
 
-  public checkByPhone$(phone: string) {
+  public checkUserByPhone$(phone: string) {
     return this.post<ICheckByPhoneRequest, ICheckByPhoneResponse>(
       `/profile/fl/check-by-phone-v2`,
       {
@@ -92,11 +92,11 @@ export class NopaperApiService {
     );
   }
 
-  public getStepName(packetId: number) {
+  public getPacketStepName(packetId: number) {
     return this.get<IGetStepNameResponse>(`/document/status/${packetId}`);
   }
 
-  public setStepName(packetId: number, stepName: StepName) {
+  public setPacketStepName(packetId: number, stepName: StepName) {
     return this.post<IPostStepNameRequest, any>('/document/changestep', {
       documentId: packetId,
       stepSystemName: stepName,
