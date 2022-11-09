@@ -1,3 +1,4 @@
+import { clientUuidSelector } from './../../../store/crm-context/selectors';
 import {
   ICheckByPhoneResponse,
   ICheckByPhoneRequest,
@@ -11,8 +12,9 @@ import {
   IGetFileSignatureRequest,
   IGetFileSignatureResponse,
   IGetPacketInfoResponse,
+  IGetAmoAccessTokenResponse,
 } from './nopaper-api.types';
-import { Observable, map, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Store } from '@ngrx/store';
@@ -21,9 +23,9 @@ import {
   xApiKeySelector,
 } from 'src/app/store/crm-context/selectors';
 import { environment } from 'src/environments/environment';
-import { updateAccessTokenAction } from 'src/app/store/access-token/actions';
 
 const BASE_URL = environment.nopaperBaseUrl;
+const BASE_URL_TOKEN = environment.nopaperBaseTokenUrl;
 
 @Injectable({
   providedIn: 'root',
@@ -31,22 +33,35 @@ const BASE_URL = environment.nopaperBaseUrl;
 export class NopaperApiService {
   private headers: HttpHeaders;
 
-  // TODO: только для отладки с локальным сервером авторизации
+  xApiKey$ = this.store.select(xApiKeySelector);
+  clientUuid$ = this.store.select(clientUuidSelector);
+  subdomain$ = this.store.select(subdomainSelector);
+
   private xApiKey?: string;
+  private clientUuid?: string;
   private subdomain?: string;
-  //
 
   constructor(private http: HttpClient, private store: Store) {
-    this.store.select(xApiKeySelector).subscribe((xApiKey) => {
-      this.xApiKey = xApiKey;
-      this.headers = new HttpHeaders({
-        'Content-Type': 'application/json',
-        'X-API-Key': `${xApiKey}`,
-      });
+    this.xApiKey$.subscribe((key) => {
+      this.xApiKey = key;
+      this.updateHeaders();
     });
-    this.store
-      .select(subdomainSelector)
-      .subscribe((subdomain) => (this.subdomain = subdomain));
+
+    this.clientUuid$.subscribe((uuid) => {
+      this.clientUuid = uuid;
+    });
+
+    this.subdomain$.subscribe((subdomain) => {
+      this.subdomain = subdomain;
+      this.updateHeaders();
+    });
+  }
+
+  private updateHeaders(): void {
+    this.headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'X-API-Key': `${this.xApiKey}`,
+    });
   }
 
   private post<Req, Res>(path: string, body: Req): Observable<Res> {
@@ -55,25 +70,28 @@ export class NopaperApiService {
     });
   }
 
-  private get<Res>(path: string): Observable<Res> {
-    return this.http.get<Res>(`${BASE_URL}${path}`, {
+  private get<Res>(path: string, baseUrl = BASE_URL): Observable<Res> {
+    return this.http.get<Res>(`${baseUrl}${path}`, {
       headers: this.headers,
     });
   }
 
-  // TODO: только для отладки с локальным сервером авторизации
-  public getAmoToken(): Observable<string> {
-    return this.http
-      .post<{ access_token: string }>('http://localhost:5200/access_token', {
+  // Для для отладки с локальным сервером авторизации
+  public getAmoAccessTokenLocally() {
+    return this.http.post<{ access_token: string }>(
+      'http://localhost:5200/access_token',
+      {
         x_api_key: this.xApiKey,
         subdomain: this.subdomain,
-      })
-      .pipe(
-        map((response) => response.access_token),
-        tap((accessToken) =>
-          this.store.dispatch(updateAccessTokenAction({ token: accessToken }))
-        )
-      );
+      }
+    );
+  }
+
+  public getAmoAccessToken() {
+    return this.get<IGetAmoAccessTokenResponse>(
+      `/amo-crm/authorization/access-token/${this.clientUuid}`,
+      BASE_URL_TOKEN
+    );
   }
 
   public postPacket(body: IPostDraftRequest) {

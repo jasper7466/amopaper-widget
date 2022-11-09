@@ -1,7 +1,6 @@
-import { NopaperApiService } from '../../../services/api/nopaper/nopaper-api.service';
+import { NopaperService } from 'src/app/services/nopaper.service';
 import { CrmService } from '../../../services/crm.service';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { RoutingService } from 'src/app/services/routing.service';
 
@@ -13,7 +12,7 @@ import { RoutingService } from 'src/app/services/routing.service';
 export class StartupPageComponent implements OnInit {
   constructor(
     private crmService: CrmService,
-    private nopaperApiService: NopaperApiService,
+    private nopaperService: NopaperService,
     private routingService: RoutingService
   ) {}
 
@@ -26,7 +25,7 @@ export class StartupPageComponent implements OnInit {
     this.crmService
       .getCrmContext$()
       .pipe(
-        switchMap(() => this.nopaperApiService.getAmoToken()),
+        switchMap(() => this.nopaperService.getAmoAccessToken()),
         switchMap(() => this.crmService.getPacketsFieldId())
       )
       .subscribe({

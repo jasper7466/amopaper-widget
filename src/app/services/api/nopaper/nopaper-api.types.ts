@@ -3,6 +3,10 @@ export interface IBadResponse {
   errorText: string;
 }
 
+export interface IGetAmoAccessTokenResponse {
+  accessToken: string;
+}
+
 export interface ICheckByPhoneRequest {
   phonenumber: string;
 }

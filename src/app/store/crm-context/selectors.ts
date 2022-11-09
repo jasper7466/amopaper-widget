@@ -23,3 +23,8 @@ export const leadIdSelector = createSelector(
   featureSelector,
   (state) => state.context?.cardId
 );
+
+export const clientUuidSelector = createSelector(
+  featureSelector,
+  (state) => state.context?.settings.oauth_client_uuid
+);

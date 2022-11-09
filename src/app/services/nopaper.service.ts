@@ -1,3 +1,4 @@
+import { updateAccessTokenAction } from './../store/access-token/actions';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import {
@@ -5,7 +6,6 @@ import {
   first,
   map,
   Observable,
-  of,
   Subject,
   switchMap,
   takeUntil,
@@ -47,6 +47,16 @@ export class NopaperService {
     private crmService: CrmService
   ) {}
 
+  public getAmoAccessToken() {
+    return this.nopaperApiService
+      .getAmoAccessToken()
+      .pipe(
+        tap(({ accessToken }) =>
+          this.store.dispatch(updateAccessTokenAction({ token: accessToken }))
+        )
+      );
+  }
+
   public postPacket(): Observable<any> {
     const packetBody = this.composePostDraftRequestBody();
 
@@ -69,7 +79,8 @@ export class NopaperService {
       .pipe(
         tap(() => {
           this.getStepName(packetId).subscribe();
-          this.getPacketInfo(packetId).subscribe();
+          // TODO: 404 (?)
+          // this.getPacketInfo(packetId).subscribe();
         }),
         takeUntil(
           this.packetPollingBreakerById.pipe(filter((id) => id === packetId))
