@@ -19,10 +19,10 @@ import { DocumentCountLabelComponent } from './components/document-count-label/d
 import { StatusBannerComponent } from './components/status-banner/status-banner.component';
 import { ButtonComponent } from './components/common/button/button.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { AddresseeComponent } from './components/addressee/addressee.component';
+import { AddresseeSelectorComponent } from './components/addressee-selector/addressee-selector.component';
 import { SubtitleComponent } from './components/common/subtitle/subtitle.component';
 import { AddresseeNameplateComponent } from './components/addressee-nameplate/addressee-nameplate.component';
-import { DocumentsComponent } from './components/documents/documents.component';
+import { DocumentsUploaderComponent } from './components/documents-uploader/documents-uploader.component';
 import { TooltipComponent } from './components/common/tooltip/tooltip.component';
 import { InputComponent } from './components/common/input/input.component';
 import { DocumentsListComponent } from './components/documents-list/documents-list.component';
@@ -58,6 +58,9 @@ import { PacketPageDraftComponent } from './pages/packet-pages/packet-page-draft
 import { PacketsListItemComponent } from './components/packets-list-item/packets-list-item.component';
 import { StepToLabelStatusPipe } from './pipes/step-label-status.pipe';
 import { PacketsListComponent } from './components/packets-list/packets-list.component';
+import { PacketPageEndComponent } from './pages/packet-pages/packet-page-end/packet-page-end.component';
+import { AddresseeDisplayerComponent } from './components/addressee-displayer/addressee-displayer.component';
+import { DocumentsDisplayerComponent } from './components/documents-displayer/documents-displayer.component';
 
 registerLocaleData(localeRu, 'ru');
 @NgModule({
@@ -77,10 +80,10 @@ registerLocaleData(localeRu, 'ru');
     StatusBannerComponent,
     ButtonComponent,
     FooterComponent,
-    AddresseeComponent,
+    AddresseeSelectorComponent,
     SubtitleComponent,
     AddresseeNameplateComponent,
-    DocumentsComponent,
+    DocumentsUploaderComponent,
     TooltipComponent,
     InputComponent,
     DocumentsListComponent,
@@ -106,6 +109,9 @@ registerLocaleData(localeRu, 'ru');
     PacketPageDraftComponent,
     PacketsListItemComponent,
     PacketsListComponent,
+    PacketPageEndComponent,
+    AddresseeDisplayerComponent,
+    DocumentsDisplayerComponent,
   ],
   imports: [
     BrowserModule,

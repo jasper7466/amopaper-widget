@@ -8,6 +8,7 @@ import { WidgetPageListComponent } from './pages/widget-pages/widget-page-list/w
 import { WidgetPageNewComponent } from './pages/widget-pages/widget-page-new/widget-page-new.component';
 import { WidgetPagePacketComponent } from './pages/widget-pages/widget-page-packet/widget-page-packet.component';
 import { PacketPageDraftComponent } from './pages/packet-pages/packet-page-draft/packet-page-draft.component';
+import { PacketPageEndComponent } from './pages/packet-pages/packet-page-end/packet-page-end.component';
 
 const routes: Routes = [
   { path: '', component: StartupPageComponent },
@@ -22,7 +23,10 @@ const routes: Routes = [
       {
         path: 'packet/:id',
         component: WidgetPagePacketComponent,
-        children: [{ path: 'draft', component: PacketPageDraftComponent }],
+        children: [
+          { path: 'draft', component: PacketPageDraftComponent },
+          { path: 'end', component: PacketPageEndComponent },
+        ],
       },
     ],
   },

@@ -1,3 +1,5 @@
+import { updateAccessTokenAction } from './../store/access-token/actions';
+import { NopaperApiService } from './api/nopaper/nopaper-api.service';
 import { PostMessageResponses } from '../types/crm-messages.types';
 import { PostMessageService } from './post-message.service';
 import { Injectable } from '@angular/core';
@@ -34,7 +36,8 @@ export class CrmService {
       PostMessageResponses
     >,
     private store: Store,
-    private amoApiService: AmoApiService
+    private amoApiService: AmoApiService,
+    private nopaperApiService: NopaperApiService
   ) {}
 
   // checkWidgetStatus() {

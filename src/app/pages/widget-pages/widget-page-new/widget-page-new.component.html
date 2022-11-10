@@ -1,11 +1,11 @@
 <app-main-content-wrapper>
-  <app-stage-header class="content__stage-header" statusLabelStatus="draft"
+  <app-stage-header statusLabelStatus="draft"
     >Добавление документа
   </app-stage-header>
 
   <ng-container *ngIf="!isAwaiting">
-    <app-addressee></app-addressee>
-    <app-documents></app-documents>
+    <app-addressee-selector></app-addressee-selector>
+    <app-documents-uploader></app-documents-uploader>
   </ng-container>
 
   <app-preloader

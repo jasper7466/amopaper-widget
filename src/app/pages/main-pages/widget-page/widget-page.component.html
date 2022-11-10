@@ -3,23 +3,5 @@
   <app-nav-bar></app-nav-bar>
   <div class="content">
     <router-outlet class="router"></router-outlet>
-    <!-- <div class="content__wrapper">
-      <app-stage-header
-        *ngIf="(stepName$ | async) === null"
-        class="content__stage-header"
-        >Добавление документа</app-stage-header
-      >
-      <app-stage-header
-        *ngIf="(stepName$ | async) !== null"
-        class="content__stage-header"
-        >Документы на подпись</app-stage-header
-      >
-      <app-addressee *ngIf="isAddresseeShown"></app-addressee>
-      <app-documents
-        *ngIf="isDocumentsShown"
-        (onShowSignInfo)="showSignInfo()"
-      ></app-documents>
-    </div> -->
-    <app-modal-sign-info></app-modal-sign-info>
   </div>
 </div>

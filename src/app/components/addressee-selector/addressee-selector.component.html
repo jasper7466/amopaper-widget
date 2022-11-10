@@ -13,6 +13,10 @@
 </div>
 <app-addressee-nameplate
   *ngIf="isAddresseeAdded$ | async"
+  (clickRemoveButton)="removeAddresseeHandler()"
+  [name]="(addresseeName$ | async)!"
+  [phone]="addresseePhone$ | async"
+  [vatId]="addresseeVatId$ | async"
 ></app-addressee-nameplate>
 <app-modal isOpened="isModalOpened">
   <app-add-addressee-form (onSubmit)="modal?.close()"></app-add-addressee-form>

@@ -13,7 +13,7 @@ const stepToLabelStatusDict: { [key in StepName]: StatusLabelStatus } = {
   nopaperReceiverPreviewBeforeOferta: 'pending',
   nopaperOfertaReceiverPreview: 'pending',
   nopaperReceiverSigning: 'pending',
-  nopaperEnd: 'unknown',
+  nopaperEnd: 'signed-single',
   nopaperEndRead: 'unknown',
   nopaperError: 'unknown',
   nopaperErrorEnd: 'unknown',

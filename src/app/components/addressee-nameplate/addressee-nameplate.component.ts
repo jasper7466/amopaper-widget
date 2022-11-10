@@ -1,6 +1,4 @@
-import { resetAddresseeAction } from 'src/app/store/addressee/actions';
-import { addresseeSelector } from 'src/app/store/addressee/selectors';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 @Component({
@@ -9,13 +7,17 @@ import { Store } from '@ngrx/store';
   styleUrls: ['./addressee-nameplate.component.css'],
 })
 export class AddresseeNameplateComponent implements OnInit {
-  addressee$ = this.store.select(addresseeSelector);
+  @Input() name: string = 'Получатель';
+  @Input() vatId: string | null = null;
+  @Input() phone: string | null = null;
+
+  @Output() clickRemoveButton = new EventEmitter<void>();
 
   constructor(private store: Store) {}
 
   ngOnInit(): void {}
 
-  addresseeRemove() {
-    this.store.dispatch(resetAddresseeAction());
+  public removeButtonClickHandler() {
+    this.clickRemoveButton.emit();
   }
 }

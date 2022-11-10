@@ -1,4 +1,4 @@
-:host {
+.addressee__wrapper {
   box-sizing: border-box;
   display: grid;
   grid-template-areas:
@@ -18,17 +18,17 @@
   line-height: 20px;
 }
 
-:host > .addressee__remove-button {
+.addressee__wrapper > .addressee__remove-button {
   display: none;
 }
 
-:host:hover {
+.addressee__wrapper_interactable:hover {
   --this-bg-color: var(--bg-color-row-hover);
   background-color: var(--this-bg-color);
   cursor: pointer;
 }
 
-:host:hover > .addressee__remove-button {
+.addressee__wrapper:hover > .addressee__remove-button {
   display: block;
 }
 
@@ -66,7 +66,3 @@
 .addressee__remove-button:hover {
   cursor: pointer;
 }
-/* .addressee__remove-button:hover {
-  --this-main-color: var(--primary-color-accent);
-  cursor: pointer;
-} */

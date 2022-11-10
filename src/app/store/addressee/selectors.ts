@@ -4,9 +4,23 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 export const featureSelector =
   createFeatureSelector<IAddresseeState>(WIDGET_CONTEXT_KEY);
 
+export const addresseeSelector = createSelector(featureSelector, (state) => ({
+  ...state,
+}));
+
 export const isAddresseeAddedSelector = createSelector(
   featureSelector,
   (state) => state.type !== null
+);
+
+export const addresseeTypeSelector = createSelector(
+  featureSelector,
+  (state) => state.type
+);
+
+export const addresseeNameSelector = createSelector(
+  featureSelector,
+  (state) => state.name
 );
 
 export const addresseePhoneSelector = createSelector(
@@ -14,6 +28,7 @@ export const addresseePhoneSelector = createSelector(
   (state) => state.phone
 );
 
-export const addresseeSelector = createSelector(featureSelector, (state) => ({
-  ...state,
-}));
+export const addresseeVatIdSelector = createSelector(
+  featureSelector,
+  (state) => state.vatId
+);

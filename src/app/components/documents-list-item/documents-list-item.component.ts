@@ -16,7 +16,6 @@ export class DocumentsListItemComponent implements OnInit {
   constructor(private nopaperService: NopaperService) {}
 
   showSignInfo(): void {
-    console.log('li press');
     if (!this.fileId) {
       return;
     }

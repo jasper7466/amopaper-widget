@@ -1,17 +1,19 @@
-<div class="addressee__avatar">{{ (addressee$ | async)!.name[0] }}</div>
+<div
+  class="addressee__wrapper"
+  [ngClass]="{ addressee__wrapper_interactable: clickRemoveButton.observed }"
+>
+  <div class="addressee__avatar">{{ name[0] }}</div>
 
-<p class="addressee__name">{{ (addressee$ | async)?.name }}</p>
-<p class="addressee__vat-id">
-  {{
-    (addressee$ | async)?.vatId
-      ? (addressee$ | async)?.vatId
-      : ((addressee$ | async)?.phone || "" | mask: "+0 (000) 000-00-00")
-  }}
-</p>
-<app-button
-  (onClick)="addresseeRemove()"
-  class="addressee__remove-button"
-  styleOption="skeleton"
-  colorOption="custom"
-  iconOption="trash"
-></app-button>
+  <p class="addressee__name">{{ name }}</p>
+  <p class="addressee__vat-id">
+    {{ vatId ? vatId : (phone || "" | mask: "+0 (000) 000-00-00") }}
+  </p>
+  <app-button
+    *ngIf="clickRemoveButton.observed"
+    (onClick)="removeButtonClickHandler()"
+    class="addressee__remove-button"
+    styleOption="skeleton"
+    colorOption="custom"
+    iconOption="trash"
+  ></app-button>
+</div>

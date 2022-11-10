@@ -54,6 +54,7 @@ export class RoutingService {
       case 'nopaperReceiverSigning':
         break;
       case 'nopaperEnd':
+        destination = 'end';
         break;
       default:
         this.goPacketsListPage();

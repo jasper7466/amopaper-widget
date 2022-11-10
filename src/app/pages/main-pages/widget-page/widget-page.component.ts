@@ -8,17 +8,9 @@ import { ModalSignInfoComponent } from 'src/app/components/modal-sign-info/modal
   templateUrl: './widget-page.component.html',
   styleUrls: ['./widget-page.component.css'],
 })
-export class WidgetPageComponent implements OnDestroy {
-  @ViewChild(ModalSignInfoComponent) signInfo: ModalSignInfoComponent;
-
+export class WidgetPageComponent {
   constructor(
     public nopaperService: NopaperService,
     public crmService: CrmService
   ) {}
-
-  public showSignInfo(): void {
-    this.signInfo.open();
-  }
-
-  ngOnDestroy(): void {}
 }
