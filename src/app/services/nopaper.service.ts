@@ -1,3 +1,4 @@
+import { setPacketDetailsAction } from './../store/packets-list/actions';
 import { updateAccessTokenAction } from './../store/access-token/actions';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
@@ -79,8 +80,7 @@ export class NopaperService {
       .pipe(
         tap(() => {
           this.getStepName(packetId).subscribe();
-          // TODO: 404 (?)
-          // this.getPacketInfo(packetId).subscribe();
+          this.getPacketDetails(packetId).subscribe();
         }),
         takeUntil(
           this.packetPollingBreakerById.pipe(filter((id) => id === packetId))
@@ -128,10 +128,20 @@ export class NopaperService {
       );
   }
 
-  public getPacketInfo(packetId: number) {
+  public getPacketDetails(packetId: number) {
     return this.nopaperApiService
-      .getPacketInfo(packetId)
-      .pipe(tap((response) => this.store.dispatch));
+      .getPacketDetails(packetId)
+      .pipe(
+        tap((response) =>
+          this.store.dispatch(
+            setPacketDetailsAction({
+              packetId: packetId,
+              title: response.title,
+              creationDate: response.dateCreate,
+            })
+          )
+        )
+      );
   }
 
   private composePostDraftRequestBody(): IPostDraftRequest {

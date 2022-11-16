@@ -11,8 +11,9 @@ import {
   IGetFilesIdentifiersResponse,
   IGetFileSignatureRequest,
   IGetFileSignatureResponse,
-  IGetPacketInfoResponse,
+  IGetPacketDetailsResponse,
   IGetAmoAccessTokenResponse,
+  IGetPacketDetailsRequest,
 } from './nopaper-api.types';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
@@ -135,7 +136,10 @@ export class NopaperApiService {
     );
   }
 
-  public getPacketInfo(packetId: number) {
-    return this.get<IGetPacketInfoResponse>(`/document/details/${packetId}`);
+  public getPacketDetails(packetId: number) {
+    return this.post<IGetPacketDetailsRequest, IGetPacketDetailsResponse>(
+      `/document/details`,
+      { documentId: packetId }
+    );
   }
 }

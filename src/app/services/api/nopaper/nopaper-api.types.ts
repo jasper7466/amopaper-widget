@@ -117,11 +117,22 @@ export interface IGetFileSignatureResponse {
   [1]: SignatureInfo;
 }
 
+type DocumentDataNames =
+  | 'NOP_TAB_NOPAPER_DRAFT'
+  | 'NOP_TAB_NOPAPER_DOWNLOAD_DOCUMENTS'
+  | 'NOP_TAB_NOPAPER_SEND_SIGN_DOCUMENTS';
+
+export interface IGetPacketDetailsRequest {
+  documentId: number;
+  documentDataNames?: DocumentDataNames[];
+}
+
 type DocumentData = {
   name: string;
   data: { [key: string]: any };
 };
-export interface IGetPacketInfoResponse {
+
+export interface IGetPacketDetailsResponse {
   documentData: DocumentData[];
   isOwner: boolean;
   title: string;

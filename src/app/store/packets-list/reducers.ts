@@ -7,7 +7,7 @@ import {
 } from './index';
 import { createReducer, on } from '@ngrx/store';
 import {
-  setPacketInfoAction,
+  setPacketDetailsAction,
   setPacketsIdsAction,
   setPacketStepAction,
 } from './actions';
@@ -87,8 +87,8 @@ export const packetsReducer = createReducer(
       },
     };
   }),
-  on(setPacketInfoAction, (state, { packetId, title, creationDate }) => {
-    console.log('DISPATCHED: setPacketsInfoAction', title, creationDate);
+  on(setPacketDetailsAction, (state, { packetId, title, creationDate }) => {
+    console.log('DISPATCHED: setPacketsDetailsAction', title, creationDate);
 
     if (!(packetId in state.packets)) {
       return {
@@ -96,8 +96,10 @@ export const packetsReducer = createReducer(
       };
     }
 
+    title = title.length ? title : initialPacketState.title;
+
     if (
-      title === state.packets[packetId].title ||
+      title === state.packets[packetId].title &&
       creationDate === state.packets[packetId].creationDate
     ) {
       return {
