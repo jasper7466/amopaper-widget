@@ -3,11 +3,11 @@ import {
   addresseePhoneSelector,
   addresseeVatIdSelector,
   isAddresseeAddedSelector,
-} from './../../store/addressee/selectors';
-import { resetAddresseeAction } from './../../store/addressee/actions';
+} from '../../../store/addressee/selectors';
+import { resetAddresseeAction } from '../../../store/addressee/actions';
 import { Component, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { ModalComponent } from '../modal/modal.component';
+import { ModalComponent } from '../../templates/modal/modal.component';
 
 @Component({
   selector: 'app-addressee-selector',

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NopaperService } from 'src/app/services/nopaper.service';
-import { StatusLabelStatus } from '../common/status-label/status-label.component';
+import { StatusLabelStatus } from '../../atoms/status-label/status-label.component';
 
 @Component({
   selector: 'app-documents-list-item',

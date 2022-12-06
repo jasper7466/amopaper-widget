@@ -17,7 +17,7 @@ import {
 } from 'src/app/store/files/selectors';
 import { stepNameSelector } from 'src/app/store/nopaper/selectors';
 import { signaturesSignedIdentifiersSelector } from 'src/app/store/signatures/selectors';
-import { StatusLabelStatus } from '../common/status-label/status-label.component';
+import { StatusLabelStatus } from '../../atoms/status-label/status-label.component';
 
 type Item = {
   fileName: string;

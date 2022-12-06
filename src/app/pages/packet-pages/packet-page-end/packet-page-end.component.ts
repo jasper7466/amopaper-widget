@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ModalSignInfoComponent } from 'src/app/components/modal-sign-info/modal-sign-info.component';
+import { ModalSignInfoComponent } from 'src/app/components/organisms/modal-sign-info/modal-sign-info.component';
 
 @Component({
   selector: 'app-packet-page-end',

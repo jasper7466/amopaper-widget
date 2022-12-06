@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { StatusLabelStatus } from '../components/common/status-label/status-label.component';
+import { StatusLabelStatus } from '../components/atoms/status-label/status-label.component';
 import { StepName } from '../services/api/nopaper/nopaper-api.types';
 
 const stepToLabelStatusDict: { [key in StepName]: StatusLabelStatus } = {

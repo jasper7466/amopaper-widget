@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { StatusLabelStatus } from 'src/app/components/common/status-label/status-label.component';
-import { StatusBannerStatus } from '../status-banner/status-banner.component';
+import { StatusLabelStatus } from 'src/app/components/atoms/status-label/status-label.component';
+import { StatusBannerStatus } from '../../atoms/status-banner/status-banner.component';
 
 @Component({
   selector: 'app-stage-header',
