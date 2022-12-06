@@ -61,6 +61,7 @@ import { PacketsListComponent } from './components/organisms/packets-list/packet
 import { PacketPageEndComponent } from './pages/packet-pages/packet-page-end/packet-page-end.component';
 import { AddresseeDisplayerComponent } from './components/organisms/addressee-displayer/addressee-displayer.component';
 import { DocumentsDisplayerComponent } from './components/organisms/documents-displayer/documents-displayer.component';
+import { DeclensionPipe } from './pipes/declension.pipe';
 
 registerLocaleData(localeRu, 'ru');
 @NgModule({
@@ -112,6 +113,7 @@ registerLocaleData(localeRu, 'ru');
     PacketPageEndComponent,
     AddresseeDisplayerComponent,
     DocumentsDisplayerComponent,
+    DeclensionPipe,
   ],
   imports: [
     BrowserModule,
