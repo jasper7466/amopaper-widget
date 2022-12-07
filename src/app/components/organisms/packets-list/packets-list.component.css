@@ -1,5 +1,5 @@
 .packets-list {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: var(--spacing-xs-4px);
 }
