@@ -7,17 +7,19 @@
     colorOption="regular"
     iconOption="plus"
     sizeOption="custom"
-    (onClick)="modal?.open()"
+    (onClick)="showSelectorModal()"
     >Добавить</app-button
   >
 </div>
 <app-addressee-nameplate
   *ngIf="isAddresseeAdded$ | async"
-  (clickRemoveButton)="removeAddresseeHandler()"
+  (clickRemoveButton)="removeAddressee()"
   [name]="(addresseeName$ | async)!"
   [phone]="addresseePhone$ | async"
   [vatId]="addresseeVatId$ | async"
 ></app-addressee-nameplate>
-<app-modal isOpened="isModalOpened">
-  <app-add-addressee-form (onSubmit)="modal?.close()"></app-add-addressee-form>
+<app-modal [openTrigger]="openModalEmitter" [closeTrigger]="closeModalEmitter">
+  <app-add-addressee-form
+    (onSubmit)="hideSelectorModal()"
+  ></app-add-addressee-form>
 </app-modal>
