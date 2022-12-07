@@ -1,12 +1,12 @@
 <div
   class="addressee__wrapper"
-  [ngClass]="{ addressee__wrapper_interactable: clickRemoveButton.observed }"
+  [ngClass]="{ addressee__wrapper_interactive: clickRemoveButton.observed }"
 >
   <div class="addressee__avatar">{{ name[0] }}</div>
 
   <p class="addressee__name">{{ name }}</p>
   <p class="addressee__vat-id">
-    {{ vatId ? vatId : (phone || "" | mask: "+0 (000) 000-00-00") }}
+    {{ vatId ? vatId : (phone || "" | mask : "+0 (000) 000-00-00") }}
   </p>
   <app-button
     *ngIf="clickRemoveButton.observed"

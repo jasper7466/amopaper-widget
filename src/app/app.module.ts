@@ -25,7 +25,6 @@ import { AddresseeNameplateComponent } from './components/molecules/addressee-na
 import { DocumentsUploaderComponent } from './components/organisms/documents-uploader/documents-uploader.component';
 import { TooltipComponent } from './components/atoms/tooltip/tooltip.component';
 import { InputComponent } from './components/atoms/input/input.component';
-import { DocumentsListComponent } from './components/molecules/documents-list/documents-list.component';
 import { BannerPreparingComponent } from './components/molecules/banner-preparing/banner-preparing.component';
 import { PreloaderComponent } from './components/atoms/preloader/preloader.component';
 import { BannerAwaitingComponent } from './components/molecules/banner-awaiting/banner-awaiting.component';
@@ -62,6 +61,8 @@ import { PacketPageEndComponent } from './pages/packet-pages/packet-page-end/pac
 import { AddresseeDisplayerComponent } from './components/organisms/addressee-displayer/addressee-displayer.component';
 import { DocumentsDisplayerComponent } from './components/organisms/documents-displayer/documents-displayer.component';
 import { DeclensionPipe } from './pipes/declension.pipe';
+import { UploadsFoldableListComponent } from './components/templates/uploads-foldable-list/uploads-foldable-list.component';
+import { DocumentsListComponent } from './components/templates/documents-list/documents-list.component';
 
 registerLocaleData(localeRu, 'ru');
 @NgModule({
@@ -87,7 +88,6 @@ registerLocaleData(localeRu, 'ru');
     DocumentsUploaderComponent,
     TooltipComponent,
     InputComponent,
-    DocumentsListComponent,
     BannerPreparingComponent,
     PreloaderComponent,
     BannerAwaitingComponent,
@@ -114,6 +114,8 @@ registerLocaleData(localeRu, 'ru');
     AddresseeDisplayerComponent,
     DocumentsDisplayerComponent,
     DeclensionPipe,
+    UploadsFoldableListComponent,
+    DocumentsListComponent,
   ],
   imports: [
     BrowserModule,

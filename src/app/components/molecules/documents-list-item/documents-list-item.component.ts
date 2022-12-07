@@ -1,5 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { NopaperService } from 'src/app/services/nopaper.service';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { StatusLabelStatus } from '../../atoms/status-label/status-label.component';
 
 @Component({
@@ -7,23 +6,19 @@ import { StatusLabelStatus } from '../../atoms/status-label/status-label.compone
   templateUrl: './documents-list-item.component.html',
   styleUrls: ['./documents-list-item.component.css'],
 })
-export class DocumentsListItemComponent implements OnInit {
-  @Input() fileId?: number = 0;
+export class DocumentsListItemComponent {
+  @Input() fileId?: number;
   @Input() signStatus: StatusLabelStatus | null = null;
   @Input() fileName: string = 'unnamed';
-  @Output() onShowSignInfo = new EventEmitter<void>();
+  @Output() onShowSignInfo = new EventEmitter<number>();
 
-  constructor(private nopaperService: NopaperService) {}
+  constructor() {}
 
-  showSignInfo(): void {
+  protected showSignInfo(): void {
     if (!this.fileId) {
       return;
     }
 
-    this.nopaperService.getFileSignature(this.fileId).subscribe(() => {
-      this.onShowSignInfo.emit();
-    });
+    this.onShowSignInfo.emit(this.fileId);
   }
-
-  ngOnInit(): void {}
 }

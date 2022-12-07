@@ -29,7 +29,7 @@
   --this-animation-function: ease-in-out;
 }
 
-.documents-list__status {
+.list__status {
   display: flex;
   align-items: center;
   height: var(--spacing-4xl-48px);
@@ -41,14 +41,14 @@
   line-height: 20px;
 }
 
-.documents-list__remove-all-button {
+.list__remove-all-button {
   margin-left: auto;
   --this-main-color: var(--txt-color-tertiary);
   --this-border-hover-color: var(--primary-color-accent);
   --this-border-active-color: var(--stroke-color-danger);
 }
 
-.documents-list__fold-button {
+.list__fold-button {
   display: flex;
   align-items: center;
   padding: 0;
@@ -58,27 +58,27 @@
   cursor: pointer;
 }
 
-.documents-list__fold-arrow {
+.list__fold-arrow {
   transition: var(--this-transition);
   transition: var(--this-animation-duration) var(--this-animation-function);
 }
 
-.documents-list__fold-arrow_folded {
+.list__fold-arrow_folded {
   transform: rotate(-180deg);
 }
 
-.documents-list__fold-arrow > path {
+.list__fold-arrow > path {
   stroke: var(--txt-color-secondary);
 }
 
-.documents__fold-content {
+.list__fold-content {
   animation-name: unfoldAnimation;
   animation-duration: var(--this-animation-duration);
   animation-timing-function: var(--this-animation-function);
   animation-fill-mode: forwards;
 }
 
-.documents__fold-content_folded {
+.list__fold-content_folded {
   max-height: 0;
   animation-name: foldAnimation;
   animation-duration: var(--this-animation-duration);
@@ -86,7 +86,7 @@
   animation-fill-mode: forwards;
 }
 
-.documents-list__list {
+.list__list {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-xs-4px);

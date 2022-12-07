@@ -22,7 +22,7 @@
   display: none;
 }
 
-.addressee__wrapper_interactable:hover {
+.addressee__wrapper_interactive:hover {
   --this-bg-color: var(--bg-color-row-hover);
   background-color: var(--this-bg-color);
   cursor: pointer;
