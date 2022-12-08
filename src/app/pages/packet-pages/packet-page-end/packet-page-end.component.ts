@@ -1,3 +1,4 @@
+import { NopaperService } from 'src/app/services/nopaper.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalSignInfoComponent } from 'src/app/components/organisms/modal-sign-info/modal-sign-info.component';
 
@@ -9,9 +10,11 @@ import { ModalSignInfoComponent } from 'src/app/components/organisms/modal-sign-
 export class PacketPageEndComponent implements OnInit {
   @ViewChild(ModalSignInfoComponent) signInfo: ModalSignInfoComponent;
 
-  constructor() {}
+  constructor(private nopaperService: NopaperService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.nopaperService.getPacketFilesIds;
+  }
 
   public showSignInfo(): void {
     this.signInfo.open();

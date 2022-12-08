@@ -52,6 +52,7 @@ export type StepName =
   | 'nopaperSignRefused'
   | 'nopaperSignRefusedEnd'
   | 'nopaperSignRefusedRead';
+
 export interface IGetStepNameResponse {
   stepName: StepName;
 }
@@ -60,6 +61,8 @@ export interface IPostStepNameRequest {
   documentId: number;
   stepSystemName: string;
 }
+
+export interface IPostStepNameResponse {}
 
 export interface IGetFilesIdsRequest {
   documentId: number;

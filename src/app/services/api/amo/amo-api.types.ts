@@ -116,7 +116,7 @@ export interface PatchLeadRequestBody {
   request_id: string;
 }
 
-export interface PatchLeadResponse {
+export interface IPatchLeadResponse {
   id: number;
   updated_at: number;
   request_id: string;

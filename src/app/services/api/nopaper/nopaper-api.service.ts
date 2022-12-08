@@ -14,6 +14,7 @@ import {
   IGetPacketDetailsResponse,
   IGetAmoAccessTokenResponse,
   IGetPacketDetailsRequest,
+  IPostStepNameResponse,
 } from './nopaper-api.types';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
@@ -116,10 +117,13 @@ export class NopaperApiService {
   }
 
   public setPacketStepName(packetId: number, stepName: StepName) {
-    return this.post<IPostStepNameRequest, any>('/document/changestep', {
-      documentId: packetId,
-      stepSystemName: stepName,
-    });
+    return this.post<IPostStepNameRequest, IPostStepNameResponse>(
+      '/document/changestep',
+      {
+        documentId: packetId,
+        stepSystemName: stepName,
+      }
+    );
   }
 
   public getFilesIdentifiers(packetId: number) {

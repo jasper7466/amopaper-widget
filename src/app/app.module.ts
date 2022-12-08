@@ -63,6 +63,8 @@ import { DocumentsDisplayerComponent } from './components/organisms/documents-di
 import { DeclensionPipe } from './pipes/declension.pipe';
 import { UploadsFoldableListComponent } from './components/templates/uploads-foldable-list/uploads-foldable-list.component';
 import { DocumentsListComponent } from './components/templates/documents-list/documents-list.component';
+import { PacketPagePreviewComponent } from './pages/packet-pages/packet-page-preview/packet-page-preview.component';
+import { PacketPagePrepareComponent } from './pages/packet-pages/packet-page-prepare/packet-page-prepare.component';
 
 registerLocaleData(localeRu, 'ru');
 @NgModule({
@@ -116,6 +118,8 @@ registerLocaleData(localeRu, 'ru');
     DeclensionPipe,
     UploadsFoldableListComponent,
     DocumentsListComponent,
+    PacketPagePreviewComponent,
+    PacketPagePrepareComponent,
   ],
   imports: [
     BrowserModule,

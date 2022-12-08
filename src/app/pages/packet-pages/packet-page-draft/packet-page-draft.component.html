@@ -3,11 +3,15 @@
 </app-main-content-wrapper> -->
 <app-banner-awaiting class="banner"></app-banner-awaiting>
 <app-footer>
-  <app-button styleOption="blank" (onClick)="clickBackButtonHandler()"
+  <app-button
+    class="left-side"
+    styleOption="blank"
+    (onClick)="backButtonHandler()"
     >Назад</app-button
   >
   <app-button
-    (onClick)="clickRemoveButton()"
+    class="right-side"
+    (onClick)="removeButtonHandler()"
     styleOption="blank"
     colorOption="danger"
     >Удалить</app-button

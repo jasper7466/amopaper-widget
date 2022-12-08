@@ -15,17 +15,25 @@
   ></app-preloader>
 </app-main-content-wrapper>
 
-<app-footer *ngIf="!isAwaiting">
+<app-footer>
   <app-button
-    [isEnabled]="this.isCreateButtonEnabled"
-    (onClick)="clickCreateDraftButtonHandler()"
+    class="left-side"
+    [isEnabled]="this.isControlsEnabled"
+    (onClick)="submitDraftButtonHandler()"
+    >Далее</app-button
+  >
+  <app-button
+    class="left-side"
+    [isEnabled]="this.isControlsEnabled"
+    (onClick)="saveDraftButtonHandler()"
     styleOption="blank"
     colorOption="regular"
     >Сохранить черновик</app-button
   >
   <app-button
-    class="cancel-button"
-    (onClick)="clickCancelButtonHandler()"
+    class="right-side"
+    [isEnabled]="this.isControlsEnabled"
+    (onClick)="cancelButtonHandler()"
     styleOption="skeleton"
     colorOption="regular"
     >Отмена</app-button

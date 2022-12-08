@@ -72,6 +72,7 @@
         </defs>
       </svg>
     </div>
+
     <div class="sign-info__fold-area">
       <table class="sign-info__table">
         <tbody>
@@ -85,7 +86,7 @@
             <td class="sign-info__table-cell sign-info__table-cell_data">
               {{
                 (senderSignature$ | async)?.snapshot
-                  ?.procuratoryIssueDateTimeUtc | date: "d MMM y, h:mm"
+                  ?.procuratoryIssueDateTimeUtc | date : "d MMM y, h:mm"
               }}
             </td>
           </tr>
@@ -107,7 +108,7 @@
             <td class="sign-info__table-cell sign-info__table-cell_data">
               {{
                 (senderSignature$ | async)?.signingDateTime
-                  | date: "d MMM y, h:mm"
+                  | date : "d MMM y, h:mm"
               }}
             </td>
           </tr>

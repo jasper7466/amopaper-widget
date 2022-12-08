@@ -3,7 +3,7 @@ import {
   GetCustomFieldsResponse,
   customField,
   PatchLeadRequestBody,
-  PatchLeadResponse,
+  IPatchLeadResponse,
   GetLeadByIdResponse,
 } from './amo-api.types';
 import { map, Observable, tap, expand, EMPTY, reduce } from 'rxjs';
@@ -77,7 +77,7 @@ export class AmoApiService {
   }
 
   patchLeadById(id: number, data: Partial<PatchLeadRequestBody>) {
-    return this.patch$<PatchLeadResponse>(`/leads/${id}`, data);
+    return this.patch$<IPatchLeadResponse>(`/leads/${id}`, data);
   }
 
   getLeadById$(id: number): Observable<GetLeadByIdResponse> {

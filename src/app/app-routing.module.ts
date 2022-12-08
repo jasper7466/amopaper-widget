@@ -9,6 +9,8 @@ import { WidgetPageNewComponent } from './pages/widget-pages/widget-page-new/wid
 import { WidgetPagePacketComponent } from './pages/widget-pages/widget-page-packet/widget-page-packet.component';
 import { PacketPageDraftComponent } from './pages/packet-pages/packet-page-draft/packet-page-draft.component';
 import { PacketPageEndComponent } from './pages/packet-pages/packet-page-end/packet-page-end.component';
+import { PacketPagePreviewComponent } from './pages/packet-pages/packet-page-preview/packet-page-preview.component';
+import { PacketPagePrepareComponent } from './pages/packet-pages/packet-page-prepare/packet-page-prepare.component';
 
 const routes: Routes = [
   { path: '', component: StartupPageComponent },
@@ -25,6 +27,8 @@ const routes: Routes = [
         component: WidgetPagePacketComponent,
         children: [
           { path: 'draft', component: PacketPageDraftComponent },
+          { path: 'prepare', component: PacketPagePrepareComponent },
+          { path: 'preview', component: PacketPagePreviewComponent },
           { path: 'end', component: PacketPageEndComponent },
         ],
       },

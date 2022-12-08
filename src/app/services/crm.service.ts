@@ -18,7 +18,7 @@ import { AmoApiService } from './api/amo/amo-api.service';
 import { documentPacketsIdCrmFieldName } from '../constants/config';
 import { updateCrmContextAction } from '../store/crm-context/actions';
 import { setPacketsIdsAction } from '../store/packets-list/actions';
-import { PatchLeadResponse } from './api/amo/amo-api.types';
+import { IPatchLeadResponse } from './api/amo/amo-api.types';
 
 @Injectable({
   providedIn: 'root',
@@ -121,7 +121,7 @@ export class CrmService {
     return this.setLeadPacketsIds(null);
   }
 
-  public attachPacketToLead(packetId: number): Observable<PatchLeadResponse> {
+  public attachPacketToLead(packetId: number): Observable<IPatchLeadResponse> {
     return this.getLeadPacketsIds().pipe(
       switchMap((packetsIds) =>
         this.setLeadPacketsIds(packetsIds.concat(packetId))

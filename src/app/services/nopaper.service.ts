@@ -1,3 +1,4 @@
+import { IPatchLeadResponse } from './api/amo/amo-api.types';
 import { setPacketDetailsAction } from './../store/packets-list/actions';
 import { updateAccessTokenAction } from './../store/access-token/actions';
 import { Injectable } from '@angular/core';
@@ -5,7 +6,9 @@ import { Store } from '@ngrx/store';
 import {
   filter,
   first,
+  forkJoin,
   map,
+  mergeMap,
   Observable,
   Subject,
   switchMap,
@@ -26,6 +29,7 @@ import {
   IGetFilesIdentifiersResponse,
   IGetStepNameResponse,
   IPostDraftRequest,
+  IPostStepNameResponse,
   PostDraftRequestFileItem,
 } from './api/nopaper/nopaper-api.types';
 import { CrmService } from './crm.service';
@@ -58,16 +62,22 @@ export class NopaperService {
       );
   }
 
-  public postPacket(): Observable<any> {
+  public postDraft(): Observable<{ packetId: number }> {
     const packetBody = this.composePostDraftRequestBody();
+    let packetId = 0;
 
-    return this.nopaperApiService
-      .postPacket(packetBody)
-      .pipe(
-        switchMap((response) =>
-          this.crmService.attachPacketToLead(parseInt(response.documentId))
-        )
-      );
+    return this.nopaperApiService.postPacket(packetBody).pipe(
+      tap((response) => (packetId = parseInt(response.documentId))),
+      switchMap(() => this.crmService.attachPacketToLead(packetId)),
+      map(() => ({ packetId }))
+    );
+  }
+
+  public submitDraft(packetId: number): Observable<any> {
+    return this.nopaperApiService.setPacketStepName(
+      packetId,
+      'nopaperPrepareFiles'
+    );
   }
 
   public removeDraft(packetId: number) {
@@ -129,19 +139,17 @@ export class NopaperService {
   }
 
   public getPacketDetails(packetId: number) {
-    return this.nopaperApiService
-      .getPacketDetails(packetId)
-      .pipe(
-        tap((response) =>
-          this.store.dispatch(
-            setPacketDetailsAction({
-              packetId: packetId,
-              title: response.title,
-              creationDate: response.dateCreate,
-            })
-          )
+    return this.nopaperApiService.getPacketDetails(packetId).pipe(
+      tap((response) =>
+        this.store.dispatch(
+          setPacketDetailsAction({
+            packetId: packetId,
+            title: response.title,
+            creationDate: response.dateCreate,
+          })
         )
-      );
+      )
+    );
   }
 
   private composePostDraftRequestBody(): IPostDraftRequest {

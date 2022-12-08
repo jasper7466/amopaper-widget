@@ -44,12 +44,15 @@ export class RoutingService {
 
     switch (stepName) {
       case 'new':
+        destination = 'draft';
+        break;
       case 'nopaperPreview':
       case 'nopaperPreviewBeforeOferta':
       case 'nopaperOfertaSenderPreview':
-        destination = 'draft';
+        destination = 'preview';
         break;
       case 'nopaperPrepareFiles':
+        destination = 'prepare';
         break;
       case 'nopaperReceiverSigning':
         break;
@@ -57,7 +60,7 @@ export class RoutingService {
         destination = 'end';
         break;
       default:
-        this.goPacketsListPage();
+        // this.goPacketsListPage();
         return;
     }
 

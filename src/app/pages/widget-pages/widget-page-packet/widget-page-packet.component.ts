@@ -1,3 +1,4 @@
+import { filter, Subscription } from 'rxjs';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -11,7 +12,8 @@ import { packetStepNameSelector } from 'src/app/store/packets-list/selectors';
   styleUrls: ['./widget-page-packet.component.css'],
 })
 export class WidgetPagePacketComponent implements OnInit, OnDestroy {
-  public packetId: number;
+  protected packetId: number;
+  private storedStepNameSubscription: Subscription;
 
   constructor(
     private routingService: RoutingService,
@@ -24,7 +26,7 @@ export class WidgetPagePacketComponent implements OnInit, OnDestroy {
     this.packetId = this.route.snapshot.params['id'];
     this.nopaperService.startPacketPolling(this.packetId);
 
-    this.store
+    this.storedStepNameSubscription = this.store
       .select(packetStepNameSelector(this.packetId))
       .subscribe((stepName) => {
         this.routingService.goMatchedStepPacketPage(stepName, this.packetId);
@@ -32,5 +34,6 @@ export class WidgetPagePacketComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.nopaperService.stopPacketsStepPollingAll();
+    this.storedStepNameSubscription.unsubscribe();
   }
 }

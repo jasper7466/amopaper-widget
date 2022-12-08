@@ -28,11 +28,11 @@ export class PacketPageDraftComponent implements OnInit {
     this.nopaperService.getPacketFilesIds(this.id).subscribe();
   }
 
-  public clickBackButtonHandler(): void {
+  public backButtonHandler(): void {
     this.routingService.goPacketsListPage();
   }
 
-  public clickRemoveButton(): void {
+  public removeButtonHandler(): void {
     this.nopaperService.removeDraft(this.id).subscribe();
   }
 }

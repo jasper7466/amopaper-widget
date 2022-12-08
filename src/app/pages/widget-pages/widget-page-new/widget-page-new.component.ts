@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { combineLatestWith, Subscription } from 'rxjs';
+import { combineLatestWith, pipe, Subscription, switchMap, tap } from 'rxjs';
 import { NopaperService } from 'src/app/services/nopaper.service';
 import { RoutingService } from 'src/app/services/routing.service';
 import { isAddresseeAddedSelector } from 'src/app/store/addressee/selectors';
@@ -15,7 +15,7 @@ export class WidgetPageNewComponent implements OnInit, OnDestroy {
   isAddresseeAdded$ = this.store.select(isAddresseeAddedSelector);
   isAllFilesLoaded$ = this.store.select(isCompleteSelector);
 
-  isCreateButtonEnabled: boolean = false;
+  isControlsEnabled: boolean = false;
   isAwaiting: boolean = false;
 
   subscriptions: Subscription[] = [];
@@ -26,15 +26,34 @@ export class WidgetPageNewComponent implements OnInit, OnDestroy {
     private routingService: RoutingService
   ) {}
 
-  public clickCreateDraftButtonHandler(): void {
+  public saveDraftButtonHandler(): void {
     this.isAwaiting = true;
-    this.nopaperService.postPacket().subscribe(() => {
+    this.isControlsEnabled = false;
+
+    this.nopaperService.postDraft().subscribe(() => {
       this.isAwaiting = false;
       this.routingService.goPacketsListPage();
     });
   }
 
-  public clickCancelButtonHandler(): void {
+  public submitDraftButtonHandler(): void {
+    let packetId = 0;
+
+    this.isAwaiting = true;
+    this.isControlsEnabled = false;
+
+    this.nopaperService
+      .postDraft()
+      .pipe(
+        tap((result) => (packetId = result.packetId)),
+        switchMap(({ packetId }) => this.nopaperService.submitDraft(packetId))
+      )
+      .subscribe(() => {
+        this.routingService.goPacketPage(packetId);
+      });
+  }
+
+  public cancelButtonHandler(): void {
     this.routingService.goPacketsListPage();
   }
 
@@ -43,7 +62,7 @@ export class WidgetPageNewComponent implements OnInit, OnDestroy {
       this.isAddresseeAdded$
         .pipe(combineLatestWith(this.isAllFilesLoaded$))
         .subscribe(([isAddresseeAdded, isAllFilesLoaded]) => {
-          this.isCreateButtonEnabled = isAddresseeAdded && isAllFilesLoaded;
+          this.isControlsEnabled = isAddresseeAdded && isAllFilesLoaded;
         })
     );
   }
