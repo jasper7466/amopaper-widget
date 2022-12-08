@@ -8,8 +8,6 @@ import { ActionReducerMap, MetaReducer } from '@ngrx/store';
 import { crmContextReducer } from './crm-context/reducers';
 import { FILES_KEY, IFilesState } from './files';
 import { filesReducer } from './files/reducers';
-import { INopaperState, NOPAPER_KEY } from './nopaper';
-import { nopaperReducer } from './nopaper/reducers';
 import { ISignaturesState, SIGNATURES_KEY } from './signatures';
 import { signaturesReducer } from './signatures/reducers';
 import { IPacketsState, PACKETS_KEY } from './packets-list';
@@ -22,7 +20,6 @@ export interface State {
   [TOKEN_KEY]: ITokenState;
   [WIDGET_CONTEXT_KEY]: IAddresseeState;
   [FILES_KEY]: IFilesState;
-  [NOPAPER_KEY]: INopaperState;
   [SIGNATURES_KEY]: ISignaturesState;
   [PACKETS_KEY]: IPacketsState;
   [MISC_KEY]: IMiscState;
@@ -33,7 +30,6 @@ export const reducers: ActionReducerMap<State> = {
   [TOKEN_KEY]: accessTokenReducer,
   [WIDGET_CONTEXT_KEY]: widgetContextReducer,
   [FILES_KEY]: filesReducer,
-  [NOPAPER_KEY]: nopaperReducer,
   [SIGNATURES_KEY]: signaturesReducer,
   [PACKETS_KEY]: packetsReducer,
   [MISC_KEY]: miscReducer,
