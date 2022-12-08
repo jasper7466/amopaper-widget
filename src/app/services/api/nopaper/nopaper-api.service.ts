@@ -79,7 +79,7 @@ export class NopaperApiService {
 
   // Для для отладки с локальным сервером авторизации
   public getAmoAccessTokenLocally() {
-    return this.http.post<{ access_token: string }>(
+    return this.http.post<IGetAmoAccessTokenResponse>(
       'http://localhost:5200/access_token',
       {
         x_api_key: this.xApiKey,

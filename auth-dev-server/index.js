@@ -109,7 +109,7 @@ app.post("/access_token", (req, res) => {
     res.statusCode = 401;
     res.send();
   } else {
-    res.json({ access_token: secrets.tokens.access_token });
+    res.json({ accessToken: secrets.tokens.access_token });
   }
 });
 
