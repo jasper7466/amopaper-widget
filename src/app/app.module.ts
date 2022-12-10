@@ -65,6 +65,7 @@ import { UploadsFoldableListComponent } from './components/templates/uploads-fol
 import { DocumentsListComponent } from './components/templates/documents-list/documents-list.component';
 import { PacketPagePreviewComponent } from './pages/packet-pages/packet-page-preview/packet-page-preview.component';
 import { PacketPagePrepareComponent } from './pages/packet-pages/packet-page-prepare/packet-page-prepare.component';
+import { BannerDraftComponent } from './components/molecules/banner-draft/banner-draft.component';
 
 registerLocaleData(localeRu, 'ru');
 @NgModule({
@@ -120,6 +121,7 @@ registerLocaleData(localeRu, 'ru');
     DocumentsListComponent,
     PacketPagePreviewComponent,
     PacketPagePrepareComponent,
+    BannerDraftComponent,
   ],
   imports: [
     BrowserModule,

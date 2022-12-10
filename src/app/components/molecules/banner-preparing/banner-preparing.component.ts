@@ -1,15 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-banner-preparing',
   templateUrl: './banner-preparing.component.html',
-  styleUrls: ['./banner-preparing.component.css']
+  styleUrls: ['./banner-preparing.component.css'],
 })
-export class BannerPreparingComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
-}
+export class BannerPreparingComponent {}

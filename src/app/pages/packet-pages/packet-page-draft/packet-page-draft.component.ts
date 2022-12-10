@@ -1,3 +1,4 @@
+import { switchMap, tap } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NopaperService } from 'src/app/services/nopaper.service';
@@ -9,7 +10,8 @@ import { RoutingService } from 'src/app/services/routing.service';
   styleUrls: ['./packet-page-draft.component.css'],
 })
 export class PacketPageDraftComponent implements OnInit {
-  public id: number;
+  private id: number;
+  protected isControlsEnabled = true;
 
   constructor(
     private nopaperService: NopaperService,
@@ -25,7 +27,6 @@ export class PacketPageDraftComponent implements OnInit {
     }
 
     this.id = +id;
-    this.nopaperService.getPacketFilesIds(this.id).subscribe();
   }
 
   public backButtonHandler(): void {
@@ -34,5 +35,10 @@ export class PacketPageDraftComponent implements OnInit {
 
   public removeButtonHandler(): void {
     this.nopaperService.removeDraft(this.id).subscribe();
+  }
+
+  public submitDraftButtonHandler(): void {
+    this.isControlsEnabled = false;
+    this.nopaperService.submitDraft(this.id).subscribe();
   }
 }

@@ -1,12 +1,13 @@
-<!-- <app-main-content-wrapper>
-  <app-banner-awaiting class="banner"></app-banner-awaiting>
-</app-main-content-wrapper> -->
-<app-banner-awaiting class="banner"></app-banner-awaiting>
+<app-banner-draft class="banner" animationOption="rotation"></app-banner-draft>
 <app-footer>
+  <app-button class="left-side" (onClick)="submitDraftButtonHandler()"
+    >Далее</app-button
+  >
   <app-button
     class="left-side"
     styleOption="blank"
     (onClick)="backButtonHandler()"
+    [isEnabled]="this.isControlsEnabled"
     >Назад</app-button
   >
   <app-button
@@ -14,11 +15,7 @@
     (onClick)="removeButtonHandler()"
     styleOption="blank"
     colorOption="danger"
+    [isEnabled]="this.isControlsEnabled"
     >Удалить</app-button
   >
 </app-footer>
-<!-- <app-footer>
-  <app-button (onClick)="removeDraft()" styleOption="blank" colorOption="danger"
-    >Удалить</app-button
-  >
-</app-footer> -->
