@@ -17,7 +17,7 @@ import {
 import { AmoApiService } from './api/amo/amo-api.service';
 import { documentPacketsIdCrmFieldName } from '../constants/config';
 import { updateCrmContextAction } from '../store/crm-context/actions';
-import { setPacketsIdsAction } from '../store/packets-list/actions';
+import { setPacketsIdsAction } from '../store/packets/actions';
 import { IPatchLeadResponse } from './api/amo/amo-api.types';
 
 @Injectable({

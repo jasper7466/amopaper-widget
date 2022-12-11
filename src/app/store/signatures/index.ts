@@ -1,3 +1,4 @@
+import { IGetFilesByIdsResponse } from './../../services/api/nopaper/nopaper-api.types';
 import {
   IGetFilesIdentifiersResponse,
   IGetFileSignatureResponse,
@@ -7,6 +8,7 @@ export const SIGNATURES_KEY = 'signatures';
 
 export interface ISignaturesState {
   identifiers: IGetFilesIdentifiersResponse;
+  files: IGetFilesByIdsResponse;
   signature: IGetFileSignatureResponse;
 }
 
@@ -14,11 +16,12 @@ export const initialState: ISignaturesState = {
   identifiers: {
     signDocumentList: [],
     stampDocumentList: [],
-    ofertaOriginal: [],
-    ofertaWithStamp: [],
+    // ofertaOriginal: {},
+    // ofertaWithStamp: {},
     procuratoryOriginalList: [],
     procuratoryWithStampList: [],
   },
+  files: [],
   signature: [
     {
       certificateId: -1,

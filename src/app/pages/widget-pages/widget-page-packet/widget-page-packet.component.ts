@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { NopaperService } from 'src/app/services/nopaper.service';
 import { RoutingService } from 'src/app/services/routing.service';
-import { packetStepNameSelector } from 'src/app/store/packets-list/selectors';
+import { packetStepNameSelector } from 'src/app/store/packets/selectors';
 
 @Component({
   selector: 'app-widget-page-packet',

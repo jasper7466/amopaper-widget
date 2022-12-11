@@ -80,8 +80,8 @@ type DocumentListItemShortened = Omit<DocumentListItem, 'SourceDocumentFileId'>;
 export interface IGetFilesIdentifiersResponse {
   signDocumentList: DocumentListItem[];
   stampDocumentList: DocumentListItem[];
-  ofertaOriginal?: DocumentListItemShortened[];
-  ofertaWithStamp?: DocumentListItemShortened[];
+  ofertaOriginal?: DocumentListItemShortened;
+  ofertaWithStamp?: DocumentListItemShortened;
   procuratoryOriginalList: DocumentListItemShortened[];
   procuratoryWithStampList: DocumentListItemShortened[];
 }
@@ -144,3 +144,15 @@ export interface IGetPacketDetailsResponse {
   dateCreate: string;
   availableStatuses: any[];
 }
+
+export interface IGetFilesByIdsRequest {
+  documentFileIdList: number[];
+}
+
+type FilesResponseRecord = {
+  documentFileId: number;
+  base64Content: string;
+  fileName: string;
+};
+
+export interface IGetFilesByIdsResponse extends Array<FilesResponseRecord> {}

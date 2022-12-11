@@ -15,6 +15,8 @@ import {
   IGetAmoAccessTokenResponse,
   IGetPacketDetailsRequest,
   IPostStepNameResponse,
+  IGetFilesByIdsRequest,
+  IGetFilesByIdsResponse,
 } from './nopaper-api.types';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
@@ -130,6 +132,13 @@ export class NopaperApiService {
     return this.post<IGetFilesIdsRequest, IGetFilesIdentifiersResponse>(
       '/document/file-description-v2',
       { documentId: packetId }
+    );
+  }
+
+  public getFilesByIds(filesIds: number[]) {
+    return this.post<IGetFilesByIdsRequest, IGetFilesByIdsResponse>(
+      '/document/file-list',
+      { documentFileIdList: filesIds }
     );
   }
 

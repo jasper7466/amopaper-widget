@@ -10,8 +10,8 @@ import { FILES_KEY, IFilesState } from './files';
 import { filesReducer } from './files/reducers';
 import { ISignaturesState, SIGNATURES_KEY } from './signatures';
 import { signaturesReducer } from './signatures/reducers';
-import { IPacketsState, PACKETS_KEY } from './packets-list';
-import { packetsReducer } from './packets-list/reducers';
+import { IPacketsState, PACKETS_KEY } from './packets';
+import { packetsReducer } from './packets/reducers';
 import { IMiscState, MISC_KEY } from './misc';
 import { miscReducer } from './misc/reducers';
 

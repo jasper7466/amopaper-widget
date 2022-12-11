@@ -66,6 +66,7 @@ import { DocumentsListComponent } from './components/templates/documents-list/do
 import { PacketPagePreviewComponent } from './pages/packet-pages/packet-page-preview/packet-page-preview.component';
 import { PacketPagePrepareComponent } from './pages/packet-pages/packet-page-prepare/packet-page-prepare.component';
 import { BannerDraftComponent } from './components/molecules/banner-draft/banner-draft.component';
+// import { PdfPreviewWebModule } from 'local_modules/pdf-preview/src/public-api';
 
 registerLocaleData(localeRu, 'ru');
 @NgModule({
@@ -125,6 +126,7 @@ registerLocaleData(localeRu, 'ru');
   ],
   imports: [
     BrowserModule,
+    // PdfPreviewWebModule,
     AppRoutingModule,
     HttpClientModule,
     StoreModule.forRoot({}, {}),

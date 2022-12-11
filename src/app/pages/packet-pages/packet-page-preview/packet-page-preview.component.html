@@ -1,1 +1,19 @@
-<p>packet-page-preview works!</p>
+<app-main-content-wrapper>
+  <app-stage-header
+    [statusLabelStatus]="(packet$ | async)?.stepName! | toLabelStatus"
+    [documentsCount]="(filesIds$ | async)?.length || null"
+  >
+    {{ (packet$ | async)?.title }}
+  </app-stage-header>
+
+  <!-- <ng-container *ngIf="!isAwaiting">
+    <app-addressee-selector></app-addressee-selector>
+    <app-documents-uploader></app-documents-uploader>
+  </ng-container> -->
+
+  <!-- <app-preloader
+    *ngIf="isAwaiting"
+    class="preloader"
+    animationOption="rotation"
+  ></app-preloader> -->
+</app-main-content-wrapper>

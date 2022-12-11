@@ -1,5 +1,5 @@
 import { IPatchLeadResponse } from './api/amo/amo-api.types';
-import { setPacketDetailsAction } from './../store/packets-list/actions';
+import { setPacketDetailsAction } from '../store/packets/actions';
 import { updateAccessTokenAction } from './../store/access-token/actions';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
@@ -19,13 +19,15 @@ import {
 import { addresseeSelector } from '../store/addressee/selectors';
 import { filesSelector } from '../store/files/selectors';
 import { packetTitleSelector } from '../store/misc/selectors';
-import { setPacketStepAction } from '../store/packets-list/actions';
+import { setPacketStepAction } from '../store/packets/actions';
 import {
+  setFilesAction,
   setFilesIdentifiersAction,
   setFileSignatureAction,
 } from '../store/signatures/actions';
 import { NopaperApiService } from './api/nopaper/nopaper-api.service';
 import {
+  IGetFilesByIdsResponse,
   IGetFilesIdentifiersResponse,
   IGetStepNameResponse,
   IPostDraftRequest,
@@ -33,6 +35,7 @@ import {
   PostDraftRequestFileItem,
 } from './api/nopaper/nopaper-api.types';
 import { CrmService } from './crm.service';
+import { filesIdentifiersSelector } from '../store/signatures/selectors';
 
 const POLLING_INTERVAL_MS = 3000;
 @Injectable({
@@ -120,12 +123,24 @@ export class NopaperService {
 
   public getPacketFilesIds(
     packetId: number
-  ): Observable<IGetFilesIdentifiersResponse | null> {
+  ): Observable<IGetFilesIdentifiersResponse> {
     return this.nopaperApiService
       .getFilesIdentifiers(packetId)
       .pipe(
         tap((response) =>
           this.store.dispatch(setFilesIdentifiersAction(response))
+        )
+      );
+  }
+
+  private getFilesByIds(
+    filesIds: number[]
+  ): Observable<IGetFilesByIdsResponse> {
+    return this.nopaperApiService
+      .getFilesByIds(filesIds)
+      .pipe(
+        tap((response) =>
+          this.store.dispatch(setFilesAction({ payload: response }))
         )
       );
   }
@@ -149,6 +164,13 @@ export class NopaperService {
           })
         )
       )
+    );
+  }
+
+  public getPacketFiles(packetId: number) {
+    return this.getPacketFilesIds(packetId).pipe(
+      switchMap(() => this.store.select(filesIdentifiersSelector)),
+      switchMap((identifiers) => this.getFilesByIds(identifiers))
     );
   }
 

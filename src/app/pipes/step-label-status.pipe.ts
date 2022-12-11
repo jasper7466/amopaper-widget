@@ -34,6 +34,10 @@ export class StepToLabelStatusPipe implements PipeTransform {
       return 'unknown';
     }
 
+    if (!(stepName in stepToLabelStatusDict)) {
+      return 'unknown';
+    }
+
     return stepToLabelStatusDict[stepName];
   }
 }

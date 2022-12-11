@@ -15,7 +15,7 @@ import {
 export const packetsReducer = createReducer(
   initialState,
   on(setPacketsIdsAction, (state, { packetsIds }) => {
-    console.log('DISPATCHED: setPacketsIdsAction', packetsIds);
+    // console.log('DISPATCHED: setPacketsIdsAction', packetsIds);
 
     // Если набор пакетов не изменился
     if (
@@ -60,7 +60,7 @@ export const packetsReducer = createReducer(
     };
   }),
   on(setPacketStepAction, (state, { packetId, stepName }) => {
-    console.log('DISPATCHED: setPacketsStepAction', packetId, stepName);
+    // console.log('DISPATCHED: setPacketsStepAction', packetId, stepName);
 
     // if (!(packetId in state.packets)) {
     //   return {
@@ -88,7 +88,7 @@ export const packetsReducer = createReducer(
     };
   }),
   on(setPacketDetailsAction, (state, { packetId, title, creationDate }) => {
-    console.log('DISPATCHED: setPacketsDetailsAction', title, creationDate);
+    // console.log('DISPATCHED: setPacketsDetailsAction', title, creationDate);
 
     if (!(packetId in state.packets)) {
       return {

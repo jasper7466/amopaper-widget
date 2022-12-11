@@ -6,7 +6,7 @@ import { leadIdSelector } from 'src/app/store/crm-context/selectors';
 import {
   packetsIdsIsTouchedSelector,
   packetsIdsSelector,
-} from 'src/app/store/packets-list/selectors';
+} from 'src/app/store/packets/selectors';
 
 @Component({
   selector: 'app-widget-page-list',
