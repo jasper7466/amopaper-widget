@@ -4,7 +4,6 @@
   flex-direction: column;
   padding-top: 24px;
   padding-bottom: 40px;
-  border-top: 2px solid var(--line-color-gray);
 }
 
 .documents__title {

@@ -35,6 +35,7 @@ export class PacketPageDraftComponent implements OnInit {
 
   public removeButtonHandler(): void {
     this.nopaperService.removeDraft(this.id).subscribe();
+    this.routingService.goPacketsListPage();
   }
 
   public submitDraftButtonHandler(): void {

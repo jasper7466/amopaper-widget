@@ -60,7 +60,7 @@ export const packetsReducer = createReducer(
     };
   }),
   on(setPacketStepAction, (state, { packetId, stepName }) => {
-    // console.log('DISPATCHED: setPacketsStepAction', packetId, stepName);
+    console.log('DISPATCHED: setPacketsStepAction', packetId, stepName);
 
     // if (!(packetId in state.packets)) {
     //   return {

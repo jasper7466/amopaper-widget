@@ -1,7 +1,7 @@
 :host {
   box-sizing: border-box;
   padding-top: 24px;
-  border-top: 2px solid var(--line-color-gray);
+  border-bottom: 2px solid var(--line-color-gray);
 }
 
 .addressee__header {

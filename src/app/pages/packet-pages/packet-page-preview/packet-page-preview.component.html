@@ -6,14 +6,50 @@
     {{ (packet$ | async)?.title }}
   </app-stage-header>
 
-  <!-- <ng-container *ngIf="!isAwaiting">
-    <app-addressee-selector></app-addressee-selector>
-    <app-documents-uploader></app-documents-uploader>
-  </ng-container> -->
+  <ng-container *ngIf="!isAwaiting">
+    <app-subtitle class="subtitle"
+      >Файлы для предварительного просмотра</app-subtitle
+    >
 
-  <!-- <app-preloader
+    <npp-pdf-viewer>
+      <npp-pdf-view-element
+        *ngFor="let file of decodedFiles$ | async"
+        [source]="file"
+      ></npp-pdf-view-element>
+    </npp-pdf-viewer>
+  </ng-container>
+
+  <app-preloader
     *ngIf="isAwaiting"
     class="preloader"
     animationOption="rotation"
-  ></app-preloader> -->
+  ></app-preloader>
 </app-main-content-wrapper>
+
+<app-footer>
+  <app-button
+    class="left-side"
+    iconOption="sign"
+    [isEnabled]="!isAwaiting"
+    (onClick)="submitPreviewButtonHandler()"
+    >Подписать и отправить</app-button
+  >
+
+  <app-button
+    class="left-side"
+    (onClick)="removeButtonHandler()"
+    styleOption="blank"
+    colorOption="danger"
+    [isEnabled]="!isAwaiting"
+    >Удалить</app-button
+  >
+
+  <app-button
+    class="right-side"
+    [isEnabled]="!isAwaiting"
+    (onClick)="cancelButtonHandler()"
+    styleOption="skeleton"
+    colorOption="regular"
+    >Отмена</app-button
+  >
+</app-footer>

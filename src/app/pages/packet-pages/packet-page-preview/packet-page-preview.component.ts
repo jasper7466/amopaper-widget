@@ -1,34 +1,43 @@
+import { RoutingService } from 'src/app/services/routing.service';
 import {
+  decodedFilesSelector,
   filesIdentifiersSelector,
-  filesSelector,
 } from './../../../store/signatures/selectors';
-import { first, Observable, take, tap, switchMap } from 'rxjs';
+import { Observable, tap, switchMap, take, takeWhile, filter } from 'rxjs';
 import { packetSelector } from 'src/app/store/packets/selectors';
 import { Store } from '@ngrx/store';
 import { NopaperService } from 'src/app/services/nopaper.service';
 import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IPacket } from 'src/app/store/packets';
+import { clearFilesAction } from 'src/app/store/signatures/actions';
 
 @Component({
   selector: 'app-packet-page-preview',
   templateUrl: './packet-page-preview.component.html',
   styleUrls: ['./packet-page-preview.component.css'],
 })
-export class PacketPagePreviewComponent implements OnInit {
+export class PacketPagePreviewComponent implements OnInit, OnDestroy {
   private packetId: number;
 
   protected packet$: Observable<IPacket>;
   protected filesIds$ = this.store.select(filesIdentifiersSelector);
-  protected files$ = this.store.select(filesSelector);
+  protected decodedFiles$ = this.store.select(decodedFilesSelector);
+
+  protected isAwaiting: boolean = true;
+
+  protected downloadLink: string;
+  protected fileName: string;
+  protected file: File;
 
   constructor(
     private store: Store,
     private nopaperService: NopaperService,
+    private routingService: RoutingService,
     private route: ActivatedRoute
   ) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     const id = this.route.parent?.snapshot.paramMap.get('id');
 
     if (!id) {
@@ -36,8 +45,32 @@ export class PacketPagePreviewComponent implements OnInit {
     }
 
     this.packetId = parseInt(id);
-
     this.packet$ = this.store.select(packetSelector(this.packetId));
+
     this.nopaperService.getPacketFiles(this.packetId).subscribe();
+    this.decodedFiles$
+      .pipe(
+        filter((files) => files.length > 0),
+        take(1)
+      )
+      .subscribe(() => (this.isAwaiting = false));
+  }
+
+  public ngOnDestroy(): void {
+    this.store.dispatch(clearFilesAction());
+  }
+
+  protected submitPreviewButtonHandler(): void {
+    this.isAwaiting = true;
+    this.nopaperService.submitPreview(this.packetId).subscribe();
+  }
+
+  public cancelButtonHandler(): void {
+    this.routingService.goPacketsListPage();
+  }
+
+  public removeButtonHandler(): void {
+    this.nopaperService.removeDraft(this.packetId).subscribe();
+    this.routingService.goPacketsListPage();
   }
 }

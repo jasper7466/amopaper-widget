@@ -14,6 +14,9 @@ import { IPacketsState, PACKETS_KEY } from './packets';
 import { packetsReducer } from './packets/reducers';
 import { IMiscState, MISC_KEY } from './misc';
 import { miscReducer } from './misc/reducers';
+import { Injectable } from '@angular/core';
+import { Actions } from '@ngrx/effects';
+import { SignaturesEffects } from './signatures/effects';
 
 export interface State {
   [CONTEXT_KEY]: ICrmContextState;
@@ -38,3 +41,10 @@ export const reducers: ActionReducerMap<State> = {
 export const metaReducers: MetaReducer<State>[] = !environment.production
   ? []
   : [];
+
+@Injectable()
+export class AppEffects {
+  constructor(private actions$: Actions) {}
+}
+
+export const effects = [SignaturesEffects];

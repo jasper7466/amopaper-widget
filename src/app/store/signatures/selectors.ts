@@ -9,9 +9,14 @@ const identifiersSelector = createSelector(
   (state) => state.identifiers
 );
 
-export const filesSelector = createSelector(
+// export const rawFilesSelector = createSelector(
+//   featureSelector,
+//   (state) => state.rawFiles
+// );
+
+export const decodedFilesSelector = createSelector(
   featureSelector,
-  (state) => state.files
+  (state) => state.decodedFiles
 );
 
 const signatureSelector = createSelector(

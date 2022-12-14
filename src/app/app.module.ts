@@ -40,8 +40,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
-import { reducers, metaReducers } from './store';
-import { AppEffects } from './app.effects';
+import { reducers, metaReducers, effects } from './store';
 import { NgxMaskModule } from 'ngx-mask';
 import { AddAddresseeFormComponent } from './components/organisms/add-addressee-form/add-addressee-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -66,7 +65,7 @@ import { DocumentsListComponent } from './components/templates/documents-list/do
 import { PacketPagePreviewComponent } from './pages/packet-pages/packet-page-preview/packet-page-preview.component';
 import { PacketPagePrepareComponent } from './pages/packet-pages/packet-page-prepare/packet-page-prepare.component';
 import { BannerDraftComponent } from './components/molecules/banner-draft/banner-draft.component';
-// import { PdfPreviewWebModule } from 'local_modules/pdf-preview/src/public-api';
+import { PdfPreviewWebModule } from 'local_modules/pdf-preview/src/public-api';
 
 registerLocaleData(localeRu, 'ru');
 @NgModule({
@@ -126,19 +125,18 @@ registerLocaleData(localeRu, 'ru');
   ],
   imports: [
     BrowserModule,
-    // PdfPreviewWebModule,
+    PdfPreviewWebModule,
     AppRoutingModule,
     HttpClientModule,
-    StoreModule.forRoot({}, {}),
+    StoreModule.forRoot(reducers, {
+      metaReducers,
+    }),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,
     }),
-    EffectsModule.forRoot([AppEffects]),
+    EffectsModule.forRoot(effects),
     StoreRouterConnectingModule.forRoot(),
-    StoreModule.forRoot(reducers, {
-      metaReducers,
-    }),
     NgxMaskModule.forRoot(),
     ReactiveFormsModule,
   ],

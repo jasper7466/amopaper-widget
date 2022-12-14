@@ -8,7 +8,8 @@ export const SIGNATURES_KEY = 'signatures';
 
 export interface ISignaturesState {
   identifiers: IGetFilesIdentifiersResponse;
-  files: IGetFilesByIdsResponse;
+  rawFiles: IGetFilesByIdsResponse;
+  decodedFiles: File[];
   signature: IGetFileSignatureResponse;
 }
 
@@ -21,7 +22,8 @@ export const initialState: ISignaturesState = {
     procuratoryOriginalList: [],
     procuratoryWithStampList: [],
   },
-  files: [],
+  rawFiles: [],
+  decodedFiles: [],
   signature: [
     {
       certificateId: -1,

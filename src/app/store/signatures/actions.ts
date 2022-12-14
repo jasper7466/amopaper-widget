@@ -1,3 +1,4 @@
+import { SIGNATURES_KEY } from './index';
 import { createAction, props } from '@ngrx/store';
 import {
   IGetFilesByIdsResponse,
@@ -6,16 +7,25 @@ import {
 } from './../../services/api/nopaper/nopaper-api.types';
 
 export const setFilesIdentifiersAction = createAction(
-  '[SIGNATURES] set files identifiers action',
+  `[${SIGNATURES_KEY}] set files identifiers action`,
   props<IGetFilesIdentifiersResponse>()
 );
 
-export const setFilesAction = createAction(
-  '[SIGNATURES] set files action',
+export const setRawFilesAction = createAction(
+  `[${SIGNATURES_KEY}] set raw files action`,
   props<{ payload: IGetFilesByIdsResponse }>()
 );
 
+export const setDecodedFilesAction = createAction(
+  `[${SIGNATURES_KEY}] set decoded files action`,
+  props<{ payload: File[] }>()
+);
+
+export const clearFilesAction = createAction(
+  `[${SIGNATURES_KEY}] clear files action`
+);
+
 export const setFileSignatureAction = createAction(
-  '[SIGNATURES] set signatures list',
+  `[${SIGNATURES_KEY}] set signatures list`,
   props<IGetFileSignatureResponse>()
 );

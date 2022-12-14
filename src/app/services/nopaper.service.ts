@@ -21,7 +21,7 @@ import { filesSelector } from '../store/files/selectors';
 import { packetTitleSelector } from '../store/misc/selectors';
 import { setPacketStepAction } from '../store/packets/actions';
 import {
-  setFilesAction,
+  setRawFilesAction,
   setFilesIdentifiersAction,
   setFileSignatureAction,
 } from '../store/signatures/actions';
@@ -83,6 +83,13 @@ export class NopaperService {
     );
   }
 
+  public submitPreview(packetId: number): Observable<any> {
+    return this.nopaperApiService.setPacketStepName(
+      packetId,
+      'nopaperSenderSign'
+    );
+  }
+
   public removeDraft(packetId: number) {
     return this.nopaperApiService.setPacketStepName(packetId, 'nopaperDelete');
   }
@@ -140,7 +147,7 @@ export class NopaperService {
       .getFilesByIds(filesIds)
       .pipe(
         tap((response) =>
-          this.store.dispatch(setFilesAction({ payload: response }))
+          this.store.dispatch(setRawFilesAction({ payload: response }))
         )
       );
   }
