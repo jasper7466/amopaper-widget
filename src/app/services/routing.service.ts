@@ -54,6 +54,9 @@ export class RoutingService {
       case 'nopaperPrepareFiles':
         destination = 'prepare';
         break;
+      case 'nopaperSenderSign':
+        destination = 'sender-sign';
+        break;
       case 'nopaperReceiverSigning':
         break;
       case 'nopaperEnd':

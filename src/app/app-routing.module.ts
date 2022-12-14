@@ -1,3 +1,4 @@
+import { PacketPageSenderSignComponent } from './pages/packet-pages/packet-page-sender-sign/packet-page-sender-sign.component';
 import { NotificationPageComponent } from './pages/main-pages/notification-page/notification-page.component';
 import { LandingPageComponent } from './pages/main-pages/landing-page/landing-page.component';
 import { NgModule } from '@angular/core';
@@ -30,6 +31,7 @@ const routes: Routes = [
           { path: 'prepare', component: PacketPagePrepareComponent },
           { path: 'preview', component: PacketPagePreviewComponent },
           { path: 'end', component: PacketPageEndComponent },
+          { path: 'sender-sign', component: PacketPageSenderSignComponent },
         ],
       },
     ],

@@ -1,0 +1,20 @@
+<app-main-content-wrapper>
+  <app-stage-header
+    [statusLabelStatus]="(packet$ | async)?.stepName! | toLabelStatus"
+  >
+    {{ (packet$ | async)?.title }}
+  </app-stage-header>
+</app-main-content-wrapper>
+
+<app-banner-awaiting
+  class="banner"
+  animationOption="rotation"
+></app-banner-awaiting>
+<app-footer>
+  <app-button
+    class="left-side"
+    styleOption="blank"
+    (onClick)="backButtonHandler()"
+    >Назад</app-button
+  >
+</app-footer>

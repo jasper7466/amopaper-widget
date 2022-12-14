@@ -66,6 +66,7 @@ import { PacketPagePreviewComponent } from './pages/packet-pages/packet-page-pre
 import { PacketPagePrepareComponent } from './pages/packet-pages/packet-page-prepare/packet-page-prepare.component';
 import { BannerDraftComponent } from './components/molecules/banner-draft/banner-draft.component';
 import { PdfPreviewWebModule } from 'local_modules/pdf-preview/src/public-api';
+import { PacketPageSenderSignComponent } from './pages/packet-pages/packet-page-sender-sign/packet-page-sender-sign.component';
 
 registerLocaleData(localeRu, 'ru');
 @NgModule({
@@ -122,6 +123,7 @@ registerLocaleData(localeRu, 'ru');
     PacketPagePreviewComponent,
     PacketPagePrepareComponent,
     BannerDraftComponent,
+    PacketPageSenderSignComponent,
   ],
   imports: [
     BrowserModule,
