@@ -1,14 +1,10 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 export type StatusLabelStatus =
   | 'unknown'
   | 'draft'
+  | 'sign'
+  | 'sign-offer'
   | 'pending'
   | 'signed'
   | 'signed-single';
@@ -16,6 +12,8 @@ export type StatusLabelStatus =
 const statusCaptions: { [key in StatusLabelStatus]: string } = {
   unknown: 'Статус неизвестен',
   draft: 'Черновик',
+  sign: 'Подпишите',
+  'sign-offer': 'Оферта на подпись',
   pending: 'Ожидают подписи',
   signed: 'Подписаны',
   'signed-single': 'Подписано',

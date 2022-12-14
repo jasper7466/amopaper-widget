@@ -20,6 +20,14 @@
   background-color: var(--label-color-draft);
 }
 
+.label_sign {
+  background-color: var(--label-color-sign);
+}
+
+.label_sign-offer {
+  background-color: var(--label-color-sign);
+}
+
 .label_pending {
   background-color: var(--label-color-pending);
 }
