@@ -12,6 +12,7 @@ import {
   Observable,
   Subject,
   switchMap,
+  take,
   takeUntil,
   tap,
   timer,
@@ -177,6 +178,7 @@ export class NopaperService {
   public getPacketFiles(packetId: number) {
     return this.getPacketFilesIds(packetId).pipe(
       switchMap(() => this.store.select(filesIdentifiersSelector)),
+      take(1),
       switchMap((identifiers) => this.getFilesByIds(identifiers))
     );
   }
