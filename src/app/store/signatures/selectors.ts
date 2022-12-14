@@ -28,10 +28,10 @@ export const filesIdentifiersSelector = createSelector(
   identifiersSelector,
   (state) => {
     const identifiers: number[] = [];
-    const ofertaId = state.ofertaOriginal?.documentFileId;
+    const offerId = state.ofertaOriginal?.documentFileId;
 
-    if (ofertaId) {
-      identifiers.push(ofertaId);
+    if (offerId) {
+      identifiers.push(offerId);
     }
 
     identifiers.push(

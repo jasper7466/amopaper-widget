@@ -36,6 +36,7 @@ export const signaturesReducer = createReducer(
     return {
       ...state,
       identifiers: initialState.identifiers,
+      rawFiles: initialState.rawFiles,
       decodedFiles: initialState.decodedFiles,
     };
   }),

@@ -10,7 +10,7 @@ import { RoutingService } from 'src/app/services/routing.service';
   styleUrls: ['./packet-page-draft.component.css'],
 })
 export class PacketPageDraftComponent implements OnInit {
-  private id: number;
+  private packetId: number;
   protected isControlsEnabled = true;
 
   constructor(
@@ -26,7 +26,7 @@ export class PacketPageDraftComponent implements OnInit {
       throw new Error('Missing "id" parameter in parent path');
     }
 
-    this.id = +id;
+    this.packetId = parseInt(id);
   }
 
   public backButtonHandler(): void {
@@ -34,12 +34,12 @@ export class PacketPageDraftComponent implements OnInit {
   }
 
   public removeButtonHandler(): void {
-    this.nopaperService.removeDraft(this.id).subscribe();
+    this.nopaperService.removeDraft(this.packetId).subscribe();
     this.routingService.goPacketsListPage();
   }
 
   public submitDraftButtonHandler(): void {
     this.isControlsEnabled = false;
-    this.nopaperService.submitDraft(this.id).subscribe();
+    this.nopaperService.submitDraft(this.packetId).subscribe();
   }
 }

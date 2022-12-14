@@ -19,16 +19,11 @@ import { clearFilesAction } from 'src/app/store/signatures/actions';
 })
 export class PacketPagePreviewComponent implements OnInit, OnDestroy {
   private packetId: number;
+  protected isAwaiting: boolean = true;
 
   protected packet$: Observable<IPacket>;
   protected filesIds$ = this.store.select(filesIdentifiersSelector);
   protected decodedFiles$ = this.store.select(decodedFilesSelector);
-
-  protected isAwaiting: boolean = true;
-
-  protected downloadLink: string;
-  protected fileName: string;
-  protected file: File;
 
   constructor(
     private store: Store,
@@ -48,6 +43,7 @@ export class PacketPagePreviewComponent implements OnInit, OnDestroy {
     this.packet$ = this.store.select(packetSelector(this.packetId));
 
     this.nopaperService.getPacketFiles(this.packetId).subscribe();
+
     this.decodedFiles$
       .pipe(
         filter((files) => files.length > 0),

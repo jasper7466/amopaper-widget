@@ -117,14 +117,20 @@ export class CrmService {
     });
   }
 
-  resetPacketId$() {
-    return this.setLeadPacketsIds(null);
-  }
-
   public attachPacketToLead(packetId: number): Observable<IPatchLeadResponse> {
     return this.getLeadPacketsIds().pipe(
       switchMap((packetsIds) =>
         this.setLeadPacketsIds(packetsIds.concat(packetId))
+      )
+    );
+  }
+
+  public detachPacketFromLead(
+    packetId: number
+  ): Observable<IPatchLeadResponse> {
+    return this.getLeadPacketsIds().pipe(
+      switchMap((packetsIds) =>
+        this.setLeadPacketsIds(packetsIds.filter((id) => id !== packetId))
       )
     );
   }
