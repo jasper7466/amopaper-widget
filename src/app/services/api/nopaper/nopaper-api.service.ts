@@ -1,3 +1,4 @@
+import { ServicesCoreModule } from './../../services-core.module';
 import { clientUuidSelector } from './../../../store/crm-context/selectors';
 import {
   ICheckByPhoneResponse,
@@ -31,9 +32,7 @@ import { environment } from 'src/environments/environment';
 const BASE_URL = environment.nopaperBaseUrl;
 const BASE_URL_TOKEN = environment.nopaperBaseTokenUrl;
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class NopaperApiService {
   private headers: HttpHeaders;
 

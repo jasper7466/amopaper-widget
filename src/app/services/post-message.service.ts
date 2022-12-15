@@ -1,10 +1,9 @@
+import { ServicesCoreModule } from './services-core.module';
 import { Injectable } from '@angular/core';
-import { defer, timeout, Observable, flatMap, fromEvent } from 'rxjs';
+import { defer, timeout, Observable, fromEvent } from 'rxjs';
 import { filter, first, map } from 'rxjs/operators';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class PostMessageService<Requests, Responses> {
   private inbox$: Observable<MessageEvent>;
 

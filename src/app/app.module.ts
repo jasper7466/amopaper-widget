@@ -1,3 +1,4 @@
+import { ServicesCoreModule } from './services/services-core.module';
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
@@ -33,6 +34,7 @@ registerLocaleData(localeRu, 'ru');
     StoreRouterConnectingModule.forRoot(),
     ComponentsSharedModule,
     PagesSharedModule,
+    ServicesCoreModule,
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'ru' }],
   bootstrap: [AppComponent],

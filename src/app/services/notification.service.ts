@@ -1,3 +1,4 @@
+import { ServicesCoreModule } from './services-core.module';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -8,9 +9,7 @@ export type notification = {
   hint: string;
 };
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class NotificationService {
   context: notification;
 

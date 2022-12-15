@@ -1,3 +1,4 @@
+import { ServicesCoreModule } from './../../services-core.module';
 import { domainSelector } from './../../../store/crm-context/selectors';
 import {
   GetCustomFieldsResponse,
@@ -6,16 +7,14 @@ import {
   IPatchLeadResponse,
   GetLeadByIdResponse,
 } from './amo-api.types';
-import { map, Observable, tap, expand, EMPTY, reduce } from 'rxjs';
+import { map, Observable, expand, EMPTY, reduce } from 'rxjs';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { accessTokenSelector } from 'src/app/store/access-token/selectors';
 import { environment } from 'src/environments/environment';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class AmoApiService {
   private headers: HttpHeaders;
   private baseURL: string;

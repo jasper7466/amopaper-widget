@@ -1,10 +1,9 @@
+import { ServicesCoreModule } from './services-core.module';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StepName } from './api/nopaper/nopaper-api.types';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class RoutingService {
   constructor(private router: Router, private route: ActivatedRoute) {}
 

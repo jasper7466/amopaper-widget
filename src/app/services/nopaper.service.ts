@@ -1,4 +1,4 @@
-import { IPatchLeadResponse } from './api/amo/amo-api.types';
+import { ServicesCoreModule } from './services-core.module';
 import { setPacketDetailsAction } from '../store/packets/actions';
 import { updateAccessTokenAction } from './../store/access-token/actions';
 import { Injectable } from '@angular/core';
@@ -6,9 +6,7 @@ import { Store } from '@ngrx/store';
 import {
   filter,
   first,
-  forkJoin,
   map,
-  mergeMap,
   Observable,
   Subject,
   switchMap,
@@ -32,16 +30,13 @@ import {
   IGetFilesIdentifiersResponse,
   IGetStepNameResponse,
   IPostDraftRequest,
-  IPostStepNameResponse,
   PostDraftRequestFileItem,
 } from './api/nopaper/nopaper-api.types';
 import { CrmService } from './crm.service';
 import { filesIdentifiersSelector } from '../store/signatures/selectors';
 
 const POLLING_INTERVAL_MS = 3000;
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class NopaperService {
   private packetPollingBreakerById = new Subject<number>();
   private packetPollingBreakerAll = new Subject<void>();

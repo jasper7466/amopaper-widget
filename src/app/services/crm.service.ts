@@ -1,4 +1,4 @@
-import { updateAccessTokenAction } from './../store/access-token/actions';
+import { ServicesCoreModule } from './services-core.module';
 import { NopaperApiService } from './api/nopaper/nopaper-api.service';
 import { PostMessageResponses } from '../types/crm-messages.types';
 import { PostMessageService } from './post-message.service';
@@ -20,9 +20,7 @@ import { updateCrmContextAction } from '../store/crm-context/actions';
 import { setPacketsIdsAction } from '../store/packets/actions';
 import { IPatchLeadResponse } from './api/amo/amo-api.types';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class CrmService {
   private timeout = 3000;
   private packetIdFieldId: number;
