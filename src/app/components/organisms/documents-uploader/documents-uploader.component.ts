@@ -23,6 +23,7 @@ type Item = {
 export class DocumentsUploaderComponent {
   protected documentsTotalCount$ = this.store.select(totalCountSelector);
   protected documentsLoadedCount$ = this.store.select(loadedCountSelector);
+
   protected uploadedDocuments$: Observable<Item[]> = this.store
     .select(filesSelector)
     .pipe(
@@ -35,7 +36,7 @@ export class DocumentsUploaderComponent {
 
   constructor(private store: Store) {}
 
-  clearFilesList() {
+  protected clearFilesList() {
     this.store.dispatch(clearFilesListAction());
   }
 }

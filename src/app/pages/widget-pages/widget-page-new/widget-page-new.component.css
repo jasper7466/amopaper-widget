@@ -18,3 +18,8 @@
 .preloader {
   margin: auto;
 }
+
+.title-input {
+  padding-top: var(--spacing-2xl-32px);
+  border-top: 1px solid var(--line-color-gray);
+}

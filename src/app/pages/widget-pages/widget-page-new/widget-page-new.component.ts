@@ -5,6 +5,7 @@ import { NopaperService } from 'src/app/services/nopaper.service';
 import { RoutingService } from 'src/app/services/routing.service';
 import { isAddresseeAddedSelector } from 'src/app/store/addressee/selectors';
 import { isCompleteSelector } from 'src/app/store/files/selectors';
+import { setPacketTitleAction } from 'src/app/store/misc/actions';
 
 @Component({
   selector: 'app-widget-page-new',
@@ -12,13 +13,13 @@ import { isCompleteSelector } from 'src/app/store/files/selectors';
   styleUrls: ['./widget-page-new.component.css'],
 })
 export class WidgetPageNewComponent implements OnInit, OnDestroy {
-  isAddresseeAdded$ = this.store.select(isAddresseeAddedSelector);
-  isAllFilesLoaded$ = this.store.select(isCompleteSelector);
+  protected isAddresseeAdded$ = this.store.select(isAddresseeAddedSelector);
+  protected isAllFilesLoaded$ = this.store.select(isCompleteSelector);
 
-  isControlsEnabled: boolean = false;
-  isAwaiting: boolean = false;
+  protected isControlsEnabled: boolean = false;
+  protected isAwaiting: boolean = false;
 
-  subscriptions: Subscription[] = [];
+  protected subscriptions: Subscription[] = [];
 
   constructor(
     private store: Store,
@@ -26,7 +27,7 @@ export class WidgetPageNewComponent implements OnInit, OnDestroy {
     private routingService: RoutingService
   ) {}
 
-  public saveDraftButtonHandler(): void {
+  protected saveDraftButtonHandler(): void {
     this.isAwaiting = true;
     this.isControlsEnabled = false;
 
@@ -36,7 +37,7 @@ export class WidgetPageNewComponent implements OnInit, OnDestroy {
     });
   }
 
-  public submitDraftButtonHandler(): void {
+  protected submitDraftButtonHandler(): void {
     let packetId = 0;
 
     this.isAwaiting = true;
@@ -53,11 +54,15 @@ export class WidgetPageNewComponent implements OnInit, OnDestroy {
       });
   }
 
-  public cancelButtonHandler(): void {
+  protected cancelButtonHandler(): void {
     this.routingService.goPacketsListPage();
   }
 
-  ngOnInit(): void {
+  protected titleInputKeyUpHandler(value: string): void {
+    this.store.dispatch(setPacketTitleAction({ packetTitle: value }));
+  }
+
+  public ngOnInit(): void {
     this.subscriptions.push(
       this.isAddresseeAdded$
         .pipe(combineLatestWith(this.isAllFilesLoaded$))
@@ -67,7 +72,7 @@ export class WidgetPageNewComponent implements OnInit, OnDestroy {
     );
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 }

@@ -6,6 +6,11 @@
   <ng-container *ngIf="!isAwaiting">
     <app-addressee-selector></app-addressee-selector>
     <app-documents-uploader></app-documents-uploader>
+    <app-input
+      class="title-input"
+      label="Название пакета документов"
+      (onKeyUp)="titleInputKeyUpHandler($event)"
+    ></app-input>
   </ng-container>
 
   <app-preloader

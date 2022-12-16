@@ -4,8 +4,8 @@ import { setPacketTitleAction } from './actions';
 
 export const miscReducer = createReducer(
   initialState,
-  on(setPacketTitleAction, (state, { packetCaption }) => ({
+  on(setPacketTitleAction, (state, { packetTitle }) => ({
     ...state,
-    packetTitle: packetCaption,
+    packetTitle,
   }))
 );
