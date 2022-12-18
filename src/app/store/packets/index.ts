@@ -1,4 +1,4 @@
-import { StepName } from 'src/app/services/api/nopaper/nopaper-api.types';
+import { StepName } from 'src/app/services/api/nopaper-api/nopaper-api.types';
 
 export const PACKETS_KEY = 'packets';
 

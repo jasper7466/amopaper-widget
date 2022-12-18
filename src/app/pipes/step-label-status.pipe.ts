@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { StatusLabelStatus } from '../components/atoms/status-label/status-label.component';
-import { StepName } from '../services/api/nopaper/nopaper-api.types';
+import { StepName } from '../services/api/nopaper-api/nopaper-api.types';
 
 const stepToLabelStatusDict: { [key in StepName]: StatusLabelStatus } = {
   new: 'draft',

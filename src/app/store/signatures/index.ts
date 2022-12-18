@@ -1,13 +1,13 @@
-import { IGetFilesByIdsResponse } from './../../services/api/nopaper/nopaper-api.types';
+import { IGetFilesByIdsResponse } from '../../services/api/nopaper-api/nopaper-api.types';
 import {
-  IGetFilesIdentifiersResponse,
+  IGetFilesIdsResponse,
   IGetFileSignatureResponse,
-} from 'src/app/services/api/nopaper/nopaper-api.types';
+} from 'src/app/services/api/nopaper-api/nopaper-api.types';
 
 export const SIGNATURES_KEY = 'signatures';
 
 export interface ISignaturesState {
-  identifiers: IGetFilesIdentifiersResponse;
+  identifiers: IGetFilesIdsResponse;
   rawFiles: IGetFilesByIdsResponse;
   decodedFiles: File[];
   signature: IGetFileSignatureResponse;

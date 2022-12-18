@@ -1,5 +1,5 @@
 import { ServicesCoreModule } from './services-core.module';
-import { NopaperApiService } from './api/nopaper/nopaper-api.service';
+import { NopaperApiService } from './api/nopaper-api/nopaper-api.service';
 import { PostMessageResponses } from '../types/crm-messages.types';
 import { PostMessageService } from './post-message.service';
 import { Injectable } from '@angular/core';
@@ -14,11 +14,11 @@ import {
   tap,
   timer,
 } from 'rxjs';
-import { AmoApiService } from './api/amo/amo-api.service';
+import { AmoApiService } from './api/amo-api/amo-api.service';
 import { documentPacketsIdCrmFieldName } from '../constants/config';
 import { updateCrmContextAction } from '../store/crm-context/actions';
 import { setPacketsIdsAction } from '../store/packets/actions';
-import { IPatchLeadResponse } from './api/amo/amo-api.types';
+import { IPatchLeadResponse } from './api/amo-api/amo-api.types';
 
 @Injectable()
 export class CrmService {
@@ -69,7 +69,7 @@ export class CrmService {
   }
 
   public getPacketsFieldId() {
-    return this.amoApiService.getLeadsCustomFieldsAll$.pipe(
+    return this.amoApiService.getLeadsCustomFieldsAll().pipe(
       map((fields) =>
         fields.filter((field) => field.name === documentPacketsIdCrmFieldName)
       ),
@@ -134,7 +134,7 @@ export class CrmService {
   }
 
   private getLeadPacketsIds(): Observable<number[]> {
-    return this.amoApiService.getLeadById$(this.leadId).pipe(
+    return this.amoApiService.getLeadById(this.leadId).pipe(
       map((lead) => lead.custom_fields_values),
       map((fields) =>
         fields?.filter((field) => field.field_id === this.packetIdFieldId)

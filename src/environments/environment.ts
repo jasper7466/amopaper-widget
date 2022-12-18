@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   nopaperBaseUrl: 'https://nopaper-demo.abanking.ru/lk-api/external/api',
   nopaperBaseTokenUrl: 'https://nopaper-test.abanking.ru/lk-api/external/api',
-  getAmoBaseUrl: (domain: string) => '/api/v4',
+  getAmoBaseUrl: (domain?: string) => '/api/v4',
 };
 
 /*

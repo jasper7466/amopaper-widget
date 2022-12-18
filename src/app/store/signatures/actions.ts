@@ -2,13 +2,13 @@ import { SIGNATURES_KEY } from './index';
 import { createAction, props } from '@ngrx/store';
 import {
   IGetFilesByIdsResponse,
-  IGetFilesIdentifiersResponse,
+  IGetFilesIdsResponse,
   IGetFileSignatureResponse,
-} from './../../services/api/nopaper/nopaper-api.types';
+} from '../../services/api/nopaper-api/nopaper-api.types';
 
 export const setFilesIdentifiersAction = createAction(
   `[${SIGNATURES_KEY}] set files identifiers action`,
-  props<IGetFilesIdentifiersResponse>()
+  props<IGetFilesIdsResponse>()
 );
 
 export const setRawFilesAction = createAction(

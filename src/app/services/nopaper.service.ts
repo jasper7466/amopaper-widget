@@ -1,4 +1,3 @@
-import { ServicesCoreModule } from './services-core.module';
 import { setPacketDetailsAction } from '../store/packets/actions';
 import { updateAccessTokenAction } from './../store/access-token/actions';
 import { Injectable } from '@angular/core';
@@ -24,18 +23,20 @@ import {
   setFilesIdentifiersAction,
   setFileSignatureAction,
 } from '../store/signatures/actions';
-import { NopaperApiService } from './api/nopaper/nopaper-api.service';
+import { NopaperApiService } from './api/nopaper-api/nopaper-api.service';
 import {
   IGetFilesByIdsResponse,
-  IGetFilesIdentifiersResponse,
+  IGetFilesIdsResponse,
   IGetStepNameResponse,
   IPostDraftRequest,
   PostDraftRequestFileItem,
-} from './api/nopaper/nopaper-api.types';
+} from './api/nopaper-api/nopaper-api.types';
 import { CrmService } from './crm.service';
 import { filesIdentifiersSelector } from '../store/signatures/selectors';
+import { AccessTokenApiService } from './api/access-token-api/access-token-api.service';
 
 const POLLING_INTERVAL_MS = 3000;
+
 @Injectable()
 export class NopaperService {
   private packetPollingBreakerById = new Subject<number>();
@@ -48,11 +49,12 @@ export class NopaperService {
   constructor(
     private store: Store,
     private nopaperApiService: NopaperApiService,
+    private accessTokenApiService: AccessTokenApiService,
     private crmService: CrmService
   ) {}
 
   public getAmoAccessToken() {
-    return this.nopaperApiService
+    return this.accessTokenApiService
       .getAmoAccessToken()
       .pipe(
         tap(({ accessToken }) =>
@@ -124,9 +126,7 @@ export class NopaperService {
       );
   }
 
-  public getPacketFilesIds(
-    packetId: number
-  ): Observable<IGetFilesIdentifiersResponse> {
+  public getPacketFilesIds(packetId: number): Observable<IGetFilesIdsResponse> {
     return this.nopaperApiService
       .getFilesIdentifiers(packetId)
       .pipe(

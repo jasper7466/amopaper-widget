@@ -1,6 +1,6 @@
 import { Nullable } from '../../../types/common';
 
-type customFieldType =
+type CustomFieldType =
   | 'text'
   | 'numeric'
   | 'checkbox'
@@ -24,13 +24,13 @@ type customFieldType =
   | 'monetary'
   | 'file';
 
-type customFieldEnum = {
+type CustomFieldEnum = {
   id: number;
   value: string;
   sort: number;
 };
 
-type customFieldEntityType =
+type CustomFieldEntityType =
   | 'leads'
   | 'contacts'
   | 'companies'
@@ -38,23 +38,23 @@ type customFieldEntityType =
   | 'customers'
   | 'catalogs';
 
-type customFieldRemind = 'never' | 'day' | 'week' | 'month';
+type CustomFieldRemind = 'never' | 'day' | 'week' | 'month';
 
-export type customField = {
+export type CustomField = {
   id: number;
   name: string;
-  type: customFieldType;
+  type: CustomFieldType;
   account_id: number;
   code: Nullable<string>;
   sort: number;
   is_api_only: boolean;
-  enums: Nullable<customFieldEnum[]>;
+  enums: Nullable<CustomFieldEnum[]>;
   group_id: Nullable<string>;
   required_statuses: any[];
   is_deletable: boolean;
   is_predefined: boolean;
-  entity_type: customFieldEntityType;
-  remind?: Nullable<customFieldRemind>;
+  entity_type: CustomFieldEntityType;
+  remind?: Nullable<CustomFieldRemind>;
   triggers: any[];
   currency: Nullable<string>;
   hidden_statuses: [];
@@ -65,7 +65,7 @@ export type customField = {
   };
 };
 
-export interface GetCustomFieldsResponse {
+export interface IGetCustomFieldsResponse {
   _total_items: number;
   _page: number;
   _page_count: number;
@@ -81,25 +81,25 @@ export interface GetCustomFieldsResponse {
     };
   };
   _embedded: {
-    custom_fields: customField[];
+    custom_fields: CustomField[];
   };
 }
 
-interface Paginable {
+interface IPaginable {
   limit: number;
   page: number;
 }
 
-export interface GetCustomFieldsOptions extends Paginable {}
+export interface IGetCustomFieldsOptions extends IPaginable {}
 
-interface CustomFieldsValue {
+interface ICustomFieldsValue {
   field_id: number;
   values: {
     value: any;
   }[];
 }
 
-export interface PatchLeadRequestBody {
+export interface IPatchLeadRequestBody {
   name: string;
   price: number;
   status_id: number;
@@ -111,7 +111,7 @@ export interface PatchLeadRequestBody {
   updated_at: number;
   loss_reason_id: number;
   responsible_user_id: number;
-  custom_fields_values: CustomFieldsValue[];
+  custom_fields_values: ICustomFieldsValue[];
   _embedded: { [key: string]: any };
   request_id: string;
 }
@@ -122,7 +122,7 @@ export interface IPatchLeadResponse {
   request_id: string;
 }
 
-export interface GetLeadByIdResponse {
+export interface IGetLeadByIdResponse {
   id: number;
   name: string;
   price: number;
@@ -139,7 +139,7 @@ export interface GetLeadByIdResponse {
   updated_at: number;
   closest_task_at: number;
   is_deleted: boolean;
-  custom_fields_values: CustomFieldsValue[] | null;
+  custom_fields_values: ICustomFieldsValue[] | null;
   score: number | null;
   account_id: number;
   is_price_modified_by_robot: boolean;

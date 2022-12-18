@@ -3,10 +3,6 @@ export interface IBadResponse {
   errorText: string;
 }
 
-export interface IGetAmoAccessTokenResponse {
-  accessToken: string;
-}
-
 export interface ICheckByPhoneRequest {
   phonenumber: string;
 }
@@ -77,7 +73,7 @@ type DocumentListItem = {
 
 type DocumentListItemShortened = Omit<DocumentListItem, 'SourceDocumentFileId'>;
 
-export interface IGetFilesIdentifiersResponse {
+export interface IGetFilesIdsResponse {
   signDocumentList: DocumentListItem[];
   stampDocumentList: DocumentListItem[];
   ofertaOriginal?: DocumentListItemShortened;

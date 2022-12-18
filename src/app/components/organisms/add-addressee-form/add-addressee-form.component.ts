@@ -3,7 +3,7 @@ import {
   addAddresseeByVatIdAction,
   setAddresseeExistenceAction,
 } from '../../../store/addressee/actions';
-import { NopaperApiService } from '../../../services/api/nopaper/nopaper-api.service';
+import { NopaperApiService } from '../../../services/api/nopaper-api/nopaper-api.service';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Subject, tap } from 'rxjs';
 import { Store } from '@ngrx/store';

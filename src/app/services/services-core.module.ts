@@ -1,7 +1,6 @@
-import { NopaperApiService } from './api/nopaper/nopaper-api.service';
+import { ApiCoreModule } from './api/api-core.module';
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AmoApiService } from './api/amo/amo-api.service';
 import { CrmService } from './crm.service';
 import { FilesService } from './files.service';
 import { NopaperService } from './nopaper.service';
@@ -11,10 +10,8 @@ import { RoutingService } from './routing.service';
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule],
+  imports: [CommonModule, ApiCoreModule],
   providers: [
-    AmoApiService,
-    NopaperApiService,
     CrmService,
     FilesService,
     NopaperService,
