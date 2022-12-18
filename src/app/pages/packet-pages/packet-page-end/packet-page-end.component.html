@@ -5,9 +5,32 @@
     statusLabelStatus="signed"
     >Документы на подпись</app-stage-header
   >
+
   <app-addressee-displayer></app-addressee-displayer>
-  <app-documents-displayer (onShowSignInfo)="showSignInfo()"
-    >Документы со штампом
+
+  <app-documents-displayer caption="Загруженные документы">
+    <app-documents-list-item
+      *ngFor="let file of signedOriginalDocuments$ | async"
+      [fileId]="file.documentFileId"
+      [fileName]="file.fileName"
+      signStatus="signed"
+      (onShowSignInfo)="showSignInfo($event)"
+    ></app-documents-list-item>
+  </app-documents-displayer>
+
+  <app-documents-displayer caption="Документы со штампом">
+    <app-documents-list-item
+      *ngFor="let file of signedStampDocuments$ | async"
+      [fileId]="file.documentFileId"
+      [fileName]="file.fileName"
+    ></app-documents-list-item>
   </app-documents-displayer>
 </app-main-content-wrapper>
-<app-footer></app-footer>
+
+<app-footer>
+  <app-button class="left-side" (onClick)="backButtonHandler()"
+    >Назад</app-button
+  >
+</app-footer>
+
+<app-modal-sign-info [isLoading]="isSignatureLoading"></app-modal-sign-info>

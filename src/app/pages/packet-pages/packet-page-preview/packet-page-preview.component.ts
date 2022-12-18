@@ -3,7 +3,7 @@ import { CommonLogicService } from './../../../services/common-logic.service';
 import { RoutingService } from 'src/app/services/sub-services/routing.service';
 import {
   decodedFilesSelector,
-  filesIdentifiersSelector,
+  filesIdsPreviewSelector,
 } from './../../../store/signatures/selectors';
 import { Observable, take, filter } from 'rxjs';
 import { packetSelector } from 'src/app/store/packets/selectors';
@@ -22,7 +22,7 @@ export class PacketPagePreviewComponent implements OnInit, OnDestroy {
   protected isAwaiting: boolean = true;
 
   protected packet$: Observable<IPacket>;
-  protected filesIds$ = this.store.select(filesIdentifiersSelector);
+  protected filesIds$ = this.store.select(filesIdsPreviewSelector);
   protected decodedFiles$ = this.store.select(decodedFilesSelector);
 
   constructor(

@@ -37,7 +37,7 @@ import {
   IPostDraftRequest,
   PostDraftRequestFileItem,
 } from '../api/nopaper-api/nopaper-api.types';
-import { filesIdentifiersSelector } from '../../store/signatures/selectors';
+import { filesIdsPreviewSelector } from '../../store/signatures/selectors';
 import { AccessTokenApiService } from '../api/access-token-api/access-token-api.service';
 
 const POLLING_INTERVAL_MS = 3000;
@@ -217,11 +217,10 @@ export class NopaperService {
   public getFileSignature(
     fileId: number
   ): Observable<IGetFileSignatureResponse> {
-    return this.nopaperApiService
-      .getFileSignatures(fileId)
-      .pipe(
-        tap((response) => this.store.dispatch(setFileSignatureAction(response)))
-      );
+    return this.nopaperApiService.getFileSignatures(fileId).pipe(
+      tap(console.log),
+      tap((response) => this.store.dispatch(setFileSignatureAction(response)))
+    );
   }
 
   /**

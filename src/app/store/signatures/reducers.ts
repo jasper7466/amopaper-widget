@@ -41,7 +41,7 @@ export const signaturesReducer = createReducer(
     };
   }),
   on(setFileSignatureAction, (state, payload) => {
-    console.log('DISPATCHED: setFileSignatureAction');
+    console.log('DISPATCHED: setFileSignatureAction', payload);
     return {
       ...state,
       signature: payload,

@@ -1,3 +1,4 @@
+import { state } from '@angular/animations';
 import { SIGNATURES_KEY, ISignaturesState } from './index';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
@@ -9,26 +10,21 @@ const identifiersSelector = createSelector(
   (state) => state.identifiers
 );
 
-// export const rawFilesSelector = createSelector(
-//   featureSelector,
-//   (state) => state.rawFiles
-// );
-
 export const decodedFilesSelector = createSelector(
   featureSelector,
   (state) => state.decodedFiles
 );
 
-const signatureSelector = createSelector(
-  featureSelector,
-  (state) => state.signature
-);
+export const signatureSelector = createSelector(featureSelector, (state) => [
+  state.signature[0],
+  state.signature[1],
+]);
 
-export const filesIdentifiersSelector = createSelector(
+export const filesIdsPreviewSelector = createSelector(
   identifiersSelector,
   (state) => {
     const identifiers: number[] = [];
-    const offerId = state.ofertaOriginal?.documentFileId;
+    const offerId = state.ofertaOriginal.documentFileId;
 
     if (offerId) {
       identifiers.push(offerId);
@@ -42,9 +38,32 @@ export const filesIdentifiersSelector = createSelector(
   }
 );
 
-export const signaturesSignedIdentifiersSelector = createSelector(
+export const filesIdsSignedOriginal = createSelector(
   identifiersSelector,
-  (state) => state.signDocumentList
+  (state) => {
+    const offerOriginalId = state.ofertaOriginal;
+    const filesOriginalIds = [...state.signDocumentList];
+
+    if (offerOriginalId.documentFileId) {
+      filesOriginalIds.push(offerOriginalId);
+    }
+
+    return filesOriginalIds;
+  }
+);
+
+export const filesIdsSignedStamp = createSelector(
+  identifiersSelector,
+  (state) => {
+    const offerStampedId = state.ofertaWithStamp;
+    const filesStampedIds = [...state.stampDocumentList];
+
+    if (offerStampedId.documentFileId) {
+      filesStampedIds.push(offerStampedId);
+    }
+
+    return filesStampedIds;
+  }
 );
 
 export const signaturesSenderSignatureSelector = createSelector(

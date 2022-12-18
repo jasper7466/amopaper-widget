@@ -53,8 +53,6 @@
   width: 720px;
   background-color: var(--bg-color-main);
   opacity: 1;
-}
-
-.modal__main-content {
-  padding: var(--spacing-xl-24px) var(--spacing-2xl-32px);
+  max-height: 90%;
+  overflow-y: auto;
 }

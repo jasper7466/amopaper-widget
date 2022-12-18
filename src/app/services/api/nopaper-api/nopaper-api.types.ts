@@ -66,18 +66,21 @@ export interface IGetFilesIdsRequest {
 
 type DocumentListItem = {
   documentFileId: number;
-  SourceDocumentFileId: number;
+  sourceDocumentFileId: number;
   fileName: string;
   size: number;
 };
 
-type DocumentListItemShortened = Omit<DocumentListItem, 'SourceDocumentFileId'>;
+export type DocumentListItemShortened = Omit<
+  DocumentListItem,
+  'SourceDocumentFileId'
+>;
 
 export interface IGetFilesIdsResponse {
   signDocumentList: DocumentListItem[];
   stampDocumentList: DocumentListItem[];
-  ofertaOriginal?: DocumentListItemShortened;
-  ofertaWithStamp?: DocumentListItemShortened;
+  ofertaOriginal: DocumentListItemShortened;
+  ofertaWithStamp: DocumentListItemShortened;
   procuratoryOriginalList: DocumentListItemShortened[];
   procuratoryWithStampList: DocumentListItemShortened[];
 }
@@ -98,7 +101,7 @@ type Snapshot = {
   procuratoryRevokeDateTimeUtc: string;
 };
 
-type SignatureInfo = {
+export type SignatureInfo = {
   certificateId: number;
   certificateOwner: string;
   confirmCode: string;

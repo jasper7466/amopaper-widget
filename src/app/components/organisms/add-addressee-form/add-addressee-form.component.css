@@ -1,6 +1,7 @@
 :host {
   display: flex;
   flex-direction: column;
+  padding: var(--spacing-xl-24px) var(--spacing-2xl-32px);
 }
 
 .add-addressee__title {

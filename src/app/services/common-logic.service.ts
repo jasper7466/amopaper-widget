@@ -1,4 +1,4 @@
-import { filesIdentifiersSelector } from './../store/signatures/selectors';
+import { filesIdsPreviewSelector } from './../store/signatures/selectors';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap, tap, map, Observable, take } from 'rxjs';
@@ -91,7 +91,7 @@ export class CommonLogicService {
 
   public getPacketFiles(packetId: number): Observable<any> {
     return this.nopaperService.getPacketFilesIds(packetId).pipe(
-      switchMap(() => this.store.select(filesIdentifiersSelector)),
+      switchMap(() => this.store.select(filesIdsPreviewSelector)),
       take(1),
       switchMap((identifiers) => this.nopaperService.getFilesByIds(identifiers))
     );

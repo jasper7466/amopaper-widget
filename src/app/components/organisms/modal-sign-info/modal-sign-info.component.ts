@@ -1,33 +1,32 @@
-import { Component, HostBinding, OnInit } from '@angular/core';
+import { Component, HostBinding, EventEmitter, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { signaturesSenderSignatureSelector } from 'src/app/store/signatures/selectors';
+import { signatureSelector } from 'src/app/store/signatures/selectors';
 
 @Component({
   selector: 'app-modal-sign-info',
   templateUrl: './modal-sign-info.component.html',
   styleUrls: ['./modal-sign-info.component.css'],
 })
-export class ModalSignInfoComponent implements OnInit {
+export class ModalSignInfoComponent {
   @HostBinding('class.opened') isOpened: boolean = false;
-  senderSignature$ = this.store.select(signaturesSenderSignatureSelector);
+  @Input() isLoading: boolean = true;
 
-  public signerName: string = '';
-  public signerVatId: string = '';
-  public procuratoryIssueDate: string = '';
-  public procuratoryId: string = '';
-  public signingDateTime: string = '';
+  protected signatures$ = this.store.select(signatureSelector);
+
+  protected closeTrigger = new EventEmitter<void>();
+  protected openTrigger = new EventEmitter<void>();
 
   constructor(private store: Store) {}
 
-  ngOnInit(): void {
-    // this.signature$.subscribe((value) => console.log(value));
+  protected okButtonHandler() {
+    this.closeTrigger.emit();
   }
 
-  close(): void {
-    this.isOpened = false;
+  public open(): void {
+    this.openTrigger.emit();
   }
 
-  open(): void {
-    this.isOpened = true;
+  public close(): void {
+    this.closeTrigger.emit();
   }
 }

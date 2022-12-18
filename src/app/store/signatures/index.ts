@@ -1,3 +1,4 @@
+import { DocumentListItemShortened } from './../../services/api/nopaper-api/nopaper-api.types';
 import { IGetFilesByIdsResponse } from '../../services/api/nopaper-api/nopaper-api.types';
 import {
   IGetFilesIdsResponse,
@@ -17,8 +18,8 @@ export const initialState: ISignaturesState = {
   identifiers: {
     signDocumentList: [],
     stampDocumentList: [],
-    // ofertaOriginal: {},
-    // ofertaWithStamp: {},
+    ofertaOriginal: {} as DocumentListItemShortened,
+    ofertaWithStamp: {} as DocumentListItemShortened,
     procuratoryOriginalList: [],
     procuratoryWithStampList: [],
   },
