@@ -1,9 +1,8 @@
-import { ServicesCoreModule } from './services-core.module';
-import { NopaperApiService } from './api/nopaper-api/nopaper-api.service';
-import { PostMessageResponses } from '../types/crm-messages.types';
+import { NopaperApiService } from '../api/nopaper-api/nopaper-api.service';
+import { PostMessageResponses } from '../../types/crm-messages.types';
 import { PostMessageService } from './post-message.service';
 import { Injectable } from '@angular/core';
-import { PostMessageRequests } from '../types/crm-messages.types';
+import { PostMessageRequests } from '../../types/crm-messages.types';
 import { Store } from '@ngrx/store';
 import {
   map,
@@ -14,15 +13,14 @@ import {
   tap,
   timer,
 } from 'rxjs';
-import { AmoApiService } from './api/amo-api/amo-api.service';
-import { documentPacketsIdCrmFieldName } from '../constants/config';
-import { updateCrmContextAction } from '../store/crm-context/actions';
-import { setPacketsIdsAction } from '../store/packets/actions';
-import { IPatchLeadResponse } from './api/amo-api/amo-api.types';
+import { AmoApiService } from '../api/amo-api/amo-api.service';
+import { documentPacketsIdCrmFieldName } from '../../constants/config';
+import { updateCrmContextAction } from '../../store/crm-context/actions';
+import { setPacketsIdsAction } from '../../store/packets/actions';
+import { IPatchLeadResponse } from '../api/amo-api/amo-api.types';
 
 @Injectable()
 export class CrmService {
-  private timeout = 3000;
   private packetIdFieldId: number;
   private leadId: number;
 
@@ -55,7 +53,7 @@ export class CrmService {
   //   }
   // }
 
-  getCrmContext$() {
+  public getCrmContext(): Observable<any> {
     return this.postMessageService
       .request$('getCrmContextRequest', 'getCrmContextResponse', null)
       .pipe(
@@ -68,7 +66,7 @@ export class CrmService {
       );
   }
 
-  public getPacketsFieldId() {
+  public getPacketsFieldId(): Observable<any> {
     return this.amoApiService.getLeadsCustomFieldsAll().pipe(
       map((fields) =>
         fields.filter((field) => field.name === documentPacketsIdCrmFieldName)

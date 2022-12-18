@@ -1,4 +1,4 @@
-import { RoutingService } from 'src/app/services/routing.service';
+import { RoutingService } from 'src/app/services/sub-services/routing.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({

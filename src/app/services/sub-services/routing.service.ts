@@ -1,7 +1,7 @@
-import { ServicesCoreModule } from './services-core.module';
+import { ServicesCoreModule } from '../services-core.module';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { StepName } from './api/nopaper-api/nopaper-api.types';
+import { StepName } from '../api/nopaper-api/nopaper-api.types';
 
 @Injectable()
 export class RoutingService {

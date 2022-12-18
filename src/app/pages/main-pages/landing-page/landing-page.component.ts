@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RoutingService } from 'src/app/services/routing.service';
+import { RoutingService } from 'src/app/services/sub-services/routing.service';
 
 @Component({
   selector: 'app-landing-page',

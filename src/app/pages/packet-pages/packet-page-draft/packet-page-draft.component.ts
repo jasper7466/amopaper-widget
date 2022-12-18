@@ -1,8 +1,7 @@
-import { switchMap, tap } from 'rxjs';
-import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NopaperService } from 'src/app/services/nopaper.service';
-import { RoutingService } from 'src/app/services/routing.service';
+import { CommonLogicService } from '../../../services/common-logic.service';
+import { Component, OnInit } from '@angular/core';
+import { RoutingService } from 'src/app/services/sub-services/routing.service';
 
 @Component({
   selector: 'app-packet-page-draft',
@@ -14,9 +13,9 @@ export class PacketPageDraftComponent implements OnInit {
   protected isControlsEnabled = true;
 
   constructor(
-    private nopaperService: NopaperService,
-    private routingService: RoutingService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private commonLogicService: CommonLogicService,
+    private routingService: RoutingService
   ) {}
 
   ngOnInit(): void {
@@ -34,12 +33,12 @@ export class PacketPageDraftComponent implements OnInit {
   }
 
   public removeButtonHandler(): void {
-    this.nopaperService.removeDraft(this.packetId).subscribe();
+    this.commonLogicService.deletePacket(this.packetId).subscribe();
     this.routingService.goPacketsListPage();
   }
 
   public submitDraftButtonHandler(): void {
     this.isControlsEnabled = false;
-    this.nopaperService.submitDraft(this.packetId).subscribe();
+    this.commonLogicService.submitPacketDraft(this.packetId).subscribe();
   }
 }

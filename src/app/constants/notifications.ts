@@ -1,4 +1,4 @@
-import { notification } from './../services/notification.service';
+import { notification } from '../services/sub-services/notification.service';
 
 export const notifications: { [key: string]: notification } = {
   getCrmContextTimeoutError: {

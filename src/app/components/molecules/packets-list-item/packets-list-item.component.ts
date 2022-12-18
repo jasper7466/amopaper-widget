@@ -8,8 +8,8 @@ import {
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { NopaperService } from 'src/app/services/nopaper.service';
-import { RoutingService } from 'src/app/services/routing.service';
+import { NopaperService } from 'src/app/services/sub-services/nopaper.service';
+import { RoutingService } from 'src/app/services/sub-services/routing.service';
 import { IPacket } from 'src/app/store/packets';
 import { packetSelector } from 'src/app/store/packets/selectors';
 

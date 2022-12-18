@@ -1,24 +1,13 @@
+import { SubServicesCoreModule } from './sub-services/sub-services-core.module';
 import { ApiCoreModule } from './api/api-core.module';
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CrmService } from './crm.service';
-import { FilesService } from './files.service';
-import { NopaperService } from './nopaper.service';
-import { NotificationService } from './notification.service';
-import { PostMessageService } from './post-message.service';
-import { RoutingService } from './routing.service';
+import { CommonLogicService } from './common-logic.service';
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule, ApiCoreModule],
-  providers: [
-    CrmService,
-    FilesService,
-    NopaperService,
-    NotificationService,
-    PostMessageService,
-    RoutingService,
-  ],
+  imports: [CommonModule, SubServicesCoreModule],
+  providers: [CommonLogicService],
 })
 export class ServicesCoreModule {
   constructor(@Optional() @SkipSelf() parentModule: ServicesCoreModule) {

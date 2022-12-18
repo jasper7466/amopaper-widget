@@ -1,4 +1,4 @@
-import { ServicesCoreModule } from './services-core.module';
+import { ServicesCoreModule } from '../services-core.module';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 

@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { CrmService } from 'src/app/services/crm.service';
-import { RoutingService } from 'src/app/services/routing.service';
+import { CrmService } from 'src/app/services/sub-services/crm.service';
+import { RoutingService } from 'src/app/services/sub-services/routing.service';
 import { leadIdSelector } from 'src/app/store/crm-context/selectors';
 import {
   packetsIdsIsTouchedSelector,

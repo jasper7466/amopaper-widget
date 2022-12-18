@@ -1,7 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { NopaperService } from 'src/app/services/nopaper.service';
-import { CrmService } from 'src/app/services/crm.service';
-import { ModalSignInfoComponent } from 'src/app/components/organisms/modal-sign-info/modal-sign-info.component';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-widget-page',
@@ -9,8 +6,5 @@ import { ModalSignInfoComponent } from 'src/app/components/organisms/modal-sign-
   styleUrls: ['./widget-page.component.css'],
 })
 export class WidgetPageComponent {
-  constructor(
-    public nopaperService: NopaperService,
-    public crmService: CrmService
-  ) {}
+  constructor() {}
 }

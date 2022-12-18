@@ -1,8 +1,8 @@
+import { CommonLogicService } from '../../../services/common-logic.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { combineLatestWith, pipe, Subscription, switchMap, tap } from 'rxjs';
-import { NopaperService } from 'src/app/services/nopaper.service';
-import { RoutingService } from 'src/app/services/routing.service';
+import { combineLatestWith, Subscription } from 'rxjs';
+import { RoutingService } from 'src/app/services/sub-services/routing.service';
 import { isAddresseeAddedSelector } from 'src/app/store/addressee/selectors';
 import { isCompleteSelector } from 'src/app/store/files/selectors';
 import { setPacketTitleAction } from 'src/app/store/misc/actions';
@@ -23,33 +23,27 @@ export class WidgetPageNewComponent implements OnInit, OnDestroy {
 
   constructor(
     private store: Store,
-    private nopaperService: NopaperService,
+    private commonLogicService: CommonLogicService,
     private routingService: RoutingService
   ) {}
 
-  protected saveDraftButtonHandler(): void {
+  protected saveButtonHandler(): void {
     this.isAwaiting = true;
     this.isControlsEnabled = false;
 
-    this.nopaperService.postDraft().subscribe(() => {
+    this.commonLogicService.createPacketDraft().subscribe(() => {
       this.isAwaiting = false;
       this.routingService.goPacketsListPage();
     });
   }
 
-  protected submitDraftButtonHandler(): void {
-    let packetId = 0;
-
+  protected nextButtonHandler(): void {
     this.isAwaiting = true;
     this.isControlsEnabled = false;
 
-    this.nopaperService
-      .postDraft()
-      .pipe(
-        tap((result) => (packetId = result.packetId)),
-        switchMap(({ packetId }) => this.nopaperService.submitDraft(packetId))
-      )
-      .subscribe(() => {
+    this.commonLogicService
+      .createAndSubmitPacketDraft()
+      .subscribe((packetId) => {
         this.routingService.goPacketPage(packetId);
       });
   }

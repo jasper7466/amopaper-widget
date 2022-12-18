@@ -1,13 +1,13 @@
-import { RoutingService } from 'src/app/services/routing.service';
+import { ActivatedRoute } from '@angular/router';
+import { CommonLogicService } from './../../../services/common-logic.service';
+import { RoutingService } from 'src/app/services/sub-services/routing.service';
 import {
   decodedFilesSelector,
   filesIdentifiersSelector,
 } from './../../../store/signatures/selectors';
-import { Observable, tap, switchMap, take, takeWhile, filter } from 'rxjs';
+import { Observable, take, filter } from 'rxjs';
 import { packetSelector } from 'src/app/store/packets/selectors';
 import { Store } from '@ngrx/store';
-import { NopaperService } from 'src/app/services/nopaper.service';
-import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IPacket } from 'src/app/store/packets';
 import { clearFilesAction } from 'src/app/store/signatures/actions';
@@ -27,8 +27,8 @@ export class PacketPagePreviewComponent implements OnInit, OnDestroy {
 
   constructor(
     private store: Store,
-    private nopaperService: NopaperService,
     private routingService: RoutingService,
+    private commonLogicService: CommonLogicService,
     private route: ActivatedRoute
   ) {}
 
@@ -40,9 +40,9 @@ export class PacketPagePreviewComponent implements OnInit, OnDestroy {
     }
 
     this.packetId = parseInt(id);
-    this.packet$ = this.store.select(packetSelector(this.packetId));
 
-    this.nopaperService.getPacketFiles(this.packetId).subscribe();
+    this.packet$ = this.store.select(packetSelector(this.packetId));
+    this.commonLogicService.getPacketFiles(this.packetId).subscribe();
 
     this.decodedFiles$
       .pipe(
@@ -56,9 +56,9 @@ export class PacketPagePreviewComponent implements OnInit, OnDestroy {
     this.store.dispatch(clearFilesAction());
   }
 
-  protected submitPreviewButtonHandler(): void {
+  protected submitButtonHandler(): void {
     this.isAwaiting = true;
-    this.nopaperService.submitPreview(this.packetId).subscribe();
+    this.commonLogicService.submitPreview(this.packetId).subscribe();
   }
 
   public cancelButtonHandler(): void {
@@ -66,7 +66,7 @@ export class PacketPagePreviewComponent implements OnInit, OnDestroy {
   }
 
   public removeButtonHandler(): void {
-    this.nopaperService.removeDraft(this.packetId).subscribe();
+    this.commonLogicService.deletePacket(this.packetId).subscribe();
     this.routingService.goPacketsListPage();
   }
 }

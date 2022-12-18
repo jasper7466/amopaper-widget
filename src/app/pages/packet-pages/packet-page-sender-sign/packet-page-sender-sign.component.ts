@@ -1,9 +1,10 @@
+import { CommonLogicService } from './../../../services/common-logic.service';
 import { packetSelector } from 'src/app/store/packets/selectors';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { IPacket } from 'src/app/store/packets';
 import { Observable } from 'rxjs';
-import { RoutingService } from 'src/app/services/routing.service';
+import { RoutingService } from 'src/app/services/sub-services/routing.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -30,6 +31,7 @@ export class PacketPageSenderSignComponent implements OnInit {
     }
 
     this.packetId = parseInt(id);
+
     this.packet$ = this.store.select(packetSelector(this.packetId));
   }
 

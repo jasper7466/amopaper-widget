@@ -1,4 +1,4 @@
-import { ServicesCoreModule } from './services-core.module';
+import { ServicesCoreModule } from '../services-core.module';
 import { Injectable } from '@angular/core';
 import { defer, timeout, Observable, fromEvent } from 'rxjs';
 import { filter, first, map } from 'rxjs/operators';

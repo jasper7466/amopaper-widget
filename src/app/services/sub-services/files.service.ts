@@ -1,13 +1,13 @@
-import { ServicesCoreModule } from './services-core.module';
+import { ServicesCoreModule } from '../services-core.module';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Observer } from 'rxjs';
-import { FileRecord } from '../store/files';
+import { FileRecord } from '../../store/files';
 import {
   addFilesAction,
   clearFilesListAction,
   loadFileCompleteAction,
-} from '../store/files/actions';
+} from '../../store/files/actions';
 
 @Injectable()
 export class FilesService {
