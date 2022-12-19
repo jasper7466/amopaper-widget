@@ -10,7 +10,8 @@
     "build-gh": "ng build --base-href https://jasper7466.github.io/amopaper-widget/",
     "publish-gh": "angular-cli-ghpages --dir=dist/amopaper-widget",
     "deploy-gh": "npm run build-gh && npm run publish-gh",
-    "auth-dev-server": "node ./auth-dev-server/index.js"
+    "auth-dev-server": "node ./auth-dev-server/index.js",
+    "lint": "ng lint"
   },
   "private": true,
   "dependencies": {
@@ -33,10 +34,18 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^15.0.4",
+    "@angular-eslint/builder": "15.1.0",
+    "@angular-eslint/eslint-plugin": "15.1.0",
+    "@angular-eslint/eslint-plugin-template": "15.1.0",
+    "@angular-eslint/schematics": "15.1.0",
+    "@angular-eslint/template-parser": "15.1.0",
     "@angular/cli": "~15.0.4",
     "@angular/compiler-cli": "^15.0.4",
     "@types/jasmine": "~4.0.0",
+    "@typescript-eslint/eslint-plugin": "5.44.0",
+    "@typescript-eslint/parser": "5.44.0",
     "angular-cli-ghpages": "^1.0.0",
+    "eslint": "^8.28.0",
     "express": "^4.18.1",
     "fs-extra": "^10.1.0",
     "jasmine-core": "~4.1.0",
