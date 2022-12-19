@@ -26,11 +26,13 @@ export class WidgetPagePacketComponent implements OnInit, OnDestroy {
     this.packetId = this.route.snapshot.params['id'];
     this.nopaperService.startPacketPolling(this.packetId);
 
-    this.storedStepNameSubscription = this.store
-      .select(packetStepNameSelector(this.packetId))
-      .subscribe((stepName) => {
-        this.routingService.goMatchedStepPacketPage(stepName, this.packetId);
-      });
+    this.nopaperService.getPacketStepName(this.packetId).subscribe(() => {
+      this.storedStepNameSubscription = this.store
+        .select(packetStepNameSelector(this.packetId))
+        .subscribe((stepName) => {
+          this.routingService.goMatchedStepPacketPage(stepName, this.packetId);
+        });
+    });
   }
   ngOnDestroy(): void {
     this.nopaperService.stopPacketsStepPollingAll();

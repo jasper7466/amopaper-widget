@@ -1,14 +1,14 @@
 <app-main-content-wrapper>
   <app-stage-header
     class="content__stage-header"
-    statusBannerStatus="signed"
-    statusLabelStatus="signed"
+    statusBannerStatus="pending"
+    statusLabelStatus="pending"
     >Документы на подпись</app-stage-header
   >
 
   <app-addressee-displayer></app-addressee-displayer>
 
-  <app-documents-displayer caption="Загруженные документы">
+  <app-documents-displayer caption="Документы">
     <app-documents-list-item
       *ngFor="let file of signedOriginalDocuments$ | async"
       [fileId]="file.documentFileId"
@@ -17,19 +17,18 @@
       (onShowSignInfo)="showSignInfo($event)"
     ></app-documents-list-item>
   </app-documents-displayer>
-
-  <app-documents-displayer caption="Документы со штампом">
-    <app-documents-list-item
-      *ngFor="let file of signedStampDocuments$ | async"
-      [fileId]="file.documentFileId"
-      [fileName]="file.fileName"
-    ></app-documents-list-item>
-  </app-documents-displayer>
 </app-main-content-wrapper>
 
 <app-footer>
   <app-button class="left-side" (onClick)="backButtonHandler()"
     >Назад</app-button
+  >
+  <app-button
+    class="right-side"
+    colorOption="danger"
+    styleOption="blank"
+    (onClick)="revokeButtonHandler()"
+    >Отозвать</app-button
   >
 </app-footer>
 

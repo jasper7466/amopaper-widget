@@ -1,21 +1,18 @@
-import { RoutingService } from './../../../services/sub-services/routing.service';
-import { NopaperService } from 'src/app/services/sub-services/nopaper.service';
-import {
-  filesIdsSignedOriginal,
-  filesIdsSignedStamp,
-} from './../../../store/signatures/selectors';
-import { CommonLogicService } from './../../../services/common-logic.service';
-import { ActivatedRoute } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { filesIdsSignedOriginal } from './../../../store/signatures/selectors';
+import { RoutingService } from 'src/app/services/sub-services/routing.service';
 import { ModalSignInfoComponent } from 'src/app/components/organisms/modal-sign-info/modal-sign-info.component';
+import { NopaperService } from 'src/app/services/sub-services/nopaper.service';
+import { CommonLogicService } from './../../../services/common-logic.service';
+import { Store } from '@ngrx/store';
+import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 @Component({
-  selector: 'app-packet-page-end',
-  templateUrl: './packet-page-end.component.html',
-  styleUrls: ['./packet-page-end.component.css'],
+  selector: 'app-packet-page-receiver-preview',
+  templateUrl: './packet-page-receiver-preview.component.html',
+  styleUrls: ['./packet-page-receiver-preview.component.css'],
 })
-export class PacketPageEndComponent implements OnInit {
+export class PacketPageReceiverPreviewComponent implements OnInit {
   @ViewChild(ModalSignInfoComponent) signInfo: ModalSignInfoComponent;
 
   private packetId: number;
@@ -23,14 +20,13 @@ export class PacketPageEndComponent implements OnInit {
   protected signedOriginalDocuments$ = this.store.select(
     filesIdsSignedOriginal
   );
-  protected signedStampDocuments$ = this.store.select(filesIdsSignedStamp);
 
   constructor(
-    private store: Store,
     private route: ActivatedRoute,
+    private store: Store,
     private nopaperService: NopaperService,
-    private commonLogicService: CommonLogicService,
-    private routingService: RoutingService
+    private routingService: RoutingService,
+    private commonLogicService: CommonLogicService
   ) {}
 
   ngOnInit(): void {
@@ -53,5 +49,11 @@ export class PacketPageEndComponent implements OnInit {
 
   protected backButtonHandler(): void {
     this.routingService.goPacketsListPage();
+  }
+
+  protected revokeButtonHandler(): void {
+    this.commonLogicService
+      .revokePacket(this.packetId)
+      .subscribe(() => this.routingService.goPacketsListPage());
   }
 }

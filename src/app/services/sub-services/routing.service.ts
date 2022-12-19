@@ -1,4 +1,3 @@
-import { ServicesCoreModule } from '../services-core.module';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StepName } from '../api/nopaper-api/nopaper-api.types';
@@ -45,24 +44,37 @@ export class RoutingService {
       case 'new':
         destination = 'draft';
         break;
+      case 'nopaperPrepareFiles':
+        destination = 'prepare';
+        break;
       case 'nopaperPreview':
       case 'nopaperPreviewBeforeOferta':
       case 'nopaperOfertaSenderPreview':
         destination = 'preview';
         break;
-      case 'nopaperPrepareFiles':
-        destination = 'prepare';
-        break;
       case 'nopaperSenderSign':
         destination = 'sender-sign';
         break;
-      case 'nopaperReceiverSigning':
+      case 'nopaperReceiverPreview':
+      case 'nopaperReceiverPreviewBeforeOferta':
+      case 'nopaperOfertaReceiverPreview':
+        destination = 'receiver-preview';
         break;
       case 'nopaperEnd':
         destination = 'end';
         break;
+      case 'nopaperReceiverSigning':
+      case 'nopaperEndRead':
+      case 'nopaperError':
+      case 'nopaperErrorEnd':
+      case 'nopaperDelete':
+      case 'nopaperSenderCancel':
+      case 'nopaperSenderCancelEnd':
+      case 'nopaperSignRefused':
+      case 'nopaperSignRefusedEnd':
+      case 'nopaperSignRefusedRead':
       default:
-        // this.goPacketsListPage();
+        this.goPacketsListPage();
         return;
     }
 

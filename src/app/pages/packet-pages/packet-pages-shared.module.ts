@@ -1,3 +1,4 @@
+import { PacketPageReceiverPreviewComponent } from './packet-page-receiver-preview/packet-page-receiver-preview.component';
 import { ComponentsSharedModule } from '../../components/components-shared.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -16,6 +17,7 @@ import { PdfPreviewWebModule } from 'local_modules/pdf-preview/src/public-api';
     PacketPagePrepareComponent,
     PacketPagePreviewComponent,
     PacketPageSenderSignComponent,
+    PacketPageReceiverPreviewComponent,
   ],
   imports: [
     CommonModule,
@@ -29,6 +31,7 @@ import { PdfPreviewWebModule } from 'local_modules/pdf-preview/src/public-api';
     PacketPagePrepareComponent,
     PacketPagePreviewComponent,
     PacketPageSenderSignComponent,
+    PacketPageReceiverPreviewComponent,
   ],
 })
 export class PacketPagesSharedModule {}

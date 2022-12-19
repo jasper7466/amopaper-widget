@@ -120,12 +120,29 @@ export class NopaperService {
    * Удаляет пакет документов.
    * Используется для пакетов со статусами `new`, `nopaperPreviewBeforeOferta`,
    * `nopaperPreview`, `nopaperSenderCancel`, `nopaperSenderCancelEnd`.
+   *
    * Переводит пакет в статус `nopaperSenderSign`.
    * @param packetId Идентификатор пакета документов.
    * @returns
    */
   public deletePacket(packetId: number): Observable<IPostStepNameResponse> {
     return this.nopaperApiService.setPacketStepName(packetId, 'nopaperDelete');
+  }
+
+  /**
+   * Отзывает пакет документов.
+   * Используется для пакетов со статусами `nopaperReceiverPreviewBeforeOferta`,
+   * `nopaperReceiverPreview`, `nopaperOfertaReceiverPreview`.
+   *
+   * Переводит пакет в статус `nopaperSenderCancel`.
+   * @param packetId Идентификатор пакета документов.
+   * @returns
+   */
+  public revokePacket(packetId: number): Observable<IPostStepNameResponse> {
+    return this.nopaperApiService.setPacketStepName(
+      packetId,
+      'nopaperSenderCancel'
+    );
   }
 
   /**
@@ -136,9 +153,7 @@ export class NopaperService {
    * @param packetId Идентификатор пакета документов.
    * @returns
    */
-  private getPacketStepName(
-    packetId: number
-  ): Observable<IGetStepNameResponse> {
+  public getPacketStepName(packetId: number): Observable<IGetStepNameResponse> {
     return this.nopaperApiService
       .getPacketStepName(packetId)
       .pipe(

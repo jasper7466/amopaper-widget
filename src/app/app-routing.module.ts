@@ -1,3 +1,4 @@
+import { PacketPageReceiverPreviewComponent } from './pages/packet-pages/packet-page-receiver-preview/packet-page-receiver-preview.component';
 import { PacketPageSenderSignComponent } from './pages/packet-pages/packet-page-sender-sign/packet-page-sender-sign.component';
 import { NotificationPageComponent } from './pages/main-pages/notification-page/notification-page.component';
 import { LandingPageComponent } from './pages/main-pages/landing-page/landing-page.component';
@@ -32,6 +33,10 @@ const routes: Routes = [
           { path: 'preview', component: PacketPagePreviewComponent },
           { path: 'end', component: PacketPageEndComponent },
           { path: 'sender-sign', component: PacketPageSenderSignComponent },
+          {
+            path: 'receiver-preview',
+            component: PacketPageReceiverPreviewComponent,
+          },
         ],
       },
     ],

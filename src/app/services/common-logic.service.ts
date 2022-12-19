@@ -89,6 +89,17 @@ export class CommonLogicService {
       .pipe(switchMap(() => this.crmService.detachPacketFromLead(packetId)));
   }
 
+  /**
+   * Отзывает пакет документов и открепляет его от текущей сделки.
+   * @param packetId Идентификатор пакета документов.
+   * @returns
+   */
+  public revokePacket(packetId: number): Observable<any> {
+    return this.nopaperService
+      .revokePacket(packetId)
+      .pipe(switchMap(() => this.crmService.detachPacketFromLead(packetId)));
+  }
+
   public getPacketFiles(packetId: number): Observable<any> {
     return this.nopaperService.getPacketFilesIds(packetId).pipe(
       switchMap(() => this.store.select(filesIdsPreviewSelector)),

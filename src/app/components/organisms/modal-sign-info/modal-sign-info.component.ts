@@ -9,7 +9,7 @@ import { signatureSelector } from 'src/app/store/signatures/selectors';
 })
 export class ModalSignInfoComponent {
   @HostBinding('class.opened') isOpened: boolean = false;
-  @Input() isLoading: boolean = true;
+  @Input() isLoading: boolean = false;
 
   protected signatures$ = this.store.select(signatureSelector);
 
