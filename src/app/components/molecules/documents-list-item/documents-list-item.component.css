@@ -5,16 +5,18 @@
 
   font-size: 14px;
   line-height: 20px;
+
+  --transition: ease-in 0.1s;
 }
 
 .documents-list-item__plate {
   box-sizing: border-box;
   display: grid;
   grid-template-areas:
-    "icon filename"
-    ". status-label";
-  grid-template-columns: auto 1fr;
-  grid-template-rows: min-content min-content;
+    "document-icon filename download-icon"
+    ". status-label download-icon";
+  grid-template-columns: min-content 1fr min-content;
+  grid-template-rows: min-content min-content min-content;
   column-gap: var(--spacing-m-12px);
   min-height: var(--spacing-4xl-48px);
   padding: var(--spacing-m-12px) var(--spacing-l-16px);
@@ -22,9 +24,27 @@
   border-radius: 4px;
 }
 
-.documents-list-item__icon {
-  grid-area: icon;
+.documents-list-item__plate_clickable:hover {
+  background-color: var(--line-color-gray);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.documents-list-item__plate_clickable:hover
+  .documents-list-item__download-icon {
+  opacity: 0.5;
+  transition: var(--transition);
+}
+
+.documents-list-item__document-icon {
+  grid-area: document-icon;
   align-self: start;
+}
+
+.documents-list-item__download-icon {
+  grid-area: download-icon;
+  opacity: 0;
+  transition: var(--transition);
 }
 
 .documents-list-item__filename {

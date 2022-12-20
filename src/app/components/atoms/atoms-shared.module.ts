@@ -13,6 +13,8 @@ import { SubtitleComponent } from './subtitle/subtitle.component';
 import { TooltipComponent } from './tooltip/tooltip.component';
 import { TemplatesSharedModule } from '../templates/templates-shared.module';
 import { PipesSharedModule } from 'src/app/pipes/pipes-shared.module';
+import { IconDownloadComponent } from './icon-download/icon-download.component';
+import { IconDocumentComponent } from './icon-document/icon-document.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,8 @@ import { PipesSharedModule } from 'src/app/pipes/pipes-shared.module';
     StatusLabelComponent,
     SubtitleComponent,
     TooltipComponent,
+    IconDownloadComponent,
+    IconDocumentComponent,
   ],
   imports: [CommonModule, TemplatesSharedModule, PipesSharedModule],
   exports: [
@@ -41,6 +45,8 @@ import { PipesSharedModule } from 'src/app/pipes/pipes-shared.module';
     StatusLabelComponent,
     SubtitleComponent,
     TooltipComponent,
+    IconDownloadComponent,
+    IconDocumentComponent,
   ],
 })
 export class AtomsSharedModule {}

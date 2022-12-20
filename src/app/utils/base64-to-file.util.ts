@@ -1,4 +1,4 @@
-import { Observable, switchMap, map } from 'rxjs';
+import { Observable, switchMap, map, take } from 'rxjs';
 import { fromFetch } from 'rxjs/fetch';
 import { getContentType } from './get-content-type.util';
 
@@ -11,6 +11,7 @@ export const base64ToFile = (
 
   return fromFetch(url).pipe(
     switchMap((response) => response.arrayBuffer()),
+    take(1),
     map((buffer) => new File([buffer], filename, { type: mime }))
   );
 };

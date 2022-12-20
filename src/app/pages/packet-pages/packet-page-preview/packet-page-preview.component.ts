@@ -11,6 +11,8 @@ import { Store } from '@ngrx/store';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IPacket } from 'src/app/store/packets';
 import { clearFilesAction } from 'src/app/store/signatures/actions';
+import { downloadFile } from 'src/app/utils/download-file.util';
+import { openFile } from 'src/app/utils/open-file.util';
 
 @Component({
   selector: 'app-packet-page-preview',
@@ -68,5 +70,10 @@ export class PacketPagePreviewComponent implements OnInit, OnDestroy {
   public removeButtonHandler(): void {
     this.commonLogicService.deletePacket(this.packetId).subscribe();
     this.routingService.goPacketsListPage();
+  }
+
+  protected downloadFile(file: File) {
+    // downloadFile(file);
+    openFile(file);
   }
 }

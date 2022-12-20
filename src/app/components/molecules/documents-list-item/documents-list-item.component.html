@@ -1,25 +1,21 @@
-<div class="documents-list-item__plate">
-  <svg
-    class="documents-list-item__icon"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      fill-rule="evenodd"
-      clip-rule="evenodd"
-      d="M6.50219 1.94739C4.871 1.94739 3.94531 3.53912 3.94531 4.94844V18.9558C3.94531 20.3651 4.871 21.9569 6.50219 21.9569H17.4003C19.0315 21.9569 19.9572 20.3651 19.9572 18.9558V7.77463C19.9572 7.51812 19.8586 7.27142 19.6819 7.08553L15.0915 2.25829C14.9028 2.05977 14.6408 1.94739 14.3669 1.94739H6.50219ZM5.94531 4.94844C5.94531 4.60009 6.05619 4.32026 6.19057 4.14755C6.32389 3.97619 6.442 3.94739 6.50219 3.94739H13.1211V5.68672C13.1211 7.34358 14.4642 8.68672 16.1211 8.68672H17.9572V18.9558C17.9572 19.3042 17.8463 19.584 17.712 19.7567C17.5786 19.9281 17.4605 19.9569 17.4003 19.9569H6.50219C6.442 19.9569 6.32389 19.9281 6.19057 19.7567C6.05619 19.584 5.94531 19.3042 5.94531 18.9558V4.94844ZM16.5428 6.68672L15.1211 5.1917V5.68672C15.1211 6.23901 15.5688 6.68672 16.1211 6.68672H16.5428ZM14.1211 12.4777C14.6734 12.4777 15.1211 12.0299 15.1211 11.4777C15.1211 10.9254 14.6734 10.4777 14.1211 10.4777H9.61434C9.06206 10.4777 8.61434 10.9254 8.61434 11.4777C8.61434 12.0299 9.06206 12.4777 9.61434 12.4777H14.1211ZM8.61719 15.2697C8.61719 14.7174 9.0649 14.2697 9.61719 14.2697H14.1239C14.6762 14.2697 15.1239 14.7174 15.1239 15.2697C15.1239 15.8219 14.6762 16.2697 14.1239 16.2697H9.61719C9.0649 16.2697 8.61719 15.8219 8.61719 15.2697Z"
-      fill="#2E62D9"
-    />
-  </svg>
-  <p class="documents-list-item__filename">{{ fileName }}</p>
+<div
+  class="documents-list-item__plate"
+  [ngClass]="{ 'documents-list-item__plate_clickable': file || fileId }"
+  (click)="plateClick()"
+>
+  <app-icon-document
+    class="documents-list-item__document-icon"
+  ></app-icon-document>
+  <p class="documents-list-item__filename">{{ file?.name || fileName }}</p>
   <app-status-label
     *ngIf="signStatus"
     class="documents-list-item__status-label"
     [status]="signStatus"
   ></app-status-label>
+  <app-icon-download
+    *ngIf="file || fileId"
+    class="documents-list-item__download-icon"
+  ></app-icon-download>
 </div>
 <button
   class="documents-list-item__details-button"
