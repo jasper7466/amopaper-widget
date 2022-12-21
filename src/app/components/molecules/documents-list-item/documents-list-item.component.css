@@ -44,6 +44,7 @@
 .documents-list-item__download-icon {
   grid-area: download-icon;
   opacity: 0;
+  align-self: center;
   transition: var(--transition);
 }
 
