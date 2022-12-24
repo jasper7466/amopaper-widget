@@ -22,5 +22,8 @@ export const packetsIdsIsTouchedSelector = createSelector(
 export const packetStepNameSelector = (id: number) =>
   createSelector(packetsSelector, (packets) => packets[id]?.stepName);
 
+export const packetTitleSelector = (id: number) =>
+  createSelector(packetsSelector, (packets) => packets[id]?.title);
+
 export const packetSelector = (id: number) =>
   createSelector(packetsSelector, (packets) => packets[id]);

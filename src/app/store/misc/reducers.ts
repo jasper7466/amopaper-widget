@@ -1,10 +1,10 @@
 import { initialState } from './index';
 import { createReducer, on } from '@ngrx/store';
-import { setPacketTitleAction } from './actions';
+import { setNewPacketTitleAction } from './actions';
 
 export const miscReducer = createReducer(
   initialState,
-  on(setPacketTitleAction, (state, { packetTitle }) => ({
+  on(setNewPacketTitleAction, (state, { packetTitle }) => ({
     ...state,
     packetTitle,
   }))

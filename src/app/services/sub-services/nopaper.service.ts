@@ -22,7 +22,7 @@ import {
 } from 'rxjs';
 import { addresseeSelector } from '../../store/addressee/selectors';
 import { filesSelector } from '../../store/files/selectors';
-import { packetTitleSelector } from '../../store/misc/selectors';
+import { newPacketTitleSelector } from '../../store/misc/selectors';
 import { setPacketStepAction } from '../../store/packets/actions';
 import {
   setRawFilesAction,
@@ -49,7 +49,7 @@ export class NopaperService {
 
   private addressee$ = this.store.select(addresseeSelector);
   private uploadedFiles$ = this.store.select(filesSelector);
-  private packetTitle$ = this.store.select(packetTitleSelector);
+  private packetTitle$ = this.store.select(newPacketTitleSelector);
 
   constructor(
     private store: Store,

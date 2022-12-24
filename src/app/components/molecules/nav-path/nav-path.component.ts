@@ -1,16 +1,29 @@
-import { Component, OnInit } from '@angular/core';
-
-const dummyPath = [''];
+import {
+  NavigationPart,
+  RoutingService,
+} from 'src/app/services/sub-services/routing.service';
+import { takeUntil } from 'rxjs';
+import { Component, OnInit, OnDestroy, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-nav-path',
   templateUrl: './nav-path.component.html',
   styleUrls: ['./nav-path.component.css'],
 })
-export class NavPathComponent implements OnInit {
-  public path = dummyPath;
+export class NavPathComponent implements OnInit, OnDestroy {
+  private onDestroyEmitter = new EventEmitter<void>();
+  public navPath: NavigationPart[] = [];
 
-  constructor() {}
+  constructor(private routingService: RoutingService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.routingService
+      .navParts()
+      .pipe(takeUntil(this.onDestroyEmitter))
+      .subscribe((navParts) => (this.navPath = navParts));
+  }
+
+  ngOnDestroy(): void {
+    this.onDestroyEmitter.emit();
+  }
 }

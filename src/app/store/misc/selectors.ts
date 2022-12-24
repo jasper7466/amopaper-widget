@@ -3,7 +3,7 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 export const featureSelector = createFeatureSelector<IMiscState>(MISC_KEY);
 
-export const packetTitleSelector = createSelector(
+export const newPacketTitleSelector = createSelector(
   featureSelector,
   (state) => state.packetTitle
 );

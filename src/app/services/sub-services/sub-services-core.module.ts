@@ -1,3 +1,4 @@
+import { TitleResolverService } from './title-resolver.service';
 import { PostMessageService } from './post-message.service';
 import { CrmService } from 'src/app/services/sub-services/crm.service';
 import { ApiCoreModule } from '../api/api-core.module';
@@ -18,6 +19,7 @@ import { RoutingService } from './routing.service';
     NotificationService,
     PostMessageService,
     RoutingService,
+    TitleResolverService,
   ],
 })
 export class SubServicesCoreModule {

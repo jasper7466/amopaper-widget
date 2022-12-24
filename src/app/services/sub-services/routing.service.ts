@@ -1,6 +1,25 @@
+import { Observable, map, filter, tap } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import {
+  ActivatedRoute,
+  Event,
+  GuardsCheckEnd,
+  NavigationCancel,
+  NavigationEnd,
+  NavigationError,
+  NavigationStart,
+  ResolveEnd,
+  Router,
+  RouterEvent,
+  RoutesRecognized,
+  Scroll,
+} from '@angular/router';
 import { StepName } from '../api/nopaper-api/nopaper-api.types';
+
+export type NavigationPart = {
+  title: string;
+  routerLink: string | any[];
+};
 
 @Injectable()
 export class RoutingService {
@@ -14,6 +33,42 @@ export class RoutingService {
     }
 
     return parameter;
+  }
+
+  public navParts(): Observable<NavigationPart[]> {
+    return this.router.events.pipe(
+      filter(
+        (event) => event instanceof NavigationEnd || event instanceof Scroll
+      ),
+      map(() => {
+        let route = this.route;
+
+        while (route.firstChild) {
+          route = route.firstChild;
+        }
+
+        return route;
+      }),
+      map((route) => {
+        const routes = route.snapshot.pathFromRoot;
+        let navParts: NavigationPart[] = [];
+
+        for (const route of routes) {
+          const title = route.title;
+
+          if (!title) {
+            continue;
+          }
+
+          const routerLink = route.pathFromRoot
+            .map((route) => route.url.toString().split(','))
+            .flat();
+
+          navParts.push({ title, routerLink });
+        }
+        return navParts;
+      })
+    );
   }
 
   public redirect(url: string): void {

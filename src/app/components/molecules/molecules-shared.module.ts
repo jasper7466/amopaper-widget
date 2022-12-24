@@ -1,3 +1,4 @@
+import { RouterModule } from '@angular/router';
 import { DirectivesSharedModule } from './../../directives/directives-shared.module';
 import { BannerDraftComponent } from './banner-draft/banner-draft.component';
 import { BannerAwaitingComponent } from './banner-awaiting/banner-awaiting.component';
@@ -40,6 +41,7 @@ import { DocumentsDisplayerComponent } from './documents-displayer/documents-dis
     TemplatesSharedModule,
     PipesSharedModule,
     DirectivesSharedModule,
+    RouterModule,
   ],
   exports: [
     AddresseeNameplateComponent,

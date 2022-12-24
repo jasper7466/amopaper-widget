@@ -5,7 +5,7 @@ import {
   filesIdsSignedStamp,
 } from './../../../store/signatures/selectors';
 import { CommonLogicService } from './../../../services/common-logic.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalSignInfoComponent } from 'src/app/components/organisms/modal-sign-info/modal-sign-info.component';
@@ -28,12 +28,14 @@ export class PacketPageEndComponent implements OnInit {
   constructor(
     private store: Store,
     private route: ActivatedRoute,
+    private router: Router,
     private nopaperService: NopaperService,
     private commonLogicService: CommonLogicService,
     private routingService: RoutingService
   ) {}
 
   ngOnInit(): void {
+    console.log(this.router.url);
     const id = this.route.parent?.snapshot.paramMap.get('id');
 
     if (!id) {
