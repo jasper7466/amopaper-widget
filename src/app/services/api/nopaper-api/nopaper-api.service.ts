@@ -17,6 +17,8 @@ import {
   IPostStepNameResponse,
   IGetFilesByIdsRequest,
   IGetFilesByIdsResponse,
+  IGetShareLinkRequest,
+  IGetShareLinkResponse,
 } from './nopaper-api.types';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -105,6 +107,13 @@ export class NopaperApiService extends ApiService {
     return this.post<IGetPacketDetailsRequest, IGetPacketDetailsResponse>(
       `/document/details`,
       { documentId: packetId }
+    );
+  }
+
+  public getShareLink(packetId: number): Observable<IGetShareLinkResponse> {
+    return this.post<IGetShareLinkRequest, IGetShareLinkResponse>(
+      `/document/${packetId}/generate-link`,
+      {}
     );
   }
 }

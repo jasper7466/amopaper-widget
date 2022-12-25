@@ -155,3 +155,9 @@ type FilesResponseRecord = {
 };
 
 export interface IGetFilesByIdsResponse extends Array<FilesResponseRecord> {}
+
+export interface IGetShareLinkRequest {}
+
+export interface IGetShareLinkResponse {
+  shareLink: string;
+}
