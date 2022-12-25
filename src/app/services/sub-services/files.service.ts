@@ -5,7 +5,7 @@ import { Observable, Observer } from 'rxjs';
 import { FileRecord } from '../../store/files';
 import {
   addFilesAction,
-  clearFilesListAction,
+  resetFilesListAction,
   loadFileCompleteAction,
 } from '../../store/files/actions';
 
@@ -58,6 +58,6 @@ export class FilesService {
 
   protected clearFilesList() {
     this.counter = 0;
-    this.store.dispatch(clearFilesListAction());
+    this.store.dispatch(resetFilesListAction());
   }
 }

@@ -1,7 +1,7 @@
-import { initialFileRecord, initialState } from './index';
+import { initialState } from './index';
 import { createReducer, on } from '@ngrx/store';
 import {
-  clearFilesListAction,
+  resetFilesListAction,
   addFilesAction,
   loadFileCompleteAction,
 } from './actions';
@@ -39,7 +39,7 @@ export const filesReducer = createReducer(
       isComplete,
     };
   }),
-  on(clearFilesListAction, (state) => {
+  on(resetFilesListAction, (state) => {
     // state.files.forEach((file) => file.onLoadSubscription?.unsubscribe());
     return { ...initialState };
   })

@@ -11,4 +11,4 @@ export const loadFileCompleteAction = createAction(
   props<{ id: number; base64: string }>()
 );
 
-export const clearFilesListAction = createAction('[FILES] clear files list');
+export const resetFilesListAction = createAction('[FILES] clear files list');

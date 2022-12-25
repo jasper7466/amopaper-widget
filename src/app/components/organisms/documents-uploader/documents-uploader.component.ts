@@ -1,4 +1,4 @@
-import { clearFilesListAction } from 'src/app/store/files/actions';
+import { resetFilesListAction } from 'src/app/store/files/actions';
 import { map, Observable } from 'rxjs';
 import { StatusLabelStatus } from 'src/app/components/atoms/status-label/status-label.component';
 import { Store } from '@ngrx/store';
@@ -37,6 +37,6 @@ export class DocumentsUploaderComponent {
   constructor(private store: Store) {}
 
   protected clearFilesList() {
-    this.store.dispatch(clearFilesListAction());
+    this.store.dispatch(resetFilesListAction());
   }
 }
