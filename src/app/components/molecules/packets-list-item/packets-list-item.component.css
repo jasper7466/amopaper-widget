@@ -11,6 +11,7 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
+  column-gap: var(--spacing-s-8px);
   align-items: center;
   height: var(--spacing-5xl-56px);
   padding: var(--spacing-s-8px) var(--spacing-l-16px);
@@ -36,11 +37,15 @@
 .item__details-area {
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
   height: 100%;
+  min-width: 0px;
 }
 
 .item__title {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+
   color: var(--txt-color-primary);
 }
 
