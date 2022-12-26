@@ -1,4 +1,4 @@
-import { CommonLogicService } from './../../../services/common-logic.service';
+import { shareLinkSelector } from './../../../store/misc/selectors';
 import { packetSelector } from 'src/app/store/packets/selectors';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -13,8 +13,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./packet-page-sender-sign.component.css'],
 })
 export class PacketPageSenderSignComponent implements OnInit {
-  private packetId: number;
-
+  protected packetId: number;
   protected packet$: Observable<IPacket>;
 
   constructor(
@@ -35,7 +34,7 @@ export class PacketPageSenderSignComponent implements OnInit {
     this.packet$ = this.store.select(packetSelector(this.packetId));
   }
 
-  public backButtonHandler(): void {
+  protected backButtonHandler(): void {
     this.routingService.goPacketsListPage();
   }
 }

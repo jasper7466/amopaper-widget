@@ -7,3 +7,8 @@ export const newPacketTitleSelector = createSelector(
   featureSelector,
   (state) => state.packetTitle
 );
+
+export const shareLinkSelector = createSelector(
+  featureSelector,
+  (state) => state.shareLink
+);

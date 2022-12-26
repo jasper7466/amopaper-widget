@@ -1,9 +1,9 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 
-type style = 'solid' | 'blank' | 'skeleton';
-type color = 'regular' | 'danger' | 'custom';
-type icon = 'plus' | 'upload' | 'sign' | 'trash' | '';
-type size = 'medium' | 'custom';
+export type ButtonStyleOption = 'solid' | 'blank' | 'skeleton';
+type Color = 'regular' | 'danger' | 'custom';
+type Icon = 'plus' | 'upload' | 'sign' | 'trash' | '';
+type Size = 'medium' | 'custom';
 
 @Component({
   selector: 'app-button',
@@ -11,10 +11,10 @@ type size = 'medium' | 'custom';
   styleUrls: ['./button.component.css'],
 })
 export class ButtonComponent implements OnInit {
-  @Input() styleOption: style = 'solid';
-  @Input() colorOption: color = 'regular';
-  @Input() iconOption: icon = '';
-  @Input() sizeOption: size = 'medium';
+  @Input() styleOption: ButtonStyleOption = 'solid';
+  @Input() colorOption: Color = 'regular';
+  @Input() iconOption: Icon = '';
+  @Input() sizeOption: Size = 'medium';
   @Input() isEnabled: boolean = true;
   @Input() typeOption: string = 'button';
 

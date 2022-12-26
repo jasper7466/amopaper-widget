@@ -45,6 +45,9 @@ export class WidgetPageNewComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
+    this.store.dispatch(resetAddresseeAction());
+    this.store.dispatch(resetFilesListAction());
+    this.store.dispatch(resetNewPacketTitleAction());
     this.onDestroyEmitter.emit();
   }
 
@@ -78,9 +81,6 @@ export class WidgetPageNewComponent implements OnInit, OnDestroy {
   }
 
   protected cancelButtonHandler(): void {
-    this.store.dispatch(resetAddresseeAction());
-    this.store.dispatch(resetFilesListAction());
-    this.store.dispatch(resetNewPacketTitleAction());
     this.routingService.goPacketsListPage();
   }
 }

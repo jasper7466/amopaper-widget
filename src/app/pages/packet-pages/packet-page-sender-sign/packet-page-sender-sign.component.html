@@ -11,9 +11,14 @@
   animationOption="rotation"
 ></app-banner-awaiting>
 <app-footer>
-  <app-button
+  <app-share-link-button
     class="left-side"
-    styleOption="blank"
+    [packetId]="packetId"
+  ></app-share-link-button>
+
+  <app-button
+    class="right-side"
+    styleOption="skeleton"
     (onClick)="backButtonHandler()"
     >Назад</app-button
   >

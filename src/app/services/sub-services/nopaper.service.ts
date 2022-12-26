@@ -3,6 +3,7 @@ import {
   IPostStepNameResponse,
   IGetFileSignatureResponse,
   IGetPacketDetailsResponse,
+  IGetShareLinkResponse,
 } from './../api/nopaper-api/nopaper-api.types';
 import { setPacketDetailsAction } from '../../store/packets/actions';
 import { updateAccessTokenAction } from '../../store/access-token/actions';
@@ -39,6 +40,8 @@ import {
 } from '../api/nopaper-api/nopaper-api.types';
 import { filesIdsPreviewSelector } from '../../store/signatures/selectors';
 import { AccessTokenApiService } from '../api/access-token-api/access-token-api.service';
+import { setShareLinkAction } from 'src/app/store/misc/actions';
+import { response } from 'express';
 
 const POLLING_INTERVAL_MS = 3000;
 
@@ -271,6 +274,15 @@ export class NopaperService {
    */
   public stopPacketsStepPollingAll(): void {
     this.packetPollingBreakerAll.next();
+  }
+
+  public getShareLink(packetId: number): Observable<IGetShareLinkResponse> {
+    return this.nopaperApiService.getShareLink(packetId).pipe(
+      tap(console.log),
+      tap((response) => {
+        this.store.dispatch(setShareLinkAction(response));
+      })
+    );
   }
 
   /**

@@ -9,3 +9,8 @@ export const setNewPacketTitleAction = createAction(
 export const resetNewPacketTitleAction = createAction(
   `[${MISC_KEY}] reset packet title`
 );
+
+export const setShareLinkAction = createAction(
+  `[${MISC_KEY}] set share link`,
+  props<{ shareLink: string }>()
+);
