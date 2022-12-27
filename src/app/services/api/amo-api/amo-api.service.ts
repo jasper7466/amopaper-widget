@@ -1,12 +1,14 @@
 import { domainSelector } from '../../../store/crm-context/selectors';
 import {
   IGetCustomFieldsResponse,
-  CustomField,
-  IPatchLeadRequestBody,
+  ICustomField,
+  IPatchLeadRequest,
   IPatchLeadResponse,
   IGetLeadByIdResponse,
+  NoteType,
+  IGetLeadAttachmentsResponse,
 } from './amo-api.types';
-import { map, Observable, expand, EMPTY, reduce } from 'rxjs';
+import { map, Observable, expand, EMPTY, reduce, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
@@ -33,7 +35,7 @@ export class AmoApiService extends ApiService {
     });
   }
 
-  public getCompaniesCustomFieldsAll(): Observable<CustomField[]> {
+  public getCompaniesCustomFieldsAll(): Observable<ICustomField[]> {
     return this.get<IGetCustomFieldsResponse>('/companies/custom_fields').pipe(
       expand((response) =>
         response._links.next
@@ -49,7 +51,7 @@ export class AmoApiService extends ApiService {
     );
   }
 
-  public getLeadsCustomFieldsAll(): Observable<CustomField[]> {
+  public getLeadsCustomFieldsAll(): Observable<ICustomField[]> {
     return this.get<IGetCustomFieldsResponse>('/leads/custom_fields').pipe(
       expand((response) =>
         response._links.next
@@ -67,9 +69,9 @@ export class AmoApiService extends ApiService {
 
   public patchLeadById(
     id: number,
-    data: Partial<IPatchLeadRequestBody>
+    data: Partial<IPatchLeadRequest>
   ): Observable<IPatchLeadResponse> {
-    return this.patch<Partial<IPatchLeadRequestBody>, IPatchLeadResponse>(
+    return this.patch<Partial<IPatchLeadRequest>, IPatchLeadResponse>(
       `/leads/${id}`,
       data
     );
@@ -77,5 +79,22 @@ export class AmoApiService extends ApiService {
 
   public getLeadById(id: number): Observable<IGetLeadByIdResponse> {
     return this.get(`/leads/${id}`);
+  }
+
+  public getLeadAttachments(leadId: number) {
+    const noteType: NoteType = 'attachment';
+    return this.get<IGetLeadAttachmentsResponse>(
+      `/leads/${leadId}/notes?filter[note_type][0]=${noteType}`
+    ).pipe(
+      expand((response) =>
+        response._links.next
+          ? // TODO: для работы через прокси в режиме разработки
+            // ? this.get$<GetCustomFieldsResponse>(response._links.next.href)
+            this.get<IGetLeadAttachmentsResponse>(
+              `/companies/custom_fields?page=${++response._page}`
+            )
+          : EMPTY
+      )
+    );
   }
 }

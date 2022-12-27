@@ -1,5 +1,29 @@
 import { Nullable } from '../../../types/common';
 
+type Links = {
+  self: {
+    href: string;
+  };
+  next?: {
+    href: string;
+  };
+  last?: {
+    href: string;
+  };
+};
+
+interface IEmbeddedItem {
+  _links: Links;
+}
+
+interface IAmoBaseResponse<PayloadType> {
+  _total_items: number;
+  _page: number;
+  _page_count: number;
+  _links: Links;
+  _embedded: PayloadType;
+}
+
 type CustomFieldType =
   | 'text'
   | 'numeric'
@@ -40,7 +64,7 @@ type CustomFieldEntityType =
 
 type CustomFieldRemind = 'never' | 'day' | 'week' | 'month';
 
-export type CustomField = {
+export interface ICustomField extends IEmbeddedItem {
   id: number;
   name: string;
   type: CustomFieldType;
@@ -58,39 +82,61 @@ export type CustomField = {
   triggers: any[];
   currency: Nullable<string>;
   hidden_statuses: [];
-  _links: {
-    self: {
-      href: string;
-    };
-  };
-};
-
-export interface IGetCustomFieldsResponse {
-  _total_items: number;
-  _page: number;
-  _page_count: number;
-  _links: {
-    self: {
-      href: string;
-    };
-    next?: {
-      href: string;
-    };
-    last?: {
-      href: string;
-    };
-  };
-  _embedded: {
-    custom_fields: CustomField[];
-  };
 }
 
-interface IPaginable {
-  limit: number;
-  page: number;
+export interface IGetCustomFieldsResponse
+  extends IAmoBaseResponse<{ custom_fields: ICustomField[] }> {}
+
+interface NoteParams {
+  attachment: {
+    file_name: string;
+    file_uuid: string;
+    is_drive_attachment: boolean;
+    original_name: string;
+    text: string;
+    version_uuid: string;
+  };
+  common: unknown;
+  call_in: unknown;
+  call_out: unknown;
+  service_message: unknown;
+  message_cashier: unknown;
+  geolocation: unknown;
+  sms_in: unknown;
+  sms_out: unknown;
+  extended_service_message: unknown;
 }
 
-export interface IGetCustomFieldsOptions extends IPaginable {}
+export type NoteType = keyof NoteParams;
+
+interface INote<T extends keyof NoteParams> extends IEmbeddedItem {
+  account_id: number;
+  created_at: number;
+  created_by: number;
+  entity_id: number;
+  group_id: number;
+  id: number;
+  note_type: T;
+  params: NoteParams[T];
+  responsible_user_id: number;
+  updated_at: number;
+  updated_by: number;
+}
+
+interface IAttachmentNote extends INote<'attachment'> {}
+
+export interface IGetLeadAttachmentsResponse
+  extends Omit<
+    IAmoBaseResponse<{ notes: IAttachmentNote[] }>,
+    '_total_items' | '_page_count'
+  > {}
+
+// interface IPaginable {
+//   limit: number;
+//   page: number;
+// }
+
+// export interface IGetCustomFieldsOptions extends IPaginable {}
 
 interface ICustomFieldsValue {
   field_id: number;
@@ -99,7 +145,7 @@ interface ICustomFieldsValue {
   }[];
 }
 
-export interface IPatchLeadRequestBody {
+export interface IPatchLeadRequest {
   name: string;
   price: number;
   status_id: number;
