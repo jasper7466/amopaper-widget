@@ -36,7 +36,7 @@ import {
   IGetFilesIdsResponse,
   IGetStepNameResponse,
   IPostDraftRequest,
-  PostDraftRequestFileItem,
+  PostDraftFileItem,
 } from '../api/nopaper-api/nopaper-api.types';
 import { filesIdsPreviewSelector } from '../../store/signatures/selectors';
 import { AccessTokenApiService } from '../api/access-token-api/access-token-api.service';
@@ -291,7 +291,7 @@ export class NopaperService {
    */
   private composePostDraftRequestBody(): IPostDraftRequest {
     let contact = {};
-    let files: PostDraftRequestFileItem[] = [];
+    let files: PostDraftFileItem[] = [];
     let title = '';
 
     this.addressee$

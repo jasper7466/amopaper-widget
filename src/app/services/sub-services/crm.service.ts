@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 import {
   map,
   Observable,
+  of,
   Subject,
   switchMap,
   takeUntil,
@@ -143,6 +144,13 @@ export class CrmService {
       tap((packetsIds) => {
         this.store.dispatch(setPacketsIdsAction({ packetsIds: packetsIds }));
       })
+    );
+  }
+
+  public getLeadAttachments(leadId: number): Observable<void> {
+    return this.amoApiService.getLeadAttachments(leadId).pipe(
+      tap(console.log),
+      switchMap(() => of())
     );
   }
 }

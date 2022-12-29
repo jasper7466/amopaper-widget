@@ -3,7 +3,7 @@
   align-items: center;
   height: 40px;
   margin-bottom: var(--spacing-2xl-32px);
-  padding-left: var(--spacing-l-16px);
+  padding: 0 var(--spacing-l-16px);
   border-radius: 4px;
   border: 2px solid var(--stroke-color-regular);
   color: var(--txt-color-tertiary);
@@ -16,4 +16,8 @@
   --this-bg-color: var(--stroke-color-regular-hover);
   background-color: var(--this-bg-color);
   border-color: var(--primary-color-regular-hover);
+}
+
+.documents__from-lead-button {
+  margin-left: auto;
 }

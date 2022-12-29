@@ -11,7 +11,7 @@ export interface ICheckByPhoneResponse {
   userGuid: string;
 }
 
-export type PostDraftRequestFileItem = {
+export type PostDraftFileItem = {
   fileName: string;
   filebase64: string;
 };
@@ -20,7 +20,7 @@ export interface IPostDraftRequest {
   title?: string;
   clientFlPhoneNumber?: string;
   clientUlInn?: string;
-  files: PostDraftRequestFileItem[];
+  files: PostDraftFileItem[];
 }
 
 export interface IPostDraftResponse {

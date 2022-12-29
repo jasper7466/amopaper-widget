@@ -2,7 +2,7 @@
   class="documents-drop-area"
   appDragAndDrop
   fileOverClass="documents-drop-area_file-over"
-  (fileDropped)="filesService.filesHandler($event)"
+  (fileDropped)="fileLoadHandler($event)"
 >
   <label for="fileInputId" #fileLabelRef>
     <input
@@ -12,7 +12,7 @@
       id="fileInputId"
       #fileInputRef
       appFileBrowser
-      (onChanged)="filesService.filesHandler($event)"
+      (onChanged)="fileLoadHandler($event)"
     />
   </label>
   <app-button
@@ -24,4 +24,12 @@
     >Загрузите</app-button
   >
   &nbsp;или перенесите сюда
+  <app-button
+    class="documents__from-lead-button"
+    iconOption="plus"
+    styleOption="skeleton"
+    sizeOption="custom"
+    (onClick)="loadFromLeadButtonHandler()"
+    >Из сделки</app-button
+  >
 </form>
