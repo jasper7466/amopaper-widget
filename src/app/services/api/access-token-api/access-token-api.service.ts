@@ -40,12 +40,4 @@ export class AccessTokenApiService extends ApiService {
       `/amo-crm/authorization/access-token/${this.clientUuid}`
     );
   }
-
-  // Для для отладки с локальным сервером авторизации
-  public getAmoAccessTokenLocally(): Observable<IGetAmoAccessTokenResponse> {
-    return this.post<{ x_api_key: string }, IGetAmoAccessTokenResponse>(
-      'http://localhost:5200/access_token',
-      { x_api_key: this.xApiKey }
-    );
-  }
 }

@@ -8,6 +8,8 @@ import { FilesService } from './files.service';
 import { NopaperService } from './nopaper.service';
 import { NotificationService } from './notification.service';
 import { RoutingService } from './routing.service';
+import { AccessTokenApiService } from '../api/access-token-api/access-token-api.service';
+import { AccessTokenLocalApiService } from '../api/accesse-token-local-api/access-token-local-api.service';
 
 @NgModule({
   declarations: [],
@@ -20,6 +22,7 @@ import { RoutingService } from './routing.service';
     PostMessageService,
     RoutingService,
     TitleResolverService,
+    { provide: AccessTokenApiService, useClass: AccessTokenLocalApiService },
   ],
 })
 export class SubServicesCoreModule {
