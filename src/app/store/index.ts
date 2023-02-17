@@ -1,13 +1,14 @@
+import { processedFilesReducer } from './files-processed/reducers';
 import { widgetContextReducer } from './addressee/reducers';
-import { WIDGET_CONTEXT_KEY, IAddresseeState } from './addressee/index';
+import { ADDRESSEE_KEY, IAddresseeState } from './addressee/index';
 import { accessTokenReducer } from './access-token/reducers';
 import { TOKEN_KEY, ITokenState } from './access-token/index';
 import { ICrmContextState, CONTEXT_KEY } from './crm-context/index';
 import { environment } from '../../environments/environment';
 import { ActionReducerMap, MetaReducer } from '@ngrx/store';
 import { crmContextReducer } from './crm-context/reducers';
-import { FILES_KEY, IFilesState } from './files';
-import { filesReducer } from './files/reducers';
+import { FILES_SOURCE_KEY, ISourceFilesState } from './files-source';
+import { sourceFilesReducer } from './files-source/reducers';
 import { ISignaturesState, SIGNATURES_KEY } from './signatures';
 import { signaturesReducer } from './signatures/reducers';
 import { IPacketsState, PACKETS_KEY } from './packets';
@@ -17,12 +18,14 @@ import { miscReducer } from './misc/reducers';
 import { Injectable } from '@angular/core';
 import { Actions } from '@ngrx/effects';
 import { SignaturesEffects } from './signatures/effects';
+import { FILES_PROCESSED_KEY, IProcessedFilesState } from './files-processed';
 
 export interface State {
   [CONTEXT_KEY]: ICrmContextState;
   [TOKEN_KEY]: ITokenState;
-  [WIDGET_CONTEXT_KEY]: IAddresseeState;
-  [FILES_KEY]: IFilesState;
+  [ADDRESSEE_KEY]: IAddresseeState;
+  [FILES_SOURCE_KEY]: ISourceFilesState;
+  [FILES_PROCESSED_KEY]: IProcessedFilesState;
   [SIGNATURES_KEY]: ISignaturesState;
   [PACKETS_KEY]: IPacketsState;
   [MISC_KEY]: IMiscState;
@@ -31,12 +34,15 @@ export interface State {
 export const reducers: ActionReducerMap<State> = {
   [CONTEXT_KEY]: crmContextReducer,
   [TOKEN_KEY]: accessTokenReducer,
-  [WIDGET_CONTEXT_KEY]: widgetContextReducer,
-  [FILES_KEY]: filesReducer,
+  [ADDRESSEE_KEY]: widgetContextReducer,
+  [FILES_SOURCE_KEY]: sourceFilesReducer,
+  [FILES_PROCESSED_KEY]: processedFilesReducer,
   [SIGNATURES_KEY]: signaturesReducer,
   [PACKETS_KEY]: packetsReducer,
   [MISC_KEY]: miscReducer,
 };
+
+export const effects = [SignaturesEffects];
 
 export const metaReducers: MetaReducer<State>[] = !environment.production
   ? []
@@ -46,5 +52,3 @@ export const metaReducers: MetaReducer<State>[] = !environment.production
 export class AppEffects {
   constructor(private actions$: Actions) {}
 }
-
-export const effects = [SignaturesEffects];

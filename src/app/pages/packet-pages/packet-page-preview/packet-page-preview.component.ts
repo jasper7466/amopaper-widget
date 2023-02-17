@@ -3,14 +3,14 @@ import { CommonLogicService } from './../../../services/common-logic.service';
 import { RoutingService } from 'src/app/services/sub-services/routing.service';
 import {
   decodedFilesSelector,
-  filesIdsPreviewSelector,
+  filesIdsOriginalsSelector,
 } from './../../../store/signatures/selectors';
 import { Observable, take, filter } from 'rxjs';
 import { packetSelector } from 'src/app/store/packets/selectors';
 import { Store } from '@ngrx/store';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IPacket } from 'src/app/store/packets';
-import { clearFilesAction } from 'src/app/store/signatures/actions';
+import { clearSugnaturesAction } from 'src/app/store/signatures/actions';
 import { downloadFile } from 'src/app/utils/download-file.util';
 import { openFile } from 'src/app/utils/open-file.util';
 
@@ -24,7 +24,7 @@ export class PacketPagePreviewComponent implements OnInit, OnDestroy {
   protected isAwaiting: boolean = true;
 
   protected packet$: Observable<IPacket>;
-  protected filesIds$ = this.store.select(filesIdsPreviewSelector);
+  protected filesIds$ = this.store.select(filesIdsOriginalsSelector);
   protected decodedFiles$ = this.store.select(decodedFilesSelector);
 
   constructor(
@@ -55,7 +55,7 @@ export class PacketPagePreviewComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.store.dispatch(clearFilesAction());
+    this.store.dispatch(clearSugnaturesAction());
   }
 
   protected submitButtonHandler(): void {

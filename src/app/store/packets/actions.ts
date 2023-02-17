@@ -1,17 +1,25 @@
+import { IPacket, PacketStatus, PACKETS_KEY, IPacketsState } from './index';
 import { createAction, props } from '@ngrx/store';
-import { StepName } from 'src/app/services/api/nopaper-api/nopaper-api.types';
+
+export interface IPacketIdsProps extends Pick<IPacketsState, 'packetsIds'> {}
+export interface IPacketDetailsProps extends Omit<IPacket, 'status'> {
+  packetId: number;
+}
+export interface IPacketStatusProps extends Pick<IPacket, 'status'> {
+  packetId: number;
+}
 
 export const setPacketsIdsAction = createAction(
-  '[PACKETS] update packets ids',
-  props<{ packetsIds: number[] }>()
+  `[${PACKETS_KEY}] update packets ids`,
+  props<IPacketIdsProps>()
 );
 
-export const setPacketStepAction = createAction(
-  '[PACKETS] update packet step',
-  props<{ packetId: number; stepName: StepName }>()
+export const setPacketStatusAction = createAction(
+  `[${PACKETS_KEY}] update packet step`,
+  props<IPacketStatusProps>()
 );
 
 export const setPacketDetailsAction = createAction(
-  '[PACKETS] set packet info',
-  props<{ packetId: number; title: string; creationDate: string }>()
+  `[${PACKETS_KEY}] set packet info`,
+  props<IPacketDetailsProps>()
 );

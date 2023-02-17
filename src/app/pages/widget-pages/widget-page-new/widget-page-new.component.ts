@@ -1,4 +1,4 @@
-import { resetFilesListAction } from './../../../store/files/actions';
+import { sourceFilesResetAction } from '../../../store/files-source/actions';
 import { resetAddresseeAction } from './../../../store/addressee/actions';
 import { Router } from '@angular/router';
 import { CommonLogicService } from '../../../services/common-logic.service';
@@ -7,7 +7,7 @@ import { Store } from '@ngrx/store';
 import { combineLatestWith, Subscription, take, takeUntil } from 'rxjs';
 import { RoutingService } from 'src/app/services/sub-services/routing.service';
 import { isAddresseeAddedSelector } from 'src/app/store/addressee/selectors';
-import { isCompleteSelector } from 'src/app/store/files/selectors';
+import { isSourceFilesCompleteAllSelector } from 'src/app/store/files-source/selectors';
 import {
   resetNewPacketTitleAction,
   setNewPacketTitleAction,
@@ -22,7 +22,9 @@ export class WidgetPageNewComponent implements OnInit, OnDestroy {
   private onDestroyEmitter = new EventEmitter<void>();
 
   protected isAddresseeAdded$ = this.store.select(isAddresseeAddedSelector);
-  protected isAllFilesLoaded$ = this.store.select(isCompleteSelector);
+  protected isAllFilesLoaded$ = this.store.select(
+    isSourceFilesCompleteAllSelector
+  );
 
   protected isControlsEnabled: boolean = false;
   protected isAwaiting: boolean = false;
@@ -46,7 +48,7 @@ export class WidgetPageNewComponent implements OnInit, OnDestroy {
 
   public ngOnDestroy(): void {
     this.store.dispatch(resetAddresseeAction());
-    this.store.dispatch(resetFilesListAction());
+    this.store.dispatch(sourceFilesResetAction());
     this.store.dispatch(resetNewPacketTitleAction());
     this.onDestroyEmitter.emit();
   }

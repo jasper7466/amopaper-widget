@@ -1,4 +1,4 @@
-import { filesIdsPreviewSelector } from './../store/signatures/selectors';
+import { filesIdsOriginalsSelector } from './../store/signatures/selectors';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap, tap, map, Observable, take } from 'rxjs';
@@ -49,7 +49,7 @@ export class CommonLogicService {
     let justCreatedPacketId: number;
 
     return this.nopaperService.postPacket().pipe(
-      tap((packetId) => (justCreatedPacketId = packetId)),
+      tap((packetId) => (justCreatedPacketId = )),
       switchMap((packetId) => this.crmService.attachPacketToLead(packetId)),
       map(() => justCreatedPacketId)
     );
@@ -102,9 +102,11 @@ export class CommonLogicService {
 
   public getPacketFiles(packetId: number): Observable<any> {
     return this.nopaperService.getPacketFilesIds(packetId).pipe(
-      switchMap(() => this.store.select(filesIdsPreviewSelector)),
+      switchMap(() => this.store.select(filesIdsOriginalsSelector)),
       take(1),
-      switchMap((identifiers) => this.nopaperService.getFilesByIds(identifiers))
+      switchMap((identifiers) =>
+        this.nopaperService.getFilesByIds(identifiers.map((item) => item.id))
+      )
     );
   }
 }

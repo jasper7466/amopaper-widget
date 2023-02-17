@@ -2,12 +2,12 @@ import { ServicesCoreModule } from '../services-core.module';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Observer } from 'rxjs';
-import { FileRecord } from '../../store/files';
+import { FileRecord } from '../../store/files-source';
 import {
-  addFilesAction,
-  resetFilesListAction,
-  loadFileCompleteAction,
-} from '../../store/files/actions';
+  sourceFilesAddAction,
+  sourceFilesResetAction,
+  sourceFileCompleteAction,
+} from '../../store/files-source/actions';
 
 @Injectable()
 export class FilesService {
@@ -21,7 +21,7 @@ export class FilesService {
     for (const file of Array.from(files)) {
       const id = this.counter;
       this.toBase64$(file).subscribe((base64) => {
-        this.store.dispatch(loadFileCompleteAction({ id, base64 }));
+        this.store.dispatch(sourceFileCompleteAction({ id, base64 }));
       });
 
       fileRecords.push({
@@ -35,7 +35,7 @@ export class FilesService {
       this.counter++;
     }
 
-    this.store.dispatch(addFilesAction({ files: [...fileRecords] }));
+    this.store.dispatch(sourceFilesAddAction({ files: [...fileRecords] }));
   }
 
   protected toBase64$(file: File): Observable<string> {
@@ -58,6 +58,6 @@ export class FilesService {
 
   protected clearFilesList() {
     this.counter = 0;
-    this.store.dispatch(resetFilesListAction());
+    this.store.dispatch(sourceFilesResetAction());
   }
 }

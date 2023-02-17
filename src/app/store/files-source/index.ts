@@ -1,23 +1,20 @@
-import { Observable, Subscription } from 'rxjs';
-
-export const FILES_KEY = 'files';
+export const FILES_SOURCE_KEY = 'source-files';
 
 export type FileRecord = {
   id: number;
   file: File;
   base64: string;
-  onLoadSubscription: Subscription | null;
   isLoaded: boolean;
 };
 
-export interface IFilesState {
+export interface ISourceFilesState {
   files: FileRecord[];
   totalCount: number;
   loadedCount: number;
   isComplete: boolean;
 }
 
-export const initialState: IFilesState = {
+export const initialState: ISourceFilesState = {
   files: [],
   totalCount: 0,
   loadedCount: 0,
@@ -26,6 +23,5 @@ export const initialState: IFilesState = {
 
 export const initialFileRecord: Omit<FileRecord, 'file' | 'id'> = {
   base64: '',
-  onLoadSubscription: null,
   isLoaded: false,
 };

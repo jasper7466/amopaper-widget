@@ -1,8 +1,8 @@
-import { IAddresseeState, WIDGET_CONTEXT_KEY } from './index';
+import { IAddresseeState, ADDRESSEE_KEY } from './index';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 export const featureSelector =
-  createFeatureSelector<IAddresseeState>(WIDGET_CONTEXT_KEY);
+  createFeatureSelector<IAddresseeState>(ADDRESSEE_KEY);
 
 export const addresseeSelector = createSelector(featureSelector, (state) => ({
   ...state,

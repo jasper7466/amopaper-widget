@@ -1,4 +1,4 @@
-import { filesIdsSignedOriginal } from './../../../store/signatures/selectors';
+import { filesIdsOriginalsSelector } from './../../../store/signatures/selectors';
 import { RoutingService } from 'src/app/services/sub-services/routing.service';
 import { ModalSignInfoComponent } from 'src/app/components/organisms/modal-sign-info/modal-sign-info.component';
 import { NopaperService } from 'src/app/services/sub-services/nopaper.service';
@@ -18,7 +18,7 @@ export class PacketPageReceiverPreviewComponent implements OnInit {
   private packetId: number;
 
   protected signedOriginalDocuments$ = this.store.select(
-    filesIdsSignedOriginal
+    filesIdsOriginalsSelector
   );
 
   constructor(

@@ -1,19 +1,25 @@
+import { ADDRESSEE_KEY } from './index';
 import { createAction, props } from '@ngrx/store';
 
+export interface IAddresseeExistenceProps {
+  isExists: boolean;
+}
+
 export const addAddresseeByPhoneAction = createAction(
-  '[WIDGET-CONTEXT] add addressee by phone',
+  `[${ADDRESSEE_KEY}] add addressee by phone`,
   props<{ phone: string }>()
 );
 
 export const addAddresseeByVatIdAction = createAction(
-  '[WIDGET-CONTEXT] add addressee by vat-id',
+  `[${ADDRESSEE_KEY}] add addressee by vat-id`,
   props<{ vatId: string }>()
 );
 
 export const setAddresseeExistenceAction = createAction(
-  '[WIDGET-CONTEXT] set addressee existence'
+  `[${ADDRESSEE_KEY}] set addressee existence`,
+  props<IAddresseeExistenceProps>
 );
 
 export const resetAddresseeAction = createAction(
-  '[WIDGET-CONTEXT] remove addressee'
+  `[${ADDRESSEE_KEY}] remove addressee`
 );

@@ -7,8 +7,6 @@ interface IPostStepNameRequest {
   stepSystemName: string;
 }
 
-interface IPostStepNameResponse {}
-
 const requestAdapter = (
   packetId: number,
   status: PacketStatus
@@ -18,8 +16,8 @@ export function setPacketStepNameEndpoint(
   this: ApiService,
   packetId: number,
   status: PacketStatus
-): Observable<IPostStepNameResponse> {
-  return this.post<IPostStepNameRequest, IPostStepNameResponse>(
+): Observable<void> {
+  return this.post<IPostStepNameRequest, void>(
     '/document/changestep',
     requestAdapter(packetId, status)
   );

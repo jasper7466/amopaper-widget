@@ -6,7 +6,6 @@ import {
   HttpHeaders,
 } from '@angular/common/http';
 
-@Injectable()
 export class ApiService {
   private _baseUrl: string;
   private headers = new HttpHeaders();

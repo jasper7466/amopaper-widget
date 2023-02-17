@@ -1,3 +1,4 @@
+import { PacketStatus } from './../../store/packets/index';
 import { Observable, map, filter, tap } from 'rxjs';
 import { Injectable } from '@angular/core';
 import {
@@ -14,7 +15,6 @@ import {
   RoutesRecognized,
   Scroll,
 } from '@angular/router';
-import { StepName } from '../api/nopaper-api/nopaper-api.types';
 
 export type NavigationPart = {
   title: string;
@@ -91,11 +91,14 @@ export class RoutingService {
     this.router.navigate(['widget/packet', id]);
   }
 
-  public goMatchedStepPacketPage(stepName: StepName | null, id: number): void {
+  public goMatchedStepPacketPage(
+    packetStatus: PacketStatus | null,
+    id: number
+  ): void {
     const basePath = `widget/packet/${id}/`;
     let destination = '';
 
-    switch (stepName) {
+    switch (packetStatus) {
       case 'new':
         destination = 'draft';
         break;

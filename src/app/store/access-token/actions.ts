@@ -1,7 +1,7 @@
-import { ITokenState } from './index';
+import { ITokenState, TOKEN_KEY } from './index';
 import { createAction, props } from '@ngrx/store';
 
 export const updateAccessTokenAction = createAction(
-  '[ACCESS_TOKEN] update',
+  `[${TOKEN_KEY}] update action`,
   props<ITokenState>()
 );

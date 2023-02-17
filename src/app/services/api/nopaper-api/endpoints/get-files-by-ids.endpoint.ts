@@ -1,8 +1,8 @@
+import { IFileInfo } from './../../../../store/files-processed/index';
 import { ApiService } from '../../api.service';
 import { base64ToFile } from 'src/app/utils/base64-to-file.util';
-import { IDecodedFilesProps } from '../../../../store/signatures/actions';
-import { IFileInfo } from '../../../../store/signatures/index';
 import { Observable, forkJoin, map, switchMap, take } from 'rxjs';
+import { IOriginalFilesProps } from 'src/app/store/files-processed/actions';
 
 interface IGetFilesByIdsRequest {
   documentFileIdList: number[];
@@ -22,7 +22,7 @@ const requestAdapter = (data: IFileInfo[]): IGetFilesByIdsRequest => ({
 
 const responseAdapter = (
   response: IGetFilesByIdsResponse
-): Observable<IDecodedFilesProps> => {
+): Observable<IOriginalFilesProps> => {
   const tasks$: Observable<File>[] = [];
 
   for (const file of response) {
@@ -35,7 +35,7 @@ const responseAdapter = (
 export function getFilesByIdsEndpoint(
   this: ApiService,
   filesIds: IFileInfo[]
-): Observable<IDecodedFilesProps> {
+): Observable<File[]> {
   return this.post<IGetFilesByIdsRequest, IGetFilesByIdsResponse>(
     '/document/file-list',
     requestAdapter(filesIds)

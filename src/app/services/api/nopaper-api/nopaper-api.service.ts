@@ -14,7 +14,7 @@ import { getFilesByIdsEndpoint } from './endpoints/get-files-by-ids.endpoint';
 import { getFileSignaturesEndpoint } from './endpoints/get-files-signatures.endpoint';
 import { getShareLinkEndpoint } from './endpoints/get-share-link.endpoint';
 
-const BASE_URL = environment.nopaperBaseUrl;
+const BASE_URL = `${environment.nopaperBaseUrl}/api`;
 
 @Injectable()
 export class NopaperApiService extends ApiService {

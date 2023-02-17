@@ -1,22 +1,14 @@
-import {
-  initialPacketState,
-  initialState,
-  IPacketsState,
-  IPacket,
-  Packets,
-} from './index';
+import { initialPacketState, initialState, IPacket, Packets } from './index';
 import { createReducer, on } from '@ngrx/store';
 import {
   setPacketDetailsAction,
   setPacketsIdsAction,
-  setPacketStepAction,
+  setPacketStatusAction,
 } from './actions';
 
 export const packetsReducer = createReducer(
   initialState,
   on(setPacketsIdsAction, (state, { packetsIds }) => {
-    // console.log('DISPATCHED: setPacketsIdsAction', packetsIds);
-
     // Если набор пакетов не изменился
     if (
       packetsIds.length === state.packetsIds.length &&
@@ -59,9 +51,7 @@ export const packetsReducer = createReducer(
       isPacketsIdsTouched: true,
     };
   }),
-  on(setPacketStepAction, (state, { packetId, stepName }) => {
-    console.log('DISPATCHED: setPacketsStepAction', packetId, stepName);
-
+  on(setPacketStatusAction, (state, { packetId, status }) => {
     // if (!(packetId in state.packets)) {
     //   return {
     //     ...state,
@@ -76,7 +66,7 @@ export const packetsReducer = createReducer(
 
     const packet = {
       ...state.packets[packetId],
-      stepName,
+      status,
     };
 
     return {

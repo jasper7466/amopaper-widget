@@ -1,8 +1,8 @@
 import { RoutingService } from './../../../services/sub-services/routing.service';
 import { NopaperService } from 'src/app/services/sub-services/nopaper.service';
 import {
-  filesIdsSignedOriginal,
-  filesIdsSignedStamp,
+  filesIdsOriginalsSelector,
+  filesIdsStampedSelector,
 } from './../../../store/signatures/selectors';
 import { CommonLogicService } from './../../../services/common-logic.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -21,9 +21,9 @@ export class PacketPageEndComponent implements OnInit {
   private packetId: number;
 
   protected signedOriginalDocuments$ = this.store.select(
-    filesIdsSignedOriginal
+    filesIdsOriginalsSelector
   );
-  protected signedStampDocuments$ = this.store.select(filesIdsSignedStamp);
+  protected signedStampDocuments$ = this.store.select(filesIdsStampedSelector);
 
   constructor(
     private store: Store,

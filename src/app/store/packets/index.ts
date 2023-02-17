@@ -1,11 +1,31 @@
-import { StepName } from 'src/app/services/api/nopaper-api/nopaper-api.types';
-
 export const PACKETS_KEY = 'packets';
+
+export type PacketStatus =
+  | 'new'
+  | 'nopaperPrepareFiles'
+  | 'nopaperPreview'
+  | 'nopaperPreviewBeforeOferta'
+  | 'nopaperOfertaSenderPreview'
+  | 'nopaperSenderSign'
+  | 'nopaperReceiverPreview'
+  | 'nopaperReceiverPreviewBeforeOferta'
+  | 'nopaperOfertaReceiverPreview'
+  | 'nopaperReceiverSigning'
+  | 'nopaperEnd'
+  | 'nopaperEndRead'
+  | 'nopaperError'
+  | 'nopaperErrorEnd'
+  | 'nopaperDelete'
+  | 'nopaperSenderCancel'
+  | 'nopaperSenderCancelEnd'
+  | 'nopaperSignRefused'
+  | 'nopaperSignRefusedEnd'
+  | 'nopaperSignRefusedRead';
 
 export interface IPacket {
   title: string;
   creationDate: string | null;
-  stepName: StepName | null;
+  status: PacketStatus | null;
 }
 
 export type Packets = { [key: number]: IPacket };
@@ -19,7 +39,7 @@ export interface IPacketsState {
 export const initialPacketState: IPacket = {
   title: 'Без названия',
   creationDate: null,
-  stepName: null,
+  status: null,
 };
 
 export const initialState: IPacketsState = {

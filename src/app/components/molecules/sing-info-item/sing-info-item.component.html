@@ -1,12 +1,12 @@
 <div class="sign-info__status-plate" (click)="fold()">
-  <p *ngIf="signature.isUl" class="sign-info__signer-name">
-    {{ signature.snapshot.companyName }}
+  <p *ngIf="signature.isCompany" class="sign-info__signer-name">
+    {{ signature.company.name }}
   </p>
-  <p *ngIf="!signature.isUl" class="sign-info__signer-name">
-    {{ signature.certificateOwner }}
+  <p *ngIf="!signature.isCompany" class="sign-info__signer-name">
+    {{ signature.userFullName }}
   </p>
-  <p *ngIf="signature.isUl" class="sign-info__signer-vat-id">
-    ИНН {{ signature.snapshot.companyInn }}
+  <p *ngIf="signature.isCompany" class="sign-info__signer-vat-id">
+    ИНН {{ signature.company.vatId }}
   </p>
   <app-status-label
     class="sign-info__status-label"
@@ -50,23 +50,20 @@
 >
   <table class="sign-info__table">
     <tbody>
-      <tr *ngIf="signature.isUl" class="sign-info__table-row">
+      <tr *ngIf="signature.isCompany" class="sign-info__table-row">
         <th class="sign-info__table-cell sign-info__table-cell_header">
           Время проверки по ЕГРЮЛ
         </th>
         <td class="sign-info__table-cell sign-info__table-cell_data">
-          {{
-            signature.snapshot.procuratoryIssueDateTimeUtc
-              | date : "d MMM y, h:mm"
-          }}
+          {{ signature.company.auditIssueDateTimeUtc | date : "d MMM y, h:mm" }}
         </td>
       </tr>
-      <tr *ngIf="signature.isUl" class="sign-info__table-row">
+      <tr *ngIf="signature.isCompany" class="sign-info__table-row">
         <th class="sign-info__table-cell sign-info__table-cell_header">
           Номер проверки ЕГРЮЛ
         </th>
         <td class="sign-info__table-cell sign-info__table-cell_data">
-          {{ signature.snapshot.procuratoryId }}
+          {{ signature.company.auditId }}
         </td>
       </tr>
       <tr class="sign-info__table-row">

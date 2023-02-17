@@ -1,3 +1,4 @@
+import { NopaperApiV2Service } from './nopaper-api-v2/nopaper-api-v2.service';
 import { environment } from 'src/environments/environment';
 import { Store } from '@ngrx/store';
 import { HttpClient } from '@angular/common/http';
@@ -23,6 +24,7 @@ const AccessTokenApiFactory = (http: HttpClient, store: Store) => {
   providers: [
     AmoApiService,
     NopaperApiService,
+    NopaperApiV2Service,
     {
       provide: AccessTokenApiService,
       useFactory: AccessTokenApiFactory,

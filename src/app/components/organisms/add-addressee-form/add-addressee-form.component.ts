@@ -63,7 +63,7 @@ export class AddAddresseeFormComponent implements OnInit {
       );
 
       this.nopaperApiService
-        .checkUserByPhone$(this.value)
+        .checkUserByPhone(this.value)
         .subscribe((response) => {
           if ('userGuid' in response) {
             this.store.dispatch(setAddresseeExistenceAction());

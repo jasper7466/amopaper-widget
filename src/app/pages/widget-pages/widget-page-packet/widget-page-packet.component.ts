@@ -1,4 +1,4 @@
-import { StepName } from 'src/app/services/api/nopaper-api/nopaper-api.types';
+import { StepName } from 'src/app/services/api/nopaper-api/nopaper-api-common.types';
 import { takeUntil, tap, switchMap, filter } from 'rxjs';
 import { Component, OnDestroy, OnInit, EventEmitter } from '@angular/core';
 import {

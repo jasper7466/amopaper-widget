@@ -1,13 +1,13 @@
-import { resetFilesListAction } from 'src/app/store/files/actions';
+import { resetOriginalFilesAction } from 'src/app/store/files-original/actions';
 import { map, Observable } from 'rxjs';
 import { StatusLabelStatus } from 'src/app/components/atoms/status-label/status-label.component';
 import { Store } from '@ngrx/store';
 import { Component } from '@angular/core';
 import {
-  filesSelector,
-  loadedCountSelector,
-  totalCountSelector,
-} from 'src/app/store/files/selectors';
+  sourceFilesSelector,
+  sourceFilesLoadedCountSelector,
+  sourceFilesTotalCountSelector,
+} from 'src/app/store/files-source/selectors';
 
 type Item = {
   fileName: string;
@@ -21,11 +21,15 @@ type Item = {
   styleUrls: ['./documents-uploader.component.css'],
 })
 export class DocumentsUploaderComponent {
-  protected documentsTotalCount$ = this.store.select(totalCountSelector);
-  protected documentsLoadedCount$ = this.store.select(loadedCountSelector);
+  protected documentsTotalCount$ = this.store.select(
+    sourceFilesTotalCountSelector
+  );
+  protected documentsLoadedCount$ = this.store.select(
+    sourceFilesLoadedCountSelector
+  );
 
   protected uploadedDocuments$: Observable<Item[]> = this.store
-    .select(filesSelector)
+    .select(sourceFilesSelector)
     .pipe(
       map((files) =>
         files.map((item) => ({
@@ -37,6 +41,6 @@ export class DocumentsUploaderComponent {
   constructor(private store: Store) {}
 
   protected clearFilesList() {
-    this.store.dispatch(resetFilesListAction());
+    this.store.dispatch(resetOriginalFilesAction());
   }
 }

@@ -1,14 +1,14 @@
 import { initialState } from './index';
 import { createReducer, on } from '@ngrx/store';
 import {
-  resetFilesListAction,
-  addFilesAction,
-  loadFileCompleteAction,
+  sourceFilesResetAction,
+  sourceFilesAddAction,
+  sourceFileCompleteAction,
 } from './actions';
 
-export const filesReducer = createReducer(
+export const sourceFilesReducer = createReducer(
   initialState,
-  on(addFilesAction, (state, { files }) => {
+  on(sourceFilesAddAction, (state, { files }) => {
     return {
       ...state,
       files: [...state.files, ...files],
@@ -16,7 +16,7 @@ export const filesReducer = createReducer(
       isComplete: false,
     };
   }),
-  on(loadFileCompleteAction, (state, { id, base64 }) => {
+  on(sourceFileCompleteAction, (state, { id, base64 }) => {
     const fileIndex = state.files.findIndex((file) => file.id === id);
 
     if (fileIndex === -1) {
@@ -39,8 +39,7 @@ export const filesReducer = createReducer(
       isComplete,
     };
   }),
-  on(resetFilesListAction, (state) => {
-    // state.files.forEach((file) => file.onLoadSubscription?.unsubscribe());
+  on(sourceFilesResetAction, (state) => {
     return { ...initialState };
   })
 );

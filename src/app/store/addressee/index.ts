@@ -1,6 +1,7 @@
-export const WIDGET_CONTEXT_KEY = 'widgetContext';
+export const ADDRESSEE_KEY = 'addressee';
 
 export type AddresseeType = 'phone' | 'vatId' | null;
+
 export interface IAddresseeState {
   isExists: boolean | null;
   type: AddresseeType;
