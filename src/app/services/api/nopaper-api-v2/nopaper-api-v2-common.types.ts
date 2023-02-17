@@ -1,12 +1,4 @@
-import { ExactlyOneKeyOf, NonEmptyArray } from 'src/app/types/common';
-
-/** Элемент списка файлов пакета документов. */
-type FileInfo = {
-  /** Имя файла с расширением. */
-  fileNameWithExtension: string;
-  /** Файл в формате base64. */
-  fileBase64: string;
-};
+import { ExactlyOneKeyOf } from 'src/app/types/common';
 
 /** Тип действия участника маршрута документа. */
 enum ACTION_TYPE {
@@ -30,8 +22,24 @@ enum SIGN_TYPE {
   Qualified,
 }
 
+/** Статус пакета документов. */
+export enum DOCUMENT_STATUS {
+  /** Черновик. */
+  Draft = 1,
+  /** В работе. */
+  InProgress = 2,
+  /** Подписан/согласован всеми участниками маршрута. */
+  Complete = 3,
+  /** Отозван отправителем. */
+  Revoked = 4,
+  /** Ошибка. */
+  Error = 5,
+  /** Отклонён одним из участников маршрута. */
+  Rejected = 6,
+}
+
 /** Тип маршрута документа. */
-enum ROUTE_TYPE {
+export enum ROUTE_TYPE {
   /** Последовательный. */
   Serial = 1,
   /** Параллельный. */
@@ -49,27 +57,9 @@ type RecipientDeterminant = {
 };
 
 /** Элемент списка участников маршрута пакета документов. */
-type RecipientInfo = ExactlyOneKeyOf<RecipientDeterminant> & {
+export type RecipientInfo = ExactlyOneKeyOf<RecipientDeterminant> & {
   /** Тип действия участника маршрута документа. По умолчанию - подписание ЮЛ. */
   actionType?: ACTION_TYPE;
   /** Тип подписания участника маршрута. По умолчанию - НЭП.*/
   signType?: SIGN_TYPE;
 };
-
-/** Тело запроса на создание пакета документов. */
-export interface IPostDraftRequest {
-  /** Заголовок пакета документов. */
-  title?: string;
-  /** Идентификатор пользователя-отправителя документа. Пользователь должен являться сотрудником компании. */
-  userGuid?: string;
-  /** Массив объектов файлов. */
-  fileInfoList: FileInfo[];
-  /** Массив объектов участников маршрута (непустой). */
-  recipientInfoList: NonEmptyArray<RecipientInfo>;
-  /** Тип маршрута документа */
-  documentRouteType: ROUTE_TYPE;
-}
-
-export interface IPostDraftResponse {
-  documentId: number;
-}
