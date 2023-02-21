@@ -1,20 +1,12 @@
+import { TFile } from 'src/app/interfaces/file.type';
+import { IPacketFile } from 'src/app/interfaces/packet-file.interface';
+import { IPacketFilesInfo } from 'src/app/interfaces/packet-files-info.interface';
+
 export const FILES_PROCESSED_KEY = 'processed-files';
 
-export interface IFileInfo {
-  id: number;
-  name: string;
-  size: number;
-}
-
-export interface IFilesIdentifiers {
-  count: number;
-  originals: IFileInfo[];
-  stamped: IFileInfo[];
-}
-
 export interface IProcessedFilesState {
-  identifiers: IFilesIdentifiers;
-  originalFiles: File[];
+  identifiers: IPacketFilesInfo;
+  originalFiles: IPacketFile[];
 }
 
 export const initialState: IProcessedFilesState = {

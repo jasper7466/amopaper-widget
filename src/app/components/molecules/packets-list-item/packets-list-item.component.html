@@ -1,11 +1,10 @@
 <div class="item" (click)="navigatePacketPage()">
   <div class="item__details-area">
-    <span class="item__title">{{ (packet$ | async)?.title }}</span>
-    <span class="item__date">{{ (packet$ | async)?.creationDate | date }}</span>
+    <span class="item__title">{{ packet.title }}</span>
+    <span class="item__date">{{ packet.createTimeUtc | date }}</span>
   </div>
   <app-status-label
-    *ngIf="packet$ | async"
-    [status]="(packet$ | async)?.stepName || null | toLabelStatus"
+    [status]="packet.status || null | toLabelStatus"
     class="item__status-label"
   ></app-status-label>
 </div>

@@ -1,49 +1,22 @@
+import { IPacketDetails } from 'src/app/interfaces/packet-details.interface';
+import { WithOptional } from 'src/app/types/common';
+
 export const PACKETS_KEY = 'packets';
 
-export type PacketStatus =
-  | 'new'
-  | 'nopaperPrepareFiles'
-  | 'nopaperPreview'
-  | 'nopaperPreviewBeforeOferta'
-  | 'nopaperOfertaSenderPreview'
-  | 'nopaperSenderSign'
-  | 'nopaperReceiverPreview'
-  | 'nopaperReceiverPreviewBeforeOferta'
-  | 'nopaperOfertaReceiverPreview'
-  | 'nopaperReceiverSigning'
-  | 'nopaperEnd'
-  | 'nopaperEndRead'
-  | 'nopaperError'
-  | 'nopaperErrorEnd'
-  | 'nopaperDelete'
-  | 'nopaperSenderCancel'
-  | 'nopaperSenderCancelEnd'
-  | 'nopaperSignRefused'
-  | 'nopaperSignRefusedEnd'
-  | 'nopaperSignRefusedRead';
-
-export interface IPacket {
-  title: string;
-  creationDate: string | null;
-  status: PacketStatus | null;
-}
-
-export type Packets = { [key: number]: IPacket };
-
+type TPacket = WithOptional<IPacketDetails, 'status' | 'createTimeUtc'>;
 export interface IPacketsState {
-  packetsIds: number[];
-  packets: Packets;
+  packets: TPacket[];
   isPacketsIdsTouched: boolean;
 }
 
-export const initialPacketState: IPacket = {
+export const initialPacketState: TPacket = {
+  id: -1,
   title: 'Без названия',
-  creationDate: null,
-  status: null,
+  createTimeUtc: undefined,
+  status: undefined,
 };
 
 export const initialState: IPacketsState = {
-  packetsIds: [],
-  packets: {},
+  packets: [],
   isPacketsIdsTouched: false,
 };

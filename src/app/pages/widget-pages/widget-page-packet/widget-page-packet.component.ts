@@ -1,4 +1,3 @@
-import { StepName } from 'src/app/services/api/nopaper-api/nopaper-api-common.types';
 import { takeUntil, tap, switchMap, filter } from 'rxjs';
 import { Component, OnDestroy, OnInit, EventEmitter } from '@angular/core';
 import {
@@ -11,6 +10,7 @@ import { Store } from '@ngrx/store';
 import { NopaperService } from 'src/app/services/sub-services/nopaper.service';
 import { RoutingService } from 'src/app/services/sub-services/routing.service';
 import { packetStepNameSelector } from 'src/app/store/packets/selectors';
+import { TPacketStatus } from 'src/app/interfaces/packet-status.type';
 
 @Component({
   selector: 'app-widget-page-packet',
@@ -20,7 +20,7 @@ import { packetStepNameSelector } from 'src/app/store/packets/selectors';
 export class WidgetPagePacketComponent implements OnInit, OnDestroy {
   private onDestroyEmitter = new EventEmitter<void>();
   protected packetId: number;
-  protected stepName: StepName | null;
+  protected stepName: TPacketStatus | null;
 
   constructor(
     private store: Store,

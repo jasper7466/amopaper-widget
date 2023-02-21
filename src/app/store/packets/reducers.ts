@@ -1,114 +1,98 @@
-import { initialPacketState, initialState, IPacket, Packets } from './index';
+import { initialPacketState, initialState } from './index';
 import { createReducer, on } from '@ngrx/store';
 import {
+  addPacketsByIdsAction as setPacketsByIdsAction,
   setPacketDetailsAction,
-  setPacketsIdsAction,
   setPacketStatusAction,
 } from './actions';
 
 export const packetsReducer = createReducer(
   initialState,
-  on(setPacketsIdsAction, (state, { packetsIds }) => {
-    // Если набор пакетов не изменился
-    if (
-      packetsIds.length === state.packetsIds.length &&
-      packetsIds.every((id) => id in state.packets)
-    ) {
-      return {
-        ...state,
-        isPacketsIdsTouched: true,
-      };
-    }
+  on(setPacketsByIdsAction, (state, { payload }) => {
+    const updatedPacketsList = [...state.packets];
+    let updateRequired = false;
 
-    const justAdded: { [key: number]: IPacket } = {};
+    // Удаление пакетов, чей id отсутствует в запросе
+    for (const packet of updatedPacketsList) {
+      const payloadPacket = payload.find((item) => item.id === packet.id);
 
-    for (const packetId of packetsIds) {
-      if (packetId in state.packets) {
+      if (payloadPacket) {
         continue;
       }
-      justAdded[packetId] = { ...initialPacketState };
+
+      const indexToRemove = updatedPacketsList.findIndex(
+        (item) => item.id === packet.id
+      );
+
+      updatedPacketsList.splice(indexToRemove, 1);
+      updateRequired = true;
     }
 
-    // Добавляем новые пакеты
-    let update: Packets = {
-      ...state.packets,
-      ...justAdded,
-    };
+    // Добавление пакетов, чей id отсутствует в хранилище
+    for (const packet of payload) {
+      const storedPacket = updatedPacketsList.find(
+        (item) => item.id === packet.id
+      );
 
-    // Исключаем те, чей id отсутствует в запросе
-    update = Object.fromEntries(
-      Object.entries(update).filter(([key]) =>
-        packetsIds.includes(parseInt(key))
-      )
-    );
+      if (storedPacket) {
+        continue;
+      }
+
+      updatedPacketsList.push({ ...initialPacketState, ...packet });
+      updateRequired = true;
+    }
+
+    if (!updateRequired) {
+      return { ...state };
+    }
 
     return {
       ...state,
-      packetsIds: [...packetsIds],
-      packets: {
-        ...update,
-      },
+      packets: updatedPacketsList,
       isPacketsIdsTouched: true,
     };
   }),
-  on(setPacketStatusAction, (state, { packetId, status }) => {
-    // if (!(packetId in state.packets)) {
-    //   return {
-    //     ...state,
-    //   };
-    // }
+  on(setPacketStatusAction, (state, { id, status }) => {
+    const indexToUpdate = state.packets.findIndex((item) => item.id === id);
+    const packetToUpdate = state.packets[indexToUpdate];
 
-    // if (stepName === state.packets[packetId].stepName) {
-    //   return {
-    //     ...state,
-    //   };
-    // }
+    if (indexToUpdate >= 0 && packetToUpdate.status === status) {
+      return { ...state };
+    }
 
-    const packet = {
-      ...state.packets[packetId],
+    const updatedPacketsList = [...state.packets].splice(indexToUpdate, 1, {
+      ...packetToUpdate,
       status,
-    };
+    });
 
     return {
       ...state,
-      packets: {
-        ...state.packets,
-        [packetId]: packet,
-      },
+      packets: updatedPacketsList,
     };
   }),
-  on(setPacketDetailsAction, (state, { packetId, title, creationDate }) => {
-    // console.log('DISPATCHED: setPacketsDetailsAction', title, creationDate);
-
-    if (!(packetId in state.packets)) {
-      return {
-        ...state,
-      };
-    }
+  on(setPacketDetailsAction, (state, { id, title, createTimeUtc }) => {
+    const indexToUpdate = state.packets.findIndex((item) => item.id === id);
+    const packetToUpdate = state.packets[indexToUpdate];
 
     title = title.length ? title : initialPacketState.title;
 
     if (
-      title === state.packets[packetId].title &&
-      creationDate === state.packets[packetId].creationDate
+      indexToUpdate >= 0 &&
+      packetToUpdate.title === title &&
+      packetToUpdate.createTimeUtc === createTimeUtc
     ) {
-      return {
-        ...state,
-      };
+      return { ...state };
     }
 
-    const packet = {
-      ...state.packets[packetId],
+    const updatedPacketsList = [...state.packets].splice(indexToUpdate, 1, {
+      ...packetToUpdate,
       title,
-      creationDate,
-    };
+      createTimeUtc,
+    });
 
     return {
       ...state,
-      packets: {
-        ...state.packets,
-        [packetId]: packet,
-      },
+      packets: updatedPacketsList,
     };
   })
 );

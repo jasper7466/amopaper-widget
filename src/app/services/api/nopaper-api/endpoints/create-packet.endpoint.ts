@@ -1,9 +1,10 @@
-import { INewPacketData } from '../../../../store/interfaces';
+import { IPacketCreateData } from 'src/app/interfaces/packet-create-data.interface';
 import { INewPacketIdProps } from '../../../../store/misc/actions';
 import { ApiService } from '../../api.service';
 import { Observable, map } from 'rxjs';
+import { ADDRESSEE_ID_TYPE } from 'src/app/interfaces/addressee.interface';
 
-type PostDraftFileItem = {
+type FileItem = {
   fileName: string;
   filebase64: string;
 };
@@ -12,14 +13,14 @@ interface IPostDraftRequest {
   title?: string;
   clientFlPhoneNumber?: string;
   clientUlInn?: string;
-  files: PostDraftFileItem[];
+  files: FileItem[];
 }
 
 interface IPostDraftResponse {
   documentId: string;
 }
 
-const requestAdapter = (data: INewPacketData): IPostDraftRequest | never => {
+const requestAdapter = (data: IPacketCreateData): IPostDraftRequest | never => {
   const { addressee, files, title } = data;
 
   let body: IPostDraftRequest = {
@@ -29,34 +30,27 @@ const requestAdapter = (data: INewPacketData): IPostDraftRequest | never => {
     title: undefined,
   };
 
-  switch (data.addressee.type) {
-    case 'phone': {
-      if (addressee.phone) {
-        body.clientFlPhoneNumber = addressee.phone;
-      } else {
-        throw new Error('Phone is not defined');
-      }
+  switch (data.addressee.idType) {
+    case ADDRESSEE_ID_TYPE.Phone: {
+      body.clientFlPhoneNumber = addressee.idValue;
       break;
     }
-    case 'vatId':
-      {
-        if (addressee.vatId) {
-          body.clientUlInn = addressee.vatId;
-        } else {
-          throw new Error('VatId is not defined');
-        }
-      }
+    case ADDRESSEE_ID_TYPE.VatId: {
+      body.clientUlInn = addressee.idValue;
       break;
+    }
     default:
-      throw new Error('Addressee is not defined');
+      throw new Error('Unexpected addressee id type.');
   }
 
   body.files = files.map((file) => ({
-    fileName: file.file.name,
+    fileName: file.name,
     filebase64: file.base64,
   }));
 
-  body.title = title;
+  if (title.length > 0) {
+    body.title = title;
+  }
 
   return body;
 };
@@ -67,7 +61,7 @@ const responseAdapter = (response: IPostDraftResponse): INewPacketIdProps => ({
 
 export function createPacketEndpoint(
   this: ApiService,
-  data: INewPacketData
+  data: IPacketCreateData
 ): Observable<INewPacketIdProps> {
   return this.post<IPostDraftRequest, IPostDraftResponse>(
     '/document/create-for-client',

@@ -6,12 +6,9 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { IPacketDetails } from 'src/app/interfaces/packet-details.interface';
 import { NopaperService } from 'src/app/services/sub-services/nopaper.service';
 import { RoutingService } from 'src/app/services/sub-services/routing.service';
-import { IPacket } from 'src/app/store/packets';
-import { packetSelector } from 'src/app/store/packets/selectors';
 
 @Component({
   selector: 'app-packets-list-item',
@@ -19,29 +16,25 @@ import { packetSelector } from 'src/app/store/packets/selectors';
   styleUrls: ['./packets-list-item.component.css'],
 })
 export class PacketsListItemComponent implements OnInit, OnDestroy, OnChanges {
-  @Input() packetId: number = 0;
-
-  public packet$: Observable<IPacket>;
+  @Input() packet: IPacketDetails;
 
   constructor(
     private routingService: RoutingService,
-    private nopaperService: NopaperService,
-    private store: Store
+    private nopaperService: NopaperService
   ) {}
 
   ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.nopaperService.startPacketPolling(this.packetId);
-    this.packet$ = this.store.select(packetSelector(this.packetId));
+    this.nopaperService.startPacketPolling(this.packet.id);
   }
 
   ngOnDestroy(): void {
-    this.nopaperService.stopPacketPolling(this.packetId);
+    this.nopaperService.stopPacketPolling(this.packet.id);
   }
 
   public navigatePacketPage(): void {
-    console.log('navigating to packet id', this.packetId);
-    this.routingService.goPacketPage(this.packetId);
+    console.log('navigating to packet id', this.packet.id);
+    this.routingService.goPacketPage(this.packet.id);
   }
 }

@@ -1,13 +1,12 @@
-import { ServicesCoreModule } from '../services-core.module';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Observer } from 'rxjs';
-import { FileRecord } from '../../store/files-source';
 import {
   sourceFilesAddAction,
   sourceFilesResetAction,
   sourceFileCompleteAction,
 } from '../../store/files-source/actions';
+import { IFileInfo } from 'src/app/interfaces/file-info.interface';
 
 @Injectable()
 export class FilesService {
@@ -16,7 +15,7 @@ export class FilesService {
   constructor(private store: Store) {}
 
   filesHandler(files: FileList) {
-    const fileRecords: FileRecord[] = [];
+    const filesMetadata: IFileInfo[] = [];
 
     for (const file of Array.from(files)) {
       const id = this.counter;
@@ -24,18 +23,16 @@ export class FilesService {
         this.store.dispatch(sourceFileCompleteAction({ id, base64 }));
       });
 
-      fileRecords.push({
+      filesMetadata.push({
         id,
-        file,
-        base64: '',
-        onLoadSubscription: null,
-        isLoaded: false,
+        name: file.name,
+        size: file.size,
       });
 
       this.counter++;
     }
 
-    this.store.dispatch(sourceFilesAddAction({ files: [...fileRecords] }));
+    this.store.dispatch(sourceFilesAddAction({ payload: [...filesMetadata] }));
   }
 
   protected toBase64$(file: File): Observable<string> {

@@ -9,12 +9,11 @@ export const packetsSelector = createSelector(
   (state) => state.packets
 );
 
-export const packetsIdsSelector = createSelector(
-  featureSelector,
-  (state) => state.packetsIds
+export const packetsIdsSelector = createSelector(featureSelector, (state) =>
+  state.packets.map((item) => item.id)
 );
 
-export const packetsIdsIsTouchedSelector = createSelector(
+export const packetsIsTouchedSelector = createSelector(
   featureSelector,
   (state) => state.isPacketsIdsTouched
 );

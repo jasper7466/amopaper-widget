@@ -1,13 +1,13 @@
-import { IFileSignaturesProps } from '../../../../store/signatures/actions';
-import { IFileInfo } from '../../../../store/signatures/index';
 import { Observable, map } from 'rxjs';
 import { ApiService } from '../../api.service';
+import { IFileInfo } from 'src/app/interfaces/file-info.interface';
+import { IFileSignatures } from 'src/app/interfaces/file-signatures.interface';
 
 interface IGetFileSignatureRequest {
   documentFileId: number;
 }
 
-type Snapshot = {
+type TSnapshot = {
   companyInn: string;
   companyName: string;
   companyNameOpf: string;
@@ -19,7 +19,7 @@ type Snapshot = {
   procuratoryRevokeDateTimeUtc: string;
 };
 
-type SignatureInfo = {
+type TSignatureInfo = {
   certificateId: number;
   certificateOwner: string;
   confirmCode: string;
@@ -30,10 +30,10 @@ type SignatureInfo = {
   userGuid: string;
   signatureInfoFileTxt: string;
   isUl: boolean;
-  snapshot: Snapshot;
+  snapshot: TSnapshot;
 };
 
-type TGetFileSignatureResponse = [SignatureInfo, SignatureInfo];
+type TGetFileSignatureResponse = [TSignatureInfo, TSignatureInfo];
 
 const requestAdapter = (data: IFileInfo): IGetFileSignatureRequest => ({
   documentFileId: data.id,
@@ -41,12 +41,12 @@ const requestAdapter = (data: IFileInfo): IGetFileSignatureRequest => ({
 
 const responseAdapter = (
   response: TGetFileSignatureResponse
-): IFileSignaturesProps => {
+): IFileSignatures | never => {
   if (response.length < 2) {
     throw new Error('Expected 2 items but got fewer');
   }
 
-  const payload = response.map((signature) => ({
+  const signatures = response.map((signature) => ({
     userFullName: signature.certificateOwner,
     userGuid: signature.userGuid,
     signature: signature.signature,
@@ -59,17 +59,15 @@ const responseAdapter = (
       auditId: signature.snapshot.procuratoryId,
       auditIssueDateTimeUtc: signature.snapshot.procuratoryIssueDateTimeUtc,
     },
-  })) as IFileSignaturesProps['payload'];
+  }));
 
-  return {
-    payload,
-  };
+  return { sender: signatures[0], recipient: signatures[1] };
 };
 
 export function getFileSignaturesEndpoint(
   this: ApiService,
   fileIds: IFileInfo
-): Observable<IFileSignaturesProps> {
+): Observable<IFileSignatures> {
   return this.post<IGetFileSignatureRequest, TGetFileSignatureResponse>(
     '/file/signatures',
     requestAdapter(fileIds)

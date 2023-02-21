@@ -42,17 +42,8 @@ export class DocumentsListItemComponent {
 
     if (this.fileId) {
       this.nopaperApiService
-        .getFilesByIds([this.fileId])
-        .pipe(
-          switchMap((files) => {
-            const file = files.pop();
-            if (!file) {
-              throw new Error(`Empty response for fileId ${this.fileId}`);
-            }
-            return base64ToFile(file?.base64Content, file?.fileName);
-          }),
-          take(1)
-        )
+        .getFilesByIds([{ id: this.fileId }])
+        .pipe(take(1))
         .subscribe((file) => {
           this.file = file;
           downloadFile(file);

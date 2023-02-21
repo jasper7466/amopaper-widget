@@ -1,4 +1,4 @@
-export type NopaperStepName =
+export type TNopaperStepName =
   | 'new'
   | 'nopaperPrepareFiles'
   | 'nopaperPreview'

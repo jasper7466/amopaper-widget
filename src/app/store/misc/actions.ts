@@ -1,17 +1,11 @@
+import { IPacketDetails } from 'src/app/interfaces/packet-details.interface';
 import { MISC_KEY } from './index';
 import { createAction, props } from '@ngrx/store';
-
-export interface INewPacketIdProps {
-  packetId: number;
-}
-
-export interface IShareLinkProps {
-  shareLink: string;
-}
+import { IShareLink } from 'src/app/interfaces/share-link.interface';
 
 export const setNewPacketTitleAction = createAction(
   `[${MISC_KEY}] set packet title`,
-  props<{ packetTitle: string }>()
+  props<Pick<IPacketDetails, 'title'>>()
 );
 
 export const resetNewPacketTitleAction = createAction(
@@ -20,10 +14,10 @@ export const resetNewPacketTitleAction = createAction(
 
 export const setShareLinkAction = createAction(
   `[${MISC_KEY}] set share link`,
-  props<IShareLinkProps>()
+  props<IShareLink>()
 );
 
 export const setNewPacketIdAction = createAction(
   `[${MISC_KEY}] set just created packet id`,
-  props<INewPacketIdProps>()
+  props<Pick<IPacketDetails, 'id'>>()
 );

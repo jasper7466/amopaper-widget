@@ -54,7 +54,7 @@ export class WidgetPageNewComponent implements OnInit, OnDestroy {
   }
 
   protected titleInputKeyUpHandler(value: string): void {
-    this.store.dispatch(setNewPacketTitleAction({ packetTitle: value }));
+    this.store.dispatch(setNewPacketTitleAction({ title: value }));
   }
 
   protected saveButtonHandler(): void {

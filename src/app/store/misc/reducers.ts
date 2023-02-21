@@ -8,16 +8,16 @@ import {
 
 export const miscReducer = createReducer(
   initialState,
-  on(setNewPacketTitleAction, (state, { packetTitle }) => ({
+  on(setNewPacketTitleAction, (state, { title }) => ({
     ...state,
-    packetTitle,
+    packetTitle: title,
   })),
   on(resetNewPacketTitleAction, (state) => ({
     ...state,
     packetTitle: '',
   })),
-  on(setShareLinkAction, (state, { shareLink }) => ({
+  on(setShareLinkAction, (state, { link }) => ({
     ...state,
-    shareLink,
+    shareLink: link,
   }))
 );

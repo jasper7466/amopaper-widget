@@ -5,8 +5,8 @@ import { setSignaturesAction, clearSignaturesAction } from './actions';
 export const signaturesReducer = createReducer(
   initialState,
   on(clearSignaturesAction, (state) => ({ ...state })),
-  on(setSignaturesAction, (state, { payload }) => ({
+  on(setSignaturesAction, (state, payload) => ({
     ...state,
-    signature: payload,
+    signatures: payload,
   }))
 );

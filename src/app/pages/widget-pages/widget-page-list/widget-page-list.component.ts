@@ -4,7 +4,7 @@ import { CrmService } from 'src/app/services/sub-services/crm.service';
 import { RoutingService } from 'src/app/services/sub-services/routing.service';
 import { leadIdSelector } from 'src/app/store/crm-context/selectors';
 import {
-  packetsIdsIsTouchedSelector,
+  packetsIsTouchedSelector,
   packetsIdsSelector,
 } from 'src/app/store/packets/selectors';
 
@@ -16,7 +16,7 @@ import {
 export class WidgetPageListComponent implements OnInit, OnDestroy {
   public leadId$ = this.store.select(leadIdSelector);
   public packetsIds$ = this.store.select(packetsIdsSelector);
-  public isPacketsIdsTouched$ = this.store.select(packetsIdsIsTouchedSelector);
+  public isPacketsIdsTouched$ = this.store.select(packetsIsTouchedSelector);
 
   constructor(
     private store: Store,

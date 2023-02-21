@@ -1,19 +1,21 @@
+import { IAddresseeExistence } from 'src/app/interfaces/addressee-existence.interface';
+import {
+  ADDRESSEE_ID_TYPE,
+  IAddressee,
+} from 'src/app/interfaces/addressee.interface';
+
 export const ADDRESSEE_KEY = 'addressee';
 
-export type AddresseeType = 'phone' | 'vatId' | null;
-
-export interface IAddresseeState {
-  isExists: boolean | null;
-  type: AddresseeType;
-  name: string;
-  vatId: string | null;
-  phone: string | null;
+export interface IAddresseeState extends IAddressee, IAddresseeExistence {
+  isChecked: boolean;
+  isSubmitted: boolean;
 }
 
 export const initialState: IAddresseeState = {
-  isExists: null,
-  type: null,
   name: 'Получатель',
-  vatId: null,
-  phone: null,
+  idType: ADDRESSEE_ID_TYPE.Phone,
+  idValue: '',
+  isChecked: false,
+  isExists: false,
+  isSubmitted: false,
 };

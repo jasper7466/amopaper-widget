@@ -1,11 +1,6 @@
 <ul class="packets-list">
-  <div *ngIf="packetsIds.length === 0">
-    Нет прикреплённых пакетов документов
-  </div>
-  <app-packets-list-item
-    *ngFor="let packetId of packetsIds"
-    [packetId]="packetId"
-  >
-    Пакет #{{ packetId }}
+  <div *ngIf="packets.length === 0">Нет прикреплённых пакетов документов</div>
+  <app-packets-list-item *ngFor="let packet of packets" [packet]="packet">
+    Пакет #{{ packet.id }}
   </app-packets-list-item>
 </ul>

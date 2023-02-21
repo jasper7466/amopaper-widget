@@ -1,7 +1,7 @@
 import {
   addAddresseeByPhoneAction,
   addAddresseeByVatIdAction,
-  setAddresseeExistenceAction,
+  addresseeSetExistenceAction,
 } from '../../../store/addressee/actions';
 import { NopaperApiService } from '../../../services/api/nopaper-api/nopaper-api.service';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
@@ -66,7 +66,7 @@ export class AddAddresseeFormComponent implements OnInit {
         .checkUserByPhone(this.value)
         .subscribe((response) => {
           if ('userGuid' in response) {
-            this.store.dispatch(setAddresseeExistenceAction());
+            this.store.dispatch(addresseeSetExistenceAction());
           }
         });
       return;

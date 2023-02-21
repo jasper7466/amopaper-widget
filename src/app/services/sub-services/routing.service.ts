@@ -1,20 +1,7 @@
-import { PacketStatus } from './../../store/packets/index';
 import { Observable, map, filter, tap } from 'rxjs';
 import { Injectable } from '@angular/core';
-import {
-  ActivatedRoute,
-  Event,
-  GuardsCheckEnd,
-  NavigationCancel,
-  NavigationEnd,
-  NavigationError,
-  NavigationStart,
-  ResolveEnd,
-  Router,
-  RouterEvent,
-  RoutesRecognized,
-  Scroll,
-} from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, Scroll } from '@angular/router';
+import { TPacketStatus } from 'src/app/interfaces/packet-status.type';
 
 export type NavigationPart = {
   title: string;
@@ -92,7 +79,7 @@ export class RoutingService {
   }
 
   public goMatchedStepPacketPage(
-    packetStatus: PacketStatus | null,
+    packetStatus: TPacketStatus | null,
     id: number
   ): void {
     const basePath = `widget/packet/${id}/`;

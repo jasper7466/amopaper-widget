@@ -1,29 +1,26 @@
 import { initialState } from './index';
 import { createReducer, on } from '@ngrx/store';
 import {
-  addAddresseeByPhoneAction,
-  addAddresseeByVatIdAction,
+  addresseeUpdateAction,
   resetAddresseeAction,
-  setAddresseeExistenceAction,
+  addresseeSetExistenceAction,
+  addresseeSubmitAction,
 } from './actions';
 
 export const widgetContextReducer = createReducer(
   initialState,
-  on(addAddresseeByPhoneAction, (state, { phone }) => ({
+  on(addresseeUpdateAction, (state, { idType, idValue }) => ({
     ...state,
-    type: 'phone',
-    phone,
-    vatId: null,
+    idType,
+    idValue,
   })),
-  on(addAddresseeByVatIdAction, (state, { vatId }) => ({
-    ...state,
-    type: 'vatId',
-    vatId,
-    phone: null,
-  })),
-  on(setAddresseeExistenceAction, (state) => ({
+  on(addresseeSetExistenceAction, (state) => ({
     ...state,
     isExists: true,
+  })),
+  on(addresseeSubmitAction, (state) => ({
+    ...state,
+    isSubmitted: true,
   })),
   on(resetAddresseeAction, () => ({
     ...initialState,

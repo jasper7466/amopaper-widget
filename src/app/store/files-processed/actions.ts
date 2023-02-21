@@ -1,21 +1,15 @@
-import {
-  IProcessedFilesState,
-  FILES_PROCESSED_KEY,
-  IFilesIdentifiers,
-} from './index';
+import { IPacketFilesInfo } from 'src/app/interfaces/packet-files-info.interface';
+import { FILES_PROCESSED_KEY } from './index';
 import { createAction, props } from '@ngrx/store';
+import { TFile } from 'src/app/interfaces/file.type';
+import { IPacketFile } from 'src/app/interfaces/packet-file.interface';
 
-export interface IFilesIdentifiersProps extends IFilesIdentifiers {}
-export interface IOriginalFilesProps {
-  payload: File[];
-}
-
-export const setIdentifiersAction = createAction(
+export const setFilesIdentifiersAction = createAction(
   `[${FILES_PROCESSED_KEY}] set processed files identifiers action`,
-  props<IFilesIdentifiersProps>()
+  props<IPacketFilesInfo>()
 );
 
 export const setOriginalsFilesAction = createAction(
   `[${FILES_PROCESSED_KEY}] set original processed files action`,
-  props<IOriginalFilesProps>()
+  props<{ payload: IPacketFile[] }>()
 );

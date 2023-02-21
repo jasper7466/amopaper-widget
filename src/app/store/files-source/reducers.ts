@@ -1,4 +1,4 @@
-import { initialState } from './index';
+import { IFileRecord, initialState } from './index';
 import { createReducer, on } from '@ngrx/store';
 import {
   sourceFilesResetAction,
@@ -8,11 +8,19 @@ import {
 
 export const sourceFilesReducer = createReducer(
   initialState,
-  on(sourceFilesAddAction, (state, { files }) => {
+  on(sourceFilesAddAction, (state, { payload }) => {
+    const newFilesInfo: IFileRecord[] = payload.map((item) => ({
+      id: item.id,
+      name: item.name,
+      size: item.size,
+      base64: '',
+      isLoaded: false,
+    }));
+
     return {
       ...state,
-      files: [...state.files, ...files],
-      totalCount: state.files.length + files.length,
+      files: [...state.files, ...newFilesInfo],
+      totalCount: state.files.length + payload.length,
       isComplete: false,
     };
   }),

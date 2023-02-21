@@ -1,20 +1,4 @@
-import { IFileInfo } from './../../store/signatures/index';
-import {
-  IFilesIdentifiersProps,
-  IDecodedFilesProps,
-  setOriginalFilesAction,
-  IFileSignaturesProps,
-} from './../../store/signatures/actions';
-import { INewPacketData } from './../../store/interfaces';
-import {
-  INewPacketIdProps,
-  IShareLinkProps,
-  setNewPacketIdAction,
-} from './../../store/misc/actions';
-import {
-  IPacketDetailsProps,
-  IPacketStatusProps,
-} from './../../store/packets/actions';
+import { setNewPacketIdAction } from './../../store/misc/actions';
 import { IGetAmoAccessTokenResponse } from './../api/access-token-api/access-token-api.types';
 import { setPacketDetailsAction } from '../../store/packets/actions';
 import { updateAccessTokenAction } from '../../store/access-token/actions';
@@ -35,13 +19,22 @@ import { addresseeSelector } from '../../store/addressee/selectors';
 import { sourceFilesSelector } from '../../store/files-source/selectors';
 import { newPacketTitleSelector } from '../../store/misc/selectors';
 import { setPacketStatusAction } from '../../store/packets/actions';
-import {
-  setFilesIdentifiersAction,
-  setSignaturesAction,
-} from '../../store/signatures/actions';
+import { setSignaturesAction } from '../../store/signatures/actions';
 import { NopaperApiService } from '../api/nopaper-api/nopaper-api.service';
 import { AccessTokenApiService } from '../api/access-token-api/access-token-api.service';
 import { setShareLinkAction } from 'src/app/store/misc/actions';
+import {
+  setFilesIdentifiersAction,
+  setOriginalsFilesAction,
+} from 'src/app/store/files-processed/actions';
+import { IPacketFilesInfo } from 'src/app/interfaces/packet-files-info.interface';
+import { IFileInfo } from 'src/app/interfaces/file-info.interface';
+import { TFile } from 'src/app/interfaces/file.type';
+import { IPacketCreateData } from 'src/app/interfaces/packet-create-data.interface';
+import { IFileSignatures } from 'src/app/interfaces/file-signatures.interface';
+import { IPacketDetails } from 'src/app/interfaces/packet-details.interface';
+import { IShareLink } from 'src/app/interfaces/share-link.interface';
+import { IPacketFile } from 'src/app/interfaces/packet-file.interface';
 
 const POLLING_INTERVAL_MS = 3000;
 
@@ -51,7 +44,7 @@ export class NopaperService {
   private packetPollingBreakerAll = new Subject<void>();
 
   private newPacketDataObservables: {
-    [K in keyof INewPacketData]: Observable<INewPacketData[K]>;
+    [K in keyof IPacketCreateData]: Observable<IPacketCreateData[K]>;
   } = {
     addressee: this.store.select(addresseeSelector),
     files: this.store.select(sourceFilesSelector),
@@ -84,7 +77,7 @@ export class NopaperService {
    * Создаёт черновик пакета документов.
    * @returns
    */
-  public postPacket(): Observable<INewPacketIdProps> {
+  public postPacket(): Observable<Pick<IPacketDetails, 'id'>> {
     return combineLatest(this.newPacketDataObservables).pipe(
       take(1),
       switchMap((data) => this.nopaperApiService.postPacket(data)),
@@ -161,7 +154,9 @@ export class NopaperService {
    * @param packetId Идентификатор пакета документов.
    * @returns
    */
-  public getPacketStepName(packetId: number): Observable<IPacketStatusProps> {
+  public getPacketStepName(
+    packetId: number
+  ): Observable<Pick<IPacketDetails, 'id' | 'status'>> {
     return this.nopaperApiService
       .getPacketStepName(packetId)
       .pipe(
@@ -177,7 +172,7 @@ export class NopaperService {
    * @param packetId
    * @returns
    */
-  public getPacketDetails(packetId: number): Observable<IPacketDetailsProps> {
+  public getPacketDetails(packetId: number): Observable<IPacketDetails> {
     return this.nopaperApiService
       .getPacketDetails(packetId)
       .pipe(
@@ -193,9 +188,7 @@ export class NopaperService {
    * @param packetId Идентификатор пакета документов.
    * @returns
    */
-  public getPacketFilesIds(
-    packetId: number
-  ): Observable<IFilesIdentifiersProps> {
+  public getPacketFilesIds(packetId: number): Observable<IPacketFilesInfo> {
     return this.nopaperApiService
       .getPacketFilesIds(packetId)
       .pipe(
@@ -212,11 +205,13 @@ export class NopaperService {
    * @param filesIds Массив идентификаторов файлов.
    * @returns
    */
-  public getFilesByIds(filesIds: IFileInfo[]): Observable<IDecodedFilesProps> {
+  public getFilesByIds(filesIds: number[]): Observable<IPacketFile[]> {
     return this.nopaperApiService
       .getFilesByIds(filesIds)
       .pipe(
-        tap((response) => this.store.dispatch(setOriginalFilesAction(response)))
+        tap((response) =>
+          this.store.dispatch(setOriginalsFilesAction({ payload: response }))
+        )
       );
   }
 
@@ -224,12 +219,12 @@ export class NopaperService {
    * Получает подписи к файлу по его идентификатору.
    *
    * Результат сохраняется в хранилище.
-   * @param fileId Идентификатор файла.
+   * @param fileInfo Идентификатор файла.
    * @returns
    */
-  public getFileSignature(fileId: IFileInfo): Observable<IFileSignaturesProps> {
+  public getFileSignature(fileInfo: IFileInfo): Observable<IFileSignatures> {
     return this.nopaperApiService
-      .getFileSignatures(fileId)
+      .getFileSignatures(fileInfo)
       .pipe(
         tap((response) => this.store.dispatch(setSignaturesAction(response)))
       );
@@ -281,7 +276,7 @@ export class NopaperService {
   /**
    *
    */
-  public getShareLink(packetId: number): Observable<IShareLinkProps> {
+  public getShareLink(packetId: number): Observable<IShareLink> {
     return this.nopaperApiService.getShareLink(packetId).pipe(
       tap((response) => {
         this.store.dispatch(setShareLinkAction(response));

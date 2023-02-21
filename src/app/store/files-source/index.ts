@@ -1,14 +1,13 @@
+import { IBase64File } from 'src/app/interfaces/file-base64.interface';
+
 export const FILES_SOURCE_KEY = 'source-files';
 
-export type FileRecord = {
-  id: number;
-  file: File;
-  base64: string;
+export interface IFileRecord extends IBase64File {
   isLoaded: boolean;
-};
+}
 
 export interface ISourceFilesState {
-  files: FileRecord[];
+  files: IFileRecord[];
   totalCount: number;
   loadedCount: number;
   isComplete: boolean;
@@ -21,7 +20,7 @@ export const initialState: ISourceFilesState = {
   isComplete: false,
 };
 
-export const initialFileRecord: Omit<FileRecord, 'file' | 'id'> = {
+export const initialFileRecord: Pick<IFileRecord, 'base64' | 'isLoaded'> = {
   base64: '',
   isLoaded: false,
 };
