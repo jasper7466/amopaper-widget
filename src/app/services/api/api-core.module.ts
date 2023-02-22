@@ -9,6 +9,9 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AccessTokenApiService } from './access-token-api/access-token-api.service';
 import { AccessTokenLocalApiService } from './access-token-local-api/access-token-local-api.service';
+import { AmoPostApiMockService } from './amo-post-api-mock/amo-post-api-mock.service';
+import { AmoPostApiService } from './amo-post-api/amo-post-api.service';
+import { PostMessageTransportService } from '../transport/post-message-transport.service';
 
 const AccessTokenApiFactory = (http: HttpClient, store: Store) => {
   if (environment.isLocalTokenServer) {
@@ -18,6 +21,16 @@ const AccessTokenApiFactory = (http: HttpClient, store: Store) => {
   return new AccessTokenApiService(http, store);
 };
 
+const AmoPostApiFactory = (
+  postMessageTransport: PostMessageTransportService
+) => {
+  if (environment.isStandaloneFrame) {
+    return new AmoPostApiMockService();
+  }
+
+  return new AmoPostApiService(postMessageTransport);
+};
+
 @NgModule({
   declarations: [],
   imports: [CommonModule],
@@ -25,10 +38,16 @@ const AccessTokenApiFactory = (http: HttpClient, store: Store) => {
     AmoApiService,
     NopaperApiService,
     NopaperApiV2Service,
+    PostMessageTransportService,
     {
       provide: AccessTokenApiService,
       useFactory: AccessTokenApiFactory,
       deps: [HttpClient, Store],
+    },
+    {
+      provide: AmoPostApiService,
+      useFactory: AmoPostApiFactory,
+      deps: [PostMessageTransportService],
     },
   ],
 })

@@ -10,7 +10,7 @@ import { ICrmContext } from 'src/app/interfaces/crm-context.interface';
 
 interface IGetCrmContextRequest extends Required<IPostMessage> {}
 
-interface IGetCrmContextResponse extends IPostMessage {
+export interface IGetCrmContextResponse extends IPostMessage {
   payload: {
     settings: IWidgetSettings & { x_api_key: string };
     system: ISystem;

@@ -49,10 +49,6 @@ export class CrmService {
   //   }
   // }
 
-  public isFramed(): boolean {
-    return window.location !== window.parent.location;
-  }
-
   public getCrmContext(): Observable<any> {
     return this.amoPostApiService.getCrmContext().pipe(
       tap((context) => {

@@ -1,20 +1,20 @@
 import { Store } from '@ngrx/store';
-import { ActivatedRoute } from '@angular/router';
 import { switchMap, tap, map, Observable, take } from 'rxjs';
 import { NopaperService } from './sub-services/nopaper.service';
 import { CrmService } from 'src/app/services/sub-services/crm.service';
 import { RoutingService } from './sub-services/routing.service';
 import { Injectable } from '@angular/core';
 import { filesIdsOriginalsSelector } from '../store/files-processed/selectors';
+import { WindowService } from './sub-services/window.service';
 
 @Injectable()
 export class CommonLogicService {
   constructor(
-    private route: ActivatedRoute,
     private routingService: RoutingService,
     private store: Store,
     private crmService: CrmService,
-    private nopaperService: NopaperService
+    private nopaperService: NopaperService,
+    private windowService: WindowService
   ) {}
 
   /**
@@ -24,7 +24,7 @@ export class CommonLogicService {
    * Редирект на лендинг, если запуск вне фрейма.
    */
   public init(): void {
-    if (!this.crmService.isFramed()) {
+    if (!this.windowService.isFramed()) {
       this.routingService.goLandingPage();
       return;
     }
