@@ -1,5 +1,3 @@
-export type Nullable<T> = T | null;
-
 /** Тип, состоящий из типов ключей типа T. */
 type ValueOf<T> = T[keyof T];
 

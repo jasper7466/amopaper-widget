@@ -6,17 +6,17 @@ export const featureSelector =
 
 export const xApiKeySelector = createSelector(
   featureSelector,
-  (state) => state.context?.settings.x_api_key
+  (state) => state.context?.xApiKey
 );
 
 export const domainSelector = createSelector(
   featureSelector,
-  (state) => state.context?.system.domain
+  (state) => state.context?.domain
 );
 
 export const subdomainSelector = createSelector(
   featureSelector,
-  (state) => state.context?.system.subdomain
+  (state) => state.context?.subdomain
 );
 
 export const leadIdSelector = createSelector(
@@ -26,5 +26,5 @@ export const leadIdSelector = createSelector(
 
 export const clientUuidSelector = createSelector(
   featureSelector,
-  (state) => state.context?.settings.oauth_client_uuid
+  (state) => state.context?.oAuthUuid
 );

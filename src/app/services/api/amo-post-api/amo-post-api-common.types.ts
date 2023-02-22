@@ -1,4 +1,4 @@
-export type constants = {
+export type TConstants = {
   user: {};
   user_rights: {
     is_admin: boolean;
@@ -28,15 +28,15 @@ export interface ISystem {
   amohash: string;
   amouser: string;
   amouser_id: number;
-  area: location;
+  area: TLocation;
   displayed_count: number;
-  displayed_count_by_area: { [key in PageCode]: number };
+  displayed_count_by_area: { [key in TPageCode]: number };
   domain: string;
   server: string;
   subdomain: string;
 }
 
-export type PageCode =
+export type TPageCode =
   | 'dashboard'
   | 'leads'
   | 'leads-trash'
@@ -69,7 +69,7 @@ export type PageCode =
   | 'companies_card'
   | 'customers_card';
 
-type location =
+type TLocation =
   | 'lcard'
   | 'cucard'
   | 'ccard'

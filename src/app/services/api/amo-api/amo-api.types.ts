@@ -1,5 +1,3 @@
-import { Nullable } from '../../../types/common';
-
 type Links = {
   self: {
     href: string;
@@ -69,18 +67,18 @@ export interface ICustomField extends IEmbeddedItem {
   name: string;
   type: CustomFieldType;
   account_id: number;
-  code: Nullable<string>;
+  code: string | null;
   sort: number;
   is_api_only: boolean;
-  enums: Nullable<CustomFieldEnum[]>;
-  group_id: Nullable<string>;
+  enums: CustomFieldEnum[] | null;
+  group_id: string | null;
   required_statuses: any[];
   is_deletable: boolean;
   is_predefined: boolean;
   entity_type: CustomFieldEntityType;
-  remind?: Nullable<CustomFieldRemind>;
+  remind?: CustomFieldRemind | null;
   triggers: any[];
-  currency: Nullable<string>;
+  currency: string | null;
   hidden_statuses: [];
 }
 

@@ -1,5 +1,5 @@
 import { TitleResolverService } from './title-resolver.service';
-import { PostMessageService } from './post-message.service';
+import { PostMessageTransportService } from '../transport/post-message-transport.service';
 import { CrmService } from 'src/app/services/sub-services/crm.service';
 import { ApiCoreModule } from '../api/api-core.module';
 import { NgModule, Optional, SkipSelf } from '@angular/core';
@@ -17,7 +17,7 @@ import { RoutingService } from './routing.service';
     FilesService,
     NopaperService,
     NotificationService,
-    PostMessageService,
+    PostMessageTransportService,
     RoutingService,
     TitleResolverService,
   ],

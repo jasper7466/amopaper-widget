@@ -24,7 +24,7 @@ export class CommonLogicService {
    * Редирект на лендинг, если запуск вне фрейма.
    */
   public init(): void {
-    if (window.location === window.parent.location) {
+    if (!this.crmService.isFramed()) {
       this.routingService.goLandingPage();
       return;
     }

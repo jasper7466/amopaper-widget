@@ -1,7 +1,4 @@
-import { Nullable } from 'src/app/types/common';
-import { PostMessageResponses } from 'src/app/types/crm-messages.types';
-
-export type CrmContext = PostMessageResponses['getCrmContextResponse'];
+import { ICrmContext } from 'src/app/interfaces/crm-context.interface';
 
 export const CONTEXT_KEY = 'context';
 
@@ -17,7 +14,7 @@ export type LeadAttachment = {
 };
 
 export interface ICrmContextState {
-  context: Nullable<CrmContext>;
+  context: ICrmContext | null;
   documentsPacketIdCustomFieldId: number;
   attachments: LeadAttachment[];
 }

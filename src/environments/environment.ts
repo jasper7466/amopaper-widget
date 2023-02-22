@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   isLocalTokenServer: true,
+  isStandaloneFrame: true,
   // nopaperBaseUrl: 'https://nopaper-demo.abanking.ru/lk-api/external/api',
   // nopaperBaseUrl: 'https://nopaper-test.abanking.ru/lk-api/external/api',
   nopaperBaseUrl: 'https://np-demo.abanking.ru/partner-api/api/v1/external/api',

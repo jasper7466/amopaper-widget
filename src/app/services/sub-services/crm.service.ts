@@ -1,8 +1,6 @@
 import { NopaperApiService } from '../api/nopaper-api/nopaper-api.service';
-import { PostMessageResponses } from '../../types/crm-messages.types';
-import { PostMessageService } from './post-message.service';
+import { PostMessageTransportService } from '../transport/post-message-transport.service';
 import { Injectable } from '@angular/core';
-import { PostMessageRequests } from '../../types/crm-messages.types';
 import { Store } from '@ngrx/store';
 import {
   map,
@@ -19,6 +17,7 @@ import { documentPacketsIdCrmFieldName } from '../../constants/config';
 import { updateCrmContextAction } from '../../store/crm-context/actions';
 import { IPatchLeadResponse } from '../api/amo-api/amo-api.types';
 import { updatePacketsByIdsListAction } from 'src/app/store/packets/actions';
+import { AmoPostApiService } from '../api/amo-post-api/amo-post-api.service';
 
 @Injectable()
 export class CrmService {
@@ -28,13 +27,9 @@ export class CrmService {
   private packetsIdsPollingBreaker = new Subject<void>();
 
   constructor(
-    private postMessageService: PostMessageService<
-      PostMessageRequests,
-      PostMessageResponses
-    >,
     private store: Store,
     private amoApiService: AmoApiService,
-    private nopaperApiService: NopaperApiService
+    private amoPostApiService: AmoPostApiService
   ) {}
 
   // checkWidgetStatus() {
@@ -54,17 +49,19 @@ export class CrmService {
   //   }
   // }
 
+  public isFramed(): boolean {
+    return window.location !== window.parent.location;
+  }
+
   public getCrmContext(): Observable<any> {
-    return this.postMessageService
-      .request$('getCrmContextRequest', 'getCrmContextResponse', null)
-      .pipe(
-        tap((context) => {
-          if (context.cardId) {
-            this.leadId = context.cardId;
-          }
-          this.store.dispatch(updateCrmContextAction(context));
-        })
-      );
+    return this.amoPostApiService.getCrmContext().pipe(
+      tap((context) => {
+        if (context.cardId) {
+          this.leadId = context.cardId;
+        }
+        this.store.dispatch(updateCrmContextAction(context));
+      })
+    );
   }
 
   public getPacketsFieldId(): Observable<any> {
