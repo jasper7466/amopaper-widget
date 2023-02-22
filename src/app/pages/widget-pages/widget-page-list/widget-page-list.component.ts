@@ -6,6 +6,7 @@ import { leadIdSelector } from 'src/app/store/crm-context/selectors';
 import {
   packetsIsTouchedSelector,
   packetsIdsSelector,
+  packetsSelector,
 } from 'src/app/store/packets/selectors';
 
 @Component({
@@ -15,7 +16,7 @@ import {
 })
 export class WidgetPageListComponent implements OnInit, OnDestroy {
   public leadId$ = this.store.select(leadIdSelector);
-  public packetsIds$ = this.store.select(packetsIdsSelector);
+  public packets$ = this.store.select(packetsSelector);
   public isPacketsIdsTouched$ = this.store.select(packetsIsTouchedSelector);
 
   constructor(

@@ -3,7 +3,7 @@
 
   <app-packets-list
     *ngIf="isPacketsIdsTouched$ | async"
-    [packetsIds]="(packetsIds$ | async) || []"
+    [packets]="(packets$ | async) || []"
   ></app-packets-list>
 
   <app-preloader

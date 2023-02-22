@@ -1,36 +1,25 @@
-import {
-  addAddresseeByPhoneAction,
-  addAddresseeByVatIdAction,
-  addresseeSetExistenceAction,
-} from '../../../store/addressee/actions';
-import { NopaperApiService } from '../../../services/api/nopaper-api/nopaper-api.service';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Subject, tap } from 'rxjs';
+import { addresseeUpdateAction } from '../../../store/addressee/actions';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
-
-type SearchSelector = 'vatId' | 'phone';
+import { ADDRESSEE_ID_TYPE } from 'src/app/interfaces/addressee.interface';
 
 @Component({
   selector: 'app-add-addressee-form',
   templateUrl: './add-addressee-form.component.html',
   styleUrls: ['./add-addressee-form.component.css'],
 })
-export class AddAddresseeFormComponent implements OnInit {
+export class AddAddresseeFormComponent {
   @Output() onSubmit = new EventEmitter<void>();
 
-  searchSelector: SearchSelector = 'vatId';
-  inputKeyUp$: Subject<string>;
-  isSubmitEnabled: boolean = false;
-  value: string = '';
+  protected searchSelector: ADDRESSEE_ID_TYPE = ADDRESSEE_ID_TYPE.VatId;
+  protected isSubmitEnabled: boolean = false;
+  private value: string = '';
 
-  constructor(
-    private nopaperApiService: NopaperApiService,
-    private store: Store
-  ) {}
+  protected addresseeIdType = ADDRESSEE_ID_TYPE;
 
-  ngOnInit(): void {}
+  constructor(private store: Store) {}
 
-  changeSearchSelector(selector: SearchSelector) {
+  protected changeSearchSelector(selector: ADDRESSEE_ID_TYPE) {
     if (this.searchSelector === selector) {
       return;
     }
@@ -38,47 +27,30 @@ export class AddAddresseeFormComponent implements OnInit {
     this.isSubmitEnabled = false;
   }
 
-  searchInputKeyUp(value: string) {
+  protected searchInputKeyUp(value: string) {
     this.value = value.replace(/\D+/g, '');
 
-    if (this.searchSelector === 'phone') {
+    if (this.searchSelector === ADDRESSEE_ID_TYPE.Phone) {
       this.isSubmitEnabled = this.value.length === 11;
       return;
     }
 
-    if (this.searchSelector === 'vatId') {
+    if (this.searchSelector === ADDRESSEE_ID_TYPE.VatId) {
       this.isSubmitEnabled = this.value.length >= 10;
       return;
     }
   }
 
-  submit(): void {
+  protected submit(): void {
     this.onSubmit.emit();
 
-    if (this.searchSelector === 'phone') {
-      this.store.dispatch(
-        addAddresseeByPhoneAction({
-          phone: this.value,
-        })
-      );
+    this.store.dispatch(
+      addresseeUpdateAction({
+        idType: this.searchSelector,
+        idValue: this.value,
+      })
+    );
 
-      this.nopaperApiService
-        .checkUserByPhone(this.value)
-        .subscribe((response) => {
-          if ('userGuid' in response) {
-            this.store.dispatch(addresseeSetExistenceAction());
-          }
-        });
-      return;
-    }
-
-    if (this.searchSelector === 'vatId') {
-      this.store.dispatch(
-        addAddresseeByVatIdAction({
-          vatId: this.value,
-        })
-      );
-      return;
-    }
+    return;
   }
 }

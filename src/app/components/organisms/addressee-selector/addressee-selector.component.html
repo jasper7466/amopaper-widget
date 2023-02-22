@@ -14,9 +14,9 @@
 <app-addressee-nameplate
   *ngIf="isAddresseeAdded$ | async"
   (clickRemoveButton)="removeAddressee()"
-  [name]="(addresseeName$ | async)!"
-  [phone]="addresseePhone$ | async"
-  [vatId]="addresseeVatId$ | async"
+  [name]="(addressee$ | async)!.name"
+  [idValue]="(addressee$ | async)!.idValue"
+  [idType]="(addressee$ | async)!.idType"
 ></app-addressee-nameplate>
 <app-modal [openTrigger]="openModalEmitter" [closeTrigger]="closeModalEmitter">
   <app-add-addressee-form

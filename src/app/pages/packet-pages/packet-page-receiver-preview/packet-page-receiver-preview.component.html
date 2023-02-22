@@ -11,8 +11,8 @@
   <app-documents-displayer caption="Документы">
     <app-documents-list-item
       *ngFor="let file of signedOriginalDocuments$ | async"
-      [fileId]="file.documentFileId"
-      [fileName]="file.fileName"
+      [fileId]="file.id"
+      [fileName]="file.name"
       signStatus="signed"
       (onShowSignInfo)="showSignInfo($event)"
     ></app-documents-list-item>

@@ -79,7 +79,7 @@ export class RoutingService {
   }
 
   public goMatchedStepPacketPage(
-    packetStatus: TPacketStatus | null,
+    packetStatus: TPacketStatus | undefined,
     id: number
   ): void {
     const basePath = `widget/packet/${id}/`;

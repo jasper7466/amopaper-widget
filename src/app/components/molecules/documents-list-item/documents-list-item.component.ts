@@ -42,11 +42,11 @@ export class DocumentsListItemComponent {
 
     if (this.fileId) {
       this.nopaperApiService
-        .getFilesByIds([{ id: this.fileId }])
+        .getFilesByIds([this.fileId])
         .pipe(take(1))
-        .subscribe((file) => {
-          this.file = file;
-          downloadFile(file);
+        .subscribe((files) => {
+          this.file = files[0].file;
+          downloadFile(this.file);
         });
     }
   }

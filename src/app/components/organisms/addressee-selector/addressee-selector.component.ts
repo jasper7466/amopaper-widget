@@ -1,7 +1,5 @@
 import {
-  addresseeNameSelector,
-  addresseePhoneSelector,
-  addresseeVatIdSelector,
+  addresseeSelector,
   isAddresseeAddedSelector,
 } from '../../../store/addressee/selectors';
 import { resetAddresseeAction } from '../../../store/addressee/actions';
@@ -21,9 +19,7 @@ export class AddresseeSelectorComponent {
   protected closeModalEmitter: EventEmitter<void> = new EventEmitter<void>();
 
   protected isAddresseeAdded$ = this.store.select(isAddresseeAddedSelector);
-  protected addresseeName$ = this.store.select(addresseeNameSelector);
-  protected addresseePhone$ = this.store.select(addresseePhoneSelector);
-  protected addresseeVatId$ = this.store.select(addresseeVatIdSelector);
+  protected addressee$ = this.store.select(addresseeSelector);
 
   constructor(private store: Store) {}
 

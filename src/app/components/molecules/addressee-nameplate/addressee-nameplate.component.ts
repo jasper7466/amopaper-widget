@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { ADDRESSEE_ID_TYPE } from 'src/app/interfaces/addressee.interface';
 
 @Component({
   selector: 'app-addressee-nameplate',
@@ -7,10 +8,12 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 })
 export class AddresseeNameplateComponent {
   @Input() name: string = 'Получатель';
-  @Input() vatId: string | null = null;
-  @Input() phone: string | null = null;
+  @Input() idValue: string;
+  @Input() idType: ADDRESSEE_ID_TYPE;
 
   @Output() clickRemoveButton = new EventEmitter<void>();
+
+  protected addresseeIdType = ADDRESSEE_ID_TYPE;
 
   constructor() {}
 

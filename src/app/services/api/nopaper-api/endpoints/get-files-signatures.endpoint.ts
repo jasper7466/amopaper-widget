@@ -35,7 +35,9 @@ type TSignatureInfo = {
 
 type TGetFileSignatureResponse = [TSignatureInfo, TSignatureInfo];
 
-const requestAdapter = (data: IFileInfo): IGetFileSignatureRequest => ({
+const requestAdapter = (
+  data: Pick<IFileInfo, 'id'>
+): IGetFileSignatureRequest => ({
   documentFileId: data.id,
 });
 
@@ -66,10 +68,10 @@ const responseAdapter = (
 
 export function getFileSignaturesEndpoint(
   this: ApiService,
-  fileIds: IFileInfo
+  fileId: Pick<IFileInfo, 'id'>
 ): Observable<IFileSignatures> {
   return this.post<IGetFileSignatureRequest, TGetFileSignatureResponse>(
     '/file/signatures',
-    requestAdapter(fileIds)
+    requestAdapter(fileId)
   ).pipe(map(responseAdapter));
 }

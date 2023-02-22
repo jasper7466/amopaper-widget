@@ -7,20 +7,20 @@ import { forkJoin, map, Observable, switchMap, tap } from 'rxjs';
 export class SignaturesEffects {
   constructor(private actions$: Actions) {}
 
-  private setDecodedFiles$ = createEffect(() =>
-    this.actions$
-      .pipe
-      // ofType(setRawFilesAction),
-      // switchMap(({ payload }) => {
-      //   const tasks$: Observable<File>[] = [];
+  // private setDecodedFiles$ = createEffect(() =>
+  //   this.actions$
+  //     .pipe
+  //     ofType(setRawFilesAction),
+  //     switchMap(({ payload }) => {
+  //       const tasks$: Observable<File>[] = [];
 
-      //   for (const file of payload) {
-      //     tasks$.push(base64ToFile(file.base64Content, file.fileName));
-      //   }
+  //       for (const file of payload) {
+  //         tasks$.push(base64ToFile(file.base64Content, file.fileName));
+  //       }
 
-      //   return forkJoin(tasks$);
-      // }),
-      // map((files) => setOriginalFilesAction({ payload: files }))
-      ()
-  );
+  //       return forkJoin(tasks$);
+  //     }),
+  //     map((files) => setOriginalFilesAction({ payload: files }))
+  //     ()
+  // );
 }

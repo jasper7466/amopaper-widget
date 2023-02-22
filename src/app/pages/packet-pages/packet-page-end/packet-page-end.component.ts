@@ -1,14 +1,14 @@
 import { RoutingService } from './../../../services/sub-services/routing.service';
 import { NopaperService } from 'src/app/services/sub-services/nopaper.service';
-import {
-  filesIdsOriginalsSelector,
-  filesIdsStampedSelector,
-} from './../../../store/signatures/selectors';
 import { CommonLogicService } from './../../../services/common-logic.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalSignInfoComponent } from 'src/app/components/organisms/modal-sign-info/modal-sign-info.component';
+import {
+  filesIdsOriginalsSelector,
+  filesIdsStampedSelector,
+} from 'src/app/store/files-processed/selectors';
 
 @Component({
   selector: 'app-packet-page-end',
@@ -48,7 +48,7 @@ export class PacketPageEndComponent implements OnInit {
   }
 
   protected showSignInfo(fileId: number): void {
-    this.nopaperService.getFileSignature(fileId).subscribe(() => {
+    this.nopaperService.getFileSignature({ id: fileId }).subscribe(() => {
       this.signInfo.open();
     });
   }

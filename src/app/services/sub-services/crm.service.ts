@@ -18,6 +18,7 @@ import { AmoApiService } from '../api/amo-api/amo-api.service';
 import { documentPacketsIdCrmFieldName } from '../../constants/config';
 import { updateCrmContextAction } from '../../store/crm-context/actions';
 import { IPatchLeadResponse } from '../api/amo-api/amo-api.types';
+import { updatePacketsByIdsListAction } from 'src/app/store/packets/actions';
 
 @Injectable()
 export class CrmService {
@@ -141,7 +142,9 @@ export class CrmService {
       map((field) => field?.values.pop()?.value),
       map((stringified) => JSON.parse(stringified || '[]')),
       tap((packetsIds) => {
-        this.store.dispatch(setPacketsIdsAction({ packetsIds: packetsIds }));
+        this.store.dispatch(
+          updatePacketsByIdsListAction({ payload: packetsIds })
+        );
       })
     );
   }

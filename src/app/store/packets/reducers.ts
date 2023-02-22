@@ -1,54 +1,42 @@
 import { initialPacketState, initialState } from './index';
 import { createReducer, on } from '@ngrx/store';
 import {
-  addPacketsByIdsAction as setPacketsByIdsAction,
+  updatePacketsByIdsListAction,
   setPacketDetailsAction,
   setPacketStatusAction,
 } from './actions';
+import { IPacketDetails } from 'src/app/interfaces/packet-details.interface';
 
 export const packetsReducer = createReducer(
   initialState,
-  on(setPacketsByIdsAction, (state, { payload }) => {
-    const updatedPacketsList = [...state.packets];
-    let updateRequired = false;
+  on(updatePacketsByIdsListAction, (state, { payload }) => {
+    const newIdsList = payload;
+    const oldIdsList = state.ids;
 
-    // Удаление пакетов, чей id отсутствует в запросе
-    for (const packet of updatedPacketsList) {
-      const payloadPacket = payload.find((item) => item.id === packet.id);
+    const idsToAdd = newIdsList.filter((id) => !oldIdsList.includes(id));
+    const idsToRemove = oldIdsList.filter((id) => !newIdsList.includes(id));
 
-      if (payloadPacket) {
-        continue;
-      }
-
-      const indexToRemove = updatedPacketsList.findIndex(
-        (item) => item.id === packet.id
-      );
-
-      updatedPacketsList.splice(indexToRemove, 1);
-      updateRequired = true;
+    if (idsToAdd.length === 0 && idsToRemove.length === 0) {
+      return { ...state, isPacketsIdsTouched: true };
     }
 
-    // Добавление пакетов, чей id отсутствует в хранилище
-    for (const packet of payload) {
-      const storedPacket = updatedPacketsList.find(
-        (item) => item.id === packet.id
-      );
+    const updatedIds = [...state.ids]
+      .filter((id) => idsToRemove.includes(id))
+      .concat(idsToAdd);
 
-      if (storedPacket) {
-        continue;
-      }
+    const newPackets: IPacketDetails[] = idsToAdd.map((id) => ({
+      id,
+      ...initialPacketState,
+    }));
 
-      updatedPacketsList.push({ ...initialPacketState, ...packet });
-      updateRequired = true;
-    }
-
-    if (!updateRequired) {
-      return { ...state };
-    }
+    const updatedPackets = [...state.packets]
+      .filter((packet) => !idsToRemove.includes(packet.id))
+      .concat(newPackets);
 
     return {
       ...state,
-      packets: updatedPacketsList,
+      ids: updatedIds,
+      packets: updatedPackets,
       isPacketsIdsTouched: true,
     };
   }),

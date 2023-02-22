@@ -1,8 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { StatusLabelStatus } from '../components/atoms/status-label/status-label.component';
-import { StepName } from '../services/api/nopaper-api/nopaper-api-common.types';
+import { TPacketStatus } from '../interfaces/packet-status.type';
 
-const stepToLabelStatusDict: { [key in StepName]: StatusLabelStatus } = {
+const stepToLabelStatusDict: { [key in TPacketStatus]: StatusLabelStatus } = {
   new: 'draft',
   nopaperPrepareFiles: 'draft',
   nopaperPreview: 'sign',
@@ -29,7 +29,7 @@ const stepToLabelStatusDict: { [key in StepName]: StatusLabelStatus } = {
   name: 'toLabelStatus',
 })
 export class StepToLabelStatusPipe implements PipeTransform {
-  transform(stepName: StepName | null): StatusLabelStatus {
+  transform(stepName: TPacketStatus | null): StatusLabelStatus {
     if (!stepName) {
       return 'unknown';
     }

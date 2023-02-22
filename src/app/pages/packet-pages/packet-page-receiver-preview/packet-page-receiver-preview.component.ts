@@ -1,4 +1,3 @@
-import { filesIdsOriginalsSelector } from './../../../store/signatures/selectors';
 import { RoutingService } from 'src/app/services/sub-services/routing.service';
 import { ModalSignInfoComponent } from 'src/app/components/organisms/modal-sign-info/modal-sign-info.component';
 import { NopaperService } from 'src/app/services/sub-services/nopaper.service';
@@ -6,6 +5,7 @@ import { CommonLogicService } from './../../../services/common-logic.service';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { filesIdsOriginalsSelector } from 'src/app/store/files-processed/selectors';
 
 @Component({
   selector: 'app-packet-page-receiver-preview',
@@ -42,7 +42,7 @@ export class PacketPageReceiverPreviewComponent implements OnInit {
   }
 
   protected showSignInfo(fileId: number): void {
-    this.nopaperService.getFileSignature(fileId).subscribe(() => {
+    this.nopaperService.getFileSignature({ id: fileId }).subscribe(() => {
       this.signInfo.open();
     });
   }

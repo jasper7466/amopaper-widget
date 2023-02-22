@@ -11,8 +11,8 @@
   <app-documents-displayer caption="Загруженные документы">
     <app-documents-list-item
       *ngFor="let file of signedOriginalDocuments$ | async"
-      [fileId]="file.documentFileId"
-      [fileName]="file.fileName"
+      [fileId]="file.id"
+      [fileName]="file.name"
       signStatus="signed"
       (onShowSignInfo)="showSignInfo($event)"
     ></app-documents-list-item>
@@ -21,8 +21,8 @@
   <app-documents-displayer caption="Документы со штампом">
     <app-documents-list-item
       *ngFor="let file of signedStampDocuments$ | async"
-      [fileId]="file.documentFileId"
-      [fileName]="file.fileName"
+      [fileId]="file.id"
+      [fileName]="file.name"
     ></app-documents-list-item>
   </app-documents-displayer>
 </app-main-content-wrapper>

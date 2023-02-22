@@ -1,18 +1,18 @@
 import { ActivatedRoute } from '@angular/router';
 import { CommonLogicService } from './../../../services/common-logic.service';
 import { RoutingService } from 'src/app/services/sub-services/routing.service';
-import {
-  decodedFilesSelector,
-  filesIdsOriginalsSelector,
-} from './../../../store/signatures/selectors';
 import { Observable, take, filter } from 'rxjs';
 import { packetSelector } from 'src/app/store/packets/selectors';
 import { Store } from '@ngrx/store';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { IPacket } from 'src/app/store/packets';
-import { clearSugnaturesAction } from 'src/app/store/signatures/actions';
 import { downloadFile } from 'src/app/utils/download-file.util';
 import { openFile } from 'src/app/utils/open-file.util';
+import {
+  filesIdsOriginalsSelector,
+  originalFilesSelector,
+} from 'src/app/store/files-processed/selectors';
+import { IPacketDetails } from 'src/app/interfaces/packet-details.interface';
+import { clearSignaturesAction } from 'src/app/store/signatures/actions';
 
 @Component({
   selector: 'app-packet-page-preview',
@@ -23,9 +23,9 @@ export class PacketPagePreviewComponent implements OnInit, OnDestroy {
   private packetId: number;
   protected isAwaiting: boolean = true;
 
-  protected packet$: Observable<IPacket>;
+  protected packet$: Observable<IPacketDetails>;
   protected filesIds$ = this.store.select(filesIdsOriginalsSelector);
-  protected decodedFiles$ = this.store.select(decodedFilesSelector);
+  protected originalFiles$ = this.store.select(originalFilesSelector);
 
   constructor(
     private store: Store,
@@ -46,7 +46,7 @@ export class PacketPagePreviewComponent implements OnInit, OnDestroy {
     this.packet$ = this.store.select(packetSelector(this.packetId));
     this.commonLogicService.getPacketFiles(this.packetId).subscribe();
 
-    this.decodedFiles$
+    this.originalFiles$
       .pipe(
         filter((files) => files.length > 0),
         take(1)
@@ -55,7 +55,8 @@ export class PacketPagePreviewComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.store.dispatch(clearSugnaturesAction());
+    // TODO:
+    // this.store.dispatch(clearSignaturesAction());
   }
 
   protected submitButtonHandler(): void {

@@ -172,7 +172,9 @@ export class NopaperService {
    * @param packetId
    * @returns
    */
-  public getPacketDetails(packetId: number): Observable<IPacketDetails> {
+  public getPacketDetails(
+    packetId: number
+  ): Observable<Omit<IPacketDetails, 'status'>> {
     return this.nopaperApiService
       .getPacketDetails(packetId)
       .pipe(
@@ -222,7 +224,9 @@ export class NopaperService {
    * @param fileInfo Идентификатор файла.
    * @returns
    */
-  public getFileSignature(fileInfo: IFileInfo): Observable<IFileSignatures> {
+  public getFileSignature(
+    fileInfo: Pick<IFileInfo, 'id'>
+  ): Observable<IFileSignatures> {
     return this.nopaperApiService
       .getFileSignatures(fileInfo)
       .pipe(

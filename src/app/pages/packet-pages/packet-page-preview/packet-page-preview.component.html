@@ -1,6 +1,6 @@
 <app-main-content-wrapper>
   <app-stage-header
-    [statusLabelStatus]="(packet$ | async)?.stepName! | toLabelStatus"
+    [statusLabelStatus]="(packet$ | async)?.status! | toLabelStatus"
     [documentsCount]="(filesIds$ | async)?.length || null"
   >
     {{ (packet$ | async)?.title }}
@@ -13,8 +13,8 @@
 
     <npp-pdf-viewer>
       <npp-pdf-view-element
-        *ngFor="let file of decodedFiles$ | async"
-        [source]="file"
+        *ngFor="let file of originalFiles$ | async"
+        [source]="file.file"
       ></npp-pdf-view-element>
     </npp-pdf-viewer>
   </ng-container>

@@ -1,6 +1,6 @@
 <app-main-content-wrapper>
   <app-stage-header
-    [statusLabelStatus]="(packet$ | async)?.stepName! | toLabelStatus"
+    [statusLabelStatus]="(packet$ | async)?.status! | toLabelStatus"
   >
     {{ (packet$ | async)?.title }}
   </app-stage-header>

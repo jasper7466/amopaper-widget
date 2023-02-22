@@ -1,6 +1,7 @@
-import { IFilesIdentifiersProps } from '../../../../store/signatures/actions';
 import { Observable, map } from 'rxjs';
 import { ApiService } from '../../api.service';
+import { IPacketFilesInfo } from 'src/app/interfaces/packet-files-info.interface';
+import { IFileInfo } from 'src/app/interfaces/file-info.interface';
 
 interface IGetPacketFilesIdsRequest {
   documentId: number;
@@ -30,7 +31,7 @@ const requestAdapter = (packetId: number): IGetPacketFilesIdsRequest => ({
 
 const responseAdapter = (
   response: IGetPacketFilesIdsResponse
-): IFilesIdentifiersProps => {
+): IPacketFilesInfo => {
   const {
     signDocumentList,
     stampDocumentList,
@@ -38,9 +39,7 @@ const responseAdapter = (
     ofertaWithStamp,
   } = response;
 
-  const fileInfoMapper = (
-    data: DocumentListItemShortened[]
-  ): IFilesIdentifiersProps['originals'] =>
+  const fileInfoMapper = (data: DocumentListItemShortened[]): IFileInfo[] =>
     data.map((item) => ({
       id: item.documentFileId,
       name: item.fileName,
@@ -56,7 +55,6 @@ const responseAdapter = (
   const stamped = [...stampedOfferId, ...stampedFilesIds];
 
   return {
-    count: originals.length,
     originals,
     stamped,
   };
@@ -65,7 +63,7 @@ const responseAdapter = (
 export function getPacketFilesIdsEndpoint(
   this: ApiService,
   packetId: number
-): Observable<IFilesIdentifiersProps> {
+): Observable<IPacketFilesInfo> {
   return this.post<IGetPacketFilesIdsRequest, IGetPacketFilesIdsResponse>(
     '/document/file-description-v2',
     requestAdapter(packetId)

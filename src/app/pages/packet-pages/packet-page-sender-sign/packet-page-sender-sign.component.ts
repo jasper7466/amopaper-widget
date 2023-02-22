@@ -2,10 +2,10 @@ import { shareLinkSelector } from './../../../store/misc/selectors';
 import { packetSelector } from 'src/app/store/packets/selectors';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { IPacket } from 'src/app/store/packets';
 import { Observable } from 'rxjs';
 import { RoutingService } from 'src/app/services/sub-services/routing.service';
 import { Component, OnInit } from '@angular/core';
+import { IPacketDetails } from 'src/app/interfaces/packet-details.interface';
 
 @Component({
   selector: 'app-packet-page-sender-sign',
@@ -14,7 +14,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PacketPageSenderSignComponent implements OnInit {
   protected packetId: number;
-  protected packet$: Observable<IPacket>;
+  protected packet$: Observable<IPacketDetails>;
 
   constructor(
     private store: Store,

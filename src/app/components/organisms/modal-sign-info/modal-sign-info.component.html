@@ -7,8 +7,15 @@
         animationOption="rotation"
         *ngIf="isLoading"
       ></app-preloader>
-      <ng-container *ngFor="let signature of signatures$ | async">
-        <app-sing-info-item [signature]="signature"></app-sing-info-item>
+
+      <ng-container *ngFor="let signature; in: signatures$ | async">
+        <app-sing-info-item
+          *ngIf="signatures$ | async"
+          [signature]="(signatures$ | async)!.sender"
+        ></app-sing-info-item>
+        <app-sing-info-item
+          [signature]="(signatures$ | async)!.recipient"
+        ></app-sing-info-item>
       </ng-container>
     </div>
   </div>

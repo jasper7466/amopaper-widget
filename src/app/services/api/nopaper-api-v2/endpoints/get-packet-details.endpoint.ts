@@ -1,4 +1,3 @@
-import { IPacketDetailsProps } from './../../../../store/packets/actions';
 import { Observable, map } from 'rxjs';
 import { ApiService } from './../../api.service';
 import {
@@ -6,6 +5,7 @@ import {
   ROUTE_TYPE,
   RecipientInfo,
 } from '../nopaper-api-v2-common.types';
+import { IPacketDetails } from 'src/app/interfaces/packet-details.interface';
 
 interface IGetPacketDetailsRequest {
   documentId: number;
@@ -24,16 +24,16 @@ interface IGetPacketDetailsResponse {
 const responseAdapter = (
   packetId: number,
   response: IGetPacketDetailsResponse
-): IPacketDetailsProps => ({
-  packetId,
+): Omit<IPacketDetails, 'status'> => ({
+  id: packetId,
   title: response.title,
-  creationDate: response.createTimeUtc,
+  createTimeUtc: response.createTimeUtc,
 });
 
 export function getPacketDetailsEndpoint(
   this: ApiService,
   packetId: number
-): Observable<IPacketDetailsProps> {
+): Observable<Omit<IPacketDetails, 'status'>> {
   return this.post<IGetPacketDetailsRequest, IGetPacketDetailsResponse>(
     `/document/${packetId}`,
     { documentId: packetId }

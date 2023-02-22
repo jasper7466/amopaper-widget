@@ -5,8 +5,11 @@
   <div class="addressee__avatar">{{ name[0] }}</div>
 
   <p class="addressee__name">{{ name }}</p>
-  <p class="addressee__vat-id">
-    {{ vatId ? vatId : (phone || "" | mask : "+0 (000) 000-00-00") }}
+  <p class="addressee__id" *ngIf="idType === addresseeIdType.Phone">
+    {{ idValue || "" | mask : "+0 (000) 000-00-00" }}
+  </p>
+  <p class="addressee__id" *ngIf="idType === addresseeIdType.VatId">
+    {{ idValue }}
   </p>
   <app-button
     *ngIf="clickRemoveButton.observed"

@@ -1,4 +1,3 @@
-import { resetOriginalFilesAction } from 'src/app/store/files-original/actions';
 import { map, Observable } from 'rxjs';
 import { StatusLabelStatus } from 'src/app/components/atoms/status-label/status-label.component';
 import { Store } from '@ngrx/store';
@@ -8,6 +7,7 @@ import {
   sourceFilesLoadedCountSelector,
   sourceFilesTotalCountSelector,
 } from 'src/app/store/files-source/selectors';
+import { sourceFilesResetAction } from 'src/app/store/files-source/actions';
 
 type Item = {
   fileName: string;
@@ -33,7 +33,7 @@ export class DocumentsUploaderComponent {
     .pipe(
       map((files) =>
         files.map((item) => ({
-          fileName: item.file.name,
+          fileName: item.name,
         }))
       )
     );
@@ -41,6 +41,6 @@ export class DocumentsUploaderComponent {
   constructor(private store: Store) {}
 
   protected clearFilesList() {
-    this.store.dispatch(resetOriginalFilesAction());
+    this.store.dispatch(sourceFilesResetAction());
   }
 }

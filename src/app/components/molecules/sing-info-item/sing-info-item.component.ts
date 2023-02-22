@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { SignatureInfo } from 'src/app/store/signatures';
+import { TSignatureInfo } from 'src/app/interfaces/signature-info.type';
 
 @Component({
   selector: 'app-sing-info-item',
@@ -7,7 +7,7 @@ import { SignatureInfo } from 'src/app/store/signatures';
   styleUrls: ['./sing-info-item.component.css'],
 })
 export class SingInfoItemComponent {
-  @Input() signature: SignatureInfo;
+  @Input() signature: TSignatureInfo;
 
   protected isFolded: boolean = false;
 

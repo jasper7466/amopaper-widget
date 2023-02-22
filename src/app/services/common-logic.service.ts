@@ -1,4 +1,3 @@
-import { filesIdsOriginalsSelector } from './../store/signatures/selectors';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap, tap, map, Observable, take } from 'rxjs';
@@ -6,6 +5,7 @@ import { NopaperService } from './sub-services/nopaper.service';
 import { CrmService } from 'src/app/services/sub-services/crm.service';
 import { RoutingService } from './sub-services/routing.service';
 import { Injectable } from '@angular/core';
+import { filesIdsOriginalsSelector } from '../store/files-processed/selectors';
 
 @Injectable()
 export class CommonLogicService {
@@ -49,8 +49,8 @@ export class CommonLogicService {
     let justCreatedPacketId: number;
 
     return this.nopaperService.postPacket().pipe(
-      tap((packetId) => (justCreatedPacketId = )),
-      switchMap((packetId) => this.crmService.attachPacketToLead(packetId)),
+      tap((packet) => (justCreatedPacketId = packet.id)),
+      switchMap((packet) => this.crmService.attachPacketToLead(packet.id)),
       map(() => justCreatedPacketId)
     );
   }

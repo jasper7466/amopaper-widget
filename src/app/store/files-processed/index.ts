@@ -11,7 +11,6 @@ export interface IProcessedFilesState {
 
 export const initialState: IProcessedFilesState = {
   identifiers: {
-    count: 0,
     originals: [],
     stamped: [],
   },

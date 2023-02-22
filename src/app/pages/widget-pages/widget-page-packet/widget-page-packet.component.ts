@@ -20,7 +20,7 @@ import { TPacketStatus } from 'src/app/interfaces/packet-status.type';
 export class WidgetPagePacketComponent implements OnInit, OnDestroy {
   private onDestroyEmitter = new EventEmitter<void>();
   protected packetId: number;
-  protected stepName: TPacketStatus | null;
+  protected stepName: TPacketStatus | undefined;
 
   constructor(
     private store: Store,

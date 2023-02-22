@@ -2,16 +2,20 @@
 <ul class="add-addressee__search-selector">
   <li class="add-addressee__search-selector-option">
     <input type="radio" name="addBy" id="byVatId" value="byVatId" checked />
-    <label for="byVatId" (click)="changeSearchSelector('vatId')">ИНН</label>
+    <label for="byVatId" (click)="changeSearchSelector(addresseeIdType.VatId)"
+      >ИНН</label
+    >
   </li>
   <li class="add-addressee__search-selector-option">
     <input type="radio" name="addBy" id="byPhone" value="byPhone" />
-    <label for="byPhone" (click)="changeSearchSelector('phone')">Телефон</label>
+    <label for="byPhone" (click)="changeSearchSelector(addresseeIdType.Phone)"
+      >Телефон</label
+    >
   </li>
 </ul>
 <div>
   <app-input
-    *ngIf="searchSelector === 'vatId'"
+    *ngIf="searchSelector === addresseeIdType.VatId"
     (onKeyUp)="searchInputKeyUp($event)"
     class="add-addressee__search-input"
     placeholder="ИНН"
@@ -19,7 +23,7 @@
     mask="000000000000"
   ></app-input>
   <app-input
-    *ngIf="searchSelector === 'phone'"
+    *ngIf="searchSelector === addresseeIdType.Phone"
     (onKeyUp)="searchInputKeyUp($event)"
     class="add-addressee__search-input"
     placeholder="Телефон"

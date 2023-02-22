@@ -1,9 +1,10 @@
 import { RecipientInfo, ROUTE_TYPE } from './../nopaper-api-v2-common.types';
 import { Observable, map } from 'rxjs';
-import { INewPacketIdProps } from './../../../../store/misc/actions';
 import { ApiService } from './../../api.service';
-import { INewPacketData } from './../../../../store/interfaces';
 import { NonEmptyArray, isNonEmptyArray } from 'src/app/types/common';
+import { IPacketCreateData } from 'src/app/interfaces/packet-create-data.interface';
+import { ADDRESSEE_ID_TYPE } from 'src/app/interfaces/addressee.interface';
+import { IPacketDetails } from 'src/app/interfaces/packet-details.interface';
 
 /** Элемент списка файлов пакета документов. */
 type FileInfo = {
@@ -31,11 +32,11 @@ export interface IPostDraftResponse {
   documentId: number;
 }
 
-const requestAdapter = (data: INewPacketData): IPostDraftRequest | never => {
+const requestAdapter = (data: IPacketCreateData): IPostDraftRequest | never => {
   const { addressee, files, title } = data;
 
   const fileInfoList: FileInfo[] = files.map((item) => ({
-    fileNameWithExtension: item.file.name,
+    fileNameWithExtension: item.name,
     fileBase64: item.base64,
   }));
 
@@ -45,26 +46,17 @@ const requestAdapter = (data: INewPacketData): IPostDraftRequest | never => {
 
   let recipientInfo: RecipientInfo;
 
-  switch (data.addressee.type) {
-    case 'phone': {
-      if (addressee.phone) {
-        recipientInfo = { userPhone: addressee.phone };
-      } else {
-        throw new Error('Phone is not defined');
-      }
+  switch (data.addressee.idType) {
+    case ADDRESSEE_ID_TYPE.Phone: {
+      recipientInfo = { userPhone: addressee.idValue };
       break;
     }
-    case 'vatId':
-      {
-        if (addressee.vatId) {
-          recipientInfo = { companyInn: addressee.vatId };
-        } else {
-          throw new Error('VatId is not defined');
-        }
-      }
+    case ADDRESSEE_ID_TYPE.VatId: {
+      recipientInfo = { companyInn: addressee.idValue };
       break;
+    }
     default:
-      throw new Error('Addressee is not defined');
+      throw new Error('Unexpected addressee id type.');
   }
 
   return {
@@ -74,14 +66,16 @@ const requestAdapter = (data: INewPacketData): IPostDraftRequest | never => {
   };
 };
 
-const responseAdapter = (response: IPostDraftResponse): INewPacketIdProps => ({
-  packetId: response.documentId,
+const responseAdapter = (
+  response: IPostDraftResponse
+): Pick<IPacketDetails, 'id'> => ({
+  id: response.documentId,
 });
 
 export function createPacketEndpoint(
   this: ApiService,
-  data: INewPacketData
-): Observable<INewPacketIdProps> {
+  data: IPacketCreateData
+): Observable<Pick<IPacketDetails, 'id'>> {
   return this.post<IPostDraftRequest, IPostDraftResponse>(
     'external/document',
     requestAdapter(data)
