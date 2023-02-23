@@ -1,20 +1,15 @@
 import { domainSelector } from '../../../store/crm-context/selectors';
-import {
-  IGetCustomFieldsResponse,
-  ICustomField,
-  IPatchLeadRequest,
-  IPatchLeadResponse,
-  IGetLeadByIdResponse,
-  NoteType,
-  IGetLeadAttachmentsResponse,
-} from './amo-api.types';
-import { map, Observable, expand, EMPTY, reduce, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { accessTokenSelector } from 'src/app/store/access-token/selectors';
 import { environment } from 'src/environments/environment';
 import { ApiService } from '../api.service';
+import { getCompaniesCustomFieldsAllEndpoint } from './endpoints/get-companies-custom-fields-all.endpoint';
+import { getLeadsCustomFieldsAllEndpoint } from './endpoints/get-leads-custom-fields-all.endpoint';
+import { patchLeadCustomFieldValueCustomEndpoint } from './endpoints/patch-lead-custom-field-value.custom-endpoint';
+import { getLeadCustomFieldValueCustomEndpoint } from './endpoints/get-lead-custom-field-value.custom-endpoint';
+import { getLeadAttachmentsEndpoint } from './endpoints/get-lead-attachments.endpoint';
 
 const BASE_URL_COMPILER: (domain?: string) => string =
   environment.getAmoBaseUrl;
@@ -35,66 +30,9 @@ export class AmoApiService extends ApiService {
     });
   }
 
-  public getCompaniesCustomFieldsAll(): Observable<ICustomField[]> {
-    return this.get<IGetCustomFieldsResponse>('/companies/custom_fields').pipe(
-      expand((response) =>
-        response._links.next
-          ? // TODO: для работы через прокси в режиме разработки
-            // ? this.get$<GetCustomFieldsResponse>(response._links.next.href)
-            this.get<IGetCustomFieldsResponse>(
-              `/companies/custom_fields?page=${++response._page}`
-            )
-          : EMPTY
-      ),
-      map((response) => response._embedded.custom_fields),
-      reduce((acc, current) => acc.concat(current))
-    );
-  }
-
-  public getLeadsCustomFieldsAll(): Observable<ICustomField[]> {
-    return this.get<IGetCustomFieldsResponse>('/leads/custom_fields').pipe(
-      expand((response) =>
-        response._links.next
-          ? // TODO: для работы через прокси в режиме разработки
-            // ? this.get$<GetCustomFieldsResponse>(response._links.next.href)
-            this.get<IGetCustomFieldsResponse>(
-              `/companies/custom_fields?page=${++response._page}`
-            )
-          : EMPTY
-      ),
-      map((response) => response._embedded.custom_fields),
-      reduce((acc, current) => acc.concat(current))
-    );
-  }
-
-  public patchLeadById(
-    id: number,
-    data: Partial<IPatchLeadRequest>
-  ): Observable<IPatchLeadResponse> {
-    return this.patch<Partial<IPatchLeadRequest>, IPatchLeadResponse>(
-      `/leads/${id}`,
-      data
-    );
-  }
-
-  public getLeadById(id: number): Observable<IGetLeadByIdResponse> {
-    return this.get(`/leads/${id}`);
-  }
-
-  public getLeadAttachments(leadId: number) {
-    const noteType: NoteType = 'attachment';
-    return this.get<IGetLeadAttachmentsResponse>(
-      `/leads/${leadId}/notes?filter[note_type][0]=${noteType}`
-    ).pipe(
-      expand((response) =>
-        response._links.next
-          ? // TODO: для работы через прокси в режиме разработки
-            // ? this.get$<GetCustomFieldsResponse>(response._links.next.href)
-            this.get<IGetLeadAttachmentsResponse>(
-              `/companies/custom_fields?page=${++response._page}`
-            )
-          : EMPTY
-      )
-    );
-  }
+  public getCompaniesCustomFieldsAll = getCompaniesCustomFieldsAllEndpoint;
+  public getLeadsCustomFieldsAll = getLeadsCustomFieldsAllEndpoint;
+  public patchLeadCustomFieldValue = patchLeadCustomFieldValueCustomEndpoint;
+  public getLeadCustomFieldValue = getLeadCustomFieldValueCustomEndpoint;
+  public getLeadAttachments = getLeadAttachmentsEndpoint;
 }
