@@ -3,7 +3,7 @@ import { widgetContextReducer } from './addressee/reducers';
 import { ADDRESSEE_KEY, IAddresseeState } from './addressee/index';
 import { accessTokenReducer } from './access-token/reducers';
 import { TOKEN_KEY, ITokenState } from './access-token/index';
-import { ICrmContextState, CONTEXT_KEY } from './crm-context/index';
+import { ICrmContextState, CRM_CONTEXT_KEY } from './crm-context/index';
 import { environment } from '../../environments/environment';
 import { ActionReducerMap, MetaReducer } from '@ngrx/store';
 import { crmContextReducer } from './crm-context/reducers';
@@ -19,9 +19,10 @@ import { Injectable } from '@angular/core';
 import { Actions } from '@ngrx/effects';
 import { SignaturesEffects } from './signatures/effects';
 import { FILES_PROCESSED_KEY, IProcessedFilesState } from './files-processed';
+import { AppContextEffects } from './app-context/effects';
 
 export interface State {
-  [CONTEXT_KEY]: ICrmContextState;
+  [CRM_CONTEXT_KEY]: ICrmContextState;
   [TOKEN_KEY]: ITokenState;
   [ADDRESSEE_KEY]: IAddresseeState;
   [FILES_SOURCE_KEY]: ISourceFilesState;
@@ -32,7 +33,7 @@ export interface State {
 }
 
 export const reducers: ActionReducerMap<State> = {
-  [CONTEXT_KEY]: crmContextReducer,
+  [CRM_CONTEXT_KEY]: crmContextReducer,
   [TOKEN_KEY]: accessTokenReducer,
   [ADDRESSEE_KEY]: widgetContextReducer,
   [FILES_SOURCE_KEY]: sourceFilesReducer,
@@ -42,7 +43,7 @@ export const reducers: ActionReducerMap<State> = {
   [MISC_KEY]: miscReducer,
 };
 
-export const effects = [SignaturesEffects];
+export const effects = [SignaturesEffects, AppContextEffects];
 
 export const metaReducers: MetaReducer<State>[] = !environment.production
   ? []

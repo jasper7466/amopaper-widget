@@ -29,11 +29,13 @@ export class CommonLogicService {
       return;
     }
 
+    this.routingService.goStartupPage();
+
     this.crmService
       .getCrmContext()
       .pipe(
-        switchMap(() => this.nopaperService.getAmoAccessToken()),
-        switchMap(() => this.crmService.getPacketsFieldId())
+        switchMap(() => this.nopaperService.getAmoAccessToken())
+        // switchMap(() => this.crmService.getPacketsFieldId())
       )
       .subscribe({
         next: () => this.routingService.goPacketsListPage(),

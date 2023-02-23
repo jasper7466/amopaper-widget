@@ -78,6 +78,10 @@ export class RoutingService {
     this.router.navigate(['widget/packet', id]);
   }
 
+  public goStartupPage(): void {
+    this.router.navigate(['']);
+  }
+
   public goMatchedStepPacketPage(
     packetStatus: TPacketStatus | undefined,
     id: number
