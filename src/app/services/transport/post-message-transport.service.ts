@@ -10,7 +10,7 @@ export interface IPostMessage {
 
 @Injectable()
 export class PostMessageTransportService {
-  private inbox$ = fromEvent<MessageEvent>(window, 'message');
+  private inbox$ = fromEvent<MessageEvent<unknown>>(window, 'message');
 
   /** Отправка сообщения без подписки на ответ. */
   public post({ action, payload }: IPostMessage): void {
@@ -21,9 +21,9 @@ export class PostMessageTransportService {
   public subscribe<Response extends IPostMessage>(
     action: IPostMessage['action']
   ): Observable<Response> {
-    return this.inbox$.pipe(
+    return (this.inbox$ as Observable<MessageEvent<Response>>).pipe(
       filter((event) => event.data.action === action),
-      map((event) => event.data.payload)
+      map((event) => event.data)
     );
   }
 
