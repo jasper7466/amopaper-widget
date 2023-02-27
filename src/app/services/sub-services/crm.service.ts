@@ -1,9 +1,6 @@
-import { NopaperApiService } from '../api/nopaper-api/nopaper-api.service';
-import { PostMessageTransportService } from '../transport/post-message-transport.service';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import {
-  map,
   Observable,
   of,
   Subject,
@@ -13,24 +10,29 @@ import {
   timer,
 } from 'rxjs';
 import { AmoApiService } from '../api/amo-api/amo-api.service';
-import { documentPacketsIdCrmFieldName } from '../../constants/config';
 import { updateCrmContextAction } from '../../store/crm-context/actions';
-import { IPatchLeadResponse } from '../api/amo-api/amo-api.types';
-import { updatePacketsByIdsListAction } from 'src/app/store/packets/actions';
 import { AmoPostApiService } from '../api/amo-post-api/amo-post-api.service';
+import { config } from 'src/app/constants/config';
+import { activeLeadIdSelector } from 'src/app/store/app-context/selectors';
+import { CrmJsonStorageService } from './crm-json-storage.service';
+import { updateLeadJsonStorageAction } from 'src/app/store/crm-lead-context/actions';
 
+const crmJsonStoragePollingInterval = config.crmJsonStoragePollingInterval;
 @Injectable()
 export class CrmService {
-  private packetIdFieldId: number;
-  private leadId: number;
+  private crmJsonStoragePollingBreaker = new Subject<void>();
+  private activeLeadId: number;
 
-  private packetsIdsPollingBreaker = new Subject<void>();
+  private activeLeadId$ = this.store.select(activeLeadIdSelector);
 
   constructor(
     private store: Store,
+    private crmJsonStorageService: CrmJsonStorageService,
     private amoApiService: AmoApiService,
     private amoPostApiService: AmoPostApiService
-  ) {}
+  ) {
+    this.activeLeadId$.subscribe((id) => (this.activeLeadId = id));
+  }
 
   // checkWidgetStatus() {
   //   if (!this.context) {
@@ -49,103 +51,73 @@ export class CrmService {
   //   }
   // }
 
+  private getJsonStorage(): Observable<any> {
+    return this.crmJsonStorageService
+      .getStorage()
+      .pipe(
+        tap((storageState) =>
+          this.store.dispatch(updateLeadJsonStorageAction(storageState))
+        )
+      );
+  }
+
   public getCrmContext(): Observable<any> {
     return this.amoPostApiService.getCrmContext().pipe(
       tap((context) => {
-        if (context.cardId) {
-          this.leadId = context.cardId;
-        }
         this.store.dispatch(updateCrmContextAction(context));
       })
     );
   }
 
-  public getPacketsFieldId(): Observable<any> {
-    return this.amoApiService.getLeadsCustomFieldsAll().pipe(
-      map((fields) =>
-        fields.filter((field) => field.name === documentPacketsIdCrmFieldName)
-      ),
-      tap((fields) => {
-        if (fields.length === 0) {
-          throw new Error('Missing documents packet id custom field');
-        }
-        if (fields.length > 1) {
-          throw new Error('Documents packet id custom field duplicate');
-        }
-      }),
-      map((fields) => fields.pop()?.id),
-      tap((id) => (this.packetIdFieldId = id as number))
-    );
-  }
+  public startJsonStoragePolling(): void {
+    this.stopJsonStoragePolling();
 
-  public startPacketsIdsPolling(): void {
-    this.stopPacketsIdsPolling();
-
-    console.log('start packets id polling from crm');
-    timer(1, 3000)
+    timer(1, crmJsonStoragePollingInterval)
       .pipe(
-        switchMap(() => this.getLeadPacketsIds()),
-        takeUntil(this.packetsIdsPollingBreaker)
+        switchMap(() => this.getJsonStorage()),
+        takeUntil(this.crmJsonStoragePollingBreaker)
       )
       .subscribe();
   }
 
-  public stopPacketsIdsPolling(): void {
-    this.packetsIdsPollingBreaker.next();
+  public stopJsonStoragePolling(): void {
+    this.crmJsonStoragePollingBreaker.next();
   }
 
-  private setLeadPacketsIds(idList: number[] | null) {
-    const value = idList ? JSON.stringify(idList) : idList;
+  public attachPacketToLead(packetId: number): Observable<any> {
+    return this.crmJsonStorageService.getStorage().pipe(
+      switchMap((state) => {
+        if (state.packetsIdsList.includes(packetId)) {
+          return of(null);
+        }
 
-    return this.amoApiService.patchLeadById(this.leadId, {
-      custom_fields_values: [
-        {
-          field_id: this.packetIdFieldId,
-          values: [{ value }],
-        },
-      ],
-    });
-  }
-
-  public attachPacketToLead(packetId: number): Observable<IPatchLeadResponse> {
-    return this.getLeadPacketsIds().pipe(
-      switchMap((packetsIds) =>
-        this.setLeadPacketsIds(packetsIds.concat(packetId))
-      )
-    );
-  }
-
-  public detachPacketFromLead(
-    packetId: number
-  ): Observable<IPatchLeadResponse> {
-    return this.getLeadPacketsIds().pipe(
-      switchMap((packetsIds) =>
-        this.setLeadPacketsIds(packetsIds.filter((id) => id !== packetId))
-      )
-    );
-  }
-
-  private getLeadPacketsIds(): Observable<number[]> {
-    return this.amoApiService.getLeadById(this.leadId).pipe(
-      map((lead) => lead.custom_fields_values),
-      map((fields) =>
-        fields?.filter((field) => field.field_id === this.packetIdFieldId)
-      ),
-      map((fields) => fields?.pop()),
-      map((field) => field?.values.pop()?.value),
-      map((stringified) => JSON.parse(stringified || '[]')),
-      tap((packetsIds) => {
-        this.store.dispatch(
-          updatePacketsByIdsListAction({ payload: packetsIds })
-        );
+        return this.crmJsonStorageService.setStorage({
+          packetsIdsList: [...state.packetsIdsList, packetId],
+        });
       })
     );
   }
 
-  public getLeadAttachments(leadId: number): Observable<void> {
-    return this.amoApiService.getLeadAttachments(leadId).pipe(
-      tap(console.log),
-      switchMap(() => of())
+  public detachPacketFromLead(packetId: number): Observable<any> {
+    return this.crmJsonStorageService.getStorage().pipe(
+      switchMap((state) => {
+        const filteredIdList = state.packetsIdsList.filter(
+          (id) => id !== packetId
+        );
+        if (state.packetsIdsList.length === filteredIdList.length) {
+          return of(null);
+        }
+        return this.crmJsonStorageService.setStorage({
+          packetsIdsList: filteredIdList,
+        });
+      })
     );
   }
+
+  // public getLeadAttachments(): Observable<void> {
+  //   return this.amoApiService.getLeadAttachments(this.activeLeadId).pipe(
+  //     tap(console.log),
+  //     switchMap(() => of())
+  //   );
+  // }
 }

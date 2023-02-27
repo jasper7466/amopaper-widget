@@ -6,15 +6,21 @@ import { RoutingService } from './sub-services/routing.service';
 import { Injectable } from '@angular/core';
 import { filesIdsOriginalsSelector } from '../store/files-processed/selectors';
 import { WindowService } from './sub-services/window.service';
+import { CrmTokenService } from './sub-services/crm-token.service';
+import { CrmJsonStorageService } from './sub-services/crm-json-storage.service';
+import { PostMessageTransportService } from './transport/post-message-transport.service';
 
 @Injectable()
 export class CommonLogicService {
   constructor(
-    private routingService: RoutingService,
     private store: Store,
     private crmService: CrmService,
+    private crmTokenService: CrmTokenService,
+    private crmJsonStorageService: CrmJsonStorageService,
     private nopaperService: NopaperService,
-    private windowService: WindowService
+    private routingService: RoutingService,
+    private windowService: WindowService,
+    private postMessageTransport: PostMessageTransportService
   ) {}
 
   /**
@@ -29,13 +35,18 @@ export class CommonLogicService {
       return;
     }
 
+    interface IPayload {
+      url: string;
+      requestOptions: RequestInit;
+    }
+
     this.routingService.goStartupPage();
 
     this.crmService
       .getCrmContext()
       .pipe(
-        switchMap(() => this.nopaperService.getAmoAccessToken())
-        // switchMap(() => this.crmService.getPacketsFieldId())
+        switchMap(() => this.crmTokenService.getAmoAccessToken()),
+        switchMap(() => this.crmJsonStorageService.init())
       )
       .subscribe({
         next: () => this.routingService.goPacketsListPage(),

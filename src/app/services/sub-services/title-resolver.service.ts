@@ -1,10 +1,8 @@
-import { state } from '@angular/animations';
 import { Store } from '@ngrx/store';
 import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   Resolve,
-  ResolveFn,
   RouterStateSnapshot,
 } from '@angular/router';
 import { Observable, take } from 'rxjs';

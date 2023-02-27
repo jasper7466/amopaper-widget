@@ -1,6 +1,6 @@
 import {
   addresseeSelector,
-  isAddresseeAddedSelector,
+  isAddresseeSubmittedSelector,
 } from '../../../store/addressee/selectors';
 import { resetAddresseeAction } from '../../../store/addressee/actions';
 import { Component, ViewChild, EventEmitter } from '@angular/core';
@@ -18,7 +18,7 @@ export class AddresseeSelectorComponent {
   protected openModalEmitter: EventEmitter<void> = new EventEmitter<void>();
   protected closeModalEmitter: EventEmitter<void> = new EventEmitter<void>();
 
-  protected isAddresseeAdded$ = this.store.select(isAddresseeAddedSelector);
+  protected isAddresseeAdded$ = this.store.select(isAddresseeSubmittedSelector);
   protected addressee$ = this.store.select(addresseeSelector);
 
   constructor(private store: Store) {}

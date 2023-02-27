@@ -1,11 +1,11 @@
 import { IPacketDetails } from 'src/app/interfaces/packet-details.interface';
 import { PACKETS_KEY } from './index';
 import { createAction, props } from '@ngrx/store';
-import { TLeadPacketsIdsList } from 'src/app/interfaces/lead-packets-ids.type';
+import { ICrmLeadJsonStorage } from 'src/app/interfaces/crm-lead-json-storage.interface';
 
-export const updatePacketsByIdsListAction = createAction(
+export const updatePacketsIdsListAction = createAction(
   `[${PACKETS_KEY}] update by identifiers list`,
-  props<{ payload: TLeadPacketsIdsList }>()
+  props<{ payload: ICrmLeadJsonStorage['packetsIdsList'] }>()
 );
 
 export const setPacketStatusAction = createAction(

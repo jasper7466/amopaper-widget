@@ -1,3 +1,6 @@
+/** Тип, состоящий из ключей типа string и значений типа T. */
+export type Indexed<T> = { [key: string]: T };
+
 /** Тип, состоящий из типов ключей типа T. */
 type ValueOf<T> = T[keyof T];
 

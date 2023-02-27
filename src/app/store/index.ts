@@ -20,30 +20,45 @@ import { Actions } from '@ngrx/effects';
 import { SignaturesEffects } from './signatures/effects';
 import { FILES_PROCESSED_KEY, IProcessedFilesState } from './files-processed';
 import { AppContextEffects } from './app-context/effects';
+import { CrmContextEffects } from './crm-context/effects';
+import { APP_CONTEXT_KEY, IAppContextState } from './app-context';
+import { CRM_LEAD_KEY, ICrmLeadState } from './crm-lead-context';
+import { appContextReducer } from './app-context/reducers';
+import { crmLeadReducer } from './crm-lead-context/reducers';
+import { CrmLeadContextEffects } from './crm-lead-context/effects';
 
 export interface State {
-  [CRM_CONTEXT_KEY]: ICrmContextState;
   [TOKEN_KEY]: ITokenState;
   [ADDRESSEE_KEY]: IAddresseeState;
-  [FILES_SOURCE_KEY]: ISourceFilesState;
+  [APP_CONTEXT_KEY]: IAppContextState;
+  [CRM_CONTEXT_KEY]: ICrmContextState;
+  [CRM_LEAD_KEY]: ICrmLeadState;
   [FILES_PROCESSED_KEY]: IProcessedFilesState;
-  [SIGNATURES_KEY]: ISignaturesState;
-  [PACKETS_KEY]: IPacketsState;
+  [FILES_SOURCE_KEY]: ISourceFilesState;
   [MISC_KEY]: IMiscState;
+  [PACKETS_KEY]: IPacketsState;
+  [SIGNATURES_KEY]: ISignaturesState;
 }
 
 export const reducers: ActionReducerMap<State> = {
-  [CRM_CONTEXT_KEY]: crmContextReducer,
   [TOKEN_KEY]: accessTokenReducer,
   [ADDRESSEE_KEY]: widgetContextReducer,
-  [FILES_SOURCE_KEY]: sourceFilesReducer,
+  [APP_CONTEXT_KEY]: appContextReducer,
+  [CRM_CONTEXT_KEY]: crmContextReducer,
+  [CRM_LEAD_KEY]: crmLeadReducer,
   [FILES_PROCESSED_KEY]: processedFilesReducer,
-  [SIGNATURES_KEY]: signaturesReducer,
-  [PACKETS_KEY]: packetsReducer,
+  [FILES_SOURCE_KEY]: sourceFilesReducer,
   [MISC_KEY]: miscReducer,
+  [PACKETS_KEY]: packetsReducer,
+  [SIGNATURES_KEY]: signaturesReducer,
 };
 
-export const effects = [SignaturesEffects, AppContextEffects];
+export const effects = [
+  SignaturesEffects,
+  AppContextEffects,
+  CrmContextEffects,
+  CrmLeadContextEffects,
+];
 
 export const metaReducers: MetaReducer<State>[] = !environment.production
   ? []

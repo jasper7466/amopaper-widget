@@ -15,5 +15,7 @@ export class AmoPostApiService implements IAmoPostApiService {
     protected postMessageTransportService: PostMessageTransportService
   ) {}
 
-  public getCrmContext = getCrmContextEndpoint;
+  public getCrmContext = () => {
+    return getCrmContextEndpoint.call(this);
+  };
 }

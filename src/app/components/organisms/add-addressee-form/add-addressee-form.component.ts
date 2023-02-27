@@ -1,4 +1,7 @@
-import { addresseeUpdateAction } from '../../../store/addressee/actions';
+import {
+  addresseeSubmitAction,
+  addresseeUpdateAction,
+} from '../../../store/addressee/actions';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ADDRESSEE_ID_TYPE } from 'src/app/interfaces/addressee.interface';
@@ -51,6 +54,6 @@ export class AddAddresseeFormComponent {
       })
     );
 
-    return;
+    this.store.dispatch(addresseeSubmitAction());
   }
 }

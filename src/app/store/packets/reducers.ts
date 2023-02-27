@@ -1,7 +1,7 @@
 import { initialPacketState, initialState } from './index';
 import { createReducer, on } from '@ngrx/store';
 import {
-  updatePacketsByIdsListAction,
+  updatePacketsIdsListAction,
   setPacketDetailsAction,
   setPacketStatusAction,
 } from './actions';
@@ -9,7 +9,7 @@ import { IPacketDetails } from 'src/app/interfaces/packet-details.interface';
 
 export const packetsReducer = createReducer(
   initialState,
-  on(updatePacketsByIdsListAction, (state, { payload }) => {
+  on(updatePacketsIdsListAction, (state, { payload }) => {
     const newIdsList = payload;
     const oldIdsList = state.ids;
 

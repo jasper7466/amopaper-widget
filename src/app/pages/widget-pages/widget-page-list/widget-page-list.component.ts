@@ -26,11 +26,11 @@ export class WidgetPageListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.crmService.startPacketsIdsPolling();
+    this.crmService.startJsonStoragePolling();
   }
 
   ngOnDestroy(): void {
-    this.crmService.stopPacketsIdsPolling();
+    this.crmService.stopJsonStoragePolling();
   }
 
   public clickCreateNewButtonHandler(): void {

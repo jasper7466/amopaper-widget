@@ -11,3 +11,8 @@ export const setAppActivePacketIdAction = createAction(
   `[${APP_CONTEXT_KEY}] set active packet`,
   props<{ packetId: number }>()
 );
+
+export const setAppActiveLeadIdAction = createAction(
+  `[${APP_CONTEXT_KEY}] set active lead`,
+  props<{ leadId: number }>()
+);

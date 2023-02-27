@@ -1,34 +1,31 @@
-import { IPostMessage } from 'src/app/services/transport/post-message-transport.service';
 import {
   ISystem,
   IWidgetSettings,
   TConstants,
 } from '../amo-post-api-common.types';
-import { Observable, map } from 'rxjs';
+import { Observable, map, tap } from 'rxjs';
 import { AmoPostApiService } from '../amo-post-api.service';
 import { ICrmContext } from 'src/app/interfaces/crm-context.interface';
 
-interface IGetCrmContextRequest extends Required<IPostMessage> {}
+interface IGetCrmContextRequest {}
 
-export interface IGetCrmContextResponse extends IPostMessage {
-  payload: {
-    settings: IWidgetSettings & { x_api_key: string };
-    system: ISystem;
-    constants: {
-      user_rights: TConstants['user_rights'];
-    };
-    isCard: boolean;
-    cardId: number | false;
+interface IGetCrmContextResponse {
+  settings: IWidgetSettings & { x_api_key: string };
+  system: ISystem;
+  constants: {
+    user_rights: TConstants['user_rights'];
   };
+  isCard: boolean;
+  cardId: number | false;
 }
 
-const responseAdapter = ({ payload }: IGetCrmContextResponse): ICrmContext => ({
-  isCard: payload.isCard,
-  cardId: typeof payload.cardId === 'number' ? payload.cardId : -1,
-  domain: payload.system.domain,
-  subdomain: payload.system.subdomain,
-  oAuthUuid: payload.settings.oauth_client_uuid,
-  xApiKey: payload.settings.x_api_key,
+const responseAdapter = (response: IGetCrmContextResponse): ICrmContext => ({
+  isCard: response.isCard,
+  cardId: typeof response.cardId === 'number' ? response.cardId : -1,
+  domain: response.system.domain,
+  subdomain: response.system.subdomain,
+  oAuthUuid: response.settings.oauth_client_uuid,
+  xApiKey: response.settings.x_api_key,
 });
 
 export function getCrmContextEndpoint(

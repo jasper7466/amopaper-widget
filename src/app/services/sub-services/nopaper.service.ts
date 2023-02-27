@@ -1,7 +1,5 @@
 import { setNewPacketIdAction } from './../../store/misc/actions';
-import { IGetAmoAccessTokenResponse } from './../api/access-token-api/access-token-api.types';
 import { setPacketDetailsAction } from '../../store/packets/actions';
-import { updateAccessTokenAction } from '../../store/access-token/actions';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import {
@@ -21,7 +19,6 @@ import { newPacketTitleSelector } from '../../store/misc/selectors';
 import { setPacketStatusAction } from '../../store/packets/actions';
 import { setSignaturesAction } from '../../store/signatures/actions';
 import { NopaperApiService } from '../api/nopaper-api/nopaper-api.service';
-import { AccessTokenApiService } from '../api/access-token-api/access-token-api.service';
 import { setShareLinkAction } from 'src/app/store/misc/actions';
 import {
   setFilesIdentifiersAction,
@@ -29,12 +26,12 @@ import {
 } from 'src/app/store/files-processed/actions';
 import { IPacketFilesInfo } from 'src/app/interfaces/packet-files-info.interface';
 import { IFileInfo } from 'src/app/interfaces/file-info.interface';
-import { TFile } from 'src/app/interfaces/file.type';
 import { IPacketCreateData } from 'src/app/interfaces/packet-create-data.interface';
 import { IFileSignatures } from 'src/app/interfaces/file-signatures.interface';
 import { IPacketDetails } from 'src/app/interfaces/packet-details.interface';
 import { IShareLink } from 'src/app/interfaces/share-link.interface';
 import { IPacketFile } from 'src/app/interfaces/packet-file.interface';
+import { NopaperApiV2Service } from '../api/nopaper-api-v2/nopaper-api-v2.service';
 
 const POLLING_INTERVAL_MS = 3000;
 
@@ -54,24 +51,8 @@ export class NopaperService {
   constructor(
     private store: Store,
     private nopaperApiService: NopaperApiService,
-    private accessTokenApiService: AccessTokenApiService
+    private nopaperApiV2Service: NopaperApiV2Service
   ) {}
-
-  /**
-   * Получает токен доступа для amoCRM.
-   *
-   * Результат сохраняется в хранилище.
-   * @returns
-   */
-  public getAmoAccessToken(): Observable<IGetAmoAccessTokenResponse> {
-    return this.accessTokenApiService
-      .getAmoAccessToken()
-      .pipe(
-        tap(({ accessToken }) =>
-          this.store.dispatch(updateAccessTokenAction({ token: accessToken }))
-        )
-      );
-  }
 
   /**
    * Создаёт черновик пакета документов.
@@ -175,7 +156,7 @@ export class NopaperService {
   public getPacketDetails(
     packetId: number
   ): Observable<Omit<IPacketDetails, 'status'>> {
-    return this.nopaperApiService
+    return this.nopaperApiV2Service
       .getPacketDetails(packetId)
       .pipe(
         tap((response) => this.store.dispatch(setPacketDetailsAction(response)))

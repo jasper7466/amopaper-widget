@@ -8,7 +8,7 @@ export const addresseeSelector = createSelector(featureSelector, (state) => ({
   ...state,
 }));
 
-export const isAddresseeAddedSelector = createSelector(
+export const isAddresseeSubmittedSelector = createSelector(
   featureSelector,
   (state) => state.isSubmitted
 );

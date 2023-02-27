@@ -28,8 +28,8 @@ export class DocumentsDropAreaComponent {
       .pipe(
         take(1),
         filter((leadId) => typeof leadId === 'number'),
-        map((leadId) => leadId as number),
-        switchMap((leadId) => this.crmService.getLeadAttachments(leadId))
+        map((leadId) => leadId as number)
+        // switchMap((leadId) => this.crmService.getLeadAttachments(leadId))
       )
       .subscribe();
   }

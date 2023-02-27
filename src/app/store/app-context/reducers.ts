@@ -1,8 +1,12 @@
-import { setAppActivePacketIdAction, setAppInitAction } from './actions';
+import {
+  setAppActiveLeadIdAction,
+  setAppActivePacketIdAction,
+  setAppInitAction,
+} from './actions';
 import { initialState } from './index';
 import { createReducer, on } from '@ngrx/store';
 
-export const crmContextReducer = createReducer(
+export const appContextReducer = createReducer(
   initialState,
   on(setAppInitAction, (state) => ({
     ...state,
@@ -11,5 +15,9 @@ export const crmContextReducer = createReducer(
   on(setAppActivePacketIdAction, (state, { packetId }) => ({
     ...state,
     activePacketId: packetId,
+  })),
+  on(setAppActiveLeadIdAction, (state, { leadId }) => ({
+    ...state,
+    activeLeadId: leadId,
   }))
 );

@@ -10,6 +10,8 @@ import { RoutingService } from './routing.service';
 import { WindowService } from './window.service';
 import { environment } from 'src/environments/environment';
 import { WindowMockService } from './window-mock.service';
+import { CrmJsonStorageService } from './crm-json-storage.service';
+import { CrmTokenService } from './crm-token.service';
 
 const WindowServiceFactory = () => {
   if (environment.isStandaloneFrame) {
@@ -32,6 +34,8 @@ const WindowServiceFactory = () => {
       provide: WindowService,
       useFactory: WindowServiceFactory,
     },
+    CrmJsonStorageService,
+    CrmTokenService,
   ],
 })
 export class SubServicesCoreModule {

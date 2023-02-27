@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
 import { createPacketEndpoint } from './endpoints/create-packet.endpoint';
 import { getPacketDetailsEndpoint } from './endpoints/get-packet-details.endpoint';
 
-const BASE_URL = environment.nopaperBaseUrl;
+const BASE_URL = environment.getNopaperBaseUrl('v2');
 
 @Injectable()
 export class NopaperApiV2Service extends ApiService {

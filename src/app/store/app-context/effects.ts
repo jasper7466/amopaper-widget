@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { forkJoin, map, Observable, switchMap, tap } from 'rxjs';
+import { map } from 'rxjs';
 import { appLoadAction, setAppInitAction } from './actions';
 import { CommonLogicService } from 'src/app/services/common-logic.service';
 

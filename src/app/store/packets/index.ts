@@ -1,10 +1,9 @@
-import { TLeadPacketsIdsList } from 'src/app/interfaces/lead-packets-ids.type';
+import { ICrmLeadJsonStorage } from 'src/app/interfaces/crm-lead-json-storage.interface';
 import { IPacketDetails } from 'src/app/interfaces/packet-details.interface';
-import { WithOptional } from 'src/app/types/common';
 
 export const PACKETS_KEY = 'packets';
 export interface IPacketsState {
-  ids: TLeadPacketsIdsList;
+  ids: ICrmLeadJsonStorage['packetsIdsList'];
   packets: IPacketDetails[];
   isPacketsIdsTouched: boolean;
 }

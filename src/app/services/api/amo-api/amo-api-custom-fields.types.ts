@@ -1,3 +1,5 @@
+import { IAmoBaseResponse, IEmbeddedItem } from './amo-api-common.types';
+
 type TCustomFieldType =
   | 'text'
   | 'numeric'
@@ -58,7 +60,7 @@ export interface ICustomField extends IEmbeddedItem {
   hidden_statuses: [];
 }
 
-interface ICustomFieldsValue {
+interface ICustomFieldsValues {
   field_id: number;
   values: {
     value: any;
@@ -80,7 +82,7 @@ export interface IPatchLeadRequest {
   updated_at: number;
   loss_reason_id: number;
   responsible_user_id: number;
-  custom_fields_values: ICustomFieldsValue[];
+  custom_fields_values: ICustomFieldsValues[];
   _embedded: { [key: string]: any };
   request_id: string;
 }
@@ -108,7 +110,7 @@ export interface IGetLeadByIdResponse {
   updated_at: number;
   closest_task_at: number;
   is_deleted: boolean;
-  custom_fields_values: ICustomFieldsValue[] | null;
+  custom_fields_values: ICustomFieldsValues[] | null;
   score: number | null;
   account_id: number;
   is_price_modified_by_robot: boolean;

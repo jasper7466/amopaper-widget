@@ -1,4 +1,4 @@
-type TLinks = {
+export type TLinks = {
   self: {
     href: string;
   };
@@ -10,11 +10,11 @@ type TLinks = {
   };
 };
 
-interface IEmbeddedItem {
+export interface IEmbeddedItem {
   _links: TLinks;
 }
 
-interface IAmoBaseResponse<PayloadType> {
+export interface IAmoBaseResponse<PayloadType> {
   _total_items: number;
   _page: number;
   _page_count: number;
