@@ -1,7 +1,6 @@
 import { ServicesCoreModule } from './services/services-core.module';
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
 import { registerLocaleData } from '@angular/common';
 import localeRu from '@angular/common/locales/ru';
 
@@ -22,7 +21,6 @@ registerLocaleData(localeRu, 'ru');
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
     StoreModule.forRoot(reducers, {
       metaReducers,
     }),

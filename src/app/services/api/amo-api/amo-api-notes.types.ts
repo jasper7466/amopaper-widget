@@ -1,3 +1,5 @@
+import { IAmoBaseResponse, IEmbeddedItem } from './amo-api-common.types';
+
 interface NoteParams {
   attachment: {
     file_name: string;

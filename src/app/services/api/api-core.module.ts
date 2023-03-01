@@ -1,7 +1,11 @@
 import { NopaperApiV2Service } from './nopaper-api-v2/nopaper-api-v2.service';
 import { environment } from 'src/environments/environment';
 import { Store } from '@ngrx/store';
-import { HttpClient } from '@angular/common/http';
+import {
+  HTTP_INTERCEPTORS,
+  HttpClient,
+  HttpClientModule,
+} from '@angular/common/http';
 import { ServicesCoreModule } from './../services-core.module';
 import { NopaperApiService } from './nopaper-api/nopaper-api.service';
 import { AmoApiService } from './amo-api/amo-api.service';
@@ -12,6 +16,7 @@ import { AccessTokenLocalApiService } from './access-token-local-api/access-toke
 import { AmoPostApiMockService } from './amo-post-api-mock/amo-post-api-mock.service';
 import { AmoPostApiService } from './amo-post-api/amo-post-api.service';
 import { PostMessageTransportService } from '../transport/post-message-transport.service';
+import { PostMessageProxyInterceptor } from 'src/app/interceptors/post-message-proxy.interceptor';
 
 const AccessTokenApiFactory = (http: HttpClient, store: Store) => {
   if (environment.isLocalTokenServer) {
@@ -33,12 +38,12 @@ const AmoPostApiFactory = (
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule],
+  imports: [CommonModule, HttpClientModule],
   providers: [
-    AmoApiService,
     NopaperApiService,
     NopaperApiV2Service,
     PostMessageTransportService,
+    AmoApiService,
     {
       provide: AccessTokenApiService,
       useFactory: AccessTokenApiFactory,
@@ -48,6 +53,11 @@ const AmoPostApiFactory = (
       provide: AmoPostApiService,
       useFactory: AmoPostApiFactory,
       deps: [PostMessageTransportService],
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: PostMessageProxyInterceptor,
+      multi: true,
     },
   ],
 })
@@ -60,3 +70,7 @@ export class ApiCoreModule {
     }
   }
 }
+// {
+//   provide: HttpHandler,
+//   useClass: PostMessageProxyHttpHandler,
+// },
