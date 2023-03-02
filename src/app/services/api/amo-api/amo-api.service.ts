@@ -1,3 +1,4 @@
+import { AmoApiModule } from './amo-api.module';
 import { domainSelector } from '../../../store/crm-context/selectors';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -15,7 +16,9 @@ import { patchLeadEndpoint } from './endpoints/patch-lead.endpoint';
 const BASE_URL_COMPILER: (domain?: string) => string =
   environment.getAmoBaseUrl;
 
-@Injectable()
+@Injectable({
+  providedIn: AmoApiModule,
+})
 export class AmoApiService extends ApiService {
   constructor(http: HttpClient, private store: Store) {
     super(http);
