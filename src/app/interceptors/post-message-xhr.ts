@@ -1,4 +1,6 @@
+import { BehaviorSubject, takeUntil, filter } from 'rxjs';
 import { Indexed } from './../types/common';
+import { EventEmitter } from '@angular/core';
 enum METHODS {
   GET = 'GET',
   POST = 'POST',
@@ -6,12 +8,20 @@ enum METHODS {
   PATCH = 'PATCH',
   DELETE = 'DELETE',
 }
+/** Тип слушателя события по способу добавления. */
+enum LISTENER_ADDING_METHOD {
+  /** Добавлен как свойство. */
+  property = 0,
+  /** Добавлен через метод `addEventListener()` */
+  method = 1,
+}
 
 interface IPostMessageXhrState {
   withCredentials: boolean;
   subscriptions: {
     onReadyStateChange: boolean;
   };
+  // openContext: IOpenContext;
 }
 
 interface IOpenContext {
@@ -27,12 +37,27 @@ interface IPayload {
   // payload:
 }
 
+type TReadyState = 0 | 1 | 2 | 3 | 4;
+
+interface IEventListener {
+  type: keyof XMLHttpRequestEventMap;
+  addedBy: LISTENER_ADDING_METHOD;
+  listener:
+    | ((
+        this: XMLHttpRequest,
+        ev: XMLHttpRequestEventMap[keyof XMLHttpRequestEventMap]
+      ) => any)
+    | null;
+}
+
 export class PostMessageXhr implements XMLHttpRequest {
-  readonly UNSENT: 0;
-  readonly OPENED: 1;
-  readonly HEADERS_RECEIVED: 2;
-  readonly LOADING: 3;
-  readonly DONE: 4;
+  readonly UNSENT: 0 = 0;
+  readonly OPENED: 1 = 1;
+  readonly HEADERS_RECEIVED: 2 = 2;
+  readonly LOADING: 3 = 3;
+  readonly DONE: 4 = 4;
+
+  private _sendFlag: boolean = false;
 
   private _state: IPostMessageXhrState = {
     withCredentials: false,
@@ -41,39 +66,23 @@ export class PostMessageXhr implements XMLHttpRequest {
     },
   };
 
+  private _listenersList: IEventListener[];
+
   private _openContext: IOpenContext;
 
-  private _onreadystatechange:
-    | ((this: XMLHttpRequest, ev: Event) => any)
-    | null = null;
+  private __readyState: TReadyState = this.UNSENT;
 
-  private _readyState: number;
-  private _status: number;
-  private _timeout: number;
-
-  constructor() {
-    this._readyState = this.UNSENT;
-    this._status = 0;
-    this._timeout = 0;
+  private set _readyState(value: TReadyState) {
+    this.__readyState = value;
+  }
+  public get readyState(): TReadyState {
+    return this.__readyState;
   }
 
-  public set onreadystatechange(
-    value: ((this: XMLHttpRequest, ev: Event) => any) | null
-  ) {
-    this._onreadystatechange = value;
-    this._state.subscriptions.onReadyStateChange =
-      value === null ? false : true;
-  }
+  private _status: number = 0;
+  private _timeout: number = 0;
 
-  public get onreadystatechange():
-    | ((this: XMLHttpRequest, ev: Event) => any)
-    | null {
-    return this._onreadystatechange;
-  }
-
-  public get readyState(): number {
-    return this._readyState;
-  }
+  constructor() {}
 
   public get response(): any {
     throw new Error('Method not implemented.');
@@ -107,10 +116,10 @@ export class PostMessageXhr implements XMLHttpRequest {
   }
 
   public set timeout(ms: number) {
-    throw new Error('Method not implemented.');
+    this._timeout = ms;
   }
   public get timeout(): number {
-    throw new Error('Method not implemented.');
+    return this._timeout;
   }
 
   public get upload(): XMLHttpRequestUpload {
@@ -196,36 +205,59 @@ export class PostMessageXhr implements XMLHttpRequest {
     type: K,
     listener: (this: XMLHttpRequest, ev: XMLHttpRequestEventMap[K]) => any,
     options?: boolean | AddEventListenerOptions | undefined
-  ): void;
-  public addEventListener(
-    type: string,
-    listener: EventListenerOrEventListenerObject,
-    options?: boolean | AddEventListenerOptions | undefined
-  ): void;
-  public addEventListener(
-    type: unknown,
-    listener: unknown,
-    options?: unknown
   ): void {
-    throw new Error('Method not implemented.');
+    if (options !== undefined) {
+      throw new Error(
+        `${this.constructor.name}: adding event listener with options not implemented.`
+      );
+    }
+
+    const existingListener = this._listenersList.find(
+      (item) =>
+        item.type === type &&
+        item.listener === listener &&
+        item.addedBy === LISTENER_ADDING_METHOD.method
+    );
+
+    if (existingListener) {
+      return;
+    }
+
+    this._listenersList.push({
+      type,
+      listener: listener as any,
+      addedBy: LISTENER_ADDING_METHOD.method,
+    });
   }
 
   public removeEventListener<K extends keyof XMLHttpRequestEventMap>(
     type: K,
     listener: (this: XMLHttpRequest, ev: XMLHttpRequestEventMap[K]) => any,
     options?: boolean | EventListenerOptions | undefined
-  ): void;
-  public removeEventListener(
-    type: string,
-    listener: EventListenerOrEventListenerObject,
-    options?: boolean | EventListenerOptions | undefined
-  ): void;
-  public removeEventListener(
-    type: unknown,
-    listener: unknown,
-    options?: unknown
   ): void {
-    throw new Error('Method not implemented.');
+    if (options !== undefined) {
+      throw new Error(
+        `${this.constructor.name}: removing event listener with options not implemented.`
+      );
+    }
+    this._listenersList = this._listenersList.filter(
+      (item) =>
+        item.type !== type &&
+        item.listener !== listener &&
+        item.addedBy === LISTENER_ADDING_METHOD.method
+    );
+  }
+
+  public set onreadystatechange(
+    value: ((this: XMLHttpRequest, ev: Event) => any) | null
+  ) {
+    this._setListenerAsProperty('readystatechange', value);
+  }
+
+  public get onreadystatechange():
+    | ((this: XMLHttpRequest, ev: Event) => any)
+    | null {
+    return this._getListenerAsProperty('readystatechange');
   }
 
   public set onabort(
@@ -233,12 +265,12 @@ export class PostMessageXhr implements XMLHttpRequest {
       | ((this: XMLHttpRequest, ev: ProgressEvent<EventTarget>) => any)
       | null
   ) {
-    throw new Error('Method not implemented.');
+    this._setListenerAsProperty('abort', value);
   }
   public get onabort():
     | ((this: XMLHttpRequest, ev: ProgressEvent<EventTarget>) => any)
     | null {
-    throw new Error('Method not implemented.');
+    return this._getListenerAsProperty('abort');
   }
 
   public set onerror(
@@ -246,12 +278,12 @@ export class PostMessageXhr implements XMLHttpRequest {
       | ((this: XMLHttpRequest, ev: ProgressEvent<EventTarget>) => any)
       | null
   ) {
-    throw new Error('Method not implemented.');
+    this._setListenerAsProperty('error', value);
   }
   public get onerror():
     | ((this: XMLHttpRequest, ev: ProgressEvent<EventTarget>) => any)
     | null {
-    throw new Error('Method not implemented.');
+    return this._getListenerAsProperty('error');
   }
 
   public set onload(
@@ -259,12 +291,12 @@ export class PostMessageXhr implements XMLHttpRequest {
       | ((this: XMLHttpRequest, ev: ProgressEvent<EventTarget>) => any)
       | null
   ) {
-    throw new Error('Method not implemented.');
+    this._setListenerAsProperty('load', value);
   }
   public get onload():
     | ((this: XMLHttpRequest, ev: ProgressEvent<EventTarget>) => any)
     | null {
-    throw new Error('Method not implemented.');
+    return this._getListenerAsProperty('load');
   }
 
   public set onloadend(
@@ -272,12 +304,12 @@ export class PostMessageXhr implements XMLHttpRequest {
       | ((this: XMLHttpRequest, ev: ProgressEvent<EventTarget>) => any)
       | null
   ) {
-    throw new Error('Method not implemented.');
+    this._setListenerAsProperty('loadend', value);
   }
   public get onloadend():
     | ((this: XMLHttpRequest, ev: ProgressEvent<EventTarget>) => any)
     | null {
-    throw new Error('Method not implemented.');
+    return this._getListenerAsProperty('loadend');
   }
 
   public set onloadstart(
@@ -285,12 +317,12 @@ export class PostMessageXhr implements XMLHttpRequest {
       | ((this: XMLHttpRequest, ev: ProgressEvent<EventTarget>) => any)
       | null
   ) {
-    throw new Error('Method not implemented.');
+    this._setListenerAsProperty('loadstart', value);
   }
   public get onloadstart():
     | ((this: XMLHttpRequest, ev: ProgressEvent<EventTarget>) => any)
     | null {
-    throw new Error('Method not implemented.');
+    return this._getListenerAsProperty('loadstart');
   }
 
   public set onprogress(
@@ -298,12 +330,12 @@ export class PostMessageXhr implements XMLHttpRequest {
       | ((this: XMLHttpRequest, ev: ProgressEvent<EventTarget>) => any)
       | null
   ) {
-    throw new Error('Method not implemented.');
+    this._setListenerAsProperty('progress', value);
   }
   public get onprogress():
     | ((this: XMLHttpRequest, ev: ProgressEvent<EventTarget>) => any)
     | null {
-    throw new Error('Method not implemented.');
+    return this._getListenerAsProperty('progress');
   }
 
   public set ontimeout(
@@ -311,12 +343,12 @@ export class PostMessageXhr implements XMLHttpRequest {
       | ((this: XMLHttpRequest, ev: ProgressEvent<EventTarget>) => any)
       | null
   ) {
-    throw new Error('Method not implemented.');
+    this._setListenerAsProperty('timeout', value);
   }
   public get ontimeout():
     | ((this: XMLHttpRequest, ev: ProgressEvent<EventTarget>) => any)
     | null {
-    throw new Error('Method not implemented.');
+    return this._getListenerAsProperty('timeout');
   }
 
   public dispatchEvent(event: Event): boolean {
@@ -330,4 +362,71 @@ export class PostMessageXhr implements XMLHttpRequest {
   ): EventListenerOrEventListenerObject[] {
     throw new Error('Method not implemented.');
   }
+
+  private _setListenerAsProperty<K extends keyof XMLHttpRequestEventMap>(
+    type: K,
+    listener:
+      | ((this: XMLHttpRequest, ev: XMLHttpRequestEventMap[K]) => any)
+      | null
+  ): void {
+    if (listener === null) {
+      this._listenersList = this._listenersList.filter(
+        (item) =>
+          item.addedBy === LISTENER_ADDING_METHOD.property && item.type !== type
+      );
+      return;
+    }
+
+    const existingListener = this._listenersList.find(
+      (item) =>
+        item.addedBy === LISTENER_ADDING_METHOD.property && item.type === type
+    );
+
+    if (existingListener) {
+      existingListener.listener = listener as any;
+      return;
+    }
+
+    this._listenersList.push({
+      type,
+      listener: listener as any,
+      addedBy: LISTENER_ADDING_METHOD.property,
+    });
+  }
+
+  private _getListenerAsProperty<K extends keyof XMLHttpRequestEventMap>(
+    type: K
+  ):
+    | ((this: XMLHttpRequest, ev: Event | ProgressEvent<EventTarget>) => any)
+    | null {
+    const existingListener = this._listenersList.find(
+      (item) =>
+        item.addedBy === LISTENER_ADDING_METHOD.property && item.type === type
+    );
+    return existingListener ? existingListener.listener : null;
+  }
 }
+
+const xhr = new XMLHttpRequest();
+
+xhr.open('GET', 'https://jsonplaceholder.typicode.com/todos/1');
+
+const handler1 = function () {
+  console.log('Handler 1 invoked');
+};
+
+const handler2 = function () {
+  console.log('Handler 2 invoked');
+};
+
+const handler3 = function () {
+  console.log('Handler 3 invoked');
+};
+
+// xhr.onload = handler1
+xhr.addEventListener('load', handler1);
+xhr.addEventListener('load', handler1);
+// xhr.onload = null
+// xhr.onload = handler3
+
+xhr.send();
