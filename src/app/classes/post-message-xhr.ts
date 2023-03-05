@@ -1,13 +1,12 @@
-import { BehaviorSubject, takeUntil, filter } from 'rxjs';
-import { Indexed } from './../types/common';
-import { EventEmitter } from '@angular/core';
-enum METHODS {
+import { Indexed } from 'src/app/types/common';
+enum METHOD {
   GET = 'GET',
   POST = 'POST',
   PUT = 'PUT',
   PATCH = 'PATCH',
   DELETE = 'DELETE',
 }
+
 /** Тип слушателя события по способу добавления. */
 enum LISTENER_ADDING_METHOD {
   /** Добавлен как свойство. */
@@ -25,7 +24,7 @@ interface IPostMessageXhrState {
 }
 
 interface IOpenContext {
-  method: METHODS;
+  method: METHOD;
   url: string;
   async: boolean;
   user: string | null;
@@ -37,7 +36,13 @@ interface IPayload {
   // payload:
 }
 
-type TReadyState = 0 | 1 | 2 | 3 | 4;
+enum READY_STATE {
+  Unsent = 0,
+  Opened = 1,
+  HeadersReceived = 2,
+  Loading = 3,
+  Done = 4,
+}
 
 interface IEventListener {
   type: keyof XMLHttpRequestEventMap;
@@ -58,61 +63,37 @@ export class PostMessageXhr implements XMLHttpRequest {
   readonly DONE: 4 = 4;
 
   private _sendFlag: boolean = false;
+  private _listenersList: IEventListener[] = [];
+  private _headersList: Indexed<string> = {};
+  private __readyState: READY_STATE = this.UNSENT;
 
-  private _state: IPostMessageXhrState = {
-    withCredentials: false,
-    subscriptions: {
-      onReadyStateChange: false,
-    },
-  };
-
-  private _listenersList: IEventListener[];
-
-  private _openContext: IOpenContext;
-
-  private __readyState: TReadyState = this.UNSENT;
-
-  private set _readyState(value: TReadyState) {
+  private set _readyState(value: READY_STATE) {
     this.__readyState = value;
   }
-  public get readyState(): TReadyState {
+  public get readyState(): READY_STATE {
     return this.__readyState;
   }
 
   private _status: number = 0;
   private _timeout: number = 0;
+  private _withCredentials: boolean = false;
+  private _method: METHOD;
+  private _url: string;
+  private _async: boolean;
+  private _user: string | null;
+  private _password: string | null;
 
   constructor() {}
 
-  public get response(): any {
-    throw new Error('Method not implemented.');
-  }
-
-  public get responseText(): string | never {
-    throw new Error('Method not implemented.');
-  }
+  // ================================================================================
+  // ============================= Read-write properties ============================
+  // ================================================================================
 
   public set responseType(type: XMLHttpRequestResponseType) {
-    throw new Error('Method not implemented.');
+    this._raiseError('Method not implemented.');
   }
   public get responseType(): XMLHttpRequestResponseType {
-    throw new Error('Method not implemented.');
-  }
-
-  public get responseURL(): string {
-    throw new Error('Method not implemented.');
-  }
-
-  public get responseXML(): Document | null | never {
-    throw new Error('Method not implemented.');
-  }
-
-  public get status(): number {
-    return this._status;
-  }
-
-  public get statusText(): string {
-    throw new Error('Method not implemented.');
+    return this._raiseError('Method not implemented.');
   }
 
   public set timeout(ms: number) {
@@ -122,36 +103,79 @@ export class PostMessageXhr implements XMLHttpRequest {
     return this._timeout;
   }
 
-  public get upload(): XMLHttpRequestUpload {
-    throw new Error('Method not implemented.');
-  }
-
   public set withCredentials(value: boolean) {
-    throw new Error('Method not implemented.');
+    if (
+      this.readyState === this.UNSENT ||
+      (this.readyState === this.OPENED && !this._sendFlag)
+    ) {
+      this._withCredentials = value;
+      return;
+    }
+
+    this._raiseError(
+      "The value may only be set if the object's state is UNSENT or OPENED."
+    );
   }
   public get withCredentials(): boolean {
-    throw new Error('Method not implemented.');
+    return this._withCredentials;
   }
 
+  // ================================================================================
+  // ============================= Read-only properties =============================
+  // ================================================================================
+
+  public get response(): any {
+    return this._raiseError('Method not implemented.');
+  }
+
+  public get responseText(): string | never {
+    return this._raiseError('Method not implemented.');
+  }
+
+  public get responseURL(): string {
+    return this._raiseError('Method not implemented.');
+  }
+
+  public get responseXML(): Document | null | never {
+    return this._raiseError('Method not implemented.');
+  }
+
+  public get status(): number {
+    return this._status;
+  }
+
+  public get statusText(): string {
+    return this._raiseError('Method not implemented.');
+  }
+
+  public get upload(): XMLHttpRequestUpload {
+    return this._raiseError('Method not implemented.');
+  }
+
+  // ================================================================================
+  // =================================== Methods ====================================
+  // ================================================================================
+
   public abort(): void {
-    if (this._readyState !== this.UNSENT && this._readyState !== this.OPENED) {
+    if (this.readyState !== this.UNSENT && this.readyState !== this.OPENED) {
       // sending postMessage to abort request
     }
     this._readyState = this.UNSENT;
     this._status = 0;
-    throw new Error('Method not implemented.');
+    this._sendFlag = false;
+    // this._raiseError('Method not implemented.');
   }
 
   public getAllResponseHeaders(): string {
-    throw new Error('Method not implemented.');
+    this._raiseError('Method not implemented.');
   }
 
   public getResponseHeader(name: string): string | null | never {
-    throw new Error('Method not implemented.');
+    this._raiseError('Method not implemented.');
   }
 
   public open(
-    method: METHODS,
+    method: string,
     url: string | URL,
     async: boolean = true,
     username?: string | null,
@@ -159,46 +183,56 @@ export class PostMessageXhr implements XMLHttpRequest {
   ): void {
     this.abort();
 
-    if (!(method in METHODS)) {
-      throw new Error(
-        `${this.constructor.name}: Unsupported method "${method}"`
-      );
+    if (!(method in METHOD)) {
+      this._raiseError(`Unsupported method "${method}"`);
     }
 
-    this._openContext.method = method;
-    this._openContext.async = async;
+    this._method = method as METHOD;
+    this._async = async;
 
     if (typeof url === 'string') {
-      this._openContext.url = url;
+      this._url = url;
     } else {
-      this._openContext.url = url.toString();
-      this._openContext.user = url.username;
-      this._openContext.password = url.password;
+      this._url = url.toString();
+      this._user = url.username;
+      this._password = url.password;
     }
 
     if (username) {
-      this._openContext.user = username;
+      this._user = username;
     }
 
     if (password) {
-      this._openContext.password = password;
+      this._password = password;
     }
 
     this._readyState = this.OPENED;
   }
 
   public overrideMimeType(mime: string): void {
-    throw new Error('Method not implemented.');
+    this._raiseError('Method not implemented.');
   }
 
   public send(
     body?: Document | XMLHttpRequestBodyInit | null | undefined
   ): void {
-    throw new Error('Method not implemented.');
+    this._sendFlag = true;
+
+    // this._raiseError('Method not implemented.');
   }
 
   public setRequestHeader(name: string, value: string): void {
-    throw new Error('Method not implemented.');
+    if (this.readyState !== this.OPENED || this._sendFlag) {
+      this._raiseError(
+        'Failed to execute "setRequestHeader". The object\'s state must be OPENED.'
+      );
+    }
+
+    if (name in this._headersList) {
+      this._headersList[name] = `${this._headersList[name]}, ${value}`;
+    } else {
+      this._headersList[name] = value;
+    }
   }
 
   public addEventListener<K extends keyof XMLHttpRequestEventMap>(
@@ -207,9 +241,7 @@ export class PostMessageXhr implements XMLHttpRequest {
     options?: boolean | AddEventListenerOptions | undefined
   ): void {
     if (options !== undefined) {
-      throw new Error(
-        `${this.constructor.name}: adding event listener with options not implemented.`
-      );
+      this._raiseError('Adding event listener with options not implemented.');
     }
 
     const existingListener = this._listenersList.find(
@@ -236,17 +268,21 @@ export class PostMessageXhr implements XMLHttpRequest {
     options?: boolean | EventListenerOptions | undefined
   ): void {
     if (options !== undefined) {
-      throw new Error(
-        `${this.constructor.name}: removing event listener with options not implemented.`
-      );
+      this._raiseError('Removing event listener with options not implemented.');
     }
     this._listenersList = this._listenersList.filter(
       (item) =>
-        item.type !== type &&
-        item.listener !== listener &&
-        item.addedBy === LISTENER_ADDING_METHOD.method
+        !(
+          item.type === type &&
+          item.listener === listener &&
+          item.addedBy === LISTENER_ADDING_METHOD.method
+        )
     );
   }
+
+  // ================================================================================
+  // ============================= Listeners properties =============================
+  // ================================================================================
 
   public set onreadystatechange(
     value: ((this: XMLHttpRequest, ev: Event) => any) | null
@@ -351,18 +387,30 @@ export class PostMessageXhr implements XMLHttpRequest {
     return this._getListenerAsProperty('timeout');
   }
 
+  // ================================================================================
+  // ================================ Not implemented ===============================
+  // ================================================================================
+
   public dispatchEvent(event: Event): boolean {
-    throw new Error('Method not implemented.');
+    this._raiseError('Method not implemented.');
   }
   public removeAllListeners?(eventName?: string | undefined): void {
-    throw new Error('Method not implemented.');
+    this._raiseError('Method not implemented.');
   }
   public eventListeners?(
     eventName?: string | undefined
   ): EventListenerOrEventListenerObject[] {
-    throw new Error('Method not implemented.');
+    this._raiseError('Method not implemented.');
   }
 
+  // ================================================================================
+  // =================================== Helpers ====================================
+  // ================================================================================
+
+  /** Вспомогательный метод для сеттеров обработчиков событий через свойства.
+   * Реализует добавление/удаление слушателей с сохранением особенностей очерёдности их
+   * вызова, как в оригинальном XHR.
+   */
   private _setListenerAsProperty<K extends keyof XMLHttpRequestEventMap>(
     type: K,
     listener:
@@ -372,7 +420,10 @@ export class PostMessageXhr implements XMLHttpRequest {
     if (listener === null) {
       this._listenersList = this._listenersList.filter(
         (item) =>
-          item.addedBy === LISTENER_ADDING_METHOD.property && item.type !== type
+          !(
+            item.addedBy === LISTENER_ADDING_METHOD.property &&
+            item.type === type
+          )
       );
       return;
     }
@@ -394,6 +445,7 @@ export class PostMessageXhr implements XMLHttpRequest {
     });
   }
 
+  /** Вспомогательный метод для геттеров обработчиков событий через свойства. */
   private _getListenerAsProperty<K extends keyof XMLHttpRequestEventMap>(
     type: K
   ):
@@ -405,28 +457,33 @@ export class PostMessageXhr implements XMLHttpRequest {
     );
     return existingListener ? existingListener.listener : null;
   }
+
+  /** Вспомогательный метод для выброса исключений. */
+  private _raiseError(description: string = 'Unexpected error.'): never {
+    throw new Error(`${this.constructor.name}: ${description}`);
+  }
 }
 
-const xhr = new XMLHttpRequest();
+// const xhr = new XMLHttpRequest();
 
-xhr.open('GET', 'https://jsonplaceholder.typicode.com/todos/1');
+// xhr.open('GET', 'https://jsonplaceholder.typicode.com/todos/1');
 
-const handler1 = function () {
-  console.log('Handler 1 invoked');
-};
+// const handler1 = function () {
+//   console.log('Handler 1 invoked');
+// };
 
-const handler2 = function () {
-  console.log('Handler 2 invoked');
-};
+// const handler2 = function () {
+//   console.log('Handler 2 invoked');
+// };
 
-const handler3 = function () {
-  console.log('Handler 3 invoked');
-};
+// const handler3 = function () {
+//   console.log('Handler 3 invoked');
+// };
 
-// xhr.onload = handler1
-xhr.addEventListener('load', handler1);
-xhr.addEventListener('load', handler1);
-// xhr.onload = null
-// xhr.onload = handler3
+// // xhr.onload = handler1
+// xhr.addEventListener('load', handler1);
+// xhr.addEventListener('load', handler1);
+// // xhr.onload = null
+// // xhr.onload = handler3
 
-xhr.send();
+// xhr.send();
