@@ -13,8 +13,7 @@ import { ICrmCustomFieldValues } from 'src/app/interfaces/crm-custom-field-value
 import { ICrmCustomFieldInfo } from 'src/app/interfaces/crm-custom-field.interface-info';
 import { patchLeadEndpoint } from './endpoints/patch-lead.endpoint';
 
-const BASE_URL_COMPILER: (domain?: string) => string =
-  environment.getAmoBaseUrl;
+const BASE_URL_COMPILER: (domain: string) => string = environment.getAmoBaseUrl;
 
 @Injectable({
   providedIn: AmoApiModule,
@@ -30,7 +29,7 @@ export class AmoApiService extends ApiService {
     });
 
     this.store.select(domainSelector).subscribe((domain) => {
-      this.baseUrl = BASE_URL_COMPILER(domain);
+      this.baseUrl = BASE_URL_COMPILER(domain!);
     });
   }
 

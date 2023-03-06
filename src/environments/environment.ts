@@ -12,7 +12,8 @@ export const environment = {
     `https://np-demo.abanking.ru/partner-api/api/${version}/external/api`,
   nopaperBaseTokenUrl: 'https://nopaper-test.abanking.ru/lk-api/external/api',
   localBaseTokenUrl: 'http://localhost:5200',
-  getAmoBaseUrl: (domain?: string) => '/api/v4',
+  // getAmoBaseUrl: (domain?: string) => '/api/v4',
+  getAmoBaseUrl: (domain: string) => `https://${domain}/api/v4`,
 };
 
 /*

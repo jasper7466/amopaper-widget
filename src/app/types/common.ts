@@ -15,6 +15,8 @@ export type ExactlyOneKeyOf<T> = ValueOf<{
 
 export type WithOptional<T, K extends keyof T> = Omit<T, K> & Partial<T>;
 
+export type Writeable<T> = { -readonly [P in keyof T]: T[P] };
+
 /** Непустой массив с хотя бы одним элементом типа T. */
 export type NonEmptyArray<T> = [T, ...T[]];
 

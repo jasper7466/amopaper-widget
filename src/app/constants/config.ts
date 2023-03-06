@@ -3,6 +3,7 @@ interface IConfig {
   crmJsonStorageLengthLimit: number;
   crmJsonStoragePollingInterval: number;
   nopaperStatusPollingInterval: number;
+  postMessageXhrProxyRequestAction: string;
 }
 
 export const config: Readonly<IConfig> = {
@@ -10,4 +11,5 @@ export const config: Readonly<IConfig> = {
   crmJsonStorageLengthLimit: 10000,
   crmJsonStoragePollingInterval: 5000,
   nopaperStatusPollingInterval: 7000,
+  postMessageXhrProxyRequestAction: 'httpProxyRequest',
 };

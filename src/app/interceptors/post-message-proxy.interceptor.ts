@@ -7,28 +7,28 @@ import {
 } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 
-@Injectable()
-export class PostMessageProxyInterceptor implements HttpInterceptor {
-  constructor() {}
+// @Injectable()
+// export class PostMessageProxyInterceptor implements HttpInterceptor {
+//   constructor() {}
 
-  intercept(
-    request: HttpRequest<unknown>,
-    next: HttpHandler
-  ): Observable<HttpEvent<unknown>> {
-    const { headers } = request;
+//   intercept(
+//     request: HttpRequest<unknown>,
+//     next: HttpHandler
+//   ): Observable<HttpEvent<unknown>> {
+//     const { headers } = request;
 
-    let plainHeaders = undefined;
-    const headersKeys = headers.keys();
+//     let plainHeaders = undefined;
+//     const headersKeys = headers.keys();
 
-    if (headersKeys.length > 0) {
-      plainHeaders = headers.keys().reduce((result, key) => {
-        return { ...result, [key]: headers.get(key) };
-      }, {});
-    }
+//     if (headersKeys.length > 0) {
+//       plainHeaders = headers.keys().reduce((result, key) => {
+//         return { ...result, [key]: headers.get(key) };
+//       }, {});
+//     }
 
-    return next.handle(request).pipe(tap(console.log));
-  }
-}
+//     return next.handle(request).pipe(tap());
+//   }
+// }
 
 // public handle({
 //   method,

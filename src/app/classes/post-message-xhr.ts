@@ -1,4 +1,12 @@
+import { Writeable } from './../types/common';
+import { config } from 'src/app/constants/config';
+import { EventEmitter } from '@angular/core';
+import { takeUntil } from 'rxjs';
+import { guid } from '../utils/guid-generator.util';
+import { PostMessageTransportService } from './../services/transport/post-message-transport.service';
 import { Indexed } from 'src/app/types/common';
+
+/** Поддерживаемые методы запроса. */
 enum METHOD {
   GET = 'GET',
   POST = 'POST',
@@ -15,25 +23,28 @@ enum LISTENER_ADDING_METHOD {
   method = 1,
 }
 
-interface IPostMessageXhrState {
+interface IPostMessageXhrConfig {
+  timeout: number;
   withCredentials: boolean;
-  subscriptions: {
-    onReadyStateChange: boolean;
-  };
-  // openContext: IOpenContext;
-}
-
-interface IOpenContext {
-  method: METHOD;
-  url: string;
-  async: boolean;
+  method: METHOD | undefined;
+  url: string | undefined;
   user: string | null;
   password: string | null;
+  headers: Indexed<string>;
+  eventsToTrack: Array<keyof XMLHttpRequestEventMap>;
+  responseType: XMLHttpRequestResponseType;
 }
 
-interface IPayload {
-  event: 'open';
-  // payload:
+interface IPostMessageXhrEvent
+  extends Writeable<
+    Partial<Pick<ProgressEvent, 'lengthComputable' | 'loaded' | 'total'>>
+  > {
+  type: keyof XMLHttpRequestEventMap | 'unexpected-error';
+  status?: number;
+  readyState?: READY_STATE;
+  description?: string;
+  data?: string;
+  responseUrl?: string;
 }
 
 enum READY_STATE {
@@ -55,6 +66,9 @@ interface IEventListener {
     | null;
 }
 
+const postMessageRequestAction = config.postMessageXhrProxyRequestAction;
+const trackAlways: Array<keyof XMLHttpRequestEventMap> = ['readystatechange'];
+
 export class PostMessageXhr implements XMLHttpRequest {
   readonly UNSENT: 0 = 0;
   readonly OPENED: 1 = 1;
@@ -64,43 +78,43 @@ export class PostMessageXhr implements XMLHttpRequest {
 
   private _sendFlag: boolean = false;
   private _listenersList: IEventListener[] = [];
-  private _headersList: Indexed<string> = {};
-  private __readyState: READY_STATE = this.UNSENT;
-
-  private set _readyState(value: READY_STATE) {
-    this.__readyState = value;
-  }
-  public get readyState(): READY_STATE {
-    return this.__readyState;
-  }
-
+  private _readyState: READY_STATE = this.UNSENT;
   private _status: number = 0;
-  private _timeout: number = 0;
-  private _withCredentials: boolean = false;
-  private _method: METHOD;
-  private _url: string;
-  private _async: boolean;
-  private _user: string | null;
-  private _password: string | null;
 
-  constructor() {}
+  private _config: IPostMessageXhrConfig = {
+    eventsToTrack: [],
+    headers: {},
+    method: undefined,
+    password: null,
+    user: null,
+    timeout: 0,
+    url: undefined,
+    withCredentials: false,
+    responseType: '',
+  };
+
+  private disconnectEmitter = new EventEmitter<void>();
+
+  constructor(private transport: PostMessageTransportService) {
+    console.log('constructed');
+  }
 
   // ================================================================================
   // ============================= Read-write properties ============================
   // ================================================================================
 
-  public set responseType(type: XMLHttpRequestResponseType) {
-    this._raiseError('Method not implemented.');
+  public set responseType(value: XMLHttpRequestResponseType) {
+    this._config.responseType = value;
   }
   public get responseType(): XMLHttpRequestResponseType {
-    return this._raiseError('Method not implemented.');
+    return this._config.responseType;
   }
 
   public set timeout(ms: number) {
-    this._timeout = ms;
+    this._config.timeout = ms;
   }
   public get timeout(): number {
-    return this._timeout;
+    return this._config.timeout;
   }
 
   public set withCredentials(value: boolean) {
@@ -108,7 +122,7 @@ export class PostMessageXhr implements XMLHttpRequest {
       this.readyState === this.UNSENT ||
       (this.readyState === this.OPENED && !this._sendFlag)
     ) {
-      this._withCredentials = value;
+      this._config.withCredentials = value;
       return;
     }
 
@@ -117,12 +131,16 @@ export class PostMessageXhr implements XMLHttpRequest {
     );
   }
   public get withCredentials(): boolean {
-    return this._withCredentials;
+    return this._config.withCredentials;
   }
 
   // ================================================================================
   // ============================= Read-only properties =============================
   // ================================================================================
+
+  public get readyState(): READY_STATE {
+    return this._readyState;
+  }
 
   public get response(): any {
     return this._raiseError('Method not implemented.');
@@ -187,23 +205,26 @@ export class PostMessageXhr implements XMLHttpRequest {
       this._raiseError(`Unsupported method "${method}"`);
     }
 
-    this._method = method as METHOD;
-    this._async = async;
+    if (!async) {
+      this._raiseError(`Synchronous mode is not supported`);
+    }
+
+    this._config.method = method as METHOD;
 
     if (typeof url === 'string') {
-      this._url = url;
+      this._config.url = url;
     } else {
-      this._url = url.toString();
-      this._user = url.username;
-      this._password = url.password;
+      this._config.url = url.toString();
+      this._config.user = url.username;
+      this._config.password = url.password;
     }
 
     if (username) {
-      this._user = username;
+      this._config.user = username;
     }
 
     if (password) {
-      this._password = password;
+      this._config.password = password;
     }
 
     this._readyState = this.OPENED;
@@ -216,9 +237,28 @@ export class PostMessageXhr implements XMLHttpRequest {
   public send(
     body?: Document | XMLHttpRequestBodyInit | null | undefined
   ): void {
-    this._sendFlag = true;
+    if (this._readyState !== this.OPENED || this._sendFlag) {
+      this._raiseError(
+        "Failed to execute 'send'. The object's state must be OPENED."
+      );
+    }
 
-    // this._raiseError('Method not implemented.');
+    console.log(this._config);
+
+    // this._sendFlag = true;
+
+    // const sessionGuid = guid();
+
+    // this.transport
+    //   .subscribe<IPostMessageXhrEvent>(sessionGuid)
+    //   .pipe(takeUntil(this.disconnectEmitter))
+    //   .subscribe(this._eventsHandler);
+
+    // this.transport.post({
+    //   action: postMessageRequestAction,
+    //   backwardAction: sessionGuid,
+    //   payload: { ...this._config, body: JSON.stringify(body) },
+    // });
   }
 
   public setRequestHeader(name: string, value: string): void {
@@ -228,10 +268,10 @@ export class PostMessageXhr implements XMLHttpRequest {
       );
     }
 
-    if (name in this._headersList) {
-      this._headersList[name] = `${this._headersList[name]}, ${value}`;
+    if (name in this._config.headers) {
+      this._config.headers[name] = `${this._config.headers[name]}, ${value}`;
     } else {
-      this._headersList[name] = value;
+      this._config.headers[name] = value;
     }
   }
 
@@ -260,6 +300,8 @@ export class PostMessageXhr implements XMLHttpRequest {
       listener: listener as any,
       addedBy: LISTENER_ADDING_METHOD.method,
     });
+
+    this._updateEventsToTrack();
   }
 
   public removeEventListener<K extends keyof XMLHttpRequestEventMap>(
@@ -278,6 +320,8 @@ export class PostMessageXhr implements XMLHttpRequest {
           item.addedBy === LISTENER_ADDING_METHOD.method
         )
     );
+
+    this._updateEventsToTrack();
   }
 
   // ================================================================================
@@ -456,6 +500,21 @@ export class PostMessageXhr implements XMLHttpRequest {
         item.addedBy === LISTENER_ADDING_METHOD.property && item.type === type
     );
     return existingListener ? existingListener.listener : null;
+  }
+
+  /** Вспомогательный метод обновления списка событий для отслеживания. */
+  private _updateEventsToTrack() {
+    const eventsToTrack = new Set<keyof XMLHttpRequestEventMap>(trackAlways);
+
+    for (const listener of this._listenersList) {
+      eventsToTrack.add(listener.type);
+    }
+
+    this._config.eventsToTrack = Array.from(eventsToTrack);
+  }
+
+  private _eventsHandler(event: IPostMessageXhrEvent) {
+    console.log(event);
   }
 
   /** Вспомогательный метод для выброса исключений. */

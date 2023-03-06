@@ -1,18 +1,25 @@
+import { PostMessageTransportService } from './../services/transport/post-message-transport.service';
 import { PostMessageXhr } from './post-message-xhr';
 
 describe('PostMessageXhr', () => {
+  let transport: PostMessageTransportService;
+
+  beforeEach(() => {
+    transport = new PostMessageTransportService();
+  });
+
   // ================================== Black-box ===================================
 
   describe('Black-box', () => {
     let instance: PostMessageXhr;
 
     beforeEach(() => {
-      instance = new PostMessageXhr();
+      instance = new PostMessageXhr(transport);
     });
 
     describe('Initialization', () => {
       it('Should create an instance', () => {
-        expect(new PostMessageXhr()).toBeTruthy();
+        expect(new PostMessageXhr(transport)).toBeTruthy();
       });
 
       it('Should have valid initial "readyState" value', () => {
@@ -52,7 +59,7 @@ describe('PostMessageXhr', () => {
     });
 
     describe('Setting request headers', () => {
-      it('Should raise exception if "readyState" in not "OPENED"', () => {
+      it('Should raise exception if "readyState" is not "OPENED"', () => {
         expect(() => {
           instance.setRequestHeader('header-name', 'header-value');
         }).toThrow();
@@ -68,13 +75,13 @@ describe('PostMessageXhr', () => {
     });
 
     describe('Sending', () => {
-      it('Negative. Should raise exception if "readyState" in not "OPENED"', () => {
+      it('Should raise exception if "readyState" is not "OPENED"', () => {
         expect(instance.send).toThrow();
       });
     });
 
-    describe('Set/get properties', () => {
-      it('Positive. "withCredentials"', () => {
+    describe('Other properties', () => {
+      it('"withCredentials". Positive', () => {
         instance.withCredentials = false;
         expect(instance.withCredentials).toBe(false);
         instance.withCredentials = true;
@@ -88,7 +95,7 @@ describe('PostMessageXhr', () => {
         expect(instance.withCredentials).toBe(true);
       });
 
-      it('Negative. Set "withCredentials" should rise error if the request has already been sent', () => {
+      it('"withCredentials". Negative. Should rise error if the request has already been sent', () => {
         instance.open('GET', '');
         instance.send();
         expect(() => {
@@ -100,11 +107,11 @@ describe('PostMessageXhr', () => {
 
   // ================================== Clear-box ===================================
 
-  describe('White-box', () => {
+  describe('Clear-box', () => {
     let instance: PostMessageXhr;
 
     beforeEach(() => {
-      instance = new PostMessageXhr();
+      instance = new PostMessageXhr(transport);
     });
 
     describe('Initialization', () => {
@@ -117,7 +124,7 @@ describe('PostMessageXhr', () => {
       });
 
       it('Headers list should be empty', () => {
-        expect(Object.keys(instance['_headersList']).length).toBe(0);
+        expect(Object.keys(instance['_config']['headers']).length).toBe(0);
       });
     });
 
@@ -145,17 +152,17 @@ describe('PostMessageXhr', () => {
       it('Should set single header', () => {
         instance.open('GET', '');
         instance.setRequestHeader('header', 'value');
-        expect(instance['_headersList']['header']).toBe('value');
-        expect(Object.keys(instance['_headersList']).length).toBe(1);
+        expect(instance['_config']['headers']['header']).toBe('value');
+        expect(Object.keys(instance['_config']['headers']).length).toBe(1);
       });
 
       it('Should set multiple headers', () => {
         instance.open('GET', '');
         instance.setRequestHeader('header-1', 'value-1');
         instance.setRequestHeader('header-2', 'value-2');
-        expect(instance['_headersList']['header-1']).toBe('value-1');
-        expect(instance['_headersList']['header-2']).toBe('value-2');
-        expect(Object.keys(instance['_headersList']).length).toBe(2);
+        expect(instance['_config']['headers']['header-1']).toBe('value-1');
+        expect(instance['_config']['headers']['header-2']).toBe('value-2');
+        expect(Object.keys(instance['_config']['headers']).length).toBe(2);
       });
 
       it('Should set multiple values for one header', () => {
@@ -163,11 +170,18 @@ describe('PostMessageXhr', () => {
         instance.setRequestHeader('header-1', 'value-1-1');
         instance.setRequestHeader('header-2', 'value-2');
         instance.setRequestHeader('header-1', 'value-1-2');
-        expect(instance['_headersList']['header-1']).toBe(
+        expect(instance['_config']['headers']['header-1']).toBe(
           'value-1-1, value-1-2'
         );
-        expect(instance['_headersList']['header-2']).toBe('value-2');
-        expect(Object.keys(instance['_headersList']).length).toBe(2);
+        expect(instance['_config']['headers']['header-2']).toBe('value-2');
+        expect(Object.keys(instance['_config']['headers']).length).toBe(2);
+      });
+
+      it('Should raise exception if "sendFlag" is set', () => {
+        instance['_sendFlag'] = true;
+        expect(() => {
+          instance.setRequestHeader('header', 'value');
+        }).toThrow();
       });
     });
 

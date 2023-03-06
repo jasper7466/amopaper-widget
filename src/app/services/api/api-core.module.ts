@@ -1,3 +1,4 @@
+import { AmoApiModule } from './amo-api/amo-api.module';
 import { NopaperApiV2Service } from './nopaper-api-v2/nopaper-api-v2.service';
 import { environment } from 'src/environments/environment';
 import { Store } from '@ngrx/store';
@@ -10,13 +11,13 @@ import { ServicesCoreModule } from './../services-core.module';
 import { NopaperApiService } from './nopaper-api/nopaper-api.service';
 import { AmoApiService } from './amo-api/amo-api.service';
 import { NgModule, Optional, SkipSelf } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, XhrFactory } from '@angular/common';
 import { AccessTokenApiService } from './access-token-api/access-token-api.service';
 import { AccessTokenLocalApiService } from './access-token-local-api/access-token-local-api.service';
 import { AmoPostApiMockService } from './amo-post-api-mock/amo-post-api-mock.service';
 import { AmoPostApiService } from './amo-post-api/amo-post-api.service';
 import { PostMessageTransportService } from '../transport/post-message-transport.service';
-import { PostMessageProxyInterceptor } from 'src/app/interceptors/post-message-proxy.interceptor';
+// import { PostMessageProxyInterceptor } from 'src/app/interceptors/post-message-proxy.interceptor';
 
 const AccessTokenApiFactory = (http: HttpClient, store: Store) => {
   if (environment.isLocalTokenServer) {
@@ -38,12 +39,11 @@ const AmoPostApiFactory = (
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule, HttpClientModule],
+  imports: [CommonModule, HttpClientModule, AmoApiModule],
   providers: [
     NopaperApiService,
     NopaperApiV2Service,
     PostMessageTransportService,
-    AmoApiService,
     {
       provide: AccessTokenApiService,
       useFactory: AccessTokenApiFactory,
@@ -54,11 +54,11 @@ const AmoPostApiFactory = (
       useFactory: AmoPostApiFactory,
       deps: [PostMessageTransportService],
     },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: PostMessageProxyInterceptor,
-      multi: true,
-    },
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: PostMessageProxyInterceptor,
+    //   multi: true,
+    // },
   ],
 })
 export class ApiCoreModule {
