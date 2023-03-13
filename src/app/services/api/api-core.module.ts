@@ -6,6 +6,7 @@ import {
   HTTP_INTERCEPTORS,
   HttpClient,
   HttpClientModule,
+  HttpHandler,
 } from '@angular/common/http';
 import { ServicesCoreModule } from './../services-core.module';
 import { NopaperApiService } from './nopaper-api/nopaper-api.service';
@@ -44,6 +45,11 @@ const AmoPostApiFactory = (
     NopaperApiService,
     NopaperApiV2Service,
     PostMessageTransportService,
+    {
+      provide: HttpClient,
+      useFactory: (handler: HttpHandler) => new HttpClient(handler),
+      deps: [HttpHandler],
+    },
     {
       provide: AccessTokenApiService,
       useFactory: AccessTokenApiFactory,

@@ -1,13 +1,21 @@
 import { PostMessageTransportService } from './../../transport/post-message-transport.service';
 import { PostMessageXhr } from './../../../classes/post-message-xhr';
 import { NgModule } from '@angular/core';
-import { CommonModule, XhrFactory } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import {
+  HttpClient,
+  HttpClientModule,
+  HttpXhrBackend,
+} from '@angular/common/http';
 
-const PostMessageProxyXhrFactory = (transport: PostMessageTransportService) => {
-  return {
+const PostMessageHttpClientFactory = (
+  transport: PostMessageTransportService
+) => {
+  const handler = new HttpXhrBackend({
     build: () => new PostMessageXhr(transport),
-  };
+  });
+
+  return new HttpClient(handler);
 };
 
 @NgModule({
@@ -15,8 +23,8 @@ const PostMessageProxyXhrFactory = (transport: PostMessageTransportService) => {
   imports: [CommonModule, HttpClientModule],
   providers: [
     {
-      provide: XhrFactory,
-      useFactory: PostMessageProxyXhrFactory,
+      provide: HttpClient,
+      useFactory: PostMessageHttpClientFactory,
       deps: [PostMessageTransportService],
     },
   ],
