@@ -50,7 +50,7 @@ export class CommonLogicService {
       )
       .subscribe({
         next: () => this.routingService.goPacketsListPage(),
-        // error: (err) => console.log(err),
+        error: (err) => console.log(err),
       });
   }
 

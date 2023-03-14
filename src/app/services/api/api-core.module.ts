@@ -45,11 +45,11 @@ const AmoPostApiFactory = (
     NopaperApiService,
     NopaperApiV2Service,
     PostMessageTransportService,
-    {
-      provide: HttpClient,
-      useFactory: (handler: HttpHandler) => new HttpClient(handler),
-      deps: [HttpHandler],
-    },
+    // {
+    //   provide: HttpClient,
+    //   useFactory: (handler: HttpHandler) => new HttpClient(handler),
+    //   deps: [HttpHandler],
+    // },
     {
       provide: AccessTokenApiService,
       useFactory: AccessTokenApiFactory,

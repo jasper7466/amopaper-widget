@@ -134,7 +134,7 @@ describe('PostMessageXhr', () => {
       });
 
       it('Should change "status" to "0"', () => {
-        instance['_status'] = 200;
+        instance['_state']['status'] = 200;
         expect(instance.status).toBe(200);
         instance.abort();
         expect(instance.readyState).toBe(0);

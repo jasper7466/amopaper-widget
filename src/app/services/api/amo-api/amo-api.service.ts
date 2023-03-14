@@ -1,7 +1,7 @@
-import { AmoApiModule } from './amo-api.module';
+import { AmoApiModule, POST_MESSAGE_HTTP_CLIENT_TOKEN } from './amo-api.module';
 import { domainSelector } from '../../../store/crm-context/selectors';
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, forwardRef, InjectionToken } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { accessTokenSelector } from 'src/app/store/access-token/selectors';
 import { environment } from 'src/environments/environment';
@@ -19,7 +19,10 @@ const BASE_URL_COMPILER: (domain: string) => string = environment.getAmoBaseUrl;
   providedIn: AmoApiModule,
 })
 export class AmoApiService extends ApiService {
-  constructor(http: HttpClient, private store: Store) {
+  constructor(
+    @Inject(POST_MESSAGE_HTTP_CLIENT_TOKEN) http: HttpClient,
+    private store: Store
+  ) {
     super(http);
 
     this.setHeaders({ 'Content-Type': 'application/json' });
