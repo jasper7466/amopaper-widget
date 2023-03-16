@@ -19,7 +19,7 @@
   border-radius: 4px;
   background-color: var(--bg-color-row-hover);
 
-  animation: fadeIn 0.2s ease;
+  animation: fadeIn 0.7s ease;
 }
 
 .item:hover {

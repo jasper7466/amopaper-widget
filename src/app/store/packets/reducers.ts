@@ -42,13 +42,21 @@ export const packetsReducer = createReducer(
   }),
   on(setPacketStatusAction, (state, { id, status }) => {
     const indexToUpdate = state.packets.findIndex((item) => item.id === id);
+
+    if (indexToUpdate === -1) {
+      throw new Error(
+        `setPacketStatusAction: Packet #${id} does not exist in store.`
+      );
+    }
+
     const packetToUpdate = state.packets[indexToUpdate];
 
-    if (indexToUpdate >= 0 && packetToUpdate.status === status) {
+    if (packetToUpdate.status === status) {
       return { ...state };
     }
 
-    const updatedPacketsList = [...state.packets].splice(indexToUpdate, 1, {
+    let updatedPacketsList = [...state.packets];
+    updatedPacketsList.splice(indexToUpdate, 1, {
       ...packetToUpdate,
       status,
     });
@@ -60,19 +68,26 @@ export const packetsReducer = createReducer(
   }),
   on(setPacketDetailsAction, (state, { id, title, createTimeUtc }) => {
     const indexToUpdate = state.packets.findIndex((item) => item.id === id);
+
+    if (indexToUpdate === -1) {
+      throw new Error(
+        `setPacketDetailsAction: Packet #${id} does not exist in store.`
+      );
+    }
+
     const packetToUpdate = state.packets[indexToUpdate];
 
     title = title.length ? title : initialPacketState.title;
 
     if (
-      indexToUpdate >= 0 &&
       packetToUpdate.title === title &&
       packetToUpdate.createTimeUtc === createTimeUtc
     ) {
       return { ...state };
     }
 
-    const updatedPacketsList = [...state.packets].splice(indexToUpdate, 1, {
+    let updatedPacketsList = [...state.packets];
+    updatedPacketsList.splice(indexToUpdate, 1, {
       ...packetToUpdate,
       title,
       createTimeUtc,

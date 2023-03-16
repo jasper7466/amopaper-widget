@@ -1,4 +1,4 @@
-import { Observable, map } from 'rxjs';
+import { Observable, map, tap } from 'rxjs';
 import { ApiService } from './../../api.service';
 import {
   DOCUMENT_STATUS,
@@ -20,7 +20,6 @@ interface IGetPacketDetailsResponse {
   documentRouteType: ROUTE_TYPE;
   createTimeUtc: string;
 }
-
 const responseAdapter = (
   packetId: number,
   response: IGetPacketDetailsResponse
