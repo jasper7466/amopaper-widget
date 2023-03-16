@@ -28,7 +28,6 @@ const PostMessageHttpClientFactory = (
   providers: [
     {
       provide: POST_MESSAGE_HTTP_CLIENT_TOKEN,
-      // useClass: HttpClient,
       useFactory: PostMessageHttpClientFactory,
       deps: [PostMessageTransportService],
     },

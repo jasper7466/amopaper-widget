@@ -11,11 +11,13 @@ import {
   IPostMessageXhrEvent,
   LISTENER_ADDING_METHOD,
   IXhrState,
+  IAdditionalActions,
 } from './post-message.interfaces';
 
 const postMessageRequestAction = config.postMessageXhrProxyRequestAction;
 const trackAlwaysEvents: Array<keyof XMLHttpRequestEventMap> = [
   'readystatechange',
+  'loadend',
 ];
 
 export class PostMessageXhr implements XMLHttpRequest {
@@ -27,6 +29,7 @@ export class PostMessageXhr implements XMLHttpRequest {
 
   private _sendFlag: boolean = false;
   private _listenersList: IEventListener[] = [];
+  private _sessionGuid: string = '';
 
   private _config: IPostMessageXhrConfig = {
     eventsToTrack: [],
@@ -38,6 +41,7 @@ export class PostMessageXhr implements XMLHttpRequest {
     url: undefined,
     withCredentials: false,
     responseType: '',
+    bodyString: '',
   };
 
   private _state: IXhrState = {
@@ -55,11 +59,9 @@ export class PostMessageXhr implements XMLHttpRequest {
     responseText: '',
   };
 
-  private disconnectEmitter = new EventEmitter<void>();
+  private _disconnectEmitter = new EventEmitter<void>();
 
-  constructor(private transport: PostMessageTransportService) {
-    console.log('constructed');
-  }
+  constructor(private transport: PostMessageTransportService) {}
 
   // ================================================================================
   // ============================= Read-write properties ============================
@@ -148,7 +150,11 @@ export class PostMessageXhr implements XMLHttpRequest {
       this.readyState !== this.OPENED &&
       this._sendFlag
     ) {
-      // sending postMessage to abort request
+      this.transport.post<IAdditionalActions>({
+        action: postMessageRequestAction,
+        backwardAction: this._sessionGuid,
+        payload: { abort: true },
+      });
     }
     this._state.readyState = this.UNSENT;
     this._state.status = 0;
@@ -215,23 +221,22 @@ export class PostMessageXhr implements XMLHttpRequest {
     }
 
     this._sendFlag = true;
-
-    const sessionGuid = guid();
+    this._config.bodyString = JSON.stringify(body);
+    this._sessionGuid = guid();
 
     this.transport
-      .subscribe<IPostMessageXhrEvent>(sessionGuid)
-      .pipe(takeUntil(this.disconnectEmitter))
+      .subscribe<IPostMessageXhrEvent>(this._sessionGuid)
+      .pipe(takeUntil(this._disconnectEmitter))
       .subscribe((event) => {
         if (event.type === 'unexpected-error') {
-          this._raiseError(event.description);
+          this._disconnectEmitter.emit();
+          this._raiseError(`EXTERNAL ERROR: ${event.description}`);
         }
 
         this._state = {
           ...this._state,
           ...event.state,
         };
-
-        console.log(event);
 
         for (const listener of this._listenersList) {
           if (listener.type === event.type) {
@@ -241,12 +246,16 @@ export class PostMessageXhr implements XMLHttpRequest {
             });
           }
         }
+
+        if (event.type === 'loadend') {
+          this._disconnectEmitter.emit();
+        }
       });
 
-    this.transport.post({
+    this.transport.post<IPostMessageXhrConfig>({
       action: postMessageRequestAction,
-      backwardAction: sessionGuid,
-      payload: { ...this._config, body: JSON.stringify(body) },
+      backwardAction: this._sessionGuid,
+      payload: { ...this._config },
     });
   }
 
@@ -504,34 +513,8 @@ export class PostMessageXhr implements XMLHttpRequest {
     this._config.eventsToTrack = Array.from(eventsToTrack);
   }
 
-  // private _eventsHandler(event: IPostMessageXhrEvent): void | never {}
-
   /** Вспомогательный метод для выброса исключений. */
   private _raiseError(description: string = 'Unexpected error.'): never {
     throw new Error(`${this.constructor.name}. ${description}`);
   }
 }
-
-// const xhr = new XMLHttpRequest();
-
-// xhr.open('GET', 'https://jsonplaceholder.typicode.com/todos/1');
-
-// const handler1 = function () {
-//   console.log('Handler 1 invoked');
-// };
-
-// const handler2 = function () {
-//   console.log('Handler 2 invoked');
-// };
-
-// const handler3 = function () {
-//   console.log('Handler 3 invoked');
-// };
-
-// // xhr.onload = handler1
-// xhr.addEventListener('load', handler1);
-// xhr.addEventListener('load', handler1);
-// // xhr.onload = null
-// // xhr.onload = handler3
-
-// xhr.send();

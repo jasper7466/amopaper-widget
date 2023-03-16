@@ -26,6 +26,11 @@ export interface IPostMessageXhrConfig {
   headers: Indexed<string>;
   eventsToTrack: Array<keyof XMLHttpRequestEventMap>;
   responseType: XMLHttpRequestResponseType;
+  bodyString: string;
+}
+
+export interface IAdditionalActions {
+  abort?: boolean;
 }
 
 export interface IXhrState {
