@@ -34,8 +34,7 @@ export function getPacketDetailsEndpoint(
   this: ApiService,
   packetId: number
 ): Observable<Omit<IPacketDetails, 'status'>> {
-  return this.post<IGetPacketDetailsRequest, IGetPacketDetailsResponse>(
-    `/document/${packetId}`,
-    { documentId: packetId }
-  ).pipe(map((response) => responseAdapter(packetId, response)));
+  return this.get<IGetPacketDetailsResponse>(`/document/${packetId}`).pipe(
+    map((response) => responseAdapter(packetId, response))
+  );
 }
