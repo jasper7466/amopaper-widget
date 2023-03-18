@@ -34,7 +34,6 @@ export class PacketsListItemComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   public navigatePacketPage(): void {
-    console.log('navigating to packet id', this.packet.id);
     this.routingService.goPacketPage(this.packet.id);
   }
 }

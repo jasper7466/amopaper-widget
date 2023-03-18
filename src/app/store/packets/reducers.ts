@@ -21,7 +21,7 @@ export const packetsReducer = createReducer(
     }
 
     const updatedIds = [...state.ids]
-      .filter((id) => idsToRemove.includes(id))
+      .filter((id) => !idsToRemove.includes(id))
       .concat(idsToAdd);
 
     const newPackets: IPacketDetails[] = idsToAdd.map((id) => ({

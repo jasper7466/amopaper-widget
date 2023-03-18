@@ -40,6 +40,8 @@ export function getPacketDetailsEndpoint(
   this: ApiService,
   packetId: number
 ): Observable<Omit<IPacketDetails, 'status'>> {
+  throw new Error('getPacketDetailsEndpoint v1 is deprecated.');
+
   return this.post<IGetPacketDetailsRequest, IGetPacketDetailsResponse>(
     `/document/details`,
     { documentId: packetId }

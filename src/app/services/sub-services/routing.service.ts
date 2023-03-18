@@ -123,8 +123,9 @@ export class RoutingService {
       case 'nopaperSignRefusedEnd':
       case 'nopaperSignRefusedRead':
       default:
-        this.goPacketsListPage();
-        return;
+        throw new Error(
+          `${this.constructor.name}: Corresponding page for status "${packetStatus}" does not exist.`
+        );
     }
 
     this.router.navigate([basePath + destination]);

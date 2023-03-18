@@ -20,7 +20,7 @@ interface IGetPacketFilesIdsResponse {
   signDocumentList: DocumentListItem[];
   stampDocumentList: DocumentListItem[];
   ofertaOriginal: DocumentListItemShortened;
-  ofertaWithStamp: DocumentListItemShortened;
+  ofertaWithStamp?: DocumentListItemShortened;
   procuratoryOriginalList: DocumentListItemShortened[];
   procuratoryWithStampList: DocumentListItemShortened[];
 }
@@ -39,17 +39,24 @@ const responseAdapter = (
     ofertaWithStamp,
   } = response;
 
-  const fileInfoMapper = (data: DocumentListItemShortened[]): IFileInfo[] =>
-    data.map((item) => ({
+  console.log(response);
+
+  const fileInfoMapper = (data: DocumentListItemShortened[]): IFileInfo[] => {
+    console.log(data);
+
+    return data.map((item) => ({
       id: item.documentFileId,
       name: item.fileName,
       size: item.size,
     }));
+  };
 
   const originalFilesIds = fileInfoMapper(signDocumentList);
   const originalOfferId = fileInfoMapper([ofertaOriginal]);
   const stampedFilesIds = fileInfoMapper(stampDocumentList);
-  const stampedOfferId = fileInfoMapper([ofertaWithStamp]);
+  const stampedOfferId = ofertaWithStamp
+    ? fileInfoMapper([ofertaWithStamp])
+    : [];
 
   const originals = [...originalOfferId, ...originalFilesIds];
   const stamped = [...stampedOfferId, ...stampedFilesIds];

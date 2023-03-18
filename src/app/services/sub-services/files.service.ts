@@ -19,7 +19,7 @@ export class FilesService {
 
     for (const file of Array.from(files)) {
       const id = this.counter;
-      this.toBase64$(file).subscribe((base64) => {
+      this.toBase64(file).subscribe((base64) => {
         this.store.dispatch(sourceFileCompleteAction({ id, base64 }));
       });
 
@@ -35,7 +35,7 @@ export class FilesService {
     this.store.dispatch(sourceFilesAddAction({ payload: [...filesMetadata] }));
   }
 
-  protected toBase64$(file: File): Observable<string> {
+  protected toBase64(file: File): Observable<string> {
     const fileReader = new FileReader();
 
     return new Observable<string>((observer: Observer<string>) => {

@@ -18,11 +18,17 @@ export const packetsIsTouchedSelector = createSelector(
   (state) => state.isPacketsIdsTouched
 );
 
+export const packetSelector = (id: number) =>
+  createSelector(packetsSelector, (packets) => {
+    const packet = packets.find((item) => item.id === id);
+    if (!packet) {
+      throw new Error(`packetSelector: Packet #${id} does not exist in store.`);
+    }
+    return packet;
+  });
+
 export const packetStepNameSelector = (id: number) =>
-  createSelector(packetsSelector, (packets) => packets[id]?.status);
+  createSelector(packetSelector(id), (packet) => packet.status);
 
 export const packetTitleSelector = (id: number) =>
-  createSelector(packetsSelector, (packets) => packets[id]?.title);
-
-export const packetSelector = (id: number) =>
-  createSelector(packetsSelector, (packets) => packets[id]);
+  createSelector(packetSelector(id), (packet) => packet.title);
