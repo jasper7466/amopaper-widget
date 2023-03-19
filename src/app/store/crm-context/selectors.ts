@@ -28,3 +28,8 @@ export const clientUuidSelector = createSelector(
   featureSelector,
   (state) => state.context?.oAuthUuid
 );
+
+export const crmContextSelector = createSelector(
+  featureSelector,
+  (state) => state.context
+);

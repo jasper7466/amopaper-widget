@@ -49,7 +49,10 @@ export class CommonLogicService {
         switchMap(() => this.crmJsonStorageService.init())
       )
       .subscribe({
-        next: () => this.routingService.goPacketsListPage(),
+        next: () => {
+          this.crmService.checkWidgetStatus();
+          this.routingService.goPacketsListPage();
+        },
         error: (err) => console.log(err),
       });
   }

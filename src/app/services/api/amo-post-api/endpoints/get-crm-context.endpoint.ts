@@ -20,12 +20,15 @@ interface IGetCrmContextResponse {
 }
 
 const responseAdapter = (response: IGetCrmContextResponse): ICrmContext => ({
+  isAdminUser: response.constants.user_rights.is_admin,
   isCard: response.isCard,
   cardId: typeof response.cardId === 'number' ? response.cardId : -1,
   domain: response.system.domain,
   subdomain: response.system.subdomain,
   oAuthUuid: response.settings.oauth_client_uuid,
   xApiKey: response.settings.x_api_key,
+  isWidgetActive: response.settings.active === 'Y',
+  isWidgetConfigured: response.settings.widget_active === 'Y',
 });
 
 export function getCrmContextEndpoint(

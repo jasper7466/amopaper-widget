@@ -1,55 +1,48 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import {
-  Observable,
-  of,
-  Subject,
-  switchMap,
-  takeUntil,
-  tap,
-  timer,
-} from 'rxjs';
-import { AmoApiService } from '../api/amo-api/amo-api.service';
+import { Observable, of, switchMap, takeUntil, tap, timer } from 'rxjs';
 import { updateCrmContextAction } from '../../store/crm-context/actions';
 import { AmoPostApiService } from '../api/amo-post-api/amo-post-api.service';
 import { config } from 'src/app/constants/config';
-import { activeLeadIdSelector } from 'src/app/store/app-context/selectors';
 import { CrmJsonStorageService } from './crm-json-storage.service';
 import { updateLeadJsonStorageAction } from 'src/app/store/crm-lead-context/actions';
+import { crmContextSelector } from 'src/app/store/crm-context/selectors';
+import { NotificationService } from './notification.service';
+import { notifications } from 'src/app/constants/notifications';
 
 const crmJsonStoragePollingInterval = config.crmJsonStoragePollingInterval;
 @Injectable()
 export class CrmService {
-  private crmJsonStoragePollingBreaker = new Subject<void>();
-  private activeLeadId: number;
+  private storagePollingBreaker = new EventEmitter<void>();
+  private context: ReturnType<typeof crmContextSelector>;
 
-  private activeLeadId$ = this.store.select(activeLeadIdSelector);
+  private context$ = this.store.select(crmContextSelector);
 
   constructor(
     private store: Store,
     private crmJsonStorageService: CrmJsonStorageService,
-    private amoApiService: AmoApiService,
-    private amoPostApiService: AmoPostApiService
+    private amoPostApiService: AmoPostApiService,
+    private notificationService: NotificationService
   ) {
-    this.activeLeadId$.subscribe((id) => (this.activeLeadId = id));
+    // this.activeLeadId$.subscribe((id) => (this.activeLeadId = id));
+    this.context$.subscribe((context) => (this.context = context));
   }
 
-  // checkWidgetStatus() {
-  //   if (!this.context) {
-  //     throw new Error('CRM context is undefined');
-  //   }
+  public checkWidgetStatus() {
+    if (!this.context) {
+      throw new Error(`${this.constructor.name}: crmContext is not defined.`);
+    }
 
-  //   const { active, status } = this.context.settings;
-  //   const isAdmin = this.context.constants.user_rights.is_admin;
+    const { isAdminUser, isWidgetActive, isWidgetConfigured } = this.context;
 
-  //   if (active !== 'Y' || status === 'not_configured') {
-  //     if (isAdmin) {
-  //       this.notificationService.notify(notifications.widgetNotConfiguredAdmin);
-  //     } else {
-  //       this.notificationService.notify(notifications.widgetNotConfiguredAdmin);
-  //     }
-  //   }
-  // }
+    if (!isWidgetActive || !isWidgetConfigured) {
+      if (isAdminUser) {
+        this.notificationService.notify(notifications.widgetNotConfiguredAdmin);
+      } else {
+        this.notificationService.notify(notifications.widgetNotConfiguredAdmin);
+      }
+    }
+  }
 
   private getJsonStorage(): Observable<any> {
     return this.crmJsonStorageService
@@ -75,13 +68,13 @@ export class CrmService {
     timer(1, crmJsonStoragePollingInterval)
       .pipe(
         switchMap(() => this.getJsonStorage()),
-        takeUntil(this.crmJsonStoragePollingBreaker)
+        takeUntil(this.storagePollingBreaker)
       )
       .subscribe();
   }
 
   public stopJsonStoragePolling(): void {
-    this.crmJsonStoragePollingBreaker.next();
+    this.storagePollingBreaker.emit();
   }
 
   public attachPacketToLead(packetId: number): Observable<any> {

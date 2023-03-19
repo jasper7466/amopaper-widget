@@ -5,4 +5,7 @@ export interface ICrmContext {
   subdomain: string;
   oAuthUuid: string;
   xApiKey: string;
+  isAdminUser: boolean;
+  isWidgetConfigured: boolean;
+  isWidgetActive: boolean;
 }

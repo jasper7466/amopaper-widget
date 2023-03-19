@@ -16,6 +16,9 @@ export class AmoPostApiMockService implements IAmoPostApiService {
       subdomain: secrets.subdomain,
       oAuthUuid: secrets.integration.client_id,
       xApiKey: secrets.x_api_key,
+      isAdminUser: true,
+      isWidgetActive: true,
+      isWidgetConfigured: true,
     }).pipe(delay(2000));
   }
 }

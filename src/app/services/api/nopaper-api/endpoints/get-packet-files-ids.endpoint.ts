@@ -39,17 +39,12 @@ const responseAdapter = (
     ofertaWithStamp,
   } = response;
 
-  console.log(response);
-
-  const fileInfoMapper = (data: DocumentListItemShortened[]): IFileInfo[] => {
-    console.log(data);
-
-    return data.map((item) => ({
+  const fileInfoMapper = (data: DocumentListItemShortened[]): IFileInfo[] =>
+    data.map((item) => ({
       id: item.documentFileId,
       name: item.fileName,
       size: item.size,
     }));
-  };
 
   const originalFilesIds = fileInfoMapper(signDocumentList);
   const originalOfferId = fileInfoMapper([ofertaOriginal]);
