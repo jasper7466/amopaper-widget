@@ -1,6 +1,6 @@
-import { notification } from '../services/sub-services/notification.service';
+import { Notification } from '../services/sub-services/notification.service';
 
-export const notifications: { [key: string]: notification } = {
+export const notifications: { [key: string]: Notification } = {
   getCrmContextTimeoutError: {
     type: 'error',
     title: 'Ошибка получения параметров CRM-системы',

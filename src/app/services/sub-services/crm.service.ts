@@ -24,7 +24,6 @@ export class CrmService {
     private amoPostApiService: AmoPostApiService,
     private notificationService: NotificationService
   ) {
-    // this.activeLeadId$.subscribe((id) => (this.activeLeadId = id));
     this.context$.subscribe((context) => (this.context = context));
   }
 
@@ -106,11 +105,4 @@ export class CrmService {
       })
     );
   }
-
-  // public getLeadAttachments(): Observable<void> {
-  //   return this.amoApiService.getLeadAttachments(this.activeLeadId).pipe(
-  //     tap(console.log),
-  //     switchMap(() => of())
-  //   );
-  // }
 }

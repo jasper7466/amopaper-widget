@@ -40,8 +40,6 @@ export class CommonLogicService {
       requestOptions: RequestInit;
     }
 
-    this.routingService.goStartupPage();
-
     this.crmService
       .getCrmContext()
       .pipe(

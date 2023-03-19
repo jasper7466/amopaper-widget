@@ -1,49 +1,40 @@
-import { ServicesCoreModule } from '../services-core.module';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { RoutingService } from './routing.service';
 
-export type notification = {
+export type Notification = {
   type: 'error' | 'info';
-  title: string;
-  details: string;
-  hint: string;
+  title?: string;
+  details?: string;
+  hint?: string;
+};
+
+const baseContext: Notification = {
+  type: 'info',
+  hint: 'В случае регулярного повторения ошибки - обратитесь в службу поддержки Nopaper.',
 };
 
 @Injectable()
 export class NotificationService {
-  context: notification;
+  context: Notification;
 
-  constructor(private router: Router) {
-    this.context = {
-      type: 'info',
-      title: 'undefined',
-      details: 'undefined',
-      hint: 'undefined',
-    };
+  constructor(private routingService: RoutingService) {}
+
+  public notify(context: Notification) {
+    this.context = { ...baseContext, ...context };
+    this.routingService.goNotificationPage();
   }
 
-  navigate() {
-    this.router.navigate(['notification']);
-  }
-
-  error(context: Omit<notification, 'type'>) {
-    this.context = {
+  public error(context: Omit<Notification, 'type'>) {
+    this.notify({
       type: 'error',
       ...context,
-    };
-    this.navigate();
+    });
   }
 
-  info(context: Omit<notification, 'type'>) {
-    this.context = {
+  public info(context: Omit<Notification, 'type'>) {
+    this.notify({
       type: 'info',
       ...context,
-    };
-    this.navigate();
-  }
-
-  notify(context: notification) {
-    this.context = context;
-    this.navigate();
+    });
   }
 }

@@ -78,6 +78,10 @@ export class RoutingService {
     this.router.navigate(['widget/packet', id]);
   }
 
+  public goNotificationPage() {
+    this.router.navigate(['notification']);
+  }
+
   public goStartupPage(): void {
     this.router.navigate(['']);
   }
