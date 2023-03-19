@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, Observer } from 'rxjs';
+import { Observable, Observer, take } from 'rxjs';
 import {
   sourceFilesAddAction,
   sourceFilesResetAction,
@@ -14,14 +14,16 @@ export class FilesService {
 
   constructor(private store: Store) {}
 
-  filesHandler(files: FileList) {
+  public filesHandler(files: FileList): void {
     const filesMetadata: IFileInfo[] = [];
 
     for (const file of Array.from(files)) {
       const id = this.counter;
-      this.toBase64(file).subscribe((base64) => {
-        this.store.dispatch(sourceFileCompleteAction({ id, base64 }));
-      });
+      this.toBase64(file)
+        .pipe(take(1))
+        .subscribe((base64) => {
+          this.store.dispatch(sourceFileCompleteAction({ id, base64 }));
+        });
 
       filesMetadata.push({
         id,
@@ -53,7 +55,7 @@ export class FilesService {
     });
   }
 
-  protected clearFilesList() {
+  protected clearFilesList(): void {
     this.counter = 0;
     this.store.dispatch(sourceFilesResetAction());
   }

@@ -23,15 +23,15 @@ export class AddresseeSelectorComponent {
 
   constructor(private store: Store) {}
 
-  public removeAddressee(): void {
+  protected removeAddressee(): void {
     this.store.dispatch(resetAddresseeAction());
   }
 
-  public showSelectorModal(): void {
+  protected showSelectorModal(): void {
     this.openModalEmitter.emit();
   }
 
-  public hideSelectorModal(): void {
+  protected hideSelectorModal(): void {
     this.closeModalEmitter.emit();
   }
 }

@@ -4,7 +4,7 @@ import { Observable, map } from 'rxjs';
 import { ADDRESSEE_ID_TYPE } from 'src/app/interfaces/addressee.interface';
 import { IPacketDetails } from 'src/app/interfaces/packet-details.interface';
 
-type FileItem = {
+type TFileItem = {
   fileName: string;
   filebase64: string;
 };
@@ -13,7 +13,7 @@ interface IPostDraftRequest {
   title?: string;
   clientFlPhoneNumber?: string;
   clientUlInn?: string;
-  files: FileItem[];
+  files: TFileItem[];
 }
 
 interface IPostDraftResponse {

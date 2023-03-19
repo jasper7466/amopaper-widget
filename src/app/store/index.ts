@@ -17,7 +17,6 @@ import { IMiscState, MISC_KEY } from './misc';
 import { miscReducer } from './misc/reducers';
 import { Injectable } from '@angular/core';
 import { Actions } from '@ngrx/effects';
-import { SignaturesEffects } from './signatures/effects';
 import { FILES_PROCESSED_KEY, IProcessedFilesState } from './files-processed';
 import { AppContextEffects } from './app-context/effects';
 import { CrmContextEffects } from './crm-context/effects';
@@ -27,7 +26,7 @@ import { appContextReducer } from './app-context/reducers';
 import { crmLeadReducer } from './crm-lead-context/reducers';
 import { CrmLeadContextEffects } from './crm-lead-context/effects';
 
-export interface State {
+export interface IState {
   [TOKEN_KEY]: ITokenState;
   [ADDRESSEE_KEY]: IAddresseeState;
   [APP_CONTEXT_KEY]: IAppContextState;
@@ -40,7 +39,7 @@ export interface State {
   [SIGNATURES_KEY]: ISignaturesState;
 }
 
-export const reducers: ActionReducerMap<State> = {
+export const reducers: ActionReducerMap<IState> = {
   [TOKEN_KEY]: accessTokenReducer,
   [ADDRESSEE_KEY]: widgetContextReducer,
   [APP_CONTEXT_KEY]: appContextReducer,
@@ -54,13 +53,12 @@ export const reducers: ActionReducerMap<State> = {
 };
 
 export const effects = [
-  SignaturesEffects,
   AppContextEffects,
   CrmContextEffects,
   CrmLeadContextEffects,
 ];
 
-export const metaReducers: MetaReducer<State>[] = !environment.production
+export const metaReducers: MetaReducer<IState>[] = !environment.production
   ? []
   : [];
 

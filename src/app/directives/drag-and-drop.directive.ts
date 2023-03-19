@@ -19,8 +19,6 @@ export class DragAndDropDirective {
 
   fileOver: boolean = false;
 
-  constructor() {}
-
   @HostListener('dragover', ['$event']) onDragOver(event: DragEvent) {
     event.preventDefault();
     event.stopPropagation();

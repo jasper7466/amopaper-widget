@@ -1,6 +1,6 @@
 import { IAmoBaseResponse, IEmbeddedItem } from './amo-api-common.types';
 
-interface NoteParams {
+interface INoteParams {
   attachment: {
     file_name: string;
     file_uuid: string;
@@ -20,9 +20,9 @@ interface NoteParams {
   extended_service_message: unknown;
 }
 
-export type NoteType = keyof NoteParams;
+export type TNoteType = keyof INoteParams;
 
-interface INote<T extends keyof NoteParams> extends IEmbeddedItem {
+interface INote<T extends keyof INoteParams> extends IEmbeddedItem {
   account_id: number;
   created_at: number;
   created_by: number;
@@ -30,7 +30,7 @@ interface INote<T extends keyof NoteParams> extends IEmbeddedItem {
   group_id: number;
   id: number;
   note_type: T;
-  params: NoteParams[T];
+  params: INoteParams[T];
   responsible_user_id: number;
   updated_at: number;
   updated_by: number;

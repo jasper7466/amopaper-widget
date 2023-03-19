@@ -5,7 +5,6 @@ import { Observable, take, filter } from 'rxjs';
 import { packetSelector } from 'src/app/store/packets/selectors';
 import { Store } from '@ngrx/store';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { downloadFile } from 'src/app/utils/download-file.util';
 import { openFile } from 'src/app/utils/open-file.util';
 import {
   filesIdsOriginalsSelector,
@@ -34,7 +33,7 @@ export class PacketPagePreviewComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute
   ) {}
 
-  public ngOnInit(): void {
+  ngOnInit(): void {
     const id = this.route.parent?.snapshot.paramMap.get('id');
 
     if (!id) {
@@ -54,14 +53,16 @@ export class PacketPagePreviewComponent implements OnInit, OnDestroy {
       .subscribe(() => (this.isAwaiting = false));
   }
 
-  public ngOnDestroy(): void {
-    // TODO:
-    // this.store.dispatch(clearSignaturesAction());
+  ngOnDestroy(): void {
+    this.store.dispatch(clearSignaturesAction());
   }
 
   protected submitButtonHandler(): void {
     this.isAwaiting = true;
-    this.commonLogicService.submitPreview(this.packetId).subscribe();
+    this.commonLogicService
+      .submitPreview(this.packetId)
+      .pipe(take(1))
+      .subscribe();
   }
 
   public cancelButtonHandler(): void {
@@ -69,11 +70,15 @@ export class PacketPagePreviewComponent implements OnInit, OnDestroy {
   }
 
   public removeButtonHandler(): void {
-    this.commonLogicService.deletePacket(this.packetId).subscribe();
+    this.commonLogicService
+      .deletePacket(this.packetId)
+      .pipe(take(1))
+      .subscribe();
     this.routingService.goPacketsListPage();
   }
 
   protected downloadFile(file: File) {
+    // TODO: Open or download???
     // downloadFile(file);
     openFile(file);
   }

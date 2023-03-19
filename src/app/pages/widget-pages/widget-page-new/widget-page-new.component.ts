@@ -1,10 +1,9 @@
 import { sourceFilesResetAction } from '../../../store/files-source/actions';
 import { resetAddresseeAction } from './../../../store/addressee/actions';
-import { Router } from '@angular/router';
 import { CommonLogicService } from '../../../services/common-logic.service';
 import { Component, OnDestroy, OnInit, EventEmitter } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { combineLatestWith, Subscription, take, takeUntil } from 'rxjs';
+import { combineLatestWith, takeUntil } from 'rxjs';
 import { RoutingService } from 'src/app/services/sub-services/routing.service';
 import { isAddresseeSubmittedSelector } from 'src/app/store/addressee/selectors';
 import { isSourceFilesCompleteAllSelector } from 'src/app/store/files-source/selectors';
@@ -35,7 +34,7 @@ export class WidgetPageNewComponent implements OnInit, OnDestroy {
     private routingService: RoutingService
   ) {}
 
-  public ngOnInit(): void {
+  ngOnInit(): void {
     this.isAddresseeAdded$
       .pipe(
         combineLatestWith(this.isAllFilesLoaded$),
@@ -46,7 +45,7 @@ export class WidgetPageNewComponent implements OnInit, OnDestroy {
       });
   }
 
-  public ngOnDestroy(): void {
+  ngOnDestroy(): void {
     this.store.dispatch(resetAddresseeAction());
     this.store.dispatch(sourceFilesResetAction());
     this.store.dispatch(resetNewPacketTitleAction());

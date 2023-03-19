@@ -3,7 +3,7 @@ import { ApiService } from './../../api.service';
 import {
   DOCUMENT_STATUS,
   ROUTE_TYPE,
-  RecipientInfo,
+  TRecipientInfo,
 } from '../nopaper-api-v2-common.types';
 import { IPacketDetails } from 'src/app/interfaces/packet-details.interface';
 
@@ -12,7 +12,7 @@ interface IGetPacketDetailsRequest {
 }
 
 interface IGetPacketDetailsResponse {
-  recipientInfoList: RecipientInfo;
+  recipientInfoList: TRecipientInfo;
   title: string;
   documentStatus: DOCUMENT_STATUS;
   senderGuid: string;

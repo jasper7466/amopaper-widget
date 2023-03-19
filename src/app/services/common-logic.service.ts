@@ -8,7 +8,6 @@ import { filesIdsOriginalsSelector } from '../store/files-processed/selectors';
 import { WindowService } from './sub-services/window.service';
 import { CrmTokenService } from './sub-services/crm-token.service';
 import { CrmJsonStorageService } from './sub-services/crm-json-storage.service';
-import { PostMessageTransportService } from './transport/post-message-transport.service';
 
 @Injectable()
 export class CommonLogicService {
@@ -19,8 +18,7 @@ export class CommonLogicService {
     private crmJsonStorageService: CrmJsonStorageService,
     private nopaperService: NopaperService,
     private routingService: RoutingService,
-    private windowService: WindowService,
-    private postMessageTransport: PostMessageTransportService
+    private windowService: WindowService
   ) {}
 
   /**
@@ -35,16 +33,12 @@ export class CommonLogicService {
       return;
     }
 
-    interface IPayload {
-      url: string;
-      requestOptions: RequestInit;
-    }
-
     this.crmService
       .getCrmContext()
       .pipe(
         switchMap(() => this.crmTokenService.getAmoAccessToken()),
-        switchMap(() => this.crmJsonStorageService.init())
+        switchMap(() => this.crmJsonStorageService.init()),
+        take(1)
       )
       .subscribe({
         next: () => {
@@ -88,7 +82,7 @@ export class CommonLogicService {
     );
   }
 
-  public submitPreview(packetId: number) {
+  public submitPreview(packetId: number): Observable<void> {
     return this.nopaperService.submitPreview(packetId);
   }
 

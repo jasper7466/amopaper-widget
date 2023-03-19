@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { IPacketDetails } from 'src/app/interfaces/packet-details.interface';
 
 @Component({
@@ -6,12 +6,6 @@ import { IPacketDetails } from 'src/app/interfaces/packet-details.interface';
   templateUrl: './packets-list.component.html',
   styleUrls: ['./packets-list.component.css'],
 })
-export class PacketsListComponent implements OnInit {
+export class PacketsListComponent {
   @Input() packets: IPacketDetails[];
-
-  constructor() {}
-
-  ngOnInit(): void {}
-
-  ngOnDestroy(): void {}
 }

@@ -47,7 +47,7 @@ export enum ROUTE_TYPE {
 }
 
 /** Определитель участника маршрута */
-type RecipientDeterminant = {
+type TRecipientDeterminant = {
   /** Номер телефона ФЛ-участника маршрута. */
   userPhone: string;
   /** ИНН ЮЛ/ИП-участника маршрута. */
@@ -57,7 +57,7 @@ type RecipientDeterminant = {
 };
 
 /** Элемент списка участников маршрута пакета документов. */
-export type RecipientInfo = ExactlyOneKeyOf<RecipientDeterminant> & {
+export type TRecipientInfo = ExactlyOneKeyOf<TRecipientDeterminant> & {
   /** Тип действия участника маршрута документа. По умолчанию - подписание ЮЛ. */
   actionType?: ACTION_TYPE;
   /** Тип подписания участника маршрута. По умолчанию - НЭП.*/

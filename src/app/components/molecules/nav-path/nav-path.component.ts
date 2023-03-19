@@ -1,5 +1,5 @@
 import {
-  NavigationPart,
+  TNavigationPart,
   RoutingService,
 } from 'src/app/services/sub-services/routing.service';
 import { takeUntil } from 'rxjs';
@@ -12,7 +12,7 @@ import { Component, OnInit, OnDestroy, EventEmitter } from '@angular/core';
 })
 export class NavPathComponent implements OnInit, OnDestroy {
   private onDestroyEmitter = new EventEmitter<void>();
-  public navPath: NavigationPart[] = [];
+  public navPath: TNavigationPart[] = [];
 
   constructor(private routingService: RoutingService) {}
 

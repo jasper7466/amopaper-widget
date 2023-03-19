@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 import { environment } from 'src/environments/environment';
 import { IGetAmoAccessTokenResponse } from './access-token-local-api.types';
-import { Observable, take } from 'rxjs';
+import { Observable } from 'rxjs';
 
 const BASE_URL = environment.localBaseTokenUrl;
 

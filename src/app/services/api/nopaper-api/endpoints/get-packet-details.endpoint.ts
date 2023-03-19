@@ -2,23 +2,23 @@ import { Observable, map } from 'rxjs';
 import { ApiService } from '../../api.service';
 import { IPacketDetails } from 'src/app/interfaces/packet-details.interface';
 
-type DocumentDataNames =
+type TDocumentDataNames =
   | 'NOP_TAB_NOPAPER_DRAFT'
   | 'NOP_TAB_NOPAPER_DOWNLOAD_DOCUMENTS'
   | 'NOP_TAB_NOPAPER_SEND_SIGN_DOCUMENTS';
 
 interface IGetPacketDetailsRequest {
   documentId: number;
-  documentDataNames?: DocumentDataNames[];
+  documentDataNames?: TDocumentDataNames[];
 }
 
-type DocumentData = {
+type TDocumentData = {
   name: string;
   data: { [key: string]: any };
 };
 
 interface IGetPacketDetailsResponse {
-  documentData: DocumentData[];
+  documentData: TDocumentData[];
   isOwner: boolean;
   title: string;
   stepId: number;

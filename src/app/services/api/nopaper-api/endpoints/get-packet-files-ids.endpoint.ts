@@ -7,22 +7,25 @@ interface IGetPacketFilesIdsRequest {
   documentId: number;
 }
 
-type DocumentListItem = {
+type TDocumentListItem = {
   documentFileId: number;
   sourceDocumentFileId: number;
   fileName: string;
   size: number;
 };
 
-type DocumentListItemShortened = Omit<DocumentListItem, 'sourceDocumentFileId'>;
+type TDocumentListItemShortened = Omit<
+  TDocumentListItem,
+  'sourceDocumentFileId'
+>;
 
 interface IGetPacketFilesIdsResponse {
-  signDocumentList: DocumentListItem[];
-  stampDocumentList: DocumentListItem[];
-  ofertaOriginal: DocumentListItemShortened;
-  ofertaWithStamp?: DocumentListItemShortened;
-  procuratoryOriginalList: DocumentListItemShortened[];
-  procuratoryWithStampList: DocumentListItemShortened[];
+  signDocumentList: TDocumentListItem[];
+  stampDocumentList: TDocumentListItem[];
+  ofertaOriginal: TDocumentListItemShortened;
+  ofertaWithStamp?: TDocumentListItemShortened;
+  procuratoryOriginalList: TDocumentListItemShortened[];
+  procuratoryWithStampList: TDocumentListItemShortened[];
 }
 
 const requestAdapter = (packetId: number): IGetPacketFilesIdsRequest => ({
@@ -39,7 +42,7 @@ const responseAdapter = (
     ofertaWithStamp,
   } = response;
 
-  const fileInfoMapper = (data: DocumentListItemShortened[]): IFileInfo[] =>
+  const fileInfoMapper = (data: TDocumentListItemShortened[]): IFileInfo[] =>
     data.map((item) => ({
       id: item.documentFileId,
       name: item.fileName,

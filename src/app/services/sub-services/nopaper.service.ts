@@ -56,7 +56,6 @@ export class NopaperService {
 
   /**
    * Создаёт черновик пакета документов.
-   * @returns
    */
   public postPacket(): Observable<Pick<IPacketDetails, 'id'>> {
     return combineLatest(this.newPacketDataObservables).pipe(
@@ -73,7 +72,6 @@ export class NopaperService {
    *
    * Переводит пакет в статус `nopaperPrepareFiles`.
    * @param packetId Идентификатор пакета документов.
-   * @returns
    */
   public submitDraft(packetId: number): Observable<void> {
     return this.nopaperApiService.setPacketStepName(
@@ -89,7 +87,6 @@ export class NopaperService {
    *
    * Переводит пакет в статус `nopaperSenderSign`.
    * @param packetId Идентификатор пакета документов.
-   * @returns
    */
   public submitPreview(packetId: number): Observable<void> {
     return this.nopaperApiService.setPacketStepName(
@@ -105,7 +102,6 @@ export class NopaperService {
    *
    * Переводит пакет в статус `nopaperSenderSign`.
    * @param packetId Идентификатор пакета документов.
-   * @returns
    */
   public deletePacket(packetId: number): Observable<void> {
     return this.nopaperApiService.setPacketStepName(packetId, 'nopaperDelete');
@@ -118,7 +114,6 @@ export class NopaperService {
    *
    * Переводит пакет в статус `nopaperSenderCancel`.
    * @param packetId Идентификатор пакета документов.
-   * @returns
    */
   public revokePacket(packetId: number): Observable<void> {
     return this.nopaperApiService.setPacketStepName(
@@ -133,7 +128,6 @@ export class NopaperService {
    *
    * Результат сохраняется в хранилище.
    * @param packetId Идентификатор пакета документов.
-   * @returns
    */
   public getPacketStepName(
     packetId: number
@@ -151,7 +145,6 @@ export class NopaperService {
    *
    * Результат сохраняется в хранилище.
    * @param packetId
-   * @returns
    */
   public getPacketDetails(
     packetId: number
@@ -169,7 +162,6 @@ export class NopaperService {
    *
    * Результат сохраняется в хранилище.
    * @param packetId Идентификатор пакета документов.
-   * @returns
    */
   public getPacketFilesIds(packetId: number): Observable<IPacketFilesInfo> {
     return this.nopaperApiService
@@ -186,7 +178,6 @@ export class NopaperService {
    *
    * Результат сохраняется в хранилище.
    * @param filesIds Массив идентификаторов файлов.
-   * @returns
    */
   public getFilesByIds(filesIds: number[]): Observable<IPacketFile[]> {
     return this.nopaperApiService
@@ -203,7 +194,6 @@ export class NopaperService {
    *
    * Результат сохраняется в хранилище.
    * @param fileInfo Идентификатор файла.
-   * @returns
    */
   public getFileSignature(
     fileInfo: Pick<IFileInfo, 'id'>
@@ -224,8 +214,8 @@ export class NopaperService {
     timer(1, POLLING_INTERVAL_MS)
       .pipe(
         tap(() => {
-          this.getPacketStepName(packetId).subscribe();
-          this.getPacketDetails(packetId).subscribe();
+          this.getPacketStepName(packetId).pipe(take(1)).subscribe();
+          this.getPacketDetails(packetId).pipe(take(1)).subscribe();
         }),
         takeUntil(
           this.packetPollingBreakerById.pipe(filter((id) => id === packetId))
@@ -255,11 +245,10 @@ export class NopaperService {
    *
    * Результат сохраняется в хранилище.
    * @param fileId Идентификатор файла.
-   * @returns
    */
 
   /**
-   *
+   * Получение ссылки на подпись.
    */
   public getShareLink(packetId: number): Observable<IShareLink> {
     return this.nopaperApiService.getShareLink(packetId).pipe(

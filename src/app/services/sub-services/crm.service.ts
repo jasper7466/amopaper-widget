@@ -27,7 +27,7 @@ export class CrmService {
     this.context$.subscribe((context) => (this.context = context));
   }
 
-  public checkWidgetStatus() {
+  public checkWidgetStatus(): void | never {
     if (!this.context) {
       throw new Error(`${this.constructor.name}: crmContext is not defined.`);
     }

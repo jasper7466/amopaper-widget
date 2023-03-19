@@ -1,9 +1,9 @@
-import { Observable, map, filter, tap } from 'rxjs';
+import { Observable, map, filter } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, Scroll } from '@angular/router';
 import { TPacketStatus } from 'src/app/interfaces/packet-status.type';
 
-export type NavigationPart = {
+export type TNavigationPart = {
   title: string;
   routerLink: string | any[];
 };
@@ -22,7 +22,7 @@ export class RoutingService {
     return parameter;
   }
 
-  public navParts(): Observable<NavigationPart[]> {
+  public navParts(): Observable<TNavigationPart[]> {
     return this.router.events.pipe(
       filter(
         (event) => event instanceof NavigationEnd || event instanceof Scroll
@@ -38,7 +38,7 @@ export class RoutingService {
       }),
       map((route) => {
         const routes = route.snapshot.pathFromRoot;
-        let navParts: NavigationPart[] = [];
+        let navParts: TNavigationPart[] = [];
 
         for (const route of routes) {
           const title = route.title;

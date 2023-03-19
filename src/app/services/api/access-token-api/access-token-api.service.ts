@@ -16,8 +16,6 @@ const BASE_URL = environment.nopaperBaseTokenUrl;
 export class AccessTokenApiService extends ApiService {
   private xApiKey$ = this.store.select(xApiKeySelector);
   private clientUuid$ = this.store.select(clientUuidSelector);
-
-  private xApiKey: string = '';
   private clientUuid?: string;
 
   constructor(http: HttpClient, private store: Store) {

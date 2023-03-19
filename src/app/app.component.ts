@@ -1,6 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { appLoadAction } from './store/app-context/actions';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +6,5 @@ import { appLoadAction } from './store/app-context/actions';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'Nopaper';
-
-  constructor(private store: Store) {}
+  protected title = 'Nopaper';
 }

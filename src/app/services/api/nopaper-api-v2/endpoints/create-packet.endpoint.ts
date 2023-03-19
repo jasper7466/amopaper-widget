@@ -1,4 +1,4 @@
-import { RecipientInfo, ROUTE_TYPE } from './../nopaper-api-v2-common.types';
+import { TRecipientInfo, ROUTE_TYPE } from './../nopaper-api-v2-common.types';
 import { Observable, map } from 'rxjs';
 import { ApiService } from './../../api.service';
 import { NonEmptyArray, isNonEmptyArray } from 'src/app/types/common';
@@ -23,7 +23,7 @@ export interface IPostDraftRequest {
   /** Массив объектов файлов. */
   fileInfoList: NonEmptyArray<FileInfo>;
   /** Массив объектов участников маршрута (непустой). */
-  recipientInfoList: NonEmptyArray<RecipientInfo>;
+  recipientInfoList: NonEmptyArray<TRecipientInfo>;
   /** Тип маршрута документа */
   documentRouteType?: ROUTE_TYPE;
 }
@@ -44,7 +44,7 @@ const requestAdapter = (data: IPacketCreateData): IPostDraftRequest | never => {
     throw new Error('Empty files list');
   }
 
-  let recipientInfo: RecipientInfo;
+  let recipientInfo: TRecipientInfo;
 
   switch (data.addressee.idType) {
     case ADDRESSEE_ID_TYPE.Phone: {

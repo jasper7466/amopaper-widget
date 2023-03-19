@@ -1,16 +1,16 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-type tooltip = 'tooltip' | null;
+type TTooltip = 'tooltip' | null;
 
 @Component({
   selector: 'app-input',
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.css'],
 })
-export class InputComponent implements OnInit {
+export class InputComponent {
   @Input() label: string = '';
   @Input() placeholder: string = '';
-  @Input() tooltipOption: tooltip = null;
+  @Input() tooltipOption: TTooltip = null;
   @Input() mask: string = '';
   @Input() type: string = 'text';
   @Input() maskPrefix: string = '';
@@ -18,11 +18,7 @@ export class InputComponent implements OnInit {
   @Output()
   onKeyUp = new EventEmitter<string>();
 
-  constructor() {}
-
-  ngOnInit(): void {}
-
-  inputKeyUpHandler(value: string) {
+  protected inputKeyUpHandler(value: string): void {
     this.onKeyUp.emit(value);
   }
 }

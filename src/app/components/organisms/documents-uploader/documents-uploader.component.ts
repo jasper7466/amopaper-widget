@@ -1,5 +1,5 @@
 import { map, Observable } from 'rxjs';
-import { StatusLabelStatus } from 'src/app/components/atoms/status-label/status-label.component';
+import { TStatusLabelStatus } from 'src/app/components/atoms/status-label/status-label.component';
 import { Store } from '@ngrx/store';
 import { Component } from '@angular/core';
 import {
@@ -9,9 +9,9 @@ import {
 } from 'src/app/store/files-source/selectors';
 import { sourceFilesResetAction } from 'src/app/store/files-source/actions';
 
-type Item = {
+type TItem = {
   fileName: string;
-  signStatus?: StatusLabelStatus;
+  signStatus?: TStatusLabelStatus;
   fileId?: number;
 };
 
@@ -28,7 +28,7 @@ export class DocumentsUploaderComponent {
     sourceFilesLoadedCountSelector
   );
 
-  protected uploadedDocuments$: Observable<Item[]> = this.store
+  protected uploadedDocuments$: Observable<TItem[]> = this.store
     .select(sourceFilesSelector)
     .pipe(
       map((files) =>
@@ -40,7 +40,7 @@ export class DocumentsUploaderComponent {
 
   constructor(private store: Store) {}
 
-  protected clearFilesList() {
+  protected clearFilesList(): void {
     this.store.dispatch(sourceFilesResetAction());
   }
 }

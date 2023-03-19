@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { ADDRESSEE_ID_TYPE } from 'src/app/interfaces/addressee.interface';
 
 @Component({
@@ -15,9 +15,7 @@ export class AddresseeNameplateComponent {
 
   protected addresseeIdType = ADDRESSEE_ID_TYPE;
 
-  constructor() {}
-
-  protected removeButtonClickHandler() {
+  protected removeButtonClickHandler(): void {
     this.clickRemoveButton.emit();
   }
 }

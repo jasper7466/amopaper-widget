@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
-export type StatusLabelStatus =
+export type TStatusLabelStatus =
   | 'unknown'
   | 'draft'
   | 'sign'
@@ -9,7 +9,7 @@ export type StatusLabelStatus =
   | 'signed'
   | 'signed-single';
 
-const statusCaptions: { [key in StatusLabelStatus]: string } = {
+const statusCaptions: { [key in TStatusLabelStatus]: string } = {
   unknown: 'Статус неизвестен',
   draft: 'Черновик',
   sign: 'Подпишите',
@@ -25,11 +25,9 @@ const statusCaptions: { [key in StatusLabelStatus]: string } = {
   styleUrls: ['./status-label.component.css'],
 })
 export class StatusLabelComponent implements OnChanges {
-  @Input() status: StatusLabelStatus = 'unknown';
+  @Input() status: TStatusLabelStatus = 'unknown';
 
   public caption: string = 'Undefined';
-
-  constructor() {}
 
   ngOnChanges(changes: SimpleChanges): void {
     this.caption = statusCaptions[this.status];

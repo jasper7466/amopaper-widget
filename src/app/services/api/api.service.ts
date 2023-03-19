@@ -15,12 +15,12 @@ export class ApiService {
     this._baseUrl = url;
   }
 
-  protected resetHeaders(headers: { [key: string]: string | string[] }) {
+  protected resetHeaders(headers: { [key: string]: string | string[] }): void {
     this.headers = new HttpHeaders();
     this.setHeaders(headers);
   }
 
-  protected setHeaders(headers: { [key: string]: string | string[] }) {
+  protected setHeaders(headers: { [key: string]: string | string[] }): void {
     for (const [header, value] of Object.entries(headers)) {
       this.headers = this.headers.set(header, value);
     }

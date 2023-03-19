@@ -1,4 +1,3 @@
-import { shareLinkSelector } from './../../../store/misc/selectors';
 import { packetSelector } from 'src/app/store/packets/selectors';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -22,7 +21,7 @@ export class PacketPageSenderSignComponent implements OnInit {
     private route: ActivatedRoute
   ) {}
 
-  public ngOnInit(): void {
+  ngOnInit(): void {
     const id = this.route.parent?.snapshot.paramMap.get('id');
 
     if (!id) {

@@ -1,7 +1,7 @@
 import { AmoApiModule, POST_MESSAGE_HTTP_CLIENT_TOKEN } from './amo-api.module';
 import { domainSelector } from '../../../store/crm-context/selectors';
 import { HttpClient } from '@angular/common/http';
-import { Inject, Injectable, forwardRef, InjectionToken } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { accessTokenSelector } from 'src/app/store/access-token/selectors';
 import { environment } from 'src/environments/environment';

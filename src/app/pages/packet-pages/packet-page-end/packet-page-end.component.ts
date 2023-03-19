@@ -9,6 +9,7 @@ import {
   filesIdsOriginalsSelector,
   filesIdsStampedSelector,
 } from 'src/app/store/files-processed/selectors';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-packet-page-end',
@@ -44,13 +45,19 @@ export class PacketPageEndComponent implements OnInit {
 
     this.packetId = parseInt(id);
 
-    this.commonLogicService.getPacketFiles(this.packetId).subscribe();
+    this.commonLogicService
+      .getPacketFiles(this.packetId)
+      .pipe(take(1))
+      .subscribe();
   }
 
   protected showSignInfo(fileId: number): void {
-    this.nopaperService.getFileSignature({ id: fileId }).subscribe(() => {
-      this.signInfo.open();
-    });
+    this.nopaperService
+      .getFileSignature({ id: fileId })
+      .pipe(take(1))
+      .subscribe(() => {
+        this.signInfo.open();
+      });
   }
 
   protected backButtonHandler(): void {

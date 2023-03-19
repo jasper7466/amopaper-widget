@@ -13,7 +13,7 @@ import { NotificationService } from '../services/sub-services/notification.servi
 export class HttpErrorHandlingInterceptor implements HttpInterceptor {
   constructor(private notificationService: NotificationService) {}
 
-  intercept(
+  public intercept(
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {

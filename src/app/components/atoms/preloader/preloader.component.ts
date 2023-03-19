@@ -1,17 +1,14 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
-type animation = 'rotation' | '';
-type icon = 'preparing' | 'awaiting' | 'signing' | '';
+type TAnimation = 'rotation' | '';
+type TIcon = 'preparing' | 'awaiting' | 'signing' | '';
 
 @Component({
   selector: 'app-preloader',
   templateUrl: './preloader.component.html',
   styleUrls: ['./preloader.component.css'],
 })
-export class PreloaderComponent implements OnInit {
-  @Input() animationOption: animation = '';
-  @Input() iconOption: icon = '';
-  constructor() {}
-
-  ngOnInit(): void {}
+export class PreloaderComponent {
+  @Input() animationOption: TAnimation = '';
+  @Input() iconOption: TIcon = '';
 }

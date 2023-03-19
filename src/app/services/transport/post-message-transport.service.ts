@@ -49,6 +49,6 @@ export class PostMessageTransportService {
     request: Required<IPostMessage<Req>>,
     msTimeout: number
   ): Observable<Res> {
-    return this.request<Req, Res>(request).pipe(timeout(100));
+    return this.request<Req, Res>(request).pipe(timeout(msTimeout));
   }
 }

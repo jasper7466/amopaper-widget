@@ -18,7 +18,7 @@ export class ModalSignInfoComponent {
 
   constructor(private store: Store) {}
 
-  protected okButtonHandler() {
+  protected okButtonHandler(): void {
     this.closeTrigger.emit();
   }
 

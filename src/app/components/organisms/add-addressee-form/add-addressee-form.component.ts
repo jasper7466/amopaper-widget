@@ -22,7 +22,7 @@ export class AddAddresseeFormComponent {
 
   constructor(private store: Store) {}
 
-  protected changeSearchSelector(selector: ADDRESSEE_ID_TYPE) {
+  protected changeSearchSelector(selector: ADDRESSEE_ID_TYPE): void {
     if (this.searchSelector === selector) {
       return;
     }
@@ -30,17 +30,18 @@ export class AddAddresseeFormComponent {
     this.isSubmitEnabled = false;
   }
 
-  protected searchInputKeyUp(value: string) {
+  protected searchInputKeyUp(value: string): void | never {
     this.value = value.replace(/\D+/g, '');
 
-    if (this.searchSelector === ADDRESSEE_ID_TYPE.Phone) {
-      this.isSubmitEnabled = this.value.length === 11;
-      return;
-    }
-
-    if (this.searchSelector === ADDRESSEE_ID_TYPE.VatId) {
-      this.isSubmitEnabled = this.value.length >= 10;
-      return;
+    switch (this.searchSelector) {
+      case ADDRESSEE_ID_TYPE.Phone:
+        this.isSubmitEnabled = this.value.length === 11;
+        break;
+      case ADDRESSEE_ID_TYPE.VatId:
+        this.isSubmitEnabled = this.value.length >= 10;
+        break;
+      default:
+        throw new Error('Unknown addressee id type.');
     }
   }
 

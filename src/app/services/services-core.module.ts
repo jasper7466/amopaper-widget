@@ -1,5 +1,4 @@
 import { SubServicesCoreModule } from './sub-services/sub-services-core.module';
-import { ApiCoreModule } from './api/api-core.module';
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CommonLogicService } from './common-logic.service';

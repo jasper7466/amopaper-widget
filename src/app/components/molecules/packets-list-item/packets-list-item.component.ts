@@ -3,7 +3,6 @@ import {
   Input,
   OnChanges,
   OnDestroy,
-  OnInit,
   SimpleChanges,
 } from '@angular/core';
 import { IPacketDetails } from 'src/app/interfaces/packet-details.interface';
@@ -15,15 +14,13 @@ import { RoutingService } from 'src/app/services/sub-services/routing.service';
   templateUrl: './packets-list-item.component.html',
   styleUrls: ['./packets-list-item.component.css'],
 })
-export class PacketsListItemComponent implements OnInit, OnDestroy, OnChanges {
+export class PacketsListItemComponent implements OnDestroy, OnChanges {
   @Input() packet: IPacketDetails;
 
   constructor(
     private routingService: RoutingService,
     private nopaperService: NopaperService
   ) {}
-
-  ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
     this.nopaperService.startPacketPolling(this.packet.id);
@@ -33,7 +30,7 @@ export class PacketsListItemComponent implements OnInit, OnDestroy, OnChanges {
     this.nopaperService.stopPacketPolling(this.packet.id);
   }
 
-  public navigatePacketPage(): void {
+  protected navigatePacketPage(): void {
     this.routingService.goPacketPage(this.packet.id);
   }
 }

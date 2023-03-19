@@ -6,8 +6,6 @@ import secrets from '../../../../../auth-dev-server/secrets.json';
 
 @Injectable()
 export class AmoPostApiMockService implements IAmoPostApiService {
-  constructor() {}
-
   getCrmContext() {
     return of<ICrmContext>({
       isCard: true,

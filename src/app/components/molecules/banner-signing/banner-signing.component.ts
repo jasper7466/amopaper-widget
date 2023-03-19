@@ -1,15 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-banner-signing',
   templateUrl: './banner-signing.component.html',
-  styleUrls: ['./banner-signing.component.css']
+  styleUrls: ['./banner-signing.component.css'],
 })
-export class BannerSigningComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
-}
+export class BannerSigningComponent {}

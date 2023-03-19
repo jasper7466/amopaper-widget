@@ -1,9 +1,8 @@
-import { take, switchMap } from 'rxjs';
+import { take } from 'rxjs';
 import { NopaperApiService } from './../../../services/api/nopaper-api/nopaper-api.service';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { StatusLabelStatus } from '../../atoms/status-label/status-label.component';
+import { TStatusLabelStatus } from '../../atoms/status-label/status-label.component';
 import { downloadFile } from 'src/app/utils/download-file.util';
-import { base64ToFile } from 'src/app/utils/base64-to-file.util';
 
 @Component({
   selector: 'app-documents-list-item',
@@ -13,7 +12,7 @@ import { base64ToFile } from 'src/app/utils/base64-to-file.util';
 export class DocumentsListItemComponent {
   @Input() fileId?: number;
   @Input() file?: File;
-  @Input() signStatus: StatusLabelStatus | null = null;
+  @Input() signStatus: TStatusLabelStatus | null = null;
   @Input() fileName?: string;
   @Output() onShowSignInfo = new EventEmitter<number>();
 

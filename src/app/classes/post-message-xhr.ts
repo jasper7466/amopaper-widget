@@ -21,11 +21,11 @@ const trackAlwaysEvents: Array<keyof XMLHttpRequestEventMap> = [
 ];
 
 export class PostMessageXhr implements XMLHttpRequest {
-  readonly UNSENT: 0 = 0;
-  readonly OPENED: 1 = 1;
-  readonly HEADERS_RECEIVED: 2 = 2;
-  readonly LOADING: 3 = 3;
-  readonly DONE: 4 = 4;
+  readonly UNSENT: 0 = 0; // eslint-disable-line
+  readonly OPENED: 1 = 1; // eslint-disable-line
+  readonly HEADERS_RECEIVED: 2 = 2; // eslint-disable-line
+  readonly LOADING: 3 = 3; // eslint-disable-line
+  readonly DONE: 4 = 4; // eslint-disable-line
 
   private _sendFlag: boolean = false;
   private _listenersList: IEventListener[] = [];

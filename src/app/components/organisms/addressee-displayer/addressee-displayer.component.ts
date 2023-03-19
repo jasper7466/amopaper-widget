@@ -5,6 +5,4 @@ import { Component } from '@angular/core';
   templateUrl: './addressee-displayer.component.html',
   styleUrls: ['./addressee-displayer.component.css'],
 })
-export class AddresseeDisplayerComponent {
-  constructor() {}
-}
+export class AddresseeDisplayerComponent {}

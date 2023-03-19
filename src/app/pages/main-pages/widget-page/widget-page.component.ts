@@ -5,6 +5,4 @@ import { Component } from '@angular/core';
   templateUrl: './widget-page.component.html',
   styleUrls: ['./widget-page.component.css'],
 })
-export class WidgetPageComponent {
-  constructor() {}
-}
+export class WidgetPageComponent {}

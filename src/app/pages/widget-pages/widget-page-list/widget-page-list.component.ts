@@ -5,7 +5,6 @@ import { RoutingService } from 'src/app/services/sub-services/routing.service';
 import { leadIdSelector } from 'src/app/store/crm-context/selectors';
 import {
   packetsIsTouchedSelector,
-  packetsIdsSelector,
   packetsSelector,
 } from 'src/app/store/packets/selectors';
 
@@ -15,9 +14,9 @@ import {
   styleUrls: ['./widget-page-list.component.css'],
 })
 export class WidgetPageListComponent implements OnInit, OnDestroy {
-  public leadId$ = this.store.select(leadIdSelector);
-  public packets$ = this.store.select(packetsSelector);
-  public isPacketsIdsTouched$ = this.store.select(packetsIsTouchedSelector);
+  protected leadId$ = this.store.select(leadIdSelector);
+  protected packets$ = this.store.select(packetsSelector);
+  protected isPacketsIdsTouched$ = this.store.select(packetsIsTouchedSelector);
 
   constructor(
     private store: Store,
@@ -33,7 +32,7 @@ export class WidgetPageListComponent implements OnInit, OnDestroy {
     this.crmService.stopJsonStoragePolling();
   }
 
-  public clickCreateNewButtonHandler(): void {
+  protected clickCreateNewButtonHandler(): void {
     this.routingService.goCreatePage();
   }
 }

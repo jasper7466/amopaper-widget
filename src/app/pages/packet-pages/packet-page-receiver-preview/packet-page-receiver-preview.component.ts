@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { filesIdsOriginalsSelector } from 'src/app/store/files-processed/selectors';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-packet-page-receiver-preview',
@@ -38,13 +39,19 @@ export class PacketPageReceiverPreviewComponent implements OnInit {
 
     this.packetId = parseInt(id);
 
-    this.commonLogicService.getPacketFiles(this.packetId).subscribe();
+    this.commonLogicService
+      .getPacketFiles(this.packetId)
+      .pipe(take(1))
+      .subscribe();
   }
 
   protected showSignInfo(fileId: number): void {
-    this.nopaperService.getFileSignature({ id: fileId }).subscribe(() => {
-      this.signInfo.open();
-    });
+    this.nopaperService
+      .getFileSignature({ id: fileId })
+      .pipe(take(1))
+      .subscribe(() => {
+        this.signInfo.open();
+      });
   }
 
   protected backButtonHandler(): void {
@@ -54,6 +61,7 @@ export class PacketPageReceiverPreviewComponent implements OnInit {
   protected revokeButtonHandler(): void {
     this.commonLogicService
       .revokePacket(this.packetId)
+      .pipe(take(1))
       .subscribe(() => this.routingService.goPacketsListPage());
   }
 }

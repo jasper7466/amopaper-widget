@@ -6,7 +6,7 @@ import {
   OnInit,
   OnDestroy,
 } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-modal',
@@ -19,24 +19,19 @@ export class ModalComponent implements OnInit, OnDestroy {
   @Input() openTrigger: EventEmitter<void>;
   @Input() closeTrigger: EventEmitter<void>;
 
-  private onInitSubscriptions: Subscription[] = [];
-
-  constructor() {}
+  private onDestroyEmitter = new EventEmitter<void>();
 
   ngOnInit(): void {
-    this.onInitSubscriptions.push(
-      this.openTrigger.subscribe(() => this.open())
-    );
-
-    this.onInitSubscriptions.push(
-      this.closeTrigger.subscribe(() => this.close())
-    );
+    this.openTrigger
+      .pipe(takeUntil(this.onDestroyEmitter))
+      .subscribe(() => this.open());
+    this.closeTrigger
+      .pipe(takeUntil(this.onDestroyEmitter))
+      .subscribe(() => this.close());
   }
 
   ngOnDestroy(): void {
-    this.onInitSubscriptions.forEach((subscription) =>
-      subscription.unsubscribe()
-    );
+    this.onDestroyEmitter.emit();
   }
 
   protected close(): void {

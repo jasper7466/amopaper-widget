@@ -1,15 +1,13 @@
 import { RoutingService } from 'src/app/services/sub-services/routing.service';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-packet-page-prepare',
   templateUrl: './packet-page-prepare.component.html',
   styleUrls: ['./packet-page-prepare.component.css'],
 })
-export class PacketPagePrepareComponent implements OnInit {
+export class PacketPagePrepareComponent {
   constructor(private routingService: RoutingService) {}
-
-  ngOnInit(): void {}
 
   public backButtonHandler(): void {
     this.routingService.goPacketsListPage();

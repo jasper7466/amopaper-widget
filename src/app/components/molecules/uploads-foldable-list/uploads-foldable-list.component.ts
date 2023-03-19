@@ -12,8 +12,6 @@ export class UploadsFoldableListComponent {
 
   protected isFolded = false;
 
-  constructor() {}
-
   protected fold(): void {
     this.isFolded = !this.isFolded;
   }

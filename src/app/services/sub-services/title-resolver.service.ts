@@ -30,7 +30,4 @@ export class TitleResolverService implements Resolve<string> {
 
     return title;
   }
-
-  // public resolve() => {
-  // };
 }

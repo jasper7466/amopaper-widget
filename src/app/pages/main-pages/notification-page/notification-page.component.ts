@@ -1,5 +1,5 @@
 import { NotificationService } from 'src/app/services/sub-services/notification.service';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { RoutingService } from 'src/app/services/sub-services/routing.service';
 
 @Component({
@@ -15,7 +15,7 @@ export class NotificationPageComponent {
     private routingService: RoutingService
   ) {}
 
-  protected reset() {
+  protected reset(): void {
     this.routingService.goStartupPage();
   }
 }

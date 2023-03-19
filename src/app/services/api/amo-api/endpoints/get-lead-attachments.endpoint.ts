@@ -1,8 +1,8 @@
 import { EMPTY, expand } from 'rxjs';
 import { ApiService } from '../../api.service';
-import { IGetLeadAttachmentsResponse, NoteType } from '../amo-api-notes.types';
+import { IGetLeadAttachmentsResponse, TNoteType } from '../amo-api-notes.types';
 
-const noteType: NoteType = 'attachment';
+const noteType: TNoteType = 'attachment';
 
 export function getLeadAttachmentsEndpoint(this: ApiService, leadId: number) {
   return this.get<IGetLeadAttachmentsResponse>(

@@ -2,6 +2,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CommonLogicService } from '../../../services/common-logic.service';
 import { Component, OnInit } from '@angular/core';
 import { RoutingService } from 'src/app/services/sub-services/routing.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-packet-page-draft',
@@ -28,17 +29,23 @@ export class PacketPageDraftComponent implements OnInit {
     this.packetId = parseInt(id);
   }
 
-  public backButtonHandler(): void {
+  protected backButtonHandler(): void {
     this.routingService.goPacketsListPage();
   }
 
-  public removeButtonHandler(): void {
-    this.commonLogicService.deletePacket(this.packetId).subscribe();
+  protected removeButtonHandler(): void {
+    this.commonLogicService
+      .deletePacket(this.packetId)
+      .pipe(take(1))
+      .subscribe();
     this.routingService.goPacketsListPage();
   }
 
-  public submitDraftButtonHandler(): void {
+  protected submitDraftButtonHandler(): void {
     this.isControlsEnabled = false;
-    this.commonLogicService.submitPacketDraft(this.packetId).subscribe();
+    this.commonLogicService
+      .submitPacketDraft(this.packetId)
+      .pipe(take(1))
+      .subscribe();
   }
 }
