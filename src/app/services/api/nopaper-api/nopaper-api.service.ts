@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 import { xApiKeySelector } from 'src/app/store/crm-context/selectors';
 import { environment } from 'src/environments/environment';
-import { getPacketDetailsEndpoint } from './endpoints/get-packet-details.endpoint';
+import { getPacketDetailsEndpoint } from './endpoints/deprecated/get-packet-details.endpoint';
 import { getPacketStepNameEndpoint } from './endpoints/get-packet-step-name.endpoint';
 import { createPacketEndpoint } from './endpoints/create-packet.endpoint';
 import { checkByPhoneEndpoint } from './endpoints/check-by-phone.endpoint';
@@ -32,10 +32,12 @@ export class NopaperApiService extends ApiService {
   public postPacket = createPacketEndpoint;
   public checkUserByPhone = checkByPhoneEndpoint;
   public getPacketStepName = getPacketStepNameEndpoint;
-  public setPacketStepName = setPacketStepNameEndpoint;
   public getPacketFilesIds = getPacketFilesIdsEndpoint;
   public getFilesByIds = getFilesByIdsEndpoint;
   public getFileSignatures = getFileSignaturesEndpoint;
-  public getPacketDetails = getPacketDetailsEndpoint;
   public getShareLink = getShareLinkEndpoint;
+  public setPacketStepName = setPacketStepNameEndpoint;
+
+  /** @deprecated */
+  public getPacketDetails = getPacketDetailsEndpoint;
 }

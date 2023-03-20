@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { createPacketEndpoint } from './endpoints/create-packet.endpoint';
 import { getPacketDetailsEndpoint } from './endpoints/get-packet-details.endpoint';
+import { revokePacketEndpoint } from './endpoints/revoke-packet.endpoint';
 
 const BASE_URL = environment.getNopaperBaseUrl('v2');
 
@@ -24,4 +25,5 @@ export class NopaperApiV2Service extends ApiService {
 
   public postPacket = createPacketEndpoint;
   public getPacketDetails = getPacketDetailsEndpoint;
+  public revokePacket = revokePacketEndpoint;
 }

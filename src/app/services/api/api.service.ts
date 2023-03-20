@@ -53,4 +53,12 @@ export class ApiService {
       })
       .pipe(catchError((error) => this.httpErrorHandler(error)));
   }
+
+  protected put<Req, Res>(path: string, body: Req): Observable<Res> {
+    return this.http
+      .put<Res>(`${this._baseUrl}${path}`, body, {
+        headers: this.headers,
+      })
+      .pipe(catchError((error) => this.httpErrorHandler(error)));
+  }
 }

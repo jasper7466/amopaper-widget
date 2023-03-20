@@ -15,7 +15,7 @@ const requestAdapter = (
 export function setPacketStepNameEndpoint(
   this: ApiService,
   packetId: number,
-  status: TPacketStatus
+  status: 'nopaperPrepareFiles'
 ): Observable<void> {
   return this.post<IPostStepNameRequest, void>(
     '/document/changestep',

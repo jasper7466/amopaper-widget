@@ -15,7 +15,7 @@ type FileInfo = {
 };
 
 /** Тело запроса на создание пакета документов. */
-export interface IPostDraftRequest {
+interface IPostDraftRequest {
   /** Заголовок пакета документов. */
   title?: string;
   /** Идентификатор пользователя-отправителя документа. Пользователь должен являться сотрудником компании. */
@@ -28,7 +28,7 @@ export interface IPostDraftRequest {
   documentRouteType?: ROUTE_TYPE;
 }
 
-export interface IPostDraftResponse {
+interface IPostDraftResponse {
   documentId: number;
 }
 
@@ -77,7 +77,7 @@ export function createPacketEndpoint(
   data: IPacketCreateData
 ): Observable<Pick<IPacketDetails, 'id'>> {
   return this.post<IPostDraftRequest, IPostDraftResponse>(
-    'external/document',
+    '/document',
     requestAdapter(data)
   ).pipe(map(responseAdapter));
 }

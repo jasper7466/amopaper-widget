@@ -1,5 +1,5 @@
 import { Observable, map } from 'rxjs';
-import { ApiService } from '../../api.service';
+import { ApiService } from '../../../api.service';
 import { IPacketDetails } from 'src/app/interfaces/packet-details.interface';
 
 type TDocumentDataNames =
@@ -36,6 +36,7 @@ const responseAdapter = (
   createTimeUtc: response.dateCreate,
 });
 
+/** @deprecated */
 export function getPacketDetailsEndpoint(
   this: ApiService,
   packetId: number

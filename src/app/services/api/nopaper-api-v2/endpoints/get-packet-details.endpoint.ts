@@ -1,4 +1,4 @@
-import { Observable, map, tap } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { ApiService } from './../../api.service';
 import {
   DOCUMENT_STATUS,
@@ -6,10 +6,6 @@ import {
   TRecipientInfo,
 } from '../nopaper-api-v2-common.types';
 import { IPacketDetails } from 'src/app/interfaces/packet-details.interface';
-
-interface IGetPacketDetailsRequest {
-  documentId: number;
-}
 
 interface IGetPacketDetailsResponse {
   recipientInfoList: TRecipientInfo;
