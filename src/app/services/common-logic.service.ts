@@ -82,6 +82,7 @@ export class CommonLogicService {
     );
   }
 
+  /** @deprecated */
   public submitPreview(packetId: number): Observable<void> {
     return this.nopaperService.submitPreview(packetId);
   }

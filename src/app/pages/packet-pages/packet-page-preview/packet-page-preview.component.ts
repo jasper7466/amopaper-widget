@@ -69,9 +69,9 @@ export class PacketPagePreviewComponent implements OnInit, OnDestroy {
     this.routingService.goPacketsListPage();
   }
 
-  public removeButtonHandler(): void {
+  public revokeButtonHandler(): void {
     this.commonLogicService
-      .deletePacket(this.packetId)
+      .revokePacket(this.packetId)
       .pipe(take(1))
       .subscribe();
     this.routingService.goPacketsListPage();

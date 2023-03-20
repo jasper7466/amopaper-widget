@@ -30,18 +30,18 @@
   <app-button
     class="left-side"
     iconOption="sign"
-    [isEnabled]="!isAwaiting"
+    [isEnabled]="false"
     (onClick)="submitButtonHandler()"
     >Подписать и отправить</app-button
   >
 
   <app-button
     class="left-side"
-    (onClick)="removeButtonHandler()"
+    (onClick)="revokeButtonHandler()"
     styleOption="blank"
     colorOption="danger"
     [isEnabled]="!isAwaiting"
-    >Удалить</app-button
+    >Отозвать</app-button
   >
 
   <app-button

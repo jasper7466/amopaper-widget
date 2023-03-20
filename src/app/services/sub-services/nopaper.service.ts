@@ -87,12 +87,14 @@ export class NopaperService {
    *
    * Переводит пакет в статус `nopaperSenderSign`.
    * @param packetId Идентификатор пакета документов.
+   * @deprecated
    */
   public submitPreview(packetId: number): Observable<void> {
-    return this.nopaperApiService.setPacketStepName(
-      packetId,
-      'nopaperSenderSign'
-    );
+    throw new Error('submitPreview() method is deprecated');
+    // return this.nopaperApiService.setPacketStepName(
+    //   packetId,
+    //   'nopaperSenderSign'
+    // );
   }
 
   /**
@@ -102,9 +104,11 @@ export class NopaperService {
    *
    * Переводит пакет в статус `nopaperSenderSign`.
    * @param packetId Идентификатор пакета документов.
+   * @deprecated
    */
   public deletePacket(packetId: number): Observable<void> {
-    return this.nopaperApiService.setPacketStepName(packetId, 'nopaperDelete');
+    throw new Error('deletePacket() method is deprecated');
+    // return this.nopaperApiService.setPacketStepName(packetId, 'nopaperDelete');
   }
 
   /**
@@ -116,10 +120,7 @@ export class NopaperService {
    * @param packetId Идентификатор пакета документов.
    */
   public revokePacket(packetId: number): Observable<void> {
-    return this.nopaperApiService.setPacketStepName(
-      packetId,
-      'nopaperSenderCancel'
-    );
+    return this.nopaperApiV2Service.revokePacket(packetId);
   }
 
   /**
