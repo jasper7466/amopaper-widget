@@ -1,4 +1,3 @@
-import { TFile } from 'src/app/interfaces/file.type';
 import { IPacketFile } from 'src/app/interfaces/packet-file.interface';
 import { IPacketFilesInfo } from 'src/app/interfaces/packet-files-info.interface';
 

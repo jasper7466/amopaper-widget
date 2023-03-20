@@ -1,7 +1,6 @@
 import { IPacketFilesInfo } from 'src/app/interfaces/packet-files-info.interface';
 import { FILES_PROCESSED_KEY } from './index';
 import { createAction, props } from '@ngrx/store';
-import { TFile } from 'src/app/interfaces/file.type';
 import { IPacketFile } from 'src/app/interfaces/packet-file.interface';
 
 export const setFilesIdentifiersAction = createAction(

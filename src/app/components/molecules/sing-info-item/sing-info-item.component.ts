@@ -9,7 +9,7 @@ import { TSignatureInfo } from 'src/app/interfaces/signature-info.type';
 export class SingInfoItemComponent {
   @Input() signature: TSignatureInfo;
 
-  protected isFolded: boolean = false;
+  protected isFolded = false;
 
   protected fold(): void {
     this.isFolded = !this.isFolded;

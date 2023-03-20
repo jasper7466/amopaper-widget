@@ -12,7 +12,7 @@
       id="fileInputId"
       #fileInputRef
       appFileBrowser
-      (onChanged)="fileLoadHandler($event)"
+      (changedEmitter)="fileLoadHandler($event)"
     />
   </label>
   <app-button

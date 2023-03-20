@@ -7,7 +7,7 @@ import { ADDRESSEE_ID_TYPE } from 'src/app/interfaces/addressee.interface';
   styleUrls: ['./addressee-nameplate.component.css'],
 })
 export class AddresseeNameplateComponent {
-  @Input() name: string = 'Получатель';
+  @Input() name = 'Получатель';
   @Input() idValue: string;
   @Input() idType: ADDRESSEE_ID_TYPE;
 

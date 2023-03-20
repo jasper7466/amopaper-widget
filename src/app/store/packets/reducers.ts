@@ -55,7 +55,7 @@ export const packetsReducer = createReducer(
       return { ...state };
     }
 
-    let updatedPacketsList = [...state.packets];
+    const updatedPacketsList = [...state.packets];
     updatedPacketsList.splice(indexToUpdate, 1, {
       ...packetToUpdate,
       status,
@@ -86,7 +86,7 @@ export const packetsReducer = createReducer(
       return { ...state };
     }
 
-    let updatedPacketsList = [...state.packets];
+    const updatedPacketsList = [...state.packets];
     updatedPacketsList.splice(indexToUpdate, 1, {
       ...packetToUpdate,
       title,

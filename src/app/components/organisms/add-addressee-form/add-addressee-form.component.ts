@@ -12,11 +12,11 @@ import { ADDRESSEE_ID_TYPE } from 'src/app/interfaces/addressee.interface';
   styleUrls: ['./add-addressee-form.component.css'],
 })
 export class AddAddresseeFormComponent {
-  @Output() onSubmit = new EventEmitter<void>();
+  @Output() submitEmitter = new EventEmitter<void>();
 
   protected searchSelector: ADDRESSEE_ID_TYPE = ADDRESSEE_ID_TYPE.VatId;
-  protected isSubmitEnabled: boolean = false;
-  private value: string = '';
+  protected isSubmitEnabled = false;
+  private value = '';
 
   protected addresseeIdType = ADDRESSEE_ID_TYPE;
 
@@ -46,7 +46,7 @@ export class AddAddresseeFormComponent {
   }
 
   protected submit(): void {
-    this.onSubmit.emit();
+    this.submitEmitter.emit();
 
     this.store.dispatch(
       addresseeUpdateAction({

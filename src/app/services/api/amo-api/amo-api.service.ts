@@ -32,7 +32,9 @@ export class AmoApiService extends ApiService {
     });
 
     this.store.select(domainSelector).subscribe((domain) => {
-      this.baseUrl = BASE_URL_COMPILER(domain!);
+      if (domain) {
+        this.baseUrl = BASE_URL_COMPILER(domain);
+      }
     });
   }
 

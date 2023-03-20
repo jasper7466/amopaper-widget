@@ -5,7 +5,7 @@ import { TPacketStatus } from 'src/app/interfaces/packet-status.type';
 
 export type TNavigationPart = {
   title: string;
-  routerLink: string | any[];
+  routerLink: string[];
 };
 
 @Injectable()
@@ -38,7 +38,7 @@ export class RoutingService {
       }),
       map((route) => {
         const routes = route.snapshot.pathFromRoot;
-        let navParts: TNavigationPart[] = [];
+        const navParts: TNavigationPart[] = [];
 
         for (const route of routes) {
           const title = route.title;

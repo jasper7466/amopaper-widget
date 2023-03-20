@@ -43,21 +43,21 @@ export class CrmService {
     }
   }
 
-  private getJsonStorage(): Observable<any> {
-    return this.crmJsonStorageService
-      .getStorage()
-      .pipe(
-        tap((storageState) =>
-          this.store.dispatch(updateLeadJsonStorageAction(storageState))
-        )
-      );
+  private getJsonStorage(): Observable<void> {
+    return this.crmJsonStorageService.getStorage().pipe(
+      tap((storageState) =>
+        this.store.dispatch(updateLeadJsonStorageAction(storageState))
+      ),
+      switchMap(() => of(void 0))
+    );
   }
 
-  public getCrmContext(): Observable<any> {
+  public getCrmContext(): Observable<void> {
     return this.amoPostApiService.getCrmContext().pipe(
       tap((context) => {
         this.store.dispatch(updateCrmContextAction(context));
-      })
+      }),
+      switchMap(() => of(void 0))
     );
   }
 
@@ -76,11 +76,11 @@ export class CrmService {
     this.storagePollingBreaker.emit();
   }
 
-  public attachPacketToLead(packetId: number): Observable<any> {
+  public attachPacketToLead(packetId: number): Observable<void> {
     return this.crmJsonStorageService.getStorage().pipe(
       switchMap((state) => {
         if (state.packetsIdsList.includes(packetId)) {
-          return of(null);
+          return of(void 0);
         }
 
         return this.crmJsonStorageService.setStorage({
@@ -90,14 +90,14 @@ export class CrmService {
     );
   }
 
-  public detachPacketFromLead(packetId: number): Observable<any> {
+  public detachPacketFromLead(packetId: number): Observable<void> {
     return this.crmJsonStorageService.getStorage().pipe(
       switchMap((state) => {
         const filteredIdList = state.packetsIdsList.filter(
           (id) => id !== packetId
         );
         if (state.packetsIdsList.length === filteredIdList.length) {
-          return of(null);
+          return of(void 0);
         }
         return this.crmJsonStorageService.setStorage({
           packetsIdsList: filteredIdList,

@@ -1,7 +1,6 @@
 import { ApiService } from '../../api.service';
 import { base64ToFile } from 'src/app/utils/base64-to-file.util';
 import { Observable, forkJoin, map, switchMap, take } from 'rxjs';
-import { TFile } from 'src/app/interfaces/file.type';
 import { IPacketFile } from 'src/app/interfaces/packet-file.interface';
 
 interface IGetFilesByIdsRequest {

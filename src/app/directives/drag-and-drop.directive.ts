@@ -11,13 +11,13 @@ import {
   selector: '[appDragAndDrop]',
 })
 export class DragAndDropDirective {
-  @Input() fileOverClass: string = '';
+  @Input() fileOverClass = '';
   @HostBinding('class') get class() {
     return this.fileOver ? this.fileOverClass : '';
   }
   @Output() fileDropped = new EventEmitter<FileList>();
 
-  fileOver: boolean = false;
+  fileOver = false;
 
   @HostListener('dragover', ['$event']) onDragOver(event: DragEvent) {
     event.preventDefault();

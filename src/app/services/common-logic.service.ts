@@ -92,7 +92,7 @@ export class CommonLogicService {
    * @param packetId Идентификатор пакета документов.
    * @returns
    */
-  public deletePacket(packetId: number): Observable<any> {
+  public deletePacket(packetId: number): Observable<void> {
     return this.nopaperService
       .deletePacket(packetId)
       .pipe(switchMap(() => this.crmService.detachPacketFromLead(packetId)));
@@ -103,13 +103,13 @@ export class CommonLogicService {
    * @param packetId Идентификатор пакета документов.
    * @returns
    */
-  public revokePacket(packetId: number): Observable<any> {
+  public revokePacket(packetId: number): Observable<void> {
     return this.nopaperService
       .revokePacket(packetId)
       .pipe(switchMap(() => this.crmService.detachPacketFromLead(packetId)));
   }
 
-  public getPacketFiles(packetId: number): Observable<any> {
+  public getPacketFiles(packetId: number): Observable<void> {
     return this.nopaperService.getPacketFilesIds(packetId).pipe(
       switchMap(() => this.store.select(filesIdsOriginalsSelector)),
       take(1),

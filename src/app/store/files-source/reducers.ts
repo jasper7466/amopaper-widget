@@ -47,7 +47,7 @@ export const sourceFilesReducer = createReducer(
       isComplete,
     };
   }),
-  on(sourceFilesResetAction, (state) => {
+  on(sourceFilesResetAction, () => {
     return { ...initialState };
   })
 );

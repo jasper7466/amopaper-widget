@@ -14,7 +14,7 @@ export class DocumentsListItemComponent {
   @Input() file?: File;
   @Input() signStatus: TStatusLabelStatus | null = null;
   @Input() fileName?: string;
-  @Output() onShowSignInfo = new EventEmitter<number>();
+  @Output() showSignInfoEmitter = new EventEmitter<number>();
 
   private _file: File;
 
@@ -25,7 +25,7 @@ export class DocumentsListItemComponent {
       return;
     }
 
-    this.onShowSignInfo.emit(this.fileId);
+    this.showSignInfoEmitter.emit(this.fileId);
   }
 
   protected plateClick(): void {

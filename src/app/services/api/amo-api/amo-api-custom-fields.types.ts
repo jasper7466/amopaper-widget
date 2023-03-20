@@ -50,12 +50,12 @@ export interface ICustomField extends IEmbeddedItem {
   is_api_only: boolean;
   enums: TCustomFieldEnum[] | null;
   group_id: string | null;
-  required_statuses: any[];
+  required_statuses: unknown[];
   is_deletable: boolean;
   is_predefined: boolean;
   entity_type: TCustomFieldEntityType;
   remind?: TCustomFieldRemind | null;
-  triggers: any[];
+  triggers: unknown[];
   currency: string | null;
   hidden_statuses: [];
 }
@@ -63,6 +63,7 @@ export interface ICustomField extends IEmbeddedItem {
 interface ICustomFieldsValues {
   field_id: number;
   values: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     value: any;
   }[];
 }
@@ -83,6 +84,7 @@ export interface IPatchLeadRequest {
   loss_reason_id: number;
   responsible_user_id: number;
   custom_fields_values: ICustomFieldsValues[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   _embedded: { [key: string]: any };
   request_id: string;
 }
@@ -114,5 +116,6 @@ export interface IGetLeadByIdResponse {
   score: number | null;
   account_id: number;
   is_price_modified_by_robot: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   _embedded: { [key: string]: any };
 }

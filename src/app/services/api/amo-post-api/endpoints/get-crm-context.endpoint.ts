@@ -3,11 +3,9 @@ import {
   IWidgetSettings,
   TConstants,
 } from '../amo-post-api-common.types';
-import { Observable, map, tap } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { AmoPostApiService } from '../amo-post-api.service';
 import { ICrmContext } from 'src/app/interfaces/crm-context.interface';
-
-interface IGetCrmContextRequest {}
 
 interface IGetCrmContextResponse {
   settings: IWidgetSettings & { x_api_key: string };
@@ -35,7 +33,7 @@ export function getCrmContextEndpoint(
   this: AmoPostApiService
 ): Observable<ICrmContext> {
   return this.postMessageTransportService
-    .request<IGetCrmContextRequest, IGetCrmContextResponse>({
+    .request<Record<string, never>, IGetCrmContextResponse>({
       action: 'getCrmContextRequest',
       backwardAction: 'getCrmContextResponse',
       payload: {},

@@ -7,7 +7,7 @@
   ></app-packets-list>
 
   <app-preloader
-    *ngIf="!(isPacketsIdsTouched$ | async)"
+    *ngIf="(isPacketsIdsTouched$ | async) === false"
     class="preloader"
     animationOption="rotation"
   ></app-preloader>

@@ -7,7 +7,6 @@ interface IGetStepNameResponse {
   stepName: TNopaperStepName;
 }
 
-type TRequest = Pick<IPacketDetails, 'id'>;
 type TResponse = Pick<IPacketDetails, 'id' | 'status'>;
 
 const responseAdapter = (

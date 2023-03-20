@@ -16,7 +16,7 @@
 <div>
   <app-input
     *ngIf="searchSelector === addresseeIdType.VatId"
-    (onKeyUp)="searchInputKeyUp($event)"
+    (keyUp)="searchInputKeyUp($event)"
     class="add-addressee__search-input"
     placeholder="ИНН"
     maskPrefix="№ "
@@ -24,7 +24,7 @@
   ></app-input>
   <app-input
     *ngIf="searchSelector === addresseeIdType.Phone"
-    (onKeyUp)="searchInputKeyUp($event)"
+    (keyUp)="searchInputKeyUp($event)"
     class="add-addressee__search-input"
     placeholder="Телефон"
     maskPrefix="+7 "

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AmoApiService } from '../api/amo-api/amo-api.service';
-import { Observable, map, switchMap, tap } from 'rxjs';
+import { Observable, map, switchMap, tap, of } from 'rxjs';
 import { config } from 'src/app/constants/config';
 import { ICrmLeadJsonStorage } from 'src/app/interfaces/crm-lead-json-storage.interface';
 import { Store } from '@ngrx/store';
@@ -23,11 +23,11 @@ export class CrmJsonStorageService {
     this.activeLead$.subscribe((leadId) => (this.activeLeadId = leadId));
   }
 
-  public init(): Observable<any> {
+  public init(): Observable<void> {
     return this.getStorageFieldId();
   }
 
-  private getStorageFieldId(): Observable<number> {
+  private getStorageFieldId(): Observable<void> {
     return this.amoApiService
       .getLeadsCustomFieldsInfoByName(storageFieldName)
       .pipe(
@@ -41,7 +41,8 @@ export class CrmJsonStorageService {
 
           return fields[0].id;
         }),
-        tap((id) => (this.storageFieldId = id))
+        tap((id) => (this.storageFieldId = id)),
+        switchMap(() => of(void 0))
       );
   }
 
@@ -70,7 +71,7 @@ export class CrmJsonStorageService {
       );
   }
 
-  public setStorage(payload: Partial<ICrmLeadJsonStorage>): Observable<any> {
+  public setStorage(payload: Partial<ICrmLeadJsonStorage>): Observable<void> {
     return this.getStorage().pipe(
       switchMap((actualState) => {
         const newStateStringified = JSON.stringify({
@@ -82,7 +83,8 @@ export class CrmJsonStorageService {
           this.activeLeadId,
           [{ id: this.storageFieldId, values: [newStateStringified] }]
         );
-      })
+      }),
+      switchMap(() => of(void 0))
     );
   }
 }

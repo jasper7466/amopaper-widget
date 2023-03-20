@@ -20,7 +20,7 @@ import { clearSignaturesAction } from 'src/app/store/signatures/actions';
 })
 export class PacketPagePreviewComponent implements OnInit, OnDestroy {
   private packetId: number;
-  protected isAwaiting: boolean = true;
+  protected isAwaiting = true;
 
   protected packet$: Observable<IPacketDetails>;
   protected filesIds$ = this.store.select(filesIdsOriginalsSelector);

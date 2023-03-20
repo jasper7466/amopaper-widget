@@ -6,6 +6,7 @@ import {
   combineLatest,
   filter,
   Observable,
+  of,
   Subject,
   switchMap,
   take,
@@ -30,7 +31,6 @@ import { IPacketCreateData } from 'src/app/interfaces/packet-create-data.interfa
 import { IFileSignatures } from 'src/app/interfaces/file-signatures.interface';
 import { IPacketDetails } from 'src/app/interfaces/packet-details.interface';
 import { IShareLink } from 'src/app/interfaces/share-link.interface';
-import { IPacketFile } from 'src/app/interfaces/packet-file.interface';
 import { NopaperApiV2Service } from '../api/nopaper-api-v2/nopaper-api-v2.service';
 
 const POLLING_INTERVAL_MS = 3000;
@@ -89,6 +89,7 @@ export class NopaperService {
    * @param packetId Идентификатор пакета документов.
    * @deprecated
    */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public submitPreview(packetId: number): Observable<void> {
     throw new Error('submitPreview() method is deprecated');
     // return this.nopaperApiService.setPacketStepName(
@@ -100,12 +101,13 @@ export class NopaperService {
   /**
    * Удаляет пакет документов.
    * Используется для пакетов со статусами `new`, `nopaperPreviewBeforeOferta`,
-   * `nopaperPreview`, `nopaperSenderCancel`, `nopaperSenderCancelEnd`.
+   * `nopaperPreview`, `nopaperSenderCancel`, `nopaperSenderCancelEnd`.
    *
    * Переводит пакет в статус `nopaperSenderSign`.
    * @param packetId Идентификатор пакета документов.
    * @deprecated
    */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public deletePacket(packetId: number): Observable<void> {
     throw new Error('deletePacket() method is deprecated');
     // return this.nopaperApiService.setPacketStepName(packetId, 'nopaperDelete');
@@ -180,14 +182,13 @@ export class NopaperService {
    * Результат сохраняется в хранилище.
    * @param filesIds Массив идентификаторов файлов.
    */
-  public getFilesByIds(filesIds: number[]): Observable<IPacketFile[]> {
-    return this.nopaperApiService
-      .getFilesByIds(filesIds)
-      .pipe(
-        tap((response) =>
-          this.store.dispatch(setOriginalsFilesAction({ payload: response }))
-        )
-      );
+  public getFilesByIds(filesIds: number[]): Observable<void> {
+    return this.nopaperApiService.getFilesByIds(filesIds).pipe(
+      tap((response) =>
+        this.store.dispatch(setOriginalsFilesAction({ payload: response }))
+      ),
+      switchMap(() => of(void 0))
+    );
   }
 
   /**

@@ -1,10 +1,4 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  OnDestroy,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy } from '@angular/core';
 import { IPacketDetails } from 'src/app/interfaces/packet-details.interface';
 import { NopaperService } from 'src/app/services/sub-services/nopaper.service';
 import { RoutingService } from 'src/app/services/sub-services/routing.service';
@@ -22,7 +16,7 @@ export class PacketsListItemComponent implements OnDestroy, OnChanges {
     private nopaperService: NopaperService
   ) {}
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(): void {
     this.nopaperService.startPacketPolling(this.packet.id);
   }
 

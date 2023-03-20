@@ -14,7 +14,7 @@ interface IGetPacketDetailsRequest {
 
 type TDocumentData = {
   name: string;
-  data: { [key: string]: any };
+  data: { [key: string]: unknown };
 };
 
 interface IGetPacketDetailsResponse {
@@ -24,7 +24,7 @@ interface IGetPacketDetailsResponse {
   stepId: number;
   workflowId: number;
   dateCreate: string;
-  availableStatuses: any[];
+  availableStatuses: unknown[];
 }
 
 const responseAdapter = (

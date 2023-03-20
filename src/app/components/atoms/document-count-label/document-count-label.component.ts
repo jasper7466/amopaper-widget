@@ -7,5 +7,5 @@ import { Component, Input } from '@angular/core';
 })
 export class DocumentCountLabelComponent {
   @Input() count: number;
-  protected caption: string = 'untitled';
+  protected caption = 'untitled';
 }

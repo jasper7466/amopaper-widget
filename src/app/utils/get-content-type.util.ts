@@ -23,7 +23,7 @@ const contentTypes: { [key: string]: string } = {
  * @returns
  */
 export const getContentType = (extOrFullName: string): string | never => {
-  let ext = extOrFullName.split('.').pop() || '';
+  const ext = extOrFullName.split('.').pop() || '';
 
   if (!(ext in contentTypes)) {
     throw new Error('getContentType: empty or unknown extension');

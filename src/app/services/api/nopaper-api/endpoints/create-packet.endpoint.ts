@@ -23,7 +23,7 @@ interface IPostDraftResponse {
 const requestAdapter = (data: IPacketCreateData): IPostDraftRequest | never => {
   const { addressee, files, title } = data;
 
-  let body: IPostDraftRequest = {
+  const body: IPostDraftRequest = {
     clientFlPhoneNumber: undefined,
     clientUlInn: undefined,
     files: [],

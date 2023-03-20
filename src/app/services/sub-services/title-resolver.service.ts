@@ -1,10 +1,6 @@
 import { Store } from '@ngrx/store';
 import { Injectable } from '@angular/core';
-import {
-  ActivatedRouteSnapshot,
-  Resolve,
-  RouterStateSnapshot,
-} from '@angular/router';
+import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { Observable, take } from 'rxjs';
 import { packetTitleSelector } from 'src/app/store/packets/selectors';
 
@@ -13,8 +9,7 @@ export class TitleResolverService implements Resolve<string> {
   constructor(private store: Store) {}
 
   resolve(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
+    route: ActivatedRouteSnapshot
   ): string | Observable<string> | Promise<string> {
     const id = route.paramMap.get('id');
     let title = '';

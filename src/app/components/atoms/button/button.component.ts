@@ -15,13 +15,12 @@ export class ButtonComponent {
   @Input() colorOption: TColor = 'regular';
   @Input() iconOption: TIcon = '';
   @Input() sizeOption: TSize = 'medium';
-  @Input() isEnabled: boolean = true;
-  @Input() typeOption: string = 'button';
+  @Input() isEnabled = true;
+  @Input() typeOption = 'button';
 
-  @Output()
-  onClick = new EventEmitter<void>();
+  @Output() Click = new EventEmitter<void>();
 
   protected clickHandler(): void {
-    this.onClick.emit();
+    this.Click.emit();
   }
 }

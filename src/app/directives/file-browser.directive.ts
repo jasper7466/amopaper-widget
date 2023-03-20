@@ -10,7 +10,7 @@ import {
   selector: '[appFileBrowser]',
 })
 export class FileBrowserDirective {
-  @Output() onChanged = new EventEmitter<FileList>();
+  @Output() changedEmitter = new EventEmitter<FileList>();
 
   constructor(private hostRef: ElementRef) {}
 
@@ -21,7 +21,7 @@ export class FileBrowserDirective {
     const files = (<HTMLInputElement>event.target).files;
 
     if (files?.length) {
-      this.onChanged.emit(files);
+      this.changedEmitter.emit(files);
     }
 
     this.hostRef.nativeElement.value = '';

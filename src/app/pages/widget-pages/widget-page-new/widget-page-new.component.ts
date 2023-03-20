@@ -25,8 +25,8 @@ export class WidgetPageNewComponent implements OnInit, OnDestroy {
     isSourceFilesCompleteAllSelector
   );
 
-  protected isControlsEnabled: boolean = false;
-  protected isAwaiting: boolean = false;
+  protected isControlsEnabled = false;
+  protected isAwaiting = false;
 
   constructor(
     private store: Store,

@@ -68,5 +68,5 @@ export interface IEventListener {
   callback: (
     this: XMLHttpRequest,
     ev: Partial<XMLHttpRequestEventMap[keyof XMLHttpRequestEventMap]>
-  ) => any;
+  ) => void;
 }

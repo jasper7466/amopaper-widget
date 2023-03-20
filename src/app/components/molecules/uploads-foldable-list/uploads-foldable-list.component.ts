@@ -8,7 +8,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 export class UploadsFoldableListComponent {
   @Input() loadedCount: number;
   @Input() totalCount: number;
-  @Output() onClear = new EventEmitter<void>();
+  @Output() clearEmitter = new EventEmitter<void>();
 
   protected isFolded = false;
 
@@ -17,6 +17,6 @@ export class UploadsFoldableListComponent {
   }
 
   protected clear(): void {
-    this.onClear.emit();
+    this.clearEmitter.emit();
   }
 }

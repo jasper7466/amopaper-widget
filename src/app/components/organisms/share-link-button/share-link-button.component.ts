@@ -21,7 +21,7 @@ export class ShareLinkButtonComponent {
 
   protected caption: string = CAPTIONS.initial;
   protected style: ButtonStyleOption = 'solid';
-  protected isEnabled: boolean = true;
+  protected isEnabled = true;
 
   protected shareLink$ = this.store.select(shareLinkSelector);
 

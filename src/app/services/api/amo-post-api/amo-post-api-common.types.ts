@@ -1,13 +1,13 @@
 export type TConstants = {
-  user: {};
+  user: Record<string, never>;
   user_rights: {
     is_admin: boolean;
     is_free_user: boolean;
   };
-  account: {};
-  managers: {};
-  groups: {};
-  task_types: {};
+  account: Record<string, never>;
+  managers: Record<string, never>;
+  groups: Record<string, never>;
+  task_types: Record<string, never>;
 };
 
 export interface IWidgetSettings {
@@ -18,7 +18,7 @@ export interface IWidgetSettings {
   oauth_client_uuid: string;
   path: string;
   status: 'not_configured' | 'installed';
-  support: any[];
+  support: unknown[];
   version: string;
   widget_active: 'N' | 'Y';
   widget_code: string;

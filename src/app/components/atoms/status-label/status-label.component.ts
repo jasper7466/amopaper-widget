@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 
 export type TStatusLabelStatus =
   | 'unknown'
@@ -27,9 +27,9 @@ const statusCaptions: { [key in TStatusLabelStatus]: string } = {
 export class StatusLabelComponent implements OnChanges {
   @Input() status: TStatusLabelStatus = 'unknown';
 
-  public caption: string = 'Undefined';
+  public caption = 'Undefined';
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(): void {
     this.caption = statusCaptions[this.status];
   }
 }

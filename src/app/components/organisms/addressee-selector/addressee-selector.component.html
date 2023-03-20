@@ -1,7 +1,7 @@
 <div class="addressee__header">
   <app-subtitle>Получатель</app-subtitle>
   <app-button
-    [isEnabled]="!(isAddresseeAdded$ | async)"
+    [isEnabled]="(isAddresseeAdded$ | async) === false"
     class="addressee__add-button"
     styleOption="skeleton"
     colorOption="regular"

@@ -1,14 +1,11 @@
-import { Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ApiService } from './../../api.service';
-
-/** Тело запроса на отзыв пакета документов. */
-interface IRevokePacketRequest {}
 
 export function revokePacketEndpoint(
   this: ApiService,
   packetId: number
 ): Observable<void> {
-  return this.put<IRevokePacketRequest, void>(
+  return this.put<Record<string, never>, void>(
     `/document/${packetId}/revoke`,
     {}
   );

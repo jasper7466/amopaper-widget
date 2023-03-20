@@ -19,7 +19,11 @@ export class AccessTokenLocalApiService extends ApiService {
 
     this.baseUrl = BASE_URL;
     this.setHeaders({ 'Content-Type': 'application/json' });
-    this.xApiKey$.subscribe((key) => (this.xApiKey = key!));
+    this.xApiKey$.subscribe((key) => {
+      if (key) {
+        this.xApiKey = key;
+      }
+    });
   }
 
   public getAmoAccessToken(): Observable<IGetAmoAccessTokenResponse> {

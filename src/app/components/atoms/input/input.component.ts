@@ -8,17 +8,17 @@ type TTooltip = 'tooltip' | null;
   styleUrls: ['./input.component.css'],
 })
 export class InputComponent {
-  @Input() label: string = '';
-  @Input() placeholder: string = '';
+  @Input() label = '';
+  @Input() placeholder = '';
   @Input() tooltipOption: TTooltip = null;
-  @Input() mask: string = '';
-  @Input() type: string = 'text';
-  @Input() maskPrefix: string = '';
+  @Input() mask = '';
+  @Input() type = 'text';
+  @Input() maskPrefix = '';
 
   @Output()
-  onKeyUp = new EventEmitter<string>();
+  keyUp = new EventEmitter<string>();
 
   protected inputKeyUpHandler(value: string): void {
-    this.onKeyUp.emit(value);
+    this.keyUp.emit(value);
   }
 }
