@@ -52,6 +52,11 @@
             "modifiers": ["private"],
             "prefix": ["_"],
             "format": ["camelCase"]
+          },
+          // CodeGuide 1.2.6: Именование методов классов в "camelCase"
+          {
+            "selector": ["classMethod"],
+            "format": ["camelCase"]
           }
         ],
         // CodeGuide 1.2.3: Поля класса должны иметь модификатор доступа
