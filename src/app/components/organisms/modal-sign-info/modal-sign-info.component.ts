@@ -8,8 +8,8 @@ import { signatureSelector } from 'src/app/store/signatures/selectors';
   styleUrls: ['./modal-sign-info.component.css'],
 })
 export class ModalSignInfoComponent {
-  @HostBinding('class.opened') isOpened = false;
-  @Input() isLoading = false;
+  @HostBinding('class.opened') protected isOpened = false;
+  @Input() protected isLoading = false;
 
   protected signatures$ = this._store.select(signatureSelector);
 

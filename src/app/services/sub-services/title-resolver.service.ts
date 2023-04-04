@@ -8,7 +8,7 @@ import { packetTitleSelector } from 'src/app/store/packets/selectors';
 export class TitleResolverService implements Resolve<string> {
   constructor(private _store: Store) {}
 
-  resolve(
+  public resolve(
     route: ActivatedRouteSnapshot
   ): string | Observable<string> | Promise<string> {
     const id = route.paramMap.get('id');

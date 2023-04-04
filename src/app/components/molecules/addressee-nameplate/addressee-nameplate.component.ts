@@ -7,11 +7,11 @@ import { ADDRESSEE_ID_TYPE } from 'src/app/interfaces/addressee.interface';
   styleUrls: ['./addressee-nameplate.component.css'],
 })
 export class AddresseeNameplateComponent {
-  @Input() name = 'Получатель';
-  @Input() idValue: string;
-  @Input() idType: ADDRESSEE_ID_TYPE;
+  @Input() public name = 'Получатель';
+  @Input() public idValue: string;
+  @Input() public idType: ADDRESSEE_ID_TYPE;
 
-  @Output() clickRemoveButton = new EventEmitter<void>();
+  @Output() protected clickRemoveButton = new EventEmitter<void>();
 
   protected addresseeIdType = ADDRESSEE_ID_TYPE;
 

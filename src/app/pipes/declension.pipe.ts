@@ -12,7 +12,7 @@ export class DeclensionPipe implements PipeTransform {
    * @param fewPieces значение для нескольких единиц
    * @returns значение с правильным склонением
    */
-  transform(
+  public transform(
     value: number,
     onePiece: string,
     twoPieces: string,

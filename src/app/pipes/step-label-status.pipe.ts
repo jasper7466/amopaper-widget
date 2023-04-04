@@ -29,7 +29,7 @@ const stepToLabelStatusDict: { [key in TPacketStatus]: TStatusLabelStatus } = {
   name: 'toLabelStatus',
 })
 export class StepToLabelStatusPipe implements PipeTransform {
-  transform(stepName: TPacketStatus | null): TStatusLabelStatus {
+  public transform(stepName: TPacketStatus | null): TStatusLabelStatus {
     if (!stepName) {
       return 'unknown';
     }

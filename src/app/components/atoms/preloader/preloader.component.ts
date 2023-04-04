@@ -9,6 +9,6 @@ type TIcon = 'preparing' | 'awaiting' | 'signing' | '';
   styleUrls: ['./preloader.component.css'],
 })
 export class PreloaderComponent {
-  @Input() animationOption: TAnimation = '';
-  @Input() iconOption: TIcon = '';
+  @Input() public animationOption: TAnimation = '';
+  @Input() public iconOption: TIcon = '';
 }

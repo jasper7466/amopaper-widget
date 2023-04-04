@@ -14,14 +14,14 @@ import { takeUntil } from 'rxjs';
   styleUrls: ['./modal.component.css'],
 })
 export class ModalComponent implements OnInit, OnDestroy {
-  @HostBinding('class.opened') isOpened = false;
-  @Input() isClosable = true;
-  @Input() openTrigger: EventEmitter<void>;
-  @Input() closeTrigger: EventEmitter<void>;
+  @HostBinding('class.opened') protected isOpened = false;
+  @Input() protected isClosable = true;
+  @Input() public openTrigger: EventEmitter<void>;
+  @Input() public closeTrigger: EventEmitter<void>;
 
   private _onDestroyEmitter = new EventEmitter<void>();
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.openTrigger
       .pipe(takeUntil(this._onDestroyEmitter))
       .subscribe(() => this.open());
@@ -30,7 +30,7 @@ export class ModalComponent implements OnInit, OnDestroy {
       .subscribe(() => this.close());
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this._onDestroyEmitter.emit();
   }
 

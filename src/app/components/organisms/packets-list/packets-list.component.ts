@@ -7,5 +7,5 @@ import { IPacketDetails } from 'src/app/interfaces/packet-details.interface';
   styleUrls: ['./packets-list.component.css'],
 })
 export class PacketsListComponent {
-  @Input() packets: IPacketDetails[];
+  @Input() public packets: IPacketDetails[];
 }

@@ -9,18 +9,18 @@ import { RoutingService } from 'src/app/services/sub-services/routing.service';
   styleUrls: ['./packets-list-item.component.css'],
 })
 export class PacketsListItemComponent implements OnDestroy, OnChanges {
-  @Input() packet: IPacketDetails;
+  @Input() public packet: IPacketDetails;
 
   constructor(
     private _routingService: RoutingService,
     private _nopaperService: NopaperService
   ) {}
 
-  ngOnChanges(): void {
+  public ngOnChanges(): void {
     this._nopaperService.startPacketPolling(this.packet.id);
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this._nopaperService.stopPacketPolling(this.packet.id);
   }
 

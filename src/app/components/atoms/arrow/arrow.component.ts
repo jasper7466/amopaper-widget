@@ -9,6 +9,6 @@ type TColor = 'gray' | 'black' | 'primary' | '';
   styleUrls: ['./arrow.component.css'],
 })
 export class ArrowComponent {
-  @Input() direction: TDirection = 'left';
-  @Input() color: TColor = 'gray';
+  @Input() public direction: TDirection = 'left';
+  @Input() public color: TColor = 'gray';
 }

@@ -11,30 +11,32 @@ import {
   selector: '[appDragAndDrop]',
 })
 export class DragAndDropDirective {
-  @Input() fileOverClass = '';
-  @HostBinding('class') get class() {
-    return this.fileOver ? this.fileOverClass : '';
+  @Input() public fileOverClass = '';
+  @HostBinding('class') protected get class() {
+    return this._fileOver ? this.fileOverClass : '';
   }
-  @Output() fileDropped = new EventEmitter<FileList>();
+  @Output() protected fileDropped = new EventEmitter<FileList>();
 
-  fileOver = false;
+  private _fileOver = false;
 
-  @HostListener('dragover', ['$event']) onDragOver(event: DragEvent) {
+  @HostListener('dragover', ['$event']) protected onDragOver(event: DragEvent) {
     event.preventDefault();
     event.stopPropagation();
-    this.fileOver = true;
+    this._fileOver = true;
   }
 
-  @HostListener('dragleave', ['$event']) onDragLeave(event: DragEvent) {
+  @HostListener('dragleave', ['$event']) protected onDragLeave(
+    event: DragEvent
+  ) {
     event.preventDefault();
     event.stopPropagation();
-    this.fileOver = false;
+    this._fileOver = false;
   }
 
-  @HostListener('drop', ['$event']) onDrop(event: DragEvent) {
+  @HostListener('drop', ['$event']) protected onDrop(event: DragEvent) {
     event.preventDefault();
     event.stopPropagation();
-    this.fileOver = false;
+    this._fileOver = false;
 
     const files = event.dataTransfer?.files;
 

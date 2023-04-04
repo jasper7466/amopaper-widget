@@ -14,7 +14,7 @@ import { take } from 'rxjs';
   styleUrls: ['./packet-page-receiver-preview.component.css'],
 })
 export class PacketPageReceiverPreviewComponent implements OnInit {
-  @ViewChild(ModalSignInfoComponent) signInfo: ModalSignInfoComponent;
+  @ViewChild(ModalSignInfoComponent) private _signInfo: ModalSignInfoComponent;
 
   private _packetId: number;
 
@@ -30,7 +30,7 @@ export class PacketPageReceiverPreviewComponent implements OnInit {
     private _commonLogicService: CommonLogicService
   ) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     const id = this._route.parent?.snapshot.paramMap.get('id');
 
     if (!id) {
@@ -50,7 +50,7 @@ export class PacketPageReceiverPreviewComponent implements OnInit {
       .getFileSignature({ id: fileId })
       .pipe(take(1))
       .subscribe(() => {
-        this.signInfo.open();
+        this._signInfo.open();
       });
   }
 

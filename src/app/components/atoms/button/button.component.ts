@@ -11,16 +11,16 @@ type TSize = 'medium' | 'custom';
   styleUrls: ['./button.component.css'],
 })
 export class ButtonComponent {
-  @Input() styleOption: ButtonStyleOption = 'solid';
-  @Input() colorOption: TColor = 'regular';
-  @Input() iconOption: TIcon = '';
-  @Input() sizeOption: TSize = 'medium';
-  @Input() isEnabled = true;
-  @Input() typeOption = 'button';
+  @Input() public styleOption: ButtonStyleOption = 'solid';
+  @Input() public colorOption: TColor = 'regular';
+  @Input() public iconOption: TIcon = '';
+  @Input() public sizeOption: TSize = 'medium';
+  @Input() public isEnabled = true;
+  @Input() public typeOption = 'button';
 
-  @Output() Click = new EventEmitter<void>();
+  @Output() protected customClick = new EventEmitter<void>();
 
   protected clickHandler(): void {
-    this.Click.emit();
+    this.customClick.emit();
   }
 }

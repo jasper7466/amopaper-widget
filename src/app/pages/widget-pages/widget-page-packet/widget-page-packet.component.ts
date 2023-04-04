@@ -30,13 +30,13 @@ export class WidgetPagePacketComponent implements OnInit, OnDestroy {
     private _nopaperService: NopaperService
   ) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.backNavigationHandlingStart();
     this.sameRouteNavigationHandlingStart();
     this.packetStatusHandlingStart();
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this._nopaperService.stopPacketsStepPollingAll();
     this._onDestroyEmitter.emit();
   }

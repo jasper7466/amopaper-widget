@@ -21,7 +21,7 @@ export class PacketPageSenderSignComponent implements OnInit {
     private _route: ActivatedRoute
   ) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     const id = this._route.parent?.snapshot.paramMap.get('id');
 
     if (!id) {

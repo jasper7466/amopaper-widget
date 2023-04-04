@@ -24,11 +24,11 @@ export class WidgetPageListComponent implements OnInit, OnDestroy {
     private _routingService: RoutingService
   ) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this._crmService.startJsonStoragePolling();
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this._crmService.stopJsonStoragePolling();
   }
 

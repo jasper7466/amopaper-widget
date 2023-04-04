@@ -16,14 +16,14 @@ export class NavPathComponent implements OnInit, OnDestroy {
 
   constructor(private _routingService: RoutingService) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this._routingService
       .navParts()
       .pipe(takeUntil(this._onDestroyEmitter))
       .subscribe((navParts) => (this.navPath = navParts));
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this._onDestroyEmitter.emit();
   }
 }

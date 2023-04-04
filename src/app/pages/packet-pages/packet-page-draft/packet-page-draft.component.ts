@@ -19,7 +19,7 @@ export class PacketPageDraftComponent implements OnInit {
     private _routingService: RoutingService
   ) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     const id = this._route.parent?.snapshot.paramMap.get('id');
 
     if (!id) {

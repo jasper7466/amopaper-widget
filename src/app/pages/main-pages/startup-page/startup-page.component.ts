@@ -10,7 +10,7 @@ import { appLoadAction } from 'src/app/store/app-context/actions';
 export class StartupPageComponent implements OnInit {
   constructor(private _store: Store) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this._store.dispatch(appLoadAction());
   }
 }

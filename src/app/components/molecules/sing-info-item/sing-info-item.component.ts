@@ -7,7 +7,7 @@ import { TSignatureInfo } from 'src/app/interfaces/signature-info.type';
   styleUrls: ['./sing-info-item.component.css'],
 })
 export class SingInfoItemComponent {
-  @Input() signature: TSignatureInfo;
+  @Input() public signature: TSignatureInfo;
 
   protected isFolded = false;
 

@@ -15,7 +15,7 @@ const baseContext: TNotification = {
 
 @Injectable()
 export class NotificationService {
-  context: TNotification;
+  public context: TNotification;
 
   constructor(private _routingService: RoutingService) {}
 

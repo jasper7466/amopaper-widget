@@ -9,7 +9,7 @@ import { RoutingService } from 'src/app/services/sub-services/routing.service';
 export class LandingPageComponent implements OnInit {
   constructor(private _routingService: RoutingService) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this._routingService.redirect('https://nopaper.ru');
   }
 }

@@ -17,7 +17,7 @@ import { take } from 'rxjs';
   styleUrls: ['./packet-page-end.component.css'],
 })
 export class PacketPageEndComponent implements OnInit {
-  @ViewChild(ModalSignInfoComponent) signInfo: ModalSignInfoComponent;
+  @ViewChild(ModalSignInfoComponent) private _signInfo: ModalSignInfoComponent;
 
   private _packetId: number;
 
@@ -35,7 +35,7 @@ export class PacketPageEndComponent implements OnInit {
     private _routingService: RoutingService
   ) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     console.log(this._router.url);
     const id = this._route.parent?.snapshot.paramMap.get('id');
 
@@ -56,7 +56,7 @@ export class PacketPageEndComponent implements OnInit {
       .getFileSignature({ id: fileId })
       .pipe(take(1))
       .subscribe(() => {
-        this.signInfo.open();
+        this._signInfo.open();
       });
   }
 

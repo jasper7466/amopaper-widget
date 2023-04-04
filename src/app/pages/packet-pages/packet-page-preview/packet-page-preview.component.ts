@@ -33,7 +33,7 @@ export class PacketPagePreviewComponent implements OnInit, OnDestroy {
     private _route: ActivatedRoute
   ) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     const id = this._route.parent?.snapshot.paramMap.get('id');
 
     if (!id) {
@@ -53,7 +53,7 @@ export class PacketPagePreviewComponent implements OnInit, OnDestroy {
       .subscribe(() => (this.isAwaiting = false));
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this._store.dispatch(clearSignaturesAction());
   }
 

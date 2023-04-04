@@ -36,7 +36,7 @@ export class WidgetPageNewComponent implements OnInit, OnDestroy {
     private _routingService: RoutingService
   ) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.isAddresseeAdded$
       .pipe(
         combineLatestWith(this.isAllFilesLoaded$),
@@ -47,7 +47,7 @@ export class WidgetPageNewComponent implements OnInit, OnDestroy {
       });
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this._store.dispatch(resetAddresseeAction());
     this._store.dispatch(sourceFilesResetAction());
     this._store.dispatch(resetNewPacketTitleAction());
