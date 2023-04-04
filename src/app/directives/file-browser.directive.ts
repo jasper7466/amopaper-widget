@@ -12,7 +12,7 @@ import {
 export class FileBrowserDirective {
   @Output() changedEmitter = new EventEmitter<FileList>();
 
-  constructor(private hostRef: ElementRef) {}
+  constructor(private _hostRef: ElementRef) {}
 
   @HostListener('change', ['$event']) onChange(event: InputEvent) {
     event.preventDefault();
@@ -24,6 +24,6 @@ export class FileBrowserDirective {
       this.changedEmitter.emit(files);
     }
 
-    this.hostRef.nativeElement.value = '';
+    this._hostRef.nativeElement.value = '';
   }
 }

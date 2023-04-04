@@ -7,9 +7,9 @@ import { RoutingService } from 'src/app/services/sub-services/routing.service';
   styleUrls: ['./landing-page.component.css'],
 })
 export class LandingPageComponent implements OnInit {
-  constructor(private routingService: RoutingService) {}
+  constructor(private _routingService: RoutingService) {}
 
   ngOnInit(): void {
-    this.routingService.redirect('https://nopaper.ru');
+    this._routingService.redirect('https://nopaper.ru');
   }
 }

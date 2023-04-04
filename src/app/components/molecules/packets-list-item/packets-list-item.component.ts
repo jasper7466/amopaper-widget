@@ -12,19 +12,19 @@ export class PacketsListItemComponent implements OnDestroy, OnChanges {
   @Input() packet: IPacketDetails;
 
   constructor(
-    private routingService: RoutingService,
-    private nopaperService: NopaperService
+    private _routingService: RoutingService,
+    private _nopaperService: NopaperService
   ) {}
 
   ngOnChanges(): void {
-    this.nopaperService.startPacketPolling(this.packet.id);
+    this._nopaperService.startPacketPolling(this.packet.id);
   }
 
   ngOnDestroy(): void {
-    this.nopaperService.stopPacketPolling(this.packet.id);
+    this._nopaperService.stopPacketPolling(this.packet.id);
   }
 
   protected navigatePacketPage(): void {
-    this.routingService.goPacketPage(this.packet.id);
+    this._routingService.goPacketPage(this.packet.id);
   }
 }

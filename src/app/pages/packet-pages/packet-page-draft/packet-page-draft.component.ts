@@ -10,41 +10,41 @@ import { take } from 'rxjs';
   styleUrls: ['./packet-page-draft.component.css'],
 })
 export class PacketPageDraftComponent implements OnInit {
-  private packetId: number;
+  private _packetId: number;
   protected isControlsEnabled = true;
 
   constructor(
-    private route: ActivatedRoute,
-    private commonLogicService: CommonLogicService,
-    private routingService: RoutingService
+    private _route: ActivatedRoute,
+    private _commonLogicService: CommonLogicService,
+    private _routingService: RoutingService
   ) {}
 
   ngOnInit(): void {
-    const id = this.route.parent?.snapshot.paramMap.get('id');
+    const id = this._route.parent?.snapshot.paramMap.get('id');
 
     if (!id) {
       throw new Error('Missing "id" parameter in parent path');
     }
 
-    this.packetId = parseInt(id);
+    this._packetId = parseInt(id);
   }
 
   protected backButtonHandler(): void {
-    this.routingService.goPacketsListPage();
+    this._routingService.goPacketsListPage();
   }
 
   protected removeButtonHandler(): void {
-    this.commonLogicService
-      .deletePacket(this.packetId)
+    this._commonLogicService
+      .deletePacket(this._packetId)
       .pipe(take(1))
       .subscribe();
-    this.routingService.goPacketsListPage();
+    this._routingService.goPacketsListPage();
   }
 
   protected submitDraftButtonHandler(): void {
     this.isControlsEnabled = false;
-    this.commonLogicService
-      .submitPacketDraft(this.packetId)
+    this._commonLogicService
+      .submitPacketDraft(this._packetId)
       .pipe(take(1))
       .subscribe();
   }

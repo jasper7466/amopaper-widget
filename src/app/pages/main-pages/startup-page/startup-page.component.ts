@@ -8,9 +8,9 @@ import { appLoadAction } from 'src/app/store/app-context/actions';
   styleUrls: ['./startup-page.component.css'],
 })
 export class StartupPageComponent implements OnInit {
-  constructor(private store: Store) {}
+  constructor(private _store: Store) {}
 
   ngOnInit(): void {
-    this.store.dispatch(appLoadAction());
+    this._store.dispatch(appLoadAction());
   }
 }

@@ -19,19 +19,19 @@ export class ModalComponent implements OnInit, OnDestroy {
   @Input() openTrigger: EventEmitter<void>;
   @Input() closeTrigger: EventEmitter<void>;
 
-  private onDestroyEmitter = new EventEmitter<void>();
+  private _onDestroyEmitter = new EventEmitter<void>();
 
   ngOnInit(): void {
     this.openTrigger
-      .pipe(takeUntil(this.onDestroyEmitter))
+      .pipe(takeUntil(this._onDestroyEmitter))
       .subscribe(() => this.open());
     this.closeTrigger
-      .pipe(takeUntil(this.onDestroyEmitter))
+      .pipe(takeUntil(this._onDestroyEmitter))
       .subscribe(() => this.close());
   }
 
   ngOnDestroy(): void {
-    this.onDestroyEmitter.emit();
+    this._onDestroyEmitter.emit();
   }
 
   protected close(): void {

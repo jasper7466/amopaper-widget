@@ -7,9 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./packet-page-prepare.component.css'],
 })
 export class PacketPagePrepareComponent {
-  constructor(private routingService: RoutingService) {}
+  constructor(private _routingService: RoutingService) {}
 
   public backButtonHandler(): void {
-    this.routingService.goPacketsListPage();
+    this._routingService.goPacketsListPage();
   }
 }

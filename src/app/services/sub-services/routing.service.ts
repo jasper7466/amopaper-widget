@@ -10,10 +10,10 @@ export type TNavigationPart = {
 
 @Injectable()
 export class RoutingService {
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(private _router: Router, private _route: ActivatedRoute) {}
 
   public getParentParameter(parameterName: string): string | never {
-    const parameter = this.route.parent?.snapshot.paramMap.get(parameterName);
+    const parameter = this._route.parent?.snapshot.paramMap.get(parameterName);
 
     if (!parameter) {
       throw new Error('Missing "id" parameter in parent path');
@@ -23,12 +23,12 @@ export class RoutingService {
   }
 
   public navParts(): Observable<TNavigationPart[]> {
-    return this.router.events.pipe(
+    return this._router.events.pipe(
       filter(
         (event) => event instanceof NavigationEnd || event instanceof Scroll
       ),
       map(() => {
-        let route = this.route;
+        let route = this._route;
 
         while (route.firstChild) {
           route = route.firstChild;
@@ -63,27 +63,27 @@ export class RoutingService {
   }
 
   public goLandingPage(): void {
-    this.router.navigate(['landing']);
+    this._router.navigate(['landing']);
   }
 
   public goPacketsListPage(): void {
-    this.router.navigate(['widget/list']);
+    this._router.navigate(['widget/list']);
   }
 
   public goCreatePage(): void {
-    this.router.navigate(['widget/new']);
+    this._router.navigate(['widget/new']);
   }
 
   public goPacketPage(id: number): void {
-    this.router.navigate(['widget/packet', id]);
+    this._router.navigate(['widget/packet', id]);
   }
 
   public goNotificationPage() {
-    this.router.navigate(['notification']);
+    this._router.navigate(['notification']);
   }
 
   public goStartupPage(): void {
-    this.router.navigate(['']);
+    this._router.navigate(['']);
   }
 
   public goMatchedStepPacketPage(
@@ -132,6 +132,6 @@ export class RoutingService {
         );
     }
 
-    this.router.navigate([basePath + destination]);
+    this._router.navigate([basePath + destination]);
   }
 }

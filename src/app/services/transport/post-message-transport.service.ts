@@ -12,7 +12,7 @@ interface IPostMessage<T extends Indexed<any>> {
 
 @Injectable()
 export class PostMessageTransportService {
-  private inbox$ = fromEvent<MessageEvent<unknown>>(window, 'message');
+  private _inbox$ = fromEvent<MessageEvent<unknown>>(window, 'message');
 
   /** Отправка сообщения без подписки на ответ. */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -27,7 +27,7 @@ export class PostMessageTransportService {
   /** Подписка на сообщения без отправки запроса. */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public subscribe<T extends Indexed<any>>(action: string): Observable<T> {
-    return (this.inbox$ as Observable<MessageEvent<IPostMessage<T>>>).pipe(
+    return (this._inbox$ as Observable<MessageEvent<IPostMessage<T>>>).pipe(
       filter((event) => event.data.action === action),
       map((event) => event.data.payload)
     );

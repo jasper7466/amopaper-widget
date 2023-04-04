@@ -64,5 +64,5 @@ export const metaReducers: MetaReducer<IState>[] = !environment.production
 
 @Injectable()
 export class AppEffects {
-  constructor(private actions$: Actions) {}
+  constructor(private _actions$: Actions) {}
 }

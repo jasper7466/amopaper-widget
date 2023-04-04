@@ -13,49 +13,53 @@ import { notifications } from 'src/app/constants/notifications';
 const crmJsonStoragePollingInterval = config.crmJsonStoragePollingInterval;
 @Injectable()
 export class CrmService {
-  private storagePollingBreaker = new EventEmitter<void>();
-  private context: ReturnType<typeof crmContextSelector>;
+  private _storagePollingBreaker = new EventEmitter<void>();
+  private _context: ReturnType<typeof crmContextSelector>;
 
-  private context$ = this.store.select(crmContextSelector);
+  private _context$ = this._store.select(crmContextSelector);
 
   constructor(
-    private store: Store,
-    private crmJsonStorageService: CrmJsonStorageService,
-    private amoPostApiService: AmoPostApiService,
-    private notificationService: NotificationService
+    private _store: Store,
+    private _crmJsonStorageService: CrmJsonStorageService,
+    private _amoPostApiService: AmoPostApiService,
+    private _notificationService: NotificationService
   ) {
-    this.context$.subscribe((context) => (this.context = context));
+    this._context$.subscribe((context) => (this._context = context));
   }
 
   public checkWidgetStatus(): void | never {
-    if (!this.context) {
+    if (!this._context) {
       throw new Error(`${this.constructor.name}: crmContext is not defined.`);
     }
 
-    const { isAdminUser, isWidgetActive, isWidgetConfigured } = this.context;
+    const { isAdminUser, isWidgetActive, isWidgetConfigured } = this._context;
 
     if (!isWidgetActive || !isWidgetConfigured) {
       if (isAdminUser) {
-        this.notificationService.notify(notifications.widgetNotConfiguredAdmin);
+        this._notificationService.notify(
+          notifications.widgetNotConfiguredAdmin
+        );
       } else {
-        this.notificationService.notify(notifications.widgetNotConfiguredAdmin);
+        this._notificationService.notify(
+          notifications.widgetNotConfiguredAdmin
+        );
       }
     }
   }
 
   private getJsonStorage(): Observable<void> {
-    return this.crmJsonStorageService.getStorage().pipe(
+    return this._crmJsonStorageService.getStorage().pipe(
       tap((storageState) =>
-        this.store.dispatch(updateLeadJsonStorageAction(storageState))
+        this._store.dispatch(updateLeadJsonStorageAction(storageState))
       ),
       switchMap(() => of(void 0))
     );
   }
 
   public getCrmContext(): Observable<void> {
-    return this.amoPostApiService.getCrmContext().pipe(
+    return this._amoPostApiService.getCrmContext().pipe(
       tap((context) => {
-        this.store.dispatch(updateCrmContextAction(context));
+        this._store.dispatch(updateCrmContextAction(context));
       }),
       switchMap(() => of(void 0))
     );
@@ -67,23 +71,23 @@ export class CrmService {
     timer(1, crmJsonStoragePollingInterval)
       .pipe(
         switchMap(() => this.getJsonStorage()),
-        takeUntil(this.storagePollingBreaker)
+        takeUntil(this._storagePollingBreaker)
       )
       .subscribe();
   }
 
   public stopJsonStoragePolling(): void {
-    this.storagePollingBreaker.emit();
+    this._storagePollingBreaker.emit();
   }
 
   public attachPacketToLead(packetId: number): Observable<void> {
-    return this.crmJsonStorageService.getStorage().pipe(
+    return this._crmJsonStorageService.getStorage().pipe(
       switchMap((state) => {
         if (state.packetsIdsList.includes(packetId)) {
           return of(void 0);
         }
 
-        return this.crmJsonStorageService.setStorage({
+        return this._crmJsonStorageService.setStorage({
           packetsIdsList: [...state.packetsIdsList, packetId],
         });
       })
@@ -91,7 +95,7 @@ export class CrmService {
   }
 
   public detachPacketFromLead(packetId: number): Observable<void> {
-    return this.crmJsonStorageService.getStorage().pipe(
+    return this._crmJsonStorageService.getStorage().pipe(
       switchMap((state) => {
         const filteredIdList = state.packetsIdsList.filter(
           (id) => id !== packetId
@@ -99,7 +103,7 @@ export class CrmService {
         if (state.packetsIdsList.length === filteredIdList.length) {
           return of(void 0);
         }
-        return this.crmJsonStorageService.setStorage({
+        return this._crmJsonStorageService.setStorage({
           packetsIdsList: filteredIdList,
         });
       })

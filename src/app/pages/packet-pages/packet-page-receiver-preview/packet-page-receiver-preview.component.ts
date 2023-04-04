@@ -16,37 +16,37 @@ import { take } from 'rxjs';
 export class PacketPageReceiverPreviewComponent implements OnInit {
   @ViewChild(ModalSignInfoComponent) signInfo: ModalSignInfoComponent;
 
-  private packetId: number;
+  private _packetId: number;
 
-  protected signedOriginalDocuments$ = this.store.select(
+  protected signedOriginalDocuments$ = this._store.select(
     filesIdsOriginalsSelector
   );
 
   constructor(
-    private route: ActivatedRoute,
-    private store: Store,
-    private nopaperService: NopaperService,
-    private routingService: RoutingService,
-    private commonLogicService: CommonLogicService
+    private _route: ActivatedRoute,
+    private _store: Store,
+    private _nopaperService: NopaperService,
+    private _routingService: RoutingService,
+    private _commonLogicService: CommonLogicService
   ) {}
 
   ngOnInit(): void {
-    const id = this.route.parent?.snapshot.paramMap.get('id');
+    const id = this._route.parent?.snapshot.paramMap.get('id');
 
     if (!id) {
       throw new Error('Missing "id" parameter in parent path');
     }
 
-    this.packetId = parseInt(id);
+    this._packetId = parseInt(id);
 
-    this.commonLogicService
-      .getPacketFiles(this.packetId)
+    this._commonLogicService
+      .getPacketFiles(this._packetId)
       .pipe(take(1))
       .subscribe();
   }
 
   protected showSignInfo(fileId: number): void {
-    this.nopaperService
+    this._nopaperService
       .getFileSignature({ id: fileId })
       .pipe(take(1))
       .subscribe(() => {
@@ -55,13 +55,13 @@ export class PacketPageReceiverPreviewComponent implements OnInit {
   }
 
   protected backButtonHandler(): void {
-    this.routingService.goPacketsListPage();
+    this._routingService.goPacketsListPage();
   }
 
   protected revokeButtonHandler(): void {
-    this.commonLogicService
-      .revokePacket(this.packetId)
+    this._commonLogicService
+      .revokePacket(this._packetId)
       .pipe(take(1))
-      .subscribe(() => this.routingService.goPacketsListPage());
+      .subscribe(() => this._routingService.goPacketsListPage());
   }
 }

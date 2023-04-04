@@ -6,10 +6,10 @@ import { setAppActiveLeadIdAction } from '../app-context/actions';
 
 @Injectable()
 export class CrmContextEffects {
-  constructor(private actions$: Actions) {}
+  constructor(private _actions$: Actions) {}
 
-  private onUpdateCrmContextEffect = createEffect(() =>
-    this.actions$.pipe(
+  private _onUpdateCrmContextEffect = createEffect(() =>
+    this._actions$.pipe(
       ofType(updateCrmContextAction),
       map((context) => setAppActiveLeadIdAction({ leadId: context.cardId }))
     )

@@ -12,13 +12,13 @@ import { CrmJsonStorageService } from './sub-services/crm-json-storage.service';
 @Injectable()
 export class CommonLogicService {
   constructor(
-    private store: Store,
-    private crmService: CrmService,
-    private crmTokenService: CrmTokenService,
-    private crmJsonStorageService: CrmJsonStorageService,
-    private nopaperService: NopaperService,
-    private routingService: RoutingService,
-    private windowService: WindowService
+    private _store: Store,
+    private _crmService: CrmService,
+    private _crmTokenService: CrmTokenService,
+    private _crmJsonStorageService: CrmJsonStorageService,
+    private _nopaperService: NopaperService,
+    private _routingService: RoutingService,
+    private _windowService: WindowService
   ) {}
 
   /**
@@ -28,22 +28,22 @@ export class CommonLogicService {
    * Редирект на лендинг, если запуск вне фрейма.
    */
   public init(): void {
-    if (!this.windowService.isFramed()) {
-      this.routingService.goLandingPage();
+    if (!this._windowService.isFramed()) {
+      this._routingService.goLandingPage();
       return;
     }
 
-    this.crmService
+    this._crmService
       .getCrmContext()
       .pipe(
-        switchMap(() => this.crmTokenService.getAmoAccessToken()),
-        switchMap(() => this.crmJsonStorageService.init()),
+        switchMap(() => this._crmTokenService.getAmoAccessToken()),
+        switchMap(() => this._crmJsonStorageService.init()),
         take(1)
       )
       .subscribe({
         next: () => {
-          this.crmService.checkWidgetStatus();
-          this.routingService.goPacketsListPage();
+          this._crmService.checkWidgetStatus();
+          this._routingService.goPacketsListPage();
         },
         error: (err) => console.log(err),
       });
@@ -56,9 +56,9 @@ export class CommonLogicService {
   public createPacketDraft(): Observable<number> {
     let justCreatedPacketId: number;
 
-    return this.nopaperService.postPacket().pipe(
+    return this._nopaperService.postPacket().pipe(
       tap((packet) => (justCreatedPacketId = packet.id)),
-      switchMap((packet) => this.crmService.attachPacketToLead(packet.id)),
+      switchMap((packet) => this._crmService.attachPacketToLead(packet.id)),
       map(() => justCreatedPacketId)
     );
   }
@@ -69,7 +69,7 @@ export class CommonLogicService {
    * @returns Переданный на вход идентификатор пакета документов.
    */
   public submitPacketDraft(packetId: number): Observable<number> {
-    return this.nopaperService.submitDraft(packetId).pipe(map(() => packetId));
+    return this._nopaperService.submitDraft(packetId).pipe(map(() => packetId));
   }
 
   /**
@@ -84,7 +84,7 @@ export class CommonLogicService {
 
   /** @deprecated */
   public submitPreview(packetId: number): Observable<void> {
-    return this.nopaperService.submitPreview(packetId);
+    return this._nopaperService.submitPreview(packetId);
   }
 
   /**
@@ -93,9 +93,9 @@ export class CommonLogicService {
    * @returns
    */
   public deletePacket(packetId: number): Observable<void> {
-    return this.nopaperService
+    return this._nopaperService
       .deletePacket(packetId)
-      .pipe(switchMap(() => this.crmService.detachPacketFromLead(packetId)));
+      .pipe(switchMap(() => this._crmService.detachPacketFromLead(packetId)));
   }
 
   /**
@@ -104,17 +104,17 @@ export class CommonLogicService {
    * @returns
    */
   public revokePacket(packetId: number): Observable<void> {
-    return this.nopaperService
+    return this._nopaperService
       .revokePacket(packetId)
-      .pipe(switchMap(() => this.crmService.detachPacketFromLead(packetId)));
+      .pipe(switchMap(() => this._crmService.detachPacketFromLead(packetId)));
   }
 
   public getPacketFiles(packetId: number): Observable<void> {
-    return this.nopaperService.getPacketFilesIds(packetId).pipe(
-      switchMap(() => this.store.select(filesIdsOriginalsSelector)),
+    return this._nopaperService.getPacketFilesIds(packetId).pipe(
+      switchMap(() => this._store.select(filesIdsOriginalsSelector)),
       take(1),
       switchMap((identifiers) =>
-        this.nopaperService.getFilesByIds(identifiers.map((item) => item.id))
+        this._nopaperService.getFilesByIds(identifiers.map((item) => item.id))
       )
     );
   }

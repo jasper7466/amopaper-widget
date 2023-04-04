@@ -7,14 +7,14 @@ import { CommonLogicService } from 'src/app/services/common-logic.service';
 @Injectable()
 export class AppContextEffects {
   constructor(
-    private actions$: Actions,
-    private commonLogic: CommonLogicService
+    private _actions$: Actions,
+    private _commonLogic: CommonLogicService
   ) {}
 
-  private onAppLoadEffect = createEffect(() =>
-    this.actions$.pipe(
+  private _onAppLoadEffect = createEffect(() =>
+    this._actions$.pipe(
       ofType(appLoadAction),
-      map(() => this.commonLogic.init()),
+      map(() => this._commonLogic.init()),
       map(() => setAppInitAction())
     )
   );

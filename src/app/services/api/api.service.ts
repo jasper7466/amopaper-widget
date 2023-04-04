@@ -7,22 +7,22 @@ import {
 
 export class ApiService {
   private _baseUrl: string;
-  private headers = new HttpHeaders();
+  private _headers = new HttpHeaders();
 
-  constructor(private http: HttpClient) {}
+  constructor(private _http: HttpClient) {}
 
   protected set baseUrl(url: string) {
     this._baseUrl = url;
   }
 
   protected resetHeaders(headers: { [key: string]: string | string[] }): void {
-    this.headers = new HttpHeaders();
+    this._headers = new HttpHeaders();
     this.setHeaders(headers);
   }
 
   protected setHeaders(headers: { [key: string]: string | string[] }): void {
     for (const [header, value] of Object.entries(headers)) {
-      this.headers = this.headers.set(header, value);
+      this._headers = this._headers.set(header, value);
     }
   }
 
@@ -31,33 +31,33 @@ export class ApiService {
   }
 
   protected get<Res>(path: string): Observable<Res> {
-    return this.http
+    return this._http
       .get<Res>(`${this._baseUrl}${path}`, {
-        headers: this.headers,
+        headers: this._headers,
       })
       .pipe(catchError((error) => this.httpErrorHandler(error)));
   }
 
   protected post<Req, Res>(path: string, body: Req): Observable<Res> {
-    return this.http
+    return this._http
       .post<Res>(`${this._baseUrl}${path}`, body, {
-        headers: this.headers,
+        headers: this._headers,
       })
       .pipe(catchError((error) => this.httpErrorHandler(error)));
   }
 
   protected patch<Req, Res>(path: string, body: Req): Observable<Res> {
-    return this.http
+    return this._http
       .patch<Res>(`${this._baseUrl}${path}`, body, {
-        headers: this.headers,
+        headers: this._headers,
       })
       .pipe(catchError((error) => this.httpErrorHandler(error)));
   }
 
   protected put<Req, Res>(path: string, body: Req): Observable<Res> {
-    return this.http
+    return this._http
       .put<Res>(`${this._baseUrl}${path}`, body, {
-        headers: this.headers,
+        headers: this._headers,
       })
       .pipe(catchError((error) => this.httpErrorHandler(error)));
   }

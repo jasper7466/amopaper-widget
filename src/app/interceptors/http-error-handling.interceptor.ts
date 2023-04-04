@@ -11,7 +11,7 @@ import { NotificationService } from '../services/sub-services/notification.servi
 
 @Injectable()
 export class HttpErrorHandlingInterceptor implements HttpInterceptor {
-  constructor(private notificationService: NotificationService) {}
+  constructor(private _notificationService: NotificationService) {}
 
   public intercept(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -21,7 +21,7 @@ export class HttpErrorHandlingInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        this.notificationService.error({
+        this._notificationService.error({
           title: error.name,
           details: `${error.message} / ${error.error.code || ''} / ${
             error.error.description || ''

@@ -6,10 +6,10 @@ import { updatePacketsIdsListAction } from '../packets/actions';
 
 @Injectable()
 export class CrmLeadContextEffects {
-  constructor(private actions$: Actions) {}
+  constructor(private _actions$: Actions) {}
 
-  private onUpdateLeadJsonStorageEffect = createEffect(() =>
-    this.actions$.pipe(
+  private _onUpdateLeadJsonStorageEffect = createEffect(() =>
+    this._actions$.pipe(
       ofType(updateLeadJsonStorageAction),
       map((storage) =>
         updatePacketsIdsListAction({ payload: storage.packetsIdsList })

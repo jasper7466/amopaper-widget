@@ -19,31 +19,31 @@ import { clearSignaturesAction } from 'src/app/store/signatures/actions';
   styleUrls: ['./packet-page-preview.component.css'],
 })
 export class PacketPagePreviewComponent implements OnInit, OnDestroy {
-  private packetId: number;
+  private _packetId: number;
   protected isAwaiting = true;
 
   protected packet$: Observable<IPacketDetails>;
-  protected filesIds$ = this.store.select(filesIdsOriginalsSelector);
-  protected originalFiles$ = this.store.select(originalFilesSelector);
+  protected filesIds$ = this._store.select(filesIdsOriginalsSelector);
+  protected originalFiles$ = this._store.select(originalFilesSelector);
 
   constructor(
-    private store: Store,
-    private routingService: RoutingService,
-    private commonLogicService: CommonLogicService,
-    private route: ActivatedRoute
+    private _store: Store,
+    private _routingService: RoutingService,
+    private _commonLogicService: CommonLogicService,
+    private _route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    const id = this.route.parent?.snapshot.paramMap.get('id');
+    const id = this._route.parent?.snapshot.paramMap.get('id');
 
     if (!id) {
       throw new Error('Missing "id" parameter in parent path');
     }
 
-    this.packetId = parseInt(id);
+    this._packetId = parseInt(id);
 
-    this.packet$ = this.store.select(packetSelector(this.packetId));
-    this.commonLogicService.getPacketFiles(this.packetId).subscribe();
+    this.packet$ = this._store.select(packetSelector(this._packetId));
+    this._commonLogicService.getPacketFiles(this._packetId).subscribe();
 
     this.originalFiles$
       .pipe(
@@ -54,27 +54,27 @@ export class PacketPagePreviewComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.store.dispatch(clearSignaturesAction());
+    this._store.dispatch(clearSignaturesAction());
   }
 
   protected submitButtonHandler(): void {
     this.isAwaiting = true;
-    this.commonLogicService
-      .submitPreview(this.packetId)
+    this._commonLogicService
+      .submitPreview(this._packetId)
       .pipe(take(1))
       .subscribe();
   }
 
   public cancelButtonHandler(): void {
-    this.routingService.goPacketsListPage();
+    this._routingService.goPacketsListPage();
   }
 
   public revokeButtonHandler(): void {
-    this.commonLogicService
-      .revokePacket(this.packetId)
+    this._commonLogicService
+      .revokePacket(this._packetId)
       .pipe(take(1))
       .subscribe();
-    this.routingService.goPacketsListPage();
+    this._routingService.goPacketsListPage();
   }
 
   protected downloadFile(file: File) {

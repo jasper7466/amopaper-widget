@@ -18,16 +18,16 @@ import { TPacketStatus } from 'src/app/interfaces/packet-status.type';
   styleUrls: ['./widget-page-packet.component.css'],
 })
 export class WidgetPagePacketComponent implements OnInit, OnDestroy {
-  private onDestroyEmitter = new EventEmitter<void>();
+  private _onDestroyEmitter = new EventEmitter<void>();
   protected packetId: number;
   protected stepName: TPacketStatus | undefined;
 
   constructor(
-    private store: Store,
-    private route: ActivatedRoute,
-    private router: Router,
-    private routingService: RoutingService,
-    private nopaperService: NopaperService
+    private _store: Store,
+    private _route: ActivatedRoute,
+    private _router: Router,
+    private _routingService: RoutingService,
+    private _nopaperService: NopaperService
   ) {}
 
   ngOnInit(): void {
@@ -37,8 +37,8 @@ export class WidgetPagePacketComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.nopaperService.stopPacketsStepPollingAll();
-    this.onDestroyEmitter.emit();
+    this._nopaperService.stopPacketsStepPollingAll();
+    this._onDestroyEmitter.emit();
   }
 
   /**
@@ -47,15 +47,15 @@ export class WidgetPagePacketComponent implements OnInit, OnDestroy {
    * браузерной навигации.
    */
   private backNavigationHandlingStart(): void {
-    this.router.events
+    this._router.events
       .pipe(
-        takeUntil(this.onDestroyEmitter),
+        takeUntil(this._onDestroyEmitter),
         filter(
           (event) =>
             event instanceof NavigationStart &&
             event.navigationTrigger === 'popstate'
         ),
-        tap(() => this.routingService.goPacketsListPage())
+        tap(() => this._routingService.goPacketsListPage())
       )
       .subscribe();
   }
@@ -66,12 +66,12 @@ export class WidgetPagePacketComponent implements OnInit, OnDestroy {
    * по тому же роуту.
    */
   private sameRouteNavigationHandlingStart(): void {
-    this.router.events
+    this._router.events
       .pipe(
-        takeUntil(this.onDestroyEmitter),
+        takeUntil(this._onDestroyEmitter),
         filter((event) => event instanceof NavigationEnd),
         tap(() => {
-          this.routingService.goMatchedStepPacketPage(
+          this._routingService.goMatchedStepPacketPage(
             this.stepName,
             this.packetId
           );
@@ -86,21 +86,21 @@ export class WidgetPagePacketComponent implements OnInit, OnDestroy {
    * пакета документов.
    */
   private packetStatusHandlingStart(): void {
-    this.route.params
+    this._route.params
       .pipe(
-        takeUntil(this.onDestroyEmitter),
+        takeUntil(this._onDestroyEmitter),
         tap((params) => {
           this.packetId = parseInt(params['id']);
-          this.nopaperService.startPacketPolling(this.packetId);
+          this._nopaperService.startPacketPolling(this.packetId);
         }),
-        switchMap(() => this.nopaperService.getPacketStepName(this.packetId)),
+        switchMap(() => this._nopaperService.getPacketStepName(this.packetId)),
         switchMap(() =>
-          this.store.select(packetStepNameSelector(this.packetId))
+          this._store.select(packetStepNameSelector(this.packetId))
         ),
-        takeUntil(this.onDestroyEmitter),
+        takeUntil(this._onDestroyEmitter),
         tap((stepName) => {
           this.stepName = stepName;
-          this.routingService.goMatchedStepPacketPage(
+          this._routingService.goMatchedStepPacketPage(
             this.stepName,
             this.packetId
           );

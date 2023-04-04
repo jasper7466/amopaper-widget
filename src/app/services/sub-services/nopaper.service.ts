@@ -37,32 +37,32 @@ const POLLING_INTERVAL_MS = 3000;
 
 @Injectable()
 export class NopaperService {
-  private packetPollingBreakerById = new Subject<number>();
-  private packetPollingBreakerAll = new Subject<void>();
+  private _packetPollingBreakerById = new Subject<number>();
+  private _packetPollingBreakerAll = new Subject<void>();
 
-  private newPacketDataObservables: {
+  private _newPacketDataObservables: {
     [K in keyof IPacketCreateData]: Observable<IPacketCreateData[K]>;
   } = {
-    addressee: this.store.select(addresseeSelector),
-    files: this.store.select(sourceFilesSelector),
-    title: this.store.select(newPacketTitleSelector),
+    addressee: this._store.select(addresseeSelector),
+    files: this._store.select(sourceFilesSelector),
+    title: this._store.select(newPacketTitleSelector),
   };
 
   constructor(
-    private store: Store,
-    private nopaperApiService: NopaperApiService,
-    private nopaperApiV2Service: NopaperApiV2Service
+    private _store: Store,
+    private _nopaperApiService: NopaperApiService,
+    private _nopaperApiV2Service: NopaperApiV2Service
   ) {}
 
   /**
    * Создаёт черновик пакета документов.
    */
   public postPacket(): Observable<Pick<IPacketDetails, 'id'>> {
-    return combineLatest(this.newPacketDataObservables).pipe(
+    return combineLatest(this._newPacketDataObservables).pipe(
       take(1),
-      switchMap((data) => this.nopaperApiService.postPacket(data)),
+      switchMap((data) => this._nopaperApiService.postPacket(data)),
       take(1),
-      tap((response) => this.store.dispatch(setNewPacketIdAction(response)))
+      tap((response) => this._store.dispatch(setNewPacketIdAction(response)))
     );
   }
 
@@ -74,7 +74,7 @@ export class NopaperService {
    * @param packetId Идентификатор пакета документов.
    */
   public submitDraft(packetId: number): Observable<void> {
-    return this.nopaperApiService.setPacketStepName(
+    return this._nopaperApiService.setPacketStepName(
       packetId,
       'nopaperPrepareFiles'
     );
@@ -122,7 +122,7 @@ export class NopaperService {
    * @param packetId Идентификатор пакета документов.
    */
   public revokePacket(packetId: number): Observable<void> {
-    return this.nopaperApiV2Service.revokePacket(packetId);
+    return this._nopaperApiV2Service.revokePacket(packetId);
   }
 
   /**
@@ -135,10 +135,10 @@ export class NopaperService {
   public getPacketStepName(
     packetId: number
   ): Observable<Pick<IPacketDetails, 'id' | 'status'>> {
-    return this.nopaperApiService
+    return this._nopaperApiService
       .getPacketStepName(packetId)
       .pipe(
-        tap((response) => this.store.dispatch(setPacketStatusAction(response)))
+        tap((response) => this._store.dispatch(setPacketStatusAction(response)))
       );
   }
 
@@ -152,10 +152,12 @@ export class NopaperService {
   public getPacketDetails(
     packetId: number
   ): Observable<Omit<IPacketDetails, 'status'>> {
-    return this.nopaperApiV2Service
+    return this._nopaperApiV2Service
       .getPacketDetails(packetId)
       .pipe(
-        tap((response) => this.store.dispatch(setPacketDetailsAction(response)))
+        tap((response) =>
+          this._store.dispatch(setPacketDetailsAction(response))
+        )
       );
   }
 
@@ -167,11 +169,11 @@ export class NopaperService {
    * @param packetId Идентификатор пакета документов.
    */
   public getPacketFilesIds(packetId: number): Observable<IPacketFilesInfo> {
-    return this.nopaperApiService
+    return this._nopaperApiService
       .getPacketFilesIds(packetId)
       .pipe(
         tap((response) =>
-          this.store.dispatch(setFilesIdentifiersAction(response))
+          this._store.dispatch(setFilesIdentifiersAction(response))
         )
       );
   }
@@ -183,9 +185,9 @@ export class NopaperService {
    * @param filesIds Массив идентификаторов файлов.
    */
   public getFilesByIds(filesIds: number[]): Observable<void> {
-    return this.nopaperApiService.getFilesByIds(filesIds).pipe(
+    return this._nopaperApiService.getFilesByIds(filesIds).pipe(
       tap((response) =>
-        this.store.dispatch(setOriginalsFilesAction({ payload: response }))
+        this._store.dispatch(setOriginalsFilesAction({ payload: response }))
       ),
       switchMap(() => of(void 0))
     );
@@ -200,10 +202,10 @@ export class NopaperService {
   public getFileSignature(
     fileInfo: Pick<IFileInfo, 'id'>
   ): Observable<IFileSignatures> {
-    return this.nopaperApiService
+    return this._nopaperApiService
       .getFileSignatures(fileInfo)
       .pipe(
-        tap((response) => this.store.dispatch(setSignaturesAction(response)))
+        tap((response) => this._store.dispatch(setSignaturesAction(response)))
       );
   }
 
@@ -220,9 +222,9 @@ export class NopaperService {
           this.getPacketDetails(packetId).pipe(take(1)).subscribe();
         }),
         takeUntil(
-          this.packetPollingBreakerById.pipe(filter((id) => id === packetId))
+          this._packetPollingBreakerById.pipe(filter((id) => id === packetId))
         ),
-        takeUntil(this.packetPollingBreakerAll)
+        takeUntil(this._packetPollingBreakerAll)
       )
       .subscribe();
   }
@@ -232,14 +234,14 @@ export class NopaperService {
    * @param packetId Идентификатор пакета документов.
    */
   public stopPacketPolling(packetId: number): void {
-    this.packetPollingBreakerById.next(packetId);
+    this._packetPollingBreakerById.next(packetId);
   }
 
   /**
    * Останавливает все поллинги пакетов, которые были запущены.
    */
   public stopPacketsStepPollingAll(): void {
-    this.packetPollingBreakerAll.next();
+    this._packetPollingBreakerAll.next();
   }
 
   /**
@@ -253,9 +255,9 @@ export class NopaperService {
    * Получение ссылки на подпись.
    */
   public getShareLink(packetId: number): Observable<IShareLink> {
-    return this.nopaperApiService.getShareLink(packetId).pipe(
+    return this._nopaperApiService.getShareLink(packetId).pipe(
       tap((response) => {
-        this.store.dispatch(setShareLinkAction(response));
+        this._store.dispatch(setShareLinkAction(response));
       })
     );
   }

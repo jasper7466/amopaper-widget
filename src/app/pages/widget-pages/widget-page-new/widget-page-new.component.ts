@@ -18,10 +18,12 @@ import {
   styleUrls: ['./widget-page-new.component.css'],
 })
 export class WidgetPageNewComponent implements OnInit, OnDestroy {
-  private onDestroyEmitter = new EventEmitter<void>();
+  private _onDestroyEmitter = new EventEmitter<void>();
 
-  protected isAddresseeAdded$ = this.store.select(isAddresseeSubmittedSelector);
-  protected isAllFilesLoaded$ = this.store.select(
+  protected isAddresseeAdded$ = this._store.select(
+    isAddresseeSubmittedSelector
+  );
+  protected isAllFilesLoaded$ = this._store.select(
     isSourceFilesCompleteAllSelector
   );
 
@@ -29,16 +31,16 @@ export class WidgetPageNewComponent implements OnInit, OnDestroy {
   protected isAwaiting = false;
 
   constructor(
-    private store: Store,
-    private commonLogicService: CommonLogicService,
-    private routingService: RoutingService
+    private _store: Store,
+    private _commonLogicService: CommonLogicService,
+    private _routingService: RoutingService
   ) {}
 
   ngOnInit(): void {
     this.isAddresseeAdded$
       .pipe(
         combineLatestWith(this.isAllFilesLoaded$),
-        takeUntil(this.onDestroyEmitter)
+        takeUntil(this._onDestroyEmitter)
       )
       .subscribe(([isAddresseeAdded, isAllFilesLoaded]) => {
         this.isControlsEnabled = isAddresseeAdded && isAllFilesLoaded;
@@ -46,26 +48,26 @@ export class WidgetPageNewComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.store.dispatch(resetAddresseeAction());
-    this.store.dispatch(sourceFilesResetAction());
-    this.store.dispatch(resetNewPacketTitleAction());
-    this.onDestroyEmitter.emit();
+    this._store.dispatch(resetAddresseeAction());
+    this._store.dispatch(sourceFilesResetAction());
+    this._store.dispatch(resetNewPacketTitleAction());
+    this._onDestroyEmitter.emit();
   }
 
   protected titleInputKeyUpHandler(value: string): void {
-    this.store.dispatch(setNewPacketTitleAction({ title: value }));
+    this._store.dispatch(setNewPacketTitleAction({ title: value }));
   }
 
   protected saveButtonHandler(): void {
     this.isAwaiting = true;
     this.isControlsEnabled = false;
 
-    this.commonLogicService
+    this._commonLogicService
       .createPacketDraft()
-      .pipe(takeUntil(this.onDestroyEmitter))
+      .pipe(takeUntil(this._onDestroyEmitter))
       .subscribe(() => {
         this.isAwaiting = false;
-        this.routingService.goPacketsListPage();
+        this._routingService.goPacketsListPage();
       });
   }
 
@@ -73,15 +75,15 @@ export class WidgetPageNewComponent implements OnInit, OnDestroy {
     this.isAwaiting = true;
     this.isControlsEnabled = false;
 
-    this.commonLogicService
+    this._commonLogicService
       .createAndSubmitPacketDraft()
-      .pipe(takeUntil(this.onDestroyEmitter))
+      .pipe(takeUntil(this._onDestroyEmitter))
       .subscribe((packetId) => {
-        this.routingService.goPacketPage(packetId);
+        this._routingService.goPacketPage(packetId);
       });
   }
 
   protected cancelButtonHandler(): void {
-    this.routingService.goPacketsListPage();
+    this._routingService.goPacketsListPage();
   }
 }

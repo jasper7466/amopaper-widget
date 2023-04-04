@@ -19,40 +19,40 @@ import { take } from 'rxjs';
 export class PacketPageEndComponent implements OnInit {
   @ViewChild(ModalSignInfoComponent) signInfo: ModalSignInfoComponent;
 
-  private packetId: number;
+  private _packetId: number;
 
-  protected signedOriginalDocuments$ = this.store.select(
+  protected signedOriginalDocuments$ = this._store.select(
     filesIdsOriginalsSelector
   );
-  protected signedStampDocuments$ = this.store.select(filesIdsStampedSelector);
+  protected signedStampDocuments$ = this._store.select(filesIdsStampedSelector);
 
   constructor(
-    private store: Store,
-    private route: ActivatedRoute,
-    private router: Router,
-    private nopaperService: NopaperService,
-    private commonLogicService: CommonLogicService,
-    private routingService: RoutingService
+    private _store: Store,
+    private _route: ActivatedRoute,
+    private _router: Router,
+    private _nopaperService: NopaperService,
+    private _commonLogicService: CommonLogicService,
+    private _routingService: RoutingService
   ) {}
 
   ngOnInit(): void {
-    console.log(this.router.url);
-    const id = this.route.parent?.snapshot.paramMap.get('id');
+    console.log(this._router.url);
+    const id = this._route.parent?.snapshot.paramMap.get('id');
 
     if (!id) {
       throw new Error('Missing "id" parameter in parent path');
     }
 
-    this.packetId = parseInt(id);
+    this._packetId = parseInt(id);
 
-    this.commonLogicService
-      .getPacketFiles(this.packetId)
+    this._commonLogicService
+      .getPacketFiles(this._packetId)
       .pipe(take(1))
       .subscribe();
   }
 
   protected showSignInfo(fileId: number): void {
-    this.nopaperService
+    this._nopaperService
       .getFileSignature({ id: fileId })
       .pipe(take(1))
       .subscribe(() => {
@@ -61,6 +61,6 @@ export class PacketPageEndComponent implements OnInit {
   }
 
   protected backButtonHandler(): void {
-    this.routingService.goPacketsListPage();
+    this._routingService.goPacketsListPage();
   }
 }

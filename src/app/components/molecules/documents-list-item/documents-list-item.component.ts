@@ -18,7 +18,7 @@ export class DocumentsListItemComponent {
 
   private _file: File;
 
-  constructor(private nopaperApiService: NopaperApiService) {}
+  constructor(private _nopaperApiService: NopaperApiService) {}
 
   protected showSignInfo(): void {
     if (!this.fileId) {
@@ -40,7 +40,7 @@ export class DocumentsListItemComponent {
     }
 
     if (this.fileId) {
-      this.nopaperApiService
+      this._nopaperApiService
         .getFilesByIds([this.fileId])
         .pipe(take(1))
         .subscribe((files) => {

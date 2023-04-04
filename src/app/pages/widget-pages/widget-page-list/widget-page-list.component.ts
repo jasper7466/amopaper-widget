@@ -14,25 +14,25 @@ import {
   styleUrls: ['./widget-page-list.component.css'],
 })
 export class WidgetPageListComponent implements OnInit, OnDestroy {
-  protected leadId$ = this.store.select(leadIdSelector);
-  protected packets$ = this.store.select(packetsSelector);
-  protected isPacketsIdsTouched$ = this.store.select(packetsIsTouchedSelector);
+  protected leadId$ = this._store.select(leadIdSelector);
+  protected packets$ = this._store.select(packetsSelector);
+  protected isPacketsIdsTouched$ = this._store.select(packetsIsTouchedSelector);
 
   constructor(
-    private store: Store,
-    private crmService: CrmService,
-    private routingService: RoutingService
+    private _store: Store,
+    private _crmService: CrmService,
+    private _routingService: RoutingService
   ) {}
 
   ngOnInit(): void {
-    this.crmService.startJsonStoragePolling();
+    this._crmService.startJsonStoragePolling();
   }
 
   ngOnDestroy(): void {
-    this.crmService.stopJsonStoragePolling();
+    this._crmService.stopJsonStoragePolling();
   }
 
   protected clickCreateNewButtonHandler(): void {
-    this.routingService.goCreatePage();
+    this._routingService.goCreatePage();
   }
 }

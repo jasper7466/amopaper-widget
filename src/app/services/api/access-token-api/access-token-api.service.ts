@@ -14,28 +14,28 @@ const BASE_URL = environment.nopaperBaseTokenUrl;
 
 @Injectable()
 export class AccessTokenApiService extends ApiService {
-  private xApiKey$ = this.store.select(xApiKeySelector);
-  private clientUuid$ = this.store.select(clientUuidSelector);
-  private clientUuid?: string;
+  private _xApiKey$ = this._store.select(xApiKeySelector);
+  private _clientUuid$ = this._store.select(clientUuidSelector);
+  private _clientUuid?: string;
 
-  constructor(http: HttpClient, private store: Store) {
-    super(http);
+  constructor(_http: HttpClient, private _store: Store) {
+    super(_http);
 
     this.baseUrl = BASE_URL;
     this.setHeaders({ 'Content-Type': 'application/json' });
 
-    this.xApiKey$.subscribe((key) => {
+    this._xApiKey$.subscribe((key) => {
       this.setHeaders({ 'X-API-Key': `${key}` });
     });
 
-    this.clientUuid$.subscribe((uuid) => {
-      this.clientUuid = uuid;
+    this._clientUuid$.subscribe((uuid) => {
+      this._clientUuid = uuid;
     });
   }
 
   public getAmoAccessToken(): Observable<IGetAmoAccessTokenResponse> {
     return this.get<IGetAmoAccessTokenResponse>(
-      `/amo-crm/authorization/${this.clientUuid}/access-token`
+      `/amo-crm/authorization/${this._clientUuid}/access-token`
     );
   }
 }

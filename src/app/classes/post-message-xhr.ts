@@ -61,7 +61,7 @@ export class PostMessageXhr implements XMLHttpRequest {
 
   private _disconnectEmitter = new EventEmitter<void>();
 
-  constructor(private transport: PostMessageTransportService) {}
+  constructor(private _transport: PostMessageTransportService) {}
 
   // ================================================================================
   // ============================= Read-write properties ============================
@@ -151,7 +151,7 @@ export class PostMessageXhr implements XMLHttpRequest {
       this.readyState !== this.OPENED &&
       this._sendFlag
     ) {
-      this.transport.post<IAdditionalActions>({
+      this._transport.post<IAdditionalActions>({
         action: postMessageRequestAction,
         backwardAction: this._sessionGuid,
         payload: { abort: true },
@@ -227,7 +227,7 @@ export class PostMessageXhr implements XMLHttpRequest {
     this._config.bodyString = JSON.stringify(body);
     this._sessionGuid = guid();
 
-    this.transport
+    this._transport
       .subscribe<IPostMessageXhrEvent>(this._sessionGuid)
       .pipe(takeUntil(this._disconnectEmitter))
       .subscribe((event) => {
@@ -255,7 +255,7 @@ export class PostMessageXhr implements XMLHttpRequest {
         }
       });
 
-    this.transport.post<IPostMessageXhrConfig>({
+    this._transport.post<IPostMessageXhrConfig>({
       action: postMessageRequestAction,
       backwardAction: this._sessionGuid,
       payload: { ...this._config },

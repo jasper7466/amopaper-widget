@@ -17,11 +17,11 @@ const baseContext: TNotification = {
 export class NotificationService {
   context: TNotification;
 
-  constructor(private routingService: RoutingService) {}
+  constructor(private _routingService: RoutingService) {}
 
   public notify(context: TNotification): void {
     this.context = { ...baseContext, ...context };
-    this.routingService.goNotificationPage();
+    this._routingService.goNotificationPage();
   }
 
   public error(context: Omit<TNotification, 'type'>): void {

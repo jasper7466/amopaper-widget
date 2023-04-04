@@ -14,13 +14,13 @@ const storageFieldName = config.crmJsonStorageFieldName;
 
 @Injectable()
 export class CrmJsonStorageService {
-  private storageFieldId: number;
-  private activeLeadId: number;
+  private _storageFieldId: number;
+  private _activeLeadId: number;
 
-  private activeLead$ = this.store.select(activeLeadIdSelector);
+  private _activeLead$ = this._store.select(activeLeadIdSelector);
 
-  constructor(private amoApiService: AmoApiService, private store: Store) {
-    this.activeLead$.subscribe((leadId) => (this.activeLeadId = leadId));
+  constructor(private _amoApiService: AmoApiService, private _store: Store) {
+    this._activeLead$.subscribe((leadId) => (this._activeLeadId = leadId));
   }
 
   public init(): Observable<void> {
@@ -28,7 +28,7 @@ export class CrmJsonStorageService {
   }
 
   private getStorageFieldId(): Observable<void> {
-    return this.amoApiService
+    return this._amoApiService
       .getLeadsCustomFieldsInfoByName(storageFieldName)
       .pipe(
         map((fields) => {
@@ -41,14 +41,14 @@ export class CrmJsonStorageService {
 
           return fields[0].id;
         }),
-        tap((id) => (this.storageFieldId = id)),
+        tap((id) => (this._storageFieldId = id)),
         switchMap(() => of(void 0))
       );
   }
 
   public getStorage(): Observable<ICrmLeadJsonStorage> {
-    return this.amoApiService
-      .getLeadCustomFieldValues(this.activeLeadId, this.storageFieldId)
+    return this._amoApiService
+      .getLeadCustomFieldValues(this._activeLeadId, this._storageFieldId)
       .pipe(
         map((response) => {
           if (response.length === 0) {
@@ -79,9 +79,9 @@ export class CrmJsonStorageService {
           ...payload,
         });
 
-        return this.amoApiService.setLeadCustomFieldValuesById(
-          this.activeLeadId,
-          [{ id: this.storageFieldId, values: [newStateStringified] }]
+        return this._amoApiService.setLeadCustomFieldValuesById(
+          this._activeLeadId,
+          [{ id: this._storageFieldId, values: [newStateStringified] }]
         );
       }),
       switchMap(() => of(void 0))

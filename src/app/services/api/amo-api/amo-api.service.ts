@@ -21,17 +21,17 @@ const BASE_URL_COMPILER: (domain: string) => string = environment.getAmoBaseUrl;
 export class AmoApiService extends ApiService {
   constructor(
     @Inject(POST_MESSAGE_HTTP_CLIENT_TOKEN) http: HttpClient,
-    private store: Store
+    private _store: Store
   ) {
     super(http);
 
     this.setHeaders({ 'Content-Type': 'application/json' });
 
-    this.store.select(accessTokenSelector).subscribe((token) => {
+    this._store.select(accessTokenSelector).subscribe((token) => {
       this.setHeaders({ Authorization: `Bearer ${token}` });
     });
 
-    this.store.select(domainSelector).subscribe((domain) => {
+    this._store.select(domainSelector).subscribe((domain) => {
       if (domain) {
         this.baseUrl = BASE_URL_COMPILER(domain);
       }

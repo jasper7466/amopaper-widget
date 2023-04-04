@@ -16,13 +16,13 @@ export class PacketPageSenderSignComponent implements OnInit {
   protected packet$: Observable<IPacketDetails>;
 
   constructor(
-    private store: Store,
-    private routingService: RoutingService,
-    private route: ActivatedRoute
+    private _store: Store,
+    private _routingService: RoutingService,
+    private _route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    const id = this.route.parent?.snapshot.paramMap.get('id');
+    const id = this._route.parent?.snapshot.paramMap.get('id');
 
     if (!id) {
       throw new Error('Missing "id" parameter in parent path');
@@ -30,10 +30,10 @@ export class PacketPageSenderSignComponent implements OnInit {
 
     this.packetId = parseInt(id);
 
-    this.packet$ = this.store.select(packetSelector(this.packetId));
+    this.packet$ = this._store.select(packetSelector(this.packetId));
   }
 
   protected backButtonHandler(): void {
-    this.routingService.goPacketsListPage();
+    this._routingService.goPacketsListPage();
   }
 }

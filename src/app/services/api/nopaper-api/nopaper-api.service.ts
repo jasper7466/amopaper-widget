@@ -18,13 +18,13 @@ const BASE_URL = environment.getNopaperBaseUrl('v1');
 
 @Injectable()
 export class NopaperApiService extends ApiService {
-  private xApiKey$ = this.store.select(xApiKeySelector);
+  private _xApiKey$ = this._store.select(xApiKeySelector);
 
-  constructor(http: HttpClient, private store: Store) {
+  constructor(http: HttpClient, private _store: Store) {
     super(http);
     this.baseUrl = BASE_URL;
     this.setHeaders({ 'Content-Type': 'application/json' });
-    this.xApiKey$.subscribe((key) => {
+    this._xApiKey$.subscribe((key) => {
       this.setHeaders({ 'X-API-Key': `${key}` });
     });
   }

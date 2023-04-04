@@ -10,16 +10,16 @@ import { FilesService } from 'src/app/services/sub-services/files.service';
   styleUrls: ['./documents-drop-area.component.css'],
 })
 export class DocumentsDropAreaComponent {
-  private leadId$ = this.store.select(leadIdSelector);
+  private _leadId$ = this._store.select(leadIdSelector);
 
-  constructor(private filesService: FilesService, private store: Store) {}
+  constructor(private _filesService: FilesService, private _store: Store) {}
 
   protected fileLoadHandler(fileList: FileList): void {
-    this.filesService.filesHandler(fileList);
+    this._filesService.filesHandler(fileList);
   }
 
   protected loadFromLeadButtonHandler(): void {
-    this.leadId$
+    this._leadId$
       .pipe(
         take(1),
         filter((leadId) => typeof leadId === 'number'),

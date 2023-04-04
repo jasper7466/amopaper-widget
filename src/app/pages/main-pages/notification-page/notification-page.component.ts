@@ -8,14 +8,14 @@ import { RoutingService } from 'src/app/services/sub-services/routing.service';
   styleUrls: ['./notification-page.component.css'],
 })
 export class NotificationPageComponent {
-  protected context = this.notificationService.context;
+  protected context = this._notificationService.context;
 
   constructor(
-    private notificationService: NotificationService,
-    private routingService: RoutingService
+    private _notificationService: NotificationService,
+    private _routingService: RoutingService
   ) {}
 
   protected reset(): void {
-    this.routingService.goStartupPage();
+    this._routingService.goStartupPage();
   }
 }

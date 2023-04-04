@@ -23,24 +23,24 @@ export class ShareLinkButtonComponent {
   protected style: ButtonStyleOption = 'solid';
   protected isEnabled = true;
 
-  protected shareLink$ = this.store.select(shareLinkSelector);
+  protected shareLink$ = this._store.select(shareLinkSelector);
 
   constructor(
-    private store: Store,
-    private nopaperService: NopaperService,
-    private clipboard: Clipboard
+    private _store: Store,
+    private _nopaperService: NopaperService,
+    private _clipboard: Clipboard
   ) {}
 
   protected clickHandler(): void {
     this.isEnabled = false;
 
-    this.nopaperService
+    this._nopaperService
       .getShareLink(this.packetId)
       .pipe(
         switchMap(() => this.shareLink$),
         take(1),
         tap((link) => {
-          this.clipboard.copy(link);
+          this._clipboard.copy(link);
           this.isEnabled = true;
           this.caption = CAPTIONS.copied;
           this.style = 'blank';

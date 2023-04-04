@@ -11,19 +11,19 @@ import { Component, OnInit, OnDestroy, EventEmitter } from '@angular/core';
   styleUrls: ['./nav-path.component.css'],
 })
 export class NavPathComponent implements OnInit, OnDestroy {
-  private onDestroyEmitter = new EventEmitter<void>();
+  private _onDestroyEmitter = new EventEmitter<void>();
   public navPath: TNavigationPart[] = [];
 
-  constructor(private routingService: RoutingService) {}
+  constructor(private _routingService: RoutingService) {}
 
   ngOnInit(): void {
-    this.routingService
+    this._routingService
       .navParts()
-      .pipe(takeUntil(this.onDestroyEmitter))
+      .pipe(takeUntil(this._onDestroyEmitter))
       .subscribe((navParts) => (this.navPath = navParts));
   }
 
   ngOnDestroy(): void {
-    this.onDestroyEmitter.emit();
+    this._onDestroyEmitter.emit();
   }
 }

@@ -16,11 +16,11 @@ export class AddAddresseeFormComponent {
 
   protected searchSelector: ADDRESSEE_ID_TYPE = ADDRESSEE_ID_TYPE.VatId;
   protected isSubmitEnabled = false;
-  private value = '';
+  private _value = '';
 
   protected addresseeIdType = ADDRESSEE_ID_TYPE;
 
-  constructor(private store: Store) {}
+  constructor(private _store: Store) {}
 
   protected changeSearchSelector(selector: ADDRESSEE_ID_TYPE): void {
     if (this.searchSelector === selector) {
@@ -31,14 +31,14 @@ export class AddAddresseeFormComponent {
   }
 
   protected searchInputKeyUp(value: string): void | never {
-    this.value = value.replace(/\D+/g, '');
+    this._value = value.replace(/\D+/g, '');
 
     switch (this.searchSelector) {
       case ADDRESSEE_ID_TYPE.Phone:
-        this.isSubmitEnabled = this.value.length === 11;
+        this.isSubmitEnabled = this._value.length === 11;
         break;
       case ADDRESSEE_ID_TYPE.VatId:
-        this.isSubmitEnabled = this.value.length >= 10;
+        this.isSubmitEnabled = this._value.length >= 10;
         break;
       default:
         throw new Error('Unknown addressee id type.');
@@ -48,13 +48,13 @@ export class AddAddresseeFormComponent {
   protected submit(): void {
     this.submitEmitter.emit();
 
-    this.store.dispatch(
+    this._store.dispatch(
       addresseeUpdateAction({
         idType: this.searchSelector,
-        idValue: this.value,
+        idValue: this._value,
       })
     );
 
-    this.store.dispatch(addresseeSubmitAction());
+    this._store.dispatch(addresseeSubmitAction());
   }
 }

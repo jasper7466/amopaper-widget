@@ -10,19 +10,19 @@ import { IFileInfo } from 'src/app/interfaces/file-info.interface';
 
 @Injectable()
 export class FilesService {
-  private counter = 0;
+  private _counter = 0;
 
-  constructor(private store: Store) {}
+  constructor(private _store: Store) {}
 
   public filesHandler(files: FileList): void {
     const filesMetadata: IFileInfo[] = [];
 
     for (const file of Array.from(files)) {
-      const id = this.counter;
+      const id = this._counter;
       this.toBase64(file)
         .pipe(take(1))
         .subscribe((base64) => {
-          this.store.dispatch(sourceFileCompleteAction({ id, base64 }));
+          this._store.dispatch(sourceFileCompleteAction({ id, base64 }));
         });
 
       filesMetadata.push({
@@ -31,10 +31,10 @@ export class FilesService {
         size: file.size,
       });
 
-      this.counter++;
+      this._counter++;
     }
 
-    this.store.dispatch(sourceFilesAddAction({ payload: [...filesMetadata] }));
+    this._store.dispatch(sourceFilesAddAction({ payload: [...filesMetadata] }));
   }
 
   protected toBase64(file: File): Observable<string> {
@@ -56,7 +56,7 @@ export class FilesService {
   }
 
   protected clearFilesList(): void {
-    this.counter = 0;
-    this.store.dispatch(sourceFilesResetAction());
+    this._counter = 0;
+    this._store.dispatch(sourceFilesResetAction());
   }
 }
