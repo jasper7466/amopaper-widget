@@ -90,7 +90,7 @@ export class PostMessageXhr implements XMLHttpRequest {
       return;
     }
 
-    this._raiseError(
+    this.raiseError(
       "The value may only be set if the object's state is UNSENT or OPENED."
     );
   }
@@ -114,11 +114,11 @@ export class PostMessageXhr implements XMLHttpRequest {
     ) {
       return JSON.parse(this._state.response);
     }
-    return this._raiseError('Getter "response" not implemented.');
+    return this.raiseError('Getter "response" not implemented.');
   }
 
   public get responseText(): string | never {
-    return this._raiseError('Getter "responseText" not implemented.');
+    return this.raiseError('Getter "responseText" not implemented.');
   }
 
   public get responseURL(): string {
@@ -126,7 +126,7 @@ export class PostMessageXhr implements XMLHttpRequest {
   }
 
   public get responseXML(): Document | null | never {
-    return this._raiseError('Getter "responseXML" not implemented.');
+    return this.raiseError('Getter "responseXML" not implemented.');
   }
 
   public get status(): number {
@@ -138,7 +138,7 @@ export class PostMessageXhr implements XMLHttpRequest {
   }
 
   public get upload(): XMLHttpRequestUpload {
-    return this._raiseError('Getter "upload" not implemented.');
+    return this.raiseError('Getter "upload" not implemented.');
   }
 
   // ================================================================================
@@ -168,7 +168,7 @@ export class PostMessageXhr implements XMLHttpRequest {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public getResponseHeader(name: string): string | null | never {
-    this._raiseError('Method "getResponseHeader()" not implemented.');
+    this.raiseError('Method "getResponseHeader()" not implemented.');
   }
 
   public open(
@@ -181,11 +181,11 @@ export class PostMessageXhr implements XMLHttpRequest {
     this.abort();
 
     if (!(method in METHOD)) {
-      this._raiseError(`Unsupported method "${method}"`);
+      this.raiseError(`Unsupported method "${method}"`);
     }
 
     if (!async) {
-      this._raiseError(`Synchronous mode is not supported`);
+      this.raiseError(`Synchronous mode is not supported`);
     }
 
     this._config.method = method as METHOD;
@@ -211,14 +211,14 @@ export class PostMessageXhr implements XMLHttpRequest {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public overrideMimeType(mime: string): void {
-    this._raiseError('Method "overrideMimeType()" not implemented.');
+    this.raiseError('Method "overrideMimeType()" not implemented.');
   }
 
   public send(
     body?: Document | XMLHttpRequestBodyInit | null | undefined
   ): void {
     if (this._state.readyState !== this.OPENED || this._sendFlag) {
-      this._raiseError(
+      this.raiseError(
         "Failed to execute 'send'. The object's state must be OPENED."
       );
     }
@@ -233,7 +233,7 @@ export class PostMessageXhr implements XMLHttpRequest {
       .subscribe((event) => {
         if (event.type === 'unexpected-error') {
           this._disconnectEmitter.emit();
-          this._raiseError(`EXTERNAL ERROR: ${event.description}`);
+          this.raiseError(`EXTERNAL ERROR: ${event.description}`);
         }
 
         this._state = {
@@ -264,7 +264,7 @@ export class PostMessageXhr implements XMLHttpRequest {
 
   public setRequestHeader(name: string, value: string): void {
     if (this.readyState !== this.OPENED || this._sendFlag) {
-      this._raiseError(
+      this.raiseError(
         'Failed to execute "setRequestHeader". The object\'s state must be OPENED.'
       );
     }
@@ -283,7 +283,7 @@ export class PostMessageXhr implements XMLHttpRequest {
     options?: boolean | AddEventListenerOptions | undefined
   ): void {
     if (options !== undefined) {
-      this._raiseError('Adding event listener with options not implemented.');
+      this.raiseError('Adding event listener with options not implemented.');
     }
 
     const existingListener = this._listenersList.find(
@@ -304,7 +304,7 @@ export class PostMessageXhr implements XMLHttpRequest {
       addedBy: LISTENER_ADDING_METHOD.method,
     });
 
-    this._updateEventsToTrack();
+    this.updateEventsToTrack();
   }
 
   public removeEventListener<K extends keyof XMLHttpRequestEventMap>(
@@ -314,7 +314,7 @@ export class PostMessageXhr implements XMLHttpRequest {
     options?: boolean | EventListenerOptions | undefined
   ): void {
     if (options !== undefined) {
-      this._raiseError('Removing event listener with options not implemented.');
+      this.raiseError('Removing event listener with options not implemented.');
     }
     this._listenersList = this._listenersList.filter(
       (item) =>
@@ -325,7 +325,7 @@ export class PostMessageXhr implements XMLHttpRequest {
         )
     );
 
-    this._updateEventsToTrack();
+    this.updateEventsToTrack();
   }
 
   // ================================================================================
@@ -336,89 +336,89 @@ export class PostMessageXhr implements XMLHttpRequest {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     value: ((this: XMLHttpRequest, ev: Event) => any) | null
   ) {
-    this._setListenerAsProperty('readystatechange', value);
+    this.setListenerAsProperty('readystatechange', value);
   }
 
   public get onreadystatechange(): // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ((this: XMLHttpRequest, ev: Event) => any) | null {
-    return this._getListenerAsProperty('readystatechange');
+    return this.getListenerAsProperty('readystatechange');
   }
 
   public set onabort(
     value: // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ((this: XMLHttpRequest, ev: ProgressEvent<EventTarget>) => any) | null
   ) {
-    this._setListenerAsProperty('abort', value);
+    this.setListenerAsProperty('abort', value);
   }
   public get onabort(): // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ((this: XMLHttpRequest, ev: ProgressEvent<EventTarget>) => any) | null {
-    return this._getListenerAsProperty('abort');
+    return this.getListenerAsProperty('abort');
   }
 
   public set onerror(
     value: // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ((this: XMLHttpRequest, ev: ProgressEvent<EventTarget>) => any) | null
   ) {
-    this._setListenerAsProperty('error', value);
+    this.setListenerAsProperty('error', value);
   }
   public get onerror(): // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ((this: XMLHttpRequest, ev: ProgressEvent<EventTarget>) => any) | null {
-    return this._getListenerAsProperty('error');
+    return this.getListenerAsProperty('error');
   }
 
   public set onload(
     value: // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ((this: XMLHttpRequest, ev: ProgressEvent<EventTarget>) => any) | null
   ) {
-    this._setListenerAsProperty('load', value);
+    this.setListenerAsProperty('load', value);
   }
   public get onload(): // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ((this: XMLHttpRequest, ev: ProgressEvent<EventTarget>) => any) | null {
-    return this._getListenerAsProperty('load');
+    return this.getListenerAsProperty('load');
   }
 
   public set onloadend(
     value: // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ((this: XMLHttpRequest, ev: ProgressEvent<EventTarget>) => any) | null
   ) {
-    this._setListenerAsProperty('loadend', value);
+    this.setListenerAsProperty('loadend', value);
   }
   public get onloadend(): // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ((this: XMLHttpRequest, ev: ProgressEvent<EventTarget>) => any) | null {
-    return this._getListenerAsProperty('loadend');
+    return this.getListenerAsProperty('loadend');
   }
 
   public set onloadstart(
     value: // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ((this: XMLHttpRequest, ev: ProgressEvent<EventTarget>) => any) | null
   ) {
-    this._setListenerAsProperty('loadstart', value);
+    this.setListenerAsProperty('loadstart', value);
   }
   public get onloadstart(): // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ((this: XMLHttpRequest, ev: ProgressEvent<EventTarget>) => any) | null {
-    return this._getListenerAsProperty('loadstart');
+    return this.getListenerAsProperty('loadstart');
   }
 
   public set onprogress(
     value: // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ((this: XMLHttpRequest, ev: ProgressEvent<EventTarget>) => any) | null
   ) {
-    this._setListenerAsProperty('progress', value);
+    this.setListenerAsProperty('progress', value);
   }
   public get onprogress(): // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ((this: XMLHttpRequest, ev: ProgressEvent<EventTarget>) => any) | null {
-    return this._getListenerAsProperty('progress');
+    return this.getListenerAsProperty('progress');
   }
 
   public set ontimeout(
     value: // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ((this: XMLHttpRequest, ev: ProgressEvent<EventTarget>) => any) | null
   ) {
-    this._setListenerAsProperty('timeout', value);
+    this.setListenerAsProperty('timeout', value);
   }
   public get ontimeout(): // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ((this: XMLHttpRequest, ev: ProgressEvent<EventTarget>) => any) | null {
-    return this._getListenerAsProperty('timeout');
+    return this.getListenerAsProperty('timeout');
   }
 
   // ================================================================================
@@ -427,19 +427,19 @@ export class PostMessageXhr implements XMLHttpRequest {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public dispatchEvent(event: Event): boolean {
-    this._raiseError('Method "dispatchEvent()" not implemented.');
+    this.raiseError('Method "dispatchEvent()" not implemented.');
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public removeAllListeners?(eventName?: string | undefined): void {
-    this._raiseError('Method "removeAllListeners()" not implemented.');
+    this.raiseError('Method "removeAllListeners()" not implemented.');
   }
 
   public eventListeners?(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     eventName?: string | undefined
   ): EventListenerOrEventListenerObject[] {
-    this._raiseError('Method "eventListeners()" not implemented.');
+    this.raiseError('Method "eventListeners()" not implemented.');
   }
 
   // ================================================================================
@@ -450,7 +450,7 @@ export class PostMessageXhr implements XMLHttpRequest {
    * Реализует добавление/удаление слушателей с сохранением особенностей очерёдности их
    * вызова, как в оригинальном XHR.
    */
-  private _setListenerAsProperty<K extends keyof XMLHttpRequestEventMap>(
+  private setListenerAsProperty<K extends keyof XMLHttpRequestEventMap>(
     type: K,
     listener: // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ((this: XMLHttpRequest, ev: XMLHttpRequestEventMap[K]) => any) | null
@@ -486,7 +486,7 @@ export class PostMessageXhr implements XMLHttpRequest {
   }
 
   /** Вспомогательный метод для геттеров обработчиков событий через свойства. */
-  private _getListenerAsProperty<K extends keyof XMLHttpRequestEventMap>(
+  private getListenerAsProperty<K extends keyof XMLHttpRequestEventMap>(
     type: K
   ): // eslint-disable-next-line @typescript-eslint/no-explicit-any
   | ((this: XMLHttpRequest, ev: Event | ProgressEvent<EventTarget>) => any)
@@ -499,7 +499,7 @@ export class PostMessageXhr implements XMLHttpRequest {
   }
 
   /** Вспомогательный метод обновления списка событий для отслеживания. */
-  private _updateEventsToTrack() {
+  private updateEventsToTrack() {
     const eventsToTrack = new Set<keyof XMLHttpRequestEventMap>(
       trackAlwaysEvents
     );
@@ -512,7 +512,7 @@ export class PostMessageXhr implements XMLHttpRequest {
   }
 
   /** Вспомогательный метод для выброса исключений. */
-  private _raiseError(description = 'Unexpected error.'): never {
+  private raiseError(description = 'Unexpected error.'): never {
     throw new Error(`${this.constructor.name}. ${description}`);
   }
 }
