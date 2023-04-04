@@ -27,7 +27,16 @@
             "style": "kebab-case"
           }
         ],
-        "@typescript-eslint/no-empty-interface": "off"
+        "@typescript-eslint/no-empty-interface": "off",
+        // "@typescript-eslint/naming-convention": "error"
+        "@typescript-eslint/naming-convention": [
+          "error",
+          // CodeGuide 1.2.2: Именование классов в "PascalCase"
+          {
+            "selector": ["class"],
+            "format": ["PascalCase"]
+          }
+        ]
       }
     },
     {
