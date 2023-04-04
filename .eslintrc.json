@@ -35,12 +35,23 @@
             "selector": ["class"],
             "format": ["PascalCase"]
           },
+          // CodeGuide 1.2.4: Именование public/protected-свойств классов в "camelCase"
+          {
+            "selector": ["classProperty"],
+            "modifiers": ["public"],
+            "format": ["camelCase"]
+          },
+          {
+            "selector": ["classProperty"],
+            "modifiers": ["protected"],
+            "format": ["camelCase"]
+          },
           // CodeGuide 1.2.5: Приватные свойства должны начинаться с символа подчёркивания
           {
             "selector": ["property", "parameterProperty", "accessor"],
             "modifiers": ["private"],
             "prefix": ["_"],
-            "format": null
+            "format": ["camelCase"]
           }
         ],
         // CodeGuide 1.2.3: Поля класса должны иметь модификатор доступа
