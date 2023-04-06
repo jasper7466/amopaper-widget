@@ -1,8 +1,8 @@
-import { SIGNATURES_KEY, ISignaturesState } from './index';
+import { signaturesKey, ISignaturesState } from './index';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 export const featureSelector =
-  createFeatureSelector<ISignaturesState>(SIGNATURES_KEY);
+  createFeatureSelector<ISignaturesState>(signaturesKey);
 
 export const signatureSelector = createSelector(
   featureSelector,

@@ -1,4 +1,4 @@
-export const APP_CONTEXT_KEY = 'app-context';
+export const appContextKey = 'app-context';
 
 export interface IAppContextState {
   isInitialized: boolean;

@@ -1,8 +1,8 @@
-import { ICrmContextState, CRM_CONTEXT_KEY } from './index';
+import { ICrmContextState, crmContextKey } from './index';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 export const featureSelector =
-  createFeatureSelector<ICrmContextState>(CRM_CONTEXT_KEY);
+  createFeatureSelector<ICrmContextState>(crmContextKey);
 
 export const xApiKeySelector = createSelector(
   featureSelector,

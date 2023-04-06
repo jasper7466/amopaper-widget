@@ -1,8 +1,7 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { IPacketsState, PACKETS_KEY } from '.';
+import { IPacketsState, packetsKey } from '.';
 
-export const featureSelector =
-  createFeatureSelector<IPacketsState>(PACKETS_KEY);
+export const featureSelector = createFeatureSelector<IPacketsState>(packetsKey);
 
 export const packetsSelector = createSelector(
   featureSelector,

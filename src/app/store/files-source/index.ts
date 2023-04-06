@@ -1,6 +1,6 @@
 import { IBase64File } from 'src/app/interfaces/file-base64.interface';
 
-export const FILES_SOURCE_KEY = 'source-files';
+export const filesSourceKey = 'source-files';
 
 export interface IFileRecord extends IBase64File {
   isLoaded: boolean;

@@ -1,4 +1,4 @@
-export const TOKEN_KEY = 'token';
+export const tokenKey = 'token';
 
 export interface ITokenState {
   token: string | null;

@@ -10,7 +10,7 @@ import { Injectable } from '@angular/core';
 import { IGetAmoAccessTokenResponse } from './access-token-api.types';
 import { Store } from '@ngrx/store';
 
-const BASE_URL = environment.nopaperBaseTokenUrl;
+const baseUrl = environment.nopaperBaseTokenUrl;
 
 @Injectable()
 export class AccessTokenApiService extends ApiService {
@@ -21,7 +21,7 @@ export class AccessTokenApiService extends ApiService {
   constructor(http: HttpClient, private _store: Store) {
     super(http);
 
-    this.baseUrl = BASE_URL;
+    this.baseUrl = baseUrl;
     this.setHeaders({ 'Content-Type': 'application/json' });
 
     this._xApiKey$.subscribe((key) => {

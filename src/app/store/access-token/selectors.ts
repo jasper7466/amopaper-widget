@@ -1,7 +1,7 @@
-import { ITokenState, TOKEN_KEY } from './index';
+import { ITokenState, tokenKey } from './index';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
-export const featureSelector = createFeatureSelector<ITokenState>(TOKEN_KEY);
+export const featureSelector = createFeatureSelector<ITokenState>(tokenKey);
 
 export const accessTokenSelector = createSelector(
   featureSelector,

@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { Component, Input } from '@angular/core';
 import { Clipboard } from '@angular/cdk/clipboard';
 
-const CAPTIONS = {
+const captions = {
   initial: 'Скопировать ссылку на подпись КЭП',
   copied: 'Скопировано',
 };
@@ -19,7 +19,7 @@ const CAPTIONS = {
 export class ShareLinkButtonComponent {
   @Input() public packetId: number;
 
-  protected caption: string = CAPTIONS.initial;
+  protected caption: string = captions.initial;
   protected style: ButtonStyleOption = 'solid';
   protected isEnabled = true;
 
@@ -42,7 +42,7 @@ export class ShareLinkButtonComponent {
         tap((link) => {
           this._clipboard.copy(link);
           this.isEnabled = true;
-          this.caption = CAPTIONS.copied;
+          this.caption = captions.copied;
           this.style = 'blank';
         })
       )

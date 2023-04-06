@@ -1,4 +1,4 @@
-import { AmoApiModule, POST_MESSAGE_HTTP_CLIENT_TOKEN } from './amo-api.module';
+import { AmoApiModule, postMessageHttpClientToken } from './amo-api.module';
 import { domainSelector } from '../../../store/crm-context/selectors';
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
@@ -14,14 +14,14 @@ import { ICrmCustomFieldInfo } from 'src/app/interfaces/crm-custom-field.interfa
 import { patchLeadEndpoint } from './endpoints/patch-lead.endpoint';
 import { IPatchLeadResponse } from './amo-api-custom-fields.types';
 
-const BASE_URL_COMPILER: (domain: string) => string = environment.getAmoBaseUrl;
+const baseUrlCompiler: (domain: string) => string = environment.getAmoBaseUrl;
 
 @Injectable({
   providedIn: AmoApiModule,
 })
 export class AmoApiService extends ApiService {
   constructor(
-    @Inject(POST_MESSAGE_HTTP_CLIENT_TOKEN) http: HttpClient,
+    @Inject(postMessageHttpClientToken) http: HttpClient,
     private _store: Store
   ) {
     super(http);
@@ -34,7 +34,7 @@ export class AmoApiService extends ApiService {
 
     this._store.select(domainSelector).subscribe((domain) => {
       if (domain) {
-        this.baseUrl = BASE_URL_COMPILER(domain);
+        this.baseUrl = baseUrlCompiler(domain);
       }
     });
   }

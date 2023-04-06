@@ -1,8 +1,8 @@
-import { IAddresseeState, ADDRESSEE_KEY } from './index';
+import { IAddresseeState, addresseeKey } from './index';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 export const featureSelector =
-  createFeatureSelector<IAddresseeState>(ADDRESSEE_KEY);
+  createFeatureSelector<IAddresseeState>(addresseeKey);
 
 export const addresseeSelector = createSelector(featureSelector, (state) => ({
   ...state,

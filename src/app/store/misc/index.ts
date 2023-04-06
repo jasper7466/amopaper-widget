@@ -1,4 +1,4 @@
-export const MISC_KEY = 'misc';
+export const miscKey = 'misc';
 
 export interface IMiscState {
   packetTitle: string;

@@ -1,8 +1,8 @@
-import { FILES_SOURCE_KEY, ISourceFilesState } from './index';
+import { filesSourceKey, ISourceFilesState } from './index';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 export const featureSelector =
-  createFeatureSelector<ISourceFilesState>(FILES_SOURCE_KEY);
+  createFeatureSelector<ISourceFilesState>(filesSourceKey);
 
 export const sourceFilesSelector = createSelector(
   featureSelector,

@@ -1,6 +1,6 @@
 import { ICrmContext } from 'src/app/interfaces/crm-context.interface';
 
-export const CRM_CONTEXT_KEY = 'crm-context';
+export const crmContextKey = 'crm-context';
 
 // export type LeadAttachment = {
 //   fileName: string;

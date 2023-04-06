@@ -10,11 +10,11 @@ import {
 } from '@angular/common/http';
 import { HttpErrorHandlingInterceptor } from 'src/app/interceptors/http-error-handling.interceptor';
 
-export const POST_MESSAGE_HTTP_CLIENT_TOKEN = new InjectionToken<HttpClient>(
+export const postMessageHttpClientToken = new InjectionToken<HttpClient>(
   'POST MESSAGE HTTP CLIENT TOKEN'
 );
 
-const PostMessageHttpClientFactory = (
+const postMessageHttpClientFactory = (
   transport: PostMessageTransportService,
   injector: EnvironmentInjector
 ): HttpClient => {
@@ -37,8 +37,8 @@ const PostMessageHttpClientFactory = (
       multi: true,
     },
     {
-      provide: POST_MESSAGE_HTTP_CLIENT_TOKEN,
-      useFactory: PostMessageHttpClientFactory,
+      provide: postMessageHttpClientToken,
+      useFactory: postMessageHttpClientFactory,
       deps: [PostMessageTransportService, EnvironmentInjector],
     },
   ],

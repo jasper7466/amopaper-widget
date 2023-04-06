@@ -1,8 +1,8 @@
-import { FILES_PROCESSED_KEY, IProcessedFilesState } from './index';
+import { filesProcessedKey, IProcessedFilesState } from './index';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 export const featureSelector =
-  createFeatureSelector<IProcessedFilesState>(FILES_PROCESSED_KEY);
+  createFeatureSelector<IProcessedFilesState>(filesProcessedKey);
 
 export const originalFilesSelector = createSelector(
   featureSelector,

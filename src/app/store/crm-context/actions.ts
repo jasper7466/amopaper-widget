@@ -1,9 +1,9 @@
 import { ICrmContext } from 'src/app/interfaces/crm-context.interface';
-import { CRM_CONTEXT_KEY } from './index';
+import { crmContextKey } from './index';
 import { createAction, props } from '@ngrx/store';
 
 export const updateCrmContextAction = createAction(
-  `[${CRM_CONTEXT_KEY}] update CRM context`,
+  `[${crmContextKey}] update CRM context`,
   props<ICrmContext>()
 );
 

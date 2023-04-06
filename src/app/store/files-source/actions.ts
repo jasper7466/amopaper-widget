@@ -1,18 +1,18 @@
 import { IFileInfo } from 'src/app/interfaces/file-info.interface';
-import { FILES_SOURCE_KEY } from './index';
+import { filesSourceKey } from './index';
 import { createAction, props } from '@ngrx/store';
 import { IBase64File } from 'src/app/interfaces/file-base64.interface';
 
 export const sourceFilesAddAction = createAction(
-  `[${FILES_SOURCE_KEY}] new source files added`,
+  `[${filesSourceKey}] new source files added`,
   props<{ payload: IFileInfo[] }>()
 );
 
 export const sourceFileCompleteAction = createAction(
-  `[${FILES_SOURCE_KEY}] one of source file is loaded`,
+  `[${filesSourceKey}] one of source file is loaded`,
   props<Pick<IBase64File, 'id' | 'base64'>>()
 );
 
 export const sourceFilesResetAction = createAction(
-  `[${FILES_SOURCE_KEY}] source files list cleared`
+  `[${filesSourceKey}] source files list cleared`
 );

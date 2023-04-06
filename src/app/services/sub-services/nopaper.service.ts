@@ -33,7 +33,7 @@ import { IPacketDetails } from 'src/app/interfaces/packet-details.interface';
 import { IShareLink } from 'src/app/interfaces/share-link.interface';
 import { NopaperApiV2Service } from '../api/nopaper-api-v2/nopaper-api-v2.service';
 
-const POLLING_INTERVAL_MS = 3000;
+const pollingIntervalMs = 3000;
 
 @Injectable()
 export class NopaperService {
@@ -215,7 +215,7 @@ export class NopaperService {
    */
   public startPacketPolling(packetId: number): void {
     this.stopPacketPolling(packetId);
-    timer(1, POLLING_INTERVAL_MS)
+    timer(1, pollingIntervalMs)
       .pipe(
         tap(() => {
           this.getPacketStepName(packetId).pipe(take(1)).subscribe();

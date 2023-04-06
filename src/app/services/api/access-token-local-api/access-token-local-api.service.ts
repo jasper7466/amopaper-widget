@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 import { IGetAmoAccessTokenResponse } from './access-token-local-api.types';
 import { Observable } from 'rxjs';
 
-const BASE_URL = environment.localBaseTokenUrl;
+const baseUrl = environment.localBaseTokenUrl;
 
 @Injectable()
 export class AccessTokenLocalApiService extends ApiService {
@@ -17,7 +17,7 @@ export class AccessTokenLocalApiService extends ApiService {
   constructor(http: HttpClient, private _store: Store) {
     super(http);
 
-    this.baseUrl = BASE_URL;
+    this.baseUrl = baseUrl;
     this.setHeaders({ 'Content-Type': 'application/json' });
     this._xApiKey$.subscribe((key) => {
       if (key) {

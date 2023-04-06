@@ -8,7 +8,7 @@ import { createPacketEndpoint } from './endpoints/create-packet.endpoint';
 import { getPacketDetailsEndpoint } from './endpoints/get-packet-details.endpoint';
 import { revokePacketEndpoint } from './endpoints/revoke-packet.endpoint';
 
-const BASE_URL = environment.getNopaperBaseUrl('v2');
+const baseUrl = environment.getNopaperBaseUrl('v2');
 
 @Injectable()
 export class NopaperApiV2Service extends ApiService {
@@ -16,7 +16,7 @@ export class NopaperApiV2Service extends ApiService {
 
   constructor(http: HttpClient, private _store: Store) {
     super(http);
-    this.baseUrl = BASE_URL;
+    this.baseUrl = baseUrl;
     this.setHeaders({ 'Content-Type': 'application/json' });
     this._xApiKey$.subscribe((key) => {
       this.setHeaders({ 'X-API-Key': `${key}` });

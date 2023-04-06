@@ -4,7 +4,7 @@ import {
   IAddressee,
 } from 'src/app/interfaces/addressee.interface';
 
-export const ADDRESSEE_KEY = 'addressee';
+export const addresseeKey = 'addressee';
 
 export interface IAddresseeState extends IAddressee, IAddresseeExistence {
   isChecked: boolean;

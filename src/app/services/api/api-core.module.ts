@@ -13,7 +13,7 @@ import { AmoPostApiMockService } from './amo-post-api-mock/amo-post-api-mock.ser
 import { AmoPostApiService } from './amo-post-api/amo-post-api.service';
 import { PostMessageTransportService } from '../transport/post-message-transport.service';
 
-const AccessTokenApiFactory = (
+const accessTokenApiFactory = (
   http: HttpClient,
   store: Store
 ): AccessTokenApiService | AccessTokenLocalApiService => {
@@ -24,7 +24,7 @@ const AccessTokenApiFactory = (
   return new AccessTokenApiService(http, store);
 };
 
-const AmoPostApiFactory = (
+const amoPostApiFactory = (
   postMessageTransport: PostMessageTransportService
 ): AmoPostApiService | AmoPostApiMockService => {
   if (environment.isStandaloneFrame) {
@@ -43,12 +43,12 @@ const AmoPostApiFactory = (
     PostMessageTransportService,
     {
       provide: AccessTokenApiService,
-      useFactory: AccessTokenApiFactory,
+      useFactory: accessTokenApiFactory,
       deps: [HttpClient, Store],
     },
     {
       provide: AmoPostApiService,
-      useFactory: AmoPostApiFactory,
+      useFactory: amoPostApiFactory,
       deps: [PostMessageTransportService],
     },
   ],

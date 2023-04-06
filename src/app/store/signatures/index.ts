@@ -1,7 +1,7 @@
 import { IFileSignatures } from 'src/app/interfaces/file-signatures.interface';
 import { TSignatureInfo } from 'src/app/interfaces/signature-info.type';
 
-export const SIGNATURES_KEY = 'signatures';
+export const signaturesKey = 'signatures';
 
 export interface ISignaturesState {
   signatures: IFileSignatures;

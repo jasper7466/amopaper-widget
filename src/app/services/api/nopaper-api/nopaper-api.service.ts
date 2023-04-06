@@ -14,7 +14,7 @@ import { getFilesByIdsEndpoint } from './endpoints/get-files-by-ids.endpoint';
 import { getFileSignaturesEndpoint } from './endpoints/get-files-signatures.endpoint';
 import { getShareLinkEndpoint } from './endpoints/get-share-link.endpoint';
 
-const BASE_URL = environment.getNopaperBaseUrl('v1');
+const baseUrl = environment.getNopaperBaseUrl('v1');
 
 @Injectable()
 export class NopaperApiService extends ApiService {
@@ -22,7 +22,7 @@ export class NopaperApiService extends ApiService {
 
   constructor(http: HttpClient, private _store: Store) {
     super(http);
-    this.baseUrl = BASE_URL;
+    this.baseUrl = baseUrl;
     this.setHeaders({ 'Content-Type': 'application/json' });
     this._xApiKey$.subscribe((key) => {
       this.setHeaders({ 'X-API-Key': `${key}` });
