@@ -75,13 +75,15 @@
             }
           }
         ],
-        // CodeGuide 1.2.7 (2/2): Обязательная типизация для аргументов функций/методов
+        // CodeGuide 1.2.7 (2/2): Обязательная типизация аргументов функций/методов
         "@typescript-eslint/typedef": [
           "error",
           {
             "parameter": true
           }
-        ]
+        ],
+        // CodeGuide 4.5: Обязательная типизация возвращаемого значения функций/методов
+        "@typescript-eslint/explicit-function-return-type": "error"
       }
     },
     {
