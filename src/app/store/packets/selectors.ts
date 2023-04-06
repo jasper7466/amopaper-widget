@@ -18,6 +18,7 @@ export const packetsIsTouchedSelector = createSelector(
   (state) => state.isPacketsIdsTouched
 );
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const packetSelector = (id: number) =>
   createSelector(packetsSelector, (packets) => {
     const packet = packets.find((item) => item.id === id);
@@ -27,8 +28,10 @@ export const packetSelector = (id: number) =>
     return packet;
   });
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const packetStepNameSelector = (id: number) =>
   createSelector(packetSelector(id), (packet) => packet.status);
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const packetTitleSelector = (id: number) =>
   createSelector(packetSelector(id), (packet) => packet.title);

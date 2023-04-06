@@ -13,7 +13,7 @@ import { WindowMockService } from './window-mock.service';
 import { CrmJsonStorageService } from './crm-json-storage.service';
 import { CrmTokenService } from './crm-token.service';
 
-const WindowServiceFactory = () => {
+const WindowServiceFactory = (): WindowService | WindowMockService => {
   if (environment.isStandaloneFrame) {
     return new WindowMockService();
   }

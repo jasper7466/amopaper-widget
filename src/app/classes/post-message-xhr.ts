@@ -499,7 +499,7 @@ export class PostMessageXhr implements XMLHttpRequest {
   }
 
   /** Вспомогательный метод обновления списка событий для отслеживания. */
-  private updateEventsToTrack() {
+  private updateEventsToTrack(): void {
     const eventsToTrack = new Set<keyof XMLHttpRequestEventMap>(
       trackAlwaysEvents
     );

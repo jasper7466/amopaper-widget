@@ -12,14 +12,16 @@ import {
 })
 export class DragAndDropDirective {
   @Input() public fileOverClass = '';
-  @HostBinding('class') protected get class() {
+  @HostBinding('class') protected get class(): string {
     return this._fileOver ? this.fileOverClass : '';
   }
   @Output() protected fileDropped = new EventEmitter<FileList>();
 
   private _fileOver = false;
 
-  @HostListener('dragover', ['$event']) protected onDragOver(event: DragEvent) {
+  @HostListener('dragover', ['$event']) protected onDragOver(
+    event: DragEvent
+  ): void {
     event.preventDefault();
     event.stopPropagation();
     this._fileOver = true;
@@ -27,13 +29,13 @@ export class DragAndDropDirective {
 
   @HostListener('dragleave', ['$event']) protected onDragLeave(
     event: DragEvent
-  ) {
+  ): void {
     event.preventDefault();
     event.stopPropagation();
     this._fileOver = false;
   }
 
-  @HostListener('drop', ['$event']) protected onDrop(event: DragEvent) {
+  @HostListener('drop', ['$event']) protected onDrop(event: DragEvent): void {
     event.preventDefault();
     event.stopPropagation();
     this._fileOver = false;

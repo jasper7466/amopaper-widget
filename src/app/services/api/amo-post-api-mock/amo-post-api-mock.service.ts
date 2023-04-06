@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { IAmoPostApiService } from '../amo-post-api/amo-post-api.service';
-import { delay, of } from 'rxjs';
+import { Observable, delay, of } from 'rxjs';
 import { ICrmContext } from 'src/app/interfaces/crm-context.interface';
 import secrets from '../../../../../auth-dev-server/secrets.json';
 
 @Injectable()
 export class AmoPostApiMockService implements IAmoPostApiService {
-  public getCrmContext() {
+  public getCrmContext(): Observable<ICrmContext> {
     return of<ICrmContext>({
       isCard: true,
       cardId: 1,

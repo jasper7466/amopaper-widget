@@ -12,6 +12,7 @@ import { getLeadEndpoint } from './endpoints/get-lead.endpoint';
 import { ICrmCustomFieldValues } from 'src/app/interfaces/crm-custom-field-value.interface';
 import { ICrmCustomFieldInfo } from 'src/app/interfaces/crm-custom-field.interface-info';
 import { patchLeadEndpoint } from './endpoints/patch-lead.endpoint';
+import { IPatchLeadResponse } from './amo-api-custom-fields.types';
 
 const BASE_URL_COMPILER: (domain: string) => string = environment.getAmoBaseUrl;
 
@@ -71,7 +72,7 @@ export class AmoApiService extends ApiService {
   public setLeadCustomFieldValuesById(
     leadId: number,
     values: ICrmCustomFieldValues[]
-  ) {
+  ): Observable<IPatchLeadResponse> {
     return patchLeadEndpoint.call(this, leadId, {
       custom_fields_values: values.map((item) => ({
         field_id: item.id,

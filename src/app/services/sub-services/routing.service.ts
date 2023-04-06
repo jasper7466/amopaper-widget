@@ -78,7 +78,7 @@ export class RoutingService {
     this._router.navigate(['widget/packet', id]);
   }
 
-  public goNotificationPage() {
+  public goNotificationPage(): void {
     this._router.navigate(['notification']);
   }
 

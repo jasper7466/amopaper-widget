@@ -14,7 +14,9 @@ export class FileBrowserDirective {
 
   constructor(private _hostRef: ElementRef) {}
 
-  @HostListener('change', ['$event']) private onChange(event: InputEvent) {
+  @HostListener('change', ['$event']) private onChange(
+    event: InputEvent
+  ): void {
     event.preventDefault();
     event.stopPropagation();
 

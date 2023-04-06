@@ -41,13 +41,13 @@ export class FilesService {
     const fileReader = new FileReader();
 
     return new Observable<string>((observer: Observer<string>) => {
-      fileReader.onload = () => {
+      fileReader.onload = (): void => {
         const result = fileReader.result as string;
         observer.next(result.replace('data:', '').replace(/^.+,/, ''));
         observer.complete();
       };
 
-      fileReader.onerror = () => {
+      fileReader.onerror = (): void => {
         observer.error({ error: `toBase64: Loading failed` });
       };
 

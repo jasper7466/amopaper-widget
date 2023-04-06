@@ -13,7 +13,10 @@ import { AmoPostApiMockService } from './amo-post-api-mock/amo-post-api-mock.ser
 import { AmoPostApiService } from './amo-post-api/amo-post-api.service';
 import { PostMessageTransportService } from '../transport/post-message-transport.service';
 
-const AccessTokenApiFactory = (http: HttpClient, store: Store) => {
+const AccessTokenApiFactory = (
+  http: HttpClient,
+  store: Store
+): AccessTokenApiService | AccessTokenLocalApiService => {
   if (environment.isLocalTokenServer) {
     return new AccessTokenLocalApiService(http, store);
   }
@@ -23,7 +26,7 @@ const AccessTokenApiFactory = (http: HttpClient, store: Store) => {
 
 const AmoPostApiFactory = (
   postMessageTransport: PostMessageTransportService
-) => {
+): AmoPostApiService | AmoPostApiMockService => {
   if (environment.isStandaloneFrame) {
     return new AmoPostApiMockService();
   }

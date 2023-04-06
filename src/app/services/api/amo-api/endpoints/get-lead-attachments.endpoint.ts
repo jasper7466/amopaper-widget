@@ -1,10 +1,13 @@
-import { EMPTY, expand } from 'rxjs';
+import { EMPTY, Observable, expand } from 'rxjs';
 import { ApiService } from '../../api.service';
 import { IGetLeadAttachmentsResponse, TNoteType } from '../amo-api-notes.types';
 
 const noteType: TNoteType = 'attachment';
 
-export function getLeadAttachmentsEndpoint(this: ApiService, leadId: number) {
+export function getLeadAttachmentsEndpoint(
+  this: ApiService,
+  leadId: number
+): Observable<IGetLeadAttachmentsResponse> {
   return this.get<IGetLeadAttachmentsResponse>(
     `/leads/${leadId}/notes?filter[note_type][0]=${noteType}`
   ).pipe(

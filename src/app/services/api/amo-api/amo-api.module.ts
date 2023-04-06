@@ -17,7 +17,7 @@ export const POST_MESSAGE_HTTP_CLIENT_TOKEN = new InjectionToken<HttpClient>(
 const PostMessageHttpClientFactory = (
   transport: PostMessageTransportService,
   injector: EnvironmentInjector
-) => {
+): HttpClient => {
   const backend = new HttpXhrBackend({
     build: () => new PostMessageXhr(transport),
   });

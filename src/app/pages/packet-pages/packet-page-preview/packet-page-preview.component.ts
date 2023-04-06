@@ -77,7 +77,7 @@ export class PacketPagePreviewComponent implements OnInit, OnDestroy {
     this._routingService.goPacketsListPage();
   }
 
-  protected downloadFile(file: File) {
+  protected downloadFile(file: File): void {
     // TODO: Open or download???
     // downloadFile(file);
     openFile(file);
