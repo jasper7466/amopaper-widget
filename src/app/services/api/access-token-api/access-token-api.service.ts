@@ -18,8 +18,8 @@ export class AccessTokenApiService extends ApiService {
   private _clientUuid$ = this._store.select(clientUuidSelector);
   private _clientUuid?: string;
 
-  constructor(_http: HttpClient, private _store: Store) {
-    super(_http);
+  constructor(http: HttpClient, private _store: Store) {
+    super(http);
 
     this.baseUrl = BASE_URL;
     this.setHeaders({ 'Content-Type': 'application/json' });

@@ -174,7 +174,7 @@ export class PostMessageXhr implements XMLHttpRequest {
   public open(
     method: string,
     url: string | URL,
-    async = true,
+    async: boolean = true,
     username?: string | null,
     password?: string | null
   ): void {
@@ -512,7 +512,7 @@ export class PostMessageXhr implements XMLHttpRequest {
   }
 
   /** Вспомогательный метод для выброса исключений. */
-  private raiseError(description = 'Unexpected error.'): never {
+  private raiseError(description: string = 'Unexpected error.'): never {
     throw new Error(`${this.constructor.name}. ${description}`);
   }
 }
