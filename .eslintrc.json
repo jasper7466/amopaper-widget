@@ -10,6 +10,7 @@
         "plugin:@angular-eslint/recommended",
         "plugin:@angular-eslint/template/process-inline-templates"
       ],
+      "plugins": ["unicorn"],
       "rules": {
         "@typescript-eslint/no-empty-interface": "off",
         "@typescript-eslint/no-inferrable-types": "off",
@@ -93,6 +94,8 @@
             "parameter": true
           }
         ],
+        // CodeGuide 1.2.8: Не использовать сокращения в именовании сущностей и файлов
+        "unicorn/prevent-abbreviations": "error",
         // CodeGuide 4.5: Обязательная типизация возвращаемого значения функций/методов
         "@typescript-eslint/explicit-function-return-type": "error"
       }
