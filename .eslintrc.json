@@ -11,6 +11,8 @@
         "plugin:@angular-eslint/template/process-inline-templates"
       ],
       "rules": {
+        "@typescript-eslint/no-empty-interface": "off",
+        "@typescript-eslint/no-inferrable-types": "off",
         "@angular-eslint/directive-selector": [
           "error",
           {
@@ -27,7 +29,6 @@
             "style": "kebab-case"
           }
         ],
-        "@typescript-eslint/no-empty-interface": "off",
         "@typescript-eslint/naming-convention": [
           "error",
           // CodeGuide 1.2.2: Именование классов в "PascalCase"
@@ -57,6 +58,11 @@
           {
             "selector": ["classMethod"],
             "format": ["camelCase"]
+          },
+          // CodeGuide 1.2.7 (1/2): Именование параметров методов класса и аргументов функций в "camelCase"
+          {
+            "selector": ["parameter"],
+            "format": ["camelCase"]
           }
         ],
         // CodeGuide 1.2.3: Поля класса должны иметь модификатор доступа
@@ -67,6 +73,13 @@
             "overrides": {
               "constructors": "no-public"
             }
+          }
+        ],
+        // CodeGuide 1.2.7 (2/2): Обязательная типизация для аргументов функций/методов
+        "@typescript-eslint/typedef": [
+          "error",
+          {
+            "parameter": true
           }
         ]
       }
