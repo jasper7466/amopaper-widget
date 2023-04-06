@@ -63,6 +63,17 @@
           {
             "selector": ["parameter"],
             "format": ["camelCase"]
+          },
+          // Unspecified: Именование переменных в "camelCase"
+          {
+            "selector": ["variable"],
+            "format": ["camelCase"]
+          },
+          // Unspecified: Именование констант в "camelCase"
+          {
+            "selector": ["variable"],
+            "modifiers": ["const"],
+            "format": ["camelCase"]
           }
         ],
         // CodeGuide 1.2.3: Поля класса должны иметь модификатор доступа
