@@ -19,15 +19,15 @@ const contentTypes: { [key: string]: string } = {
 /**
  * Возвращает MIME-type соответствующий расширению или выбрасывает исключение, если
  * тип для данного расширения отсутствует в словаре
- * @param extOrFullName полное имя файла или его расширение ('name.ext', '.ext', 'ext')
+ * @param extsionOrFullName полное имя файла или его расширение ('name.ext', '.ext', 'ext')
  * @returns
  */
-export const getContentType = (extOrFullName: string): string | never => {
-  const ext = extOrFullName.split('.').pop() || '';
+export const getContentType = (extsionOrFullName: string): string | never => {
+  const extension = extsionOrFullName.split('.').pop() || '';
 
-  if (!(ext in contentTypes)) {
+  if (!(extension in contentTypes)) {
     throw new Error('getContentType: empty or unknown extension');
   }
 
-  return contentTypes[ext];
+  return contentTypes[extension];
 };

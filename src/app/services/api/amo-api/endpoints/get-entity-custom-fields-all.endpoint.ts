@@ -31,6 +31,6 @@ export function getEntityCustomFieldsAllEndpoint(
         : EMPTY
     ),
     map(responseAdapter),
-    reduce((acc, current) => acc.concat(current))
+    reduce((accumulator, current) => accumulator.concat(current))
   );
 }

@@ -3,7 +3,7 @@ import {
   clientUuidSelector,
   xApiKeySelector,
 } from './../../../store/crm-context/selectors';
-import { environment } from './../../../../environments/environment.prod';
+import { environment } from '../../../../environments/environment.production';
 import { HttpClient } from '@angular/common/http';
 import { ApiService } from './../api.service';
 import { Injectable } from '@angular/core';

@@ -30,33 +30,42 @@ export class ApiService {
     throw error;
   }
 
-  protected get<Res>(path: string): Observable<Res> {
+  protected get<Response>(path: string): Observable<Response> {
     return this._http
-      .get<Res>(`${this._baseUrl}${path}`, {
+      .get<Response>(`${this._baseUrl}${path}`, {
         headers: this._headers,
       })
       .pipe(catchError((error) => this.httpErrorHandler(error)));
   }
 
-  protected post<Req, Res>(path: string, body: Req): Observable<Res> {
+  protected post<Request, Response>(
+    path: string,
+    body: Request
+  ): Observable<Response> {
     return this._http
-      .post<Res>(`${this._baseUrl}${path}`, body, {
+      .post<Response>(`${this._baseUrl}${path}`, body, {
         headers: this._headers,
       })
       .pipe(catchError((error) => this.httpErrorHandler(error)));
   }
 
-  protected patch<Req, Res>(path: string, body: Req): Observable<Res> {
+  protected patch<Request, Response>(
+    path: string,
+    body: Request
+  ): Observable<Response> {
     return this._http
-      .patch<Res>(`${this._baseUrl}${path}`, body, {
+      .patch<Response>(`${this._baseUrl}${path}`, body, {
         headers: this._headers,
       })
       .pipe(catchError((error) => this.httpErrorHandler(error)));
   }
 
-  protected put<Req, Res>(path: string, body: Req): Observable<Res> {
+  protected put<Request, Response>(
+    path: string,
+    body: Request
+  ): Observable<Response> {
     return this._http
-      .put<Res>(`${this._baseUrl}${path}`, body, {
+      .put<Response>(`${this._baseUrl}${path}`, body, {
         headers: this._headers,
       })
       .pipe(catchError((error) => this.httpErrorHandler(error)));

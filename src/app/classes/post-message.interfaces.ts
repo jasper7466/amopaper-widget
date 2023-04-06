@@ -67,6 +67,6 @@ export interface IEventListener {
   addedBy: LISTENER_ADDING_METHOD;
   callback: (
     this: XMLHttpRequest,
-    ev: Partial<XMLHttpRequestEventMap[keyof XMLHttpRequestEventMap]>
+    event: Partial<XMLHttpRequestEventMap[keyof XMLHttpRequestEventMap]>
   ) => void;
 }

@@ -89,8 +89,8 @@ export class WidgetPagePacketComponent implements OnInit, OnDestroy {
     this._route.params
       .pipe(
         takeUntil(this._onDestroyEmitter),
-        tap((params) => {
-          this.packetId = parseInt(params['id']);
+        tap((parameters) => {
+          this.packetId = parseInt(parameters['id']);
           this._nopaperService.startPacketPolling(this.packetId);
         }),
         switchMap(() => this._nopaperService.getPacketStepName(this.packetId)),
