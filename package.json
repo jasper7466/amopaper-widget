@@ -43,6 +43,8 @@
     "@angular-eslint/template-parser": "15.1.0",
     "@angular/cli": "~15.0.4",
     "@angular/compiler-cli": "^15.0.4",
+    "@cspell/dict-ru_ru": "^2.0.5",
+    "@cspell/eslint-plugin": "^6.31.1",
     "@types/jasmine": "~4.0.0",
     "@typescript-eslint/eslint-plugin": "5.44.0",
     "@typescript-eslint/parser": "5.44.0",

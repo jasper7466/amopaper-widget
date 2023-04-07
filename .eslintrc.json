@@ -6,6 +6,7 @@
       "files": ["*.ts"],
       "extends": [
         "eslint:recommended",
+        "plugin:@cspell/recommended",
         "plugin:@typescript-eslint/recommended",
         "plugin:@angular-eslint/recommended",
         "plugin:@angular-eslint/template/process-inline-templates"
@@ -97,7 +98,37 @@
         // CodeGuide 1.2.8: Не использовать сокращения в именовании сущностей и файлов
         "unicorn/prevent-abbreviations": "error",
         // CodeGuide 4.5: Обязательная типизация возвращаемого значения функций/методов
-        "@typescript-eslint/explicit-function-return-type": "error"
+        "@typescript-eslint/explicit-function-return-type": "error",
+        // Unspecified: Проверка орфографии
+        "@cspell/spellchecker": [
+          "warn",
+          {
+            // Авто-исправление ошибок если подобран только один вариант исправления
+            "autoFix": false,
+            // Количество вариантов исправления
+            "numSuggestions": 1,
+            // Генерировать варианты для исправления
+            "generateSuggestions": false,
+            // Не проверять имена импортов (import, require)
+            "ignoreImports": true,
+            // Не проверять импортированные переменные, структуры и типы
+            "ignoreImportProperties": true,
+            // Проверять идентификаторы (имена переменных, функций, классов)
+            "checkIdentifiers": true,
+            // Проверять строки
+            "checkStrings": true,
+            // Проверять шаблонные строки
+            "checkStringTemplates": true,
+            // Проверять JSX
+            "checkJSXText": true,
+            // Проверять комментарии
+            "checkComments": true,
+            // Путь к пользовательскому словарю (лучше настраивать словари в .cspell.json)
+            "customWordListFile": "",
+            // Вывод журнала отладки
+            "debugMode": false
+          }
+        ]
       }
     },
     {
