@@ -11,7 +11,7 @@
         "plugin:@angular-eslint/recommended",
         "plugin:@angular-eslint/template/process-inline-templates"
       ],
-      "plugins": ["unicorn"],
+      "plugins": ["unicorn", "@shopify"],
       "rules": {
         "@typescript-eslint/no-empty-interface": "off",
         "@typescript-eslint/no-inferrable-types": "off",
@@ -128,7 +128,9 @@
             // Вывод журнала отладки
             "debugMode": false
           }
-        ]
+        ],
+        // CodeGuide 2.3: Именование перечислений в единственном числе
+        "@shopify/typescript/prefer-singular-enums": "error"
       }
     },
     {
