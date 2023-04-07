@@ -17,7 +17,7 @@ import { TemplatesSharedModule } from '../templates/templates-shared.module';
 import { UploadsFoldableListComponent } from './uploads-foldable-list/uploads-foldable-list.component';
 import { PipesSharedModule } from 'src/app/pipes/pipes-shared.module';
 import { SingInfoItemComponent } from './sing-info-item/sing-info-item.component';
-import { DocumentsDisplayerComponent } from './documents-displayer/documents-displayer.component';
+import { DocumentsViewerComponent } from './documents-viewer/documents-viewer.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +33,7 @@ import { DocumentsDisplayerComponent } from './documents-displayer/documents-dis
     StageHeaderComponent,
     UploadsFoldableListComponent,
     SingInfoItemComponent,
-    DocumentsDisplayerComponent,
+    DocumentsViewerComponent,
   ],
   imports: [
     CommonModule,
@@ -56,7 +56,7 @@ import { DocumentsDisplayerComponent } from './documents-displayer/documents-dis
     StageHeaderComponent,
     UploadsFoldableListComponent,
     SingInfoItemComponent,
-    DocumentsDisplayerComponent,
+    DocumentsViewerComponent,
   ],
 })
 export class MoleculesSharedModule {}

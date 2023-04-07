@@ -25,6 +25,8 @@ export interface IWidgetSettings {
 }
 
 export interface ISystem {
+  /* eslint-disable @cspell/spellchecker */
+  // Именование задано внешним контрактом
   amohash: string;
   amouser: string;
   amouser_id: number;
@@ -34,9 +36,12 @@ export interface ISystem {
   domain: string;
   server: string;
   subdomain: string;
+  /* eslint-enable @cspell/spellchecker */
 }
 
 export type TPageCode =
+  /* eslint-disable @cspell/spellchecker */
+  // Именование задано внешним контрактом
   | 'dashboard'
   | 'leads'
   | 'leads-trash'
@@ -68,8 +73,11 @@ export type TPageCode =
   | 'contacts_card'
   | 'companies_card'
   | 'customers_card';
+/* eslint-enable @cspell/spellchecker */
 
 type TLocation =
+  /* eslint-disable @cspell/spellchecker */
+  // Именование задано внешним контрактом
   | 'lcard'
   | 'cucard'
   | 'ccard'
@@ -87,3 +95,4 @@ type TLocation =
   | 'digital_pipeline'
   | 'lead_sources'
   | 'whatsapp_modal';
+/* eslint-enable @cspell/spellchecker */

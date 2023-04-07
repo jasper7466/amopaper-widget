@@ -1,6 +1,8 @@
 import { IAmoBaseResponse, IEmbeddedItem } from './amo-api-common.types';
 
 type TCustomFieldType =
+  /* eslint-disable @cspell/spellchecker */
+  // Именование задано внешним контрактом
   | 'text'
   | 'numeric'
   | 'checkbox'
@@ -23,6 +25,7 @@ type TCustomFieldType =
   | 'chained_list'
   | 'monetary'
   | 'file';
+/* eslint-enable @cspell/spellchecker */
 
 type TCustomFieldEnum = {
   id: number;

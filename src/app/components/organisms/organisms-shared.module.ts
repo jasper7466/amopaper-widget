@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AddAddresseeFormComponent } from './add-addressee-form/add-addressee-form.component';
-import { AddresseeDisplayerComponent } from './addressee-displayer/addressee-displayer.component';
+import { AddresseeViewerComponent } from './addressee-viewer/addressee-viewer.component';
 import { AddresseeSelectorComponent } from './addressee-selector/addressee-selector.component';
 import { DocumentsUploaderComponent } from './documents-uploader/documents-uploader.component';
 import { HeaderComponent } from './header/header.component';
@@ -17,7 +17,7 @@ import { TemplatesSharedModule } from '../templates/templates-shared.module';
 @NgModule({
   declarations: [
     AddAddresseeFormComponent,
-    AddresseeDisplayerComponent,
+    AddresseeViewerComponent,
     AddresseeSelectorComponent,
     DocumentsUploaderComponent,
     HeaderComponent,
@@ -35,7 +35,7 @@ import { TemplatesSharedModule } from '../templates/templates-shared.module';
   ],
   exports: [
     AddAddresseeFormComponent,
-    AddresseeDisplayerComponent,
+    AddresseeViewerComponent,
     AddresseeSelectorComponent,
     DocumentsUploaderComponent,
     HeaderComponent,

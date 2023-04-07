@@ -8,7 +8,10 @@ import {
 import { IAddresseeExistence } from 'src/app/interfaces/addressee-existence.interface';
 
 interface ICheckByPhoneRequest {
+  /* eslint-disable @cspell/spellchecker */
+  // Именование задано внешним контрактом
   phonenumber: string;
+  /* eslint-enable @cspell/spellchecker */
 }
 
 interface ICheckByPhoneResponse {
@@ -17,6 +20,8 @@ interface ICheckByPhoneResponse {
 
 const requestAdapter = (data: IAddressee): ICheckByPhoneRequest | never => {
   if (data.idType === ADDRESSEE_ID_TYPE.Phone) {
+    // Именование задано внешним контрактом
+    // eslint-disable-next-line @cspell/spellchecker
     return { phonenumber: data.idValue };
   }
 

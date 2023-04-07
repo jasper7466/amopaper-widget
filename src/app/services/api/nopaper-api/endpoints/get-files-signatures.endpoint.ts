@@ -23,7 +23,10 @@ type TSignatureInfo = {
   certificateId: number;
   certificateOwner: string;
   confirmCode: string;
+  /* eslint-disable @cspell/spellchecker */
+  // Именование задано внешним контрактом (Identifer -> Identifier)
   cryptoProviderUserIdentifer: string;
+  /* eslint-enable @cspell/spellchecker */
   documentFileId: number;
   signature: string;
   signingDateTime: string;

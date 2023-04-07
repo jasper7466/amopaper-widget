@@ -5,8 +5,11 @@ import { ADDRESSEE_ID_TYPE } from 'src/app/interfaces/addressee.interface';
 import { IPacketDetails } from 'src/app/interfaces/packet-details.interface';
 
 type TFileItem = {
+  /* eslint-disable @cspell/spellchecker */
+  // Именование задано внешним контрактом (filebase64 -> fileBase64)
   fileName: string;
   filebase64: string;
+  /* eslint-enable @cspell/spellchecker */
 };
 
 interface IPostDraftRequest {
@@ -45,7 +48,11 @@ const requestAdapter = (data: IPacketCreateData): IPostDraftRequest | never => {
 
   body.files = files.map((file) => ({
     fileName: file.name,
+    /* eslint-disable @cspell/spellchecker */
+    // Именование задано внешним контрактом (filebase64 -> fileBase64)
+    // TODO: разблокировать правило после выноса интерфейса в отдельный файл
     filebase64: file.base64,
+    /* eslint-enable @cspell/spellchecker */
   }));
 
   if (title.length > 0) {

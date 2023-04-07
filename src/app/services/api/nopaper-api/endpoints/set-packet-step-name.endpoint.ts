@@ -18,7 +18,10 @@ export function setPacketStepNameEndpoint(
   status: 'nopaperPrepareFiles'
 ): Observable<void> {
   return this.post<IPostStepNameRequest, void>(
+    /* eslint-disable @cspell/spellchecker */
+    // Именование задано внешним контрактом (changestep -> change-step)
     '/document/changestep',
+    /* eslint-enable @cspell/spellchecker */
     requestAdapter(packetId, status)
   );
 }
