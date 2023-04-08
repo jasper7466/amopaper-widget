@@ -27,9 +27,9 @@ export class AccessTokenLocalApiService extends ApiService {
   }
 
   public getAmoAccessToken(): Observable<IGetAmoAccessTokenResponse> {
-    return this.post<{ x_api_key: string }, IGetAmoAccessTokenResponse>(
+    return this.post<{ xApiKey: string }, IGetAmoAccessTokenResponse>(
       '/access_token',
-      { x_api_key: this._xApiKey }
+      { xApiKey: this._xApiKey }
     );
   }
 }

@@ -102,7 +102,7 @@ app.use(express.json());
 app.post("/access_token", (req, res) => {
   const body = req.body;
 
-  if (body.x_api_key !== secrets.x_api_key) {
+  if (body.xApiKey !== secrets.x_api_key) {
     res.statusCode = 401;
     res.send();
   } else {

@@ -9,6 +9,7 @@ import {
   ɵHttpInterceptorHandler,
 } from '@angular/common/http';
 import { HttpErrorHandlingInterceptor } from 'src/app/interceptors/http-error-handling.interceptor';
+import { environment } from 'src/environments/environment';
 
 export const postMessageHttpClientToken = new InjectionToken<HttpClient>(
   'POST MESSAGE HTTP CLIENT TOKEN'
@@ -16,8 +17,13 @@ export const postMessageHttpClientToken = new InjectionToken<HttpClient>(
 
 const postMessageHttpClientFactory = (
   transport: PostMessageTransportService,
-  injector: EnvironmentInjector
+  injector: EnvironmentInjector,
+  regularHttpClient: HttpClient
 ): HttpClient => {
+  if (environment.isAmoDevProxy) {
+    return regularHttpClient;
+  }
+
   const backend = new HttpXhrBackend({
     build: () => new PostMessageXhr(transport),
   });
@@ -39,7 +45,7 @@ const postMessageHttpClientFactory = (
     {
       provide: postMessageHttpClientToken,
       useFactory: postMessageHttpClientFactory,
-      deps: [PostMessageTransportService, EnvironmentInjector],
+      deps: [PostMessageTransportService, EnvironmentInjector, HttpClient],
     },
   ],
 })
