@@ -66,6 +66,12 @@
             "selector": ["parameter"],
             "format": ["camelCase"]
           },
+          // CodeGuide 1.2.10 (2/2): Именование интерфейсов с префиксом "I"
+          {
+            "selector": ["interface"],
+            "prefix": ["I"],
+            "format": ["PascalCase"]
+          },
           // Unspecified: Именование переменных в "camelCase"
           {
             "selector": ["variable"],
