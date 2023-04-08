@@ -6,6 +6,8 @@ export interface IFileRecord extends IBase64File {
   isLoaded: boolean;
 }
 
+// Употребляется во множественном числе
+// eslint-disable-next-line prefer-singular-interfaces
 export interface ISourceFilesState {
   files: IFileRecord[];
   totalCount: number;

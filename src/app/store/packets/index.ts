@@ -2,6 +2,9 @@ import { ICrmLeadJsonStorage } from 'src/app/interfaces/crm-lead-json-storage.in
 import { IPacketDetails } from 'src/app/interfaces/packet-details.interface';
 
 export const packetsKey = 'packets';
+
+// Употребляется во множественном числе
+// eslint-disable-next-line prefer-singular-interfaces
 export interface IPacketsState {
   ids: ICrmLeadJsonStorage['packetsIdsList'];
   packets: IPacketDetails[];

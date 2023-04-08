@@ -3,6 +3,8 @@ import { base64ToFile } from 'src/app/utils/base64-to-file.util';
 import { Observable, forkJoin, map, switchMap, take } from 'rxjs';
 import { IPacketFile } from 'src/app/interfaces/packet-file.interface';
 
+// Употребляется во множественном числе
+// eslint-disable-next-line prefer-singular-interfaces
 interface IGetFilesByIdsRequest {
   documentFileIdList: number[];
 }
@@ -13,6 +15,8 @@ type TFilesResponseRecord = {
   fileName: string;
 };
 
+// Употребляется во множественном числе
+// eslint-disable-next-line prefer-singular-interfaces
 interface IGetFilesByIdsResponse extends Array<TFilesResponseRecord> {}
 
 const requestAdapter = (filesIds: number[]): IGetFilesByIdsRequest => ({

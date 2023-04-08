@@ -1,5 +1,7 @@
 import { IAmoBaseResponse, IEmbeddedItem } from './amo-api-common.types';
 
+// Употребляется во множественном числе
+// eslint-disable-next-line prefer-singular-interfaces
 interface INoteParameters {
   attachment: {
     file_name: string;
@@ -38,6 +40,8 @@ interface INote<T extends keyof INoteParameters> extends IEmbeddedItem {
 
 interface IAttachmentNote extends INote<'attachment'> {}
 
+// Употребляется во множественном числе
+// eslint-disable-next-line prefer-singular-interfaces
 export interface IGetLeadAttachmentsResponse
   extends Omit<
     IAmoBaseResponse<{ notes: IAttachmentNote[] }>,

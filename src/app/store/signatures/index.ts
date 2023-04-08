@@ -3,6 +3,8 @@ import { TSignatureInfo } from 'src/app/interfaces/signature-info.type';
 
 export const signaturesKey = 'signatures';
 
+// Употребляется во множественном числе
+// eslint-disable-next-line prefer-singular-interfaces
 export interface ISignaturesState {
   signatures: IFileSignatures;
 }

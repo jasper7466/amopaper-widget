@@ -63,7 +63,9 @@ export interface ICustomField extends IEmbeddedItem {
   hidden_statuses: [];
 }
 
-interface ICustomFieldsValues {
+// Употребляется во множественном числе
+// eslint-disable-next-line prefer-singular-interfaces
+interface ICustomFieldValues {
   field_id: number;
   values: {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -71,6 +73,8 @@ interface ICustomFieldsValues {
   }[];
 }
 
+// Употребляется во множественном числе
+// eslint-disable-next-line prefer-singular-interfaces
 export interface IGetCustomFieldsResponse
   extends IAmoBaseResponse<{ custom_fields: ICustomField[] }> {}
 
@@ -86,7 +90,7 @@ export interface IPatchLeadRequest {
   updated_at: number;
   loss_reason_id: number;
   responsible_user_id: number;
-  custom_fields_values: ICustomFieldsValues[];
+  custom_fields_values: ICustomFieldValues[];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   _embedded: { [key: string]: any };
   request_id: string;
@@ -115,7 +119,7 @@ export interface IGetLeadByIdResponse {
   updated_at: number;
   closest_task_at: number;
   is_deleted: boolean;
-  custom_fields_values: ICustomFieldsValues[] | null;
+  custom_fields_values: ICustomFieldValues[] | null;
   score: number | null;
   account_id: number;
   is_price_modified_by_robot: boolean;

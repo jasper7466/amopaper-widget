@@ -29,6 +29,8 @@ export interface IPostMessageXhrConfig {
   bodyString: string;
 }
 
+// Употребляется во множественном числе
+// eslint-disable-next-line prefer-singular-interfaces
 export interface IAdditionalActions {
   abort?: boolean;
 }

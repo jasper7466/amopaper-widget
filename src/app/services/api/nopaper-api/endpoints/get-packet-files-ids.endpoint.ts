@@ -3,6 +3,8 @@ import { ApiService } from '../../api.service';
 import { IPacketFilesInfo } from 'src/app/interfaces/packet-files-info.interface';
 import { IFileInfo } from 'src/app/interfaces/file-info.interface';
 
+// Употребляется во множественном числе
+// eslint-disable-next-line prefer-singular-interfaces
 interface IGetPacketFilesIdsRequest {
   documentId: number;
 }
@@ -19,6 +21,8 @@ type TDocumentListItemShortened = Omit<
   'sourceDocumentFileId'
 >;
 
+// Употребляется во множественном числе
+// eslint-disable-next-line prefer-singular-interfaces
 interface IGetPacketFilesIdsResponse {
   signDocumentList: TDocumentListItem[];
   stampDocumentList: TDocumentListItem[];
