@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --proxy-config proxy.config.json",
-    "start-no-proxy": "ng serve",
+    "start": "ng serve",
+    "start-with-proxy": "ng serve --proxy-config proxy.config.json",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
@@ -12,7 +12,7 @@
     "publish-gh": "angular-cli-ghpages --dir=dist/amopaper-widget",
     "deploy-gh": "npm run build-gh && npm run publish-gh",
     "auth-dev-server": "node ./auth-dev-server/index.js",
-    "lint": "ng lint"
+    "lint": "ng lint --rulesdir ./eslint-custom-rules"
   },
   "private": true,
   "dependencies": {
