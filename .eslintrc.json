@@ -1,6 +1,12 @@
 {
   "root": true,
   "ignorePatterns": ["projects/**/*"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2019,
+    "project": "./tsconfig.json",
+    "sourceType": "module"
+  },
   "overrides": [
     {
       "files": ["*.ts"],
@@ -11,7 +17,7 @@
         "plugin:@angular-eslint/recommended",
         "plugin:@angular-eslint/template/process-inline-templates"
       ],
-      "plugins": ["unicorn", "@shopify"],
+      "plugins": ["unicorn", "@shopify", "rxjs"],
       "rules": {
         "@typescript-eslint/no-empty-interface": "off",
         "@typescript-eslint/no-inferrable-types": "off",
@@ -103,6 +109,8 @@
         ],
         // CodeGuide 1.2.8: Не использовать сокращения в именовании сущностей и файлов
         "unicorn/prevent-abbreviations": "error",
+        // CodeGuide 1.2.12: Именовать все асинхронные сущности в "финской" нотации
+        "rxjs/finnish": "error",
         // CodeGuide 4.5: Обязательная типизация возвращаемого значения функций/методов
         "@typescript-eslint/explicit-function-return-type": "error",
         // Unspecified: Проверка орфографии
