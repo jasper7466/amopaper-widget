@@ -12,17 +12,17 @@ import { IFileInfo } from 'src/app/interfaces/file-info.interface';
 export class FilesService {
   private _counter = 0;
 
-  constructor(private _store: Store) {}
+  constructor(private _store$: Store) {}
 
   public filesHandler(files: FileList): void {
     const filesMetadata: IFileInfo[] = [];
 
     for (const file of Array.from(files)) {
       const id = this._counter;
-      this.toBase64(file)
+      this.toBase64$(file)
         .pipe(take(1))
         .subscribe((base64) => {
-          this._store.dispatch(sourceFileCompleteAction({ id, base64 }));
+          this._store$.dispatch(sourceFileCompleteAction({ id, base64 }));
         });
 
       filesMetadata.push({
@@ -34,10 +34,12 @@ export class FilesService {
       this._counter++;
     }
 
-    this._store.dispatch(sourceFilesAddAction({ payload: [...filesMetadata] }));
+    this._store$.dispatch(
+      sourceFilesAddAction({ payload: [...filesMetadata] })
+    );
   }
 
-  protected toBase64(file: File): Observable<string> {
+  protected toBase64$(file: File): Observable<string> {
     const fileReader = new FileReader();
 
     return new Observable<string>((observer: Observer<string>) => {
@@ -57,6 +59,6 @@ export class FilesService {
 
   protected clearFilesList(): void {
     this._counter = 0;
-    this._store.dispatch(sourceFilesResetAction());
+    this._store$.dispatch(sourceFilesResetAction());
   }
 }

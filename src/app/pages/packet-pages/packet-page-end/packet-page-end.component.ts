@@ -21,13 +21,13 @@ export class PacketPageEndComponent implements OnInit {
 
   private _packetId: number;
 
-  protected signedOriginalDocuments$ = this._store.select(
+  protected signedOriginalDocuments$ = this._store$.select(
     filesIdsOriginalsSelector
   );
-  protected signedStampDocuments$ = this._store.select(filesIdsStampedSelector);
+  protected signedStampDocuments$ = this._store$.select(filesIdsStampedSelector);
 
   constructor(
-    private _store: Store,
+    private _store$: Store,
     private _route: ActivatedRoute,
     private _router: Router,
     private _nopaperService: NopaperService,
@@ -46,14 +46,14 @@ export class PacketPageEndComponent implements OnInit {
     this._packetId = parseInt(id);
 
     this._commonLogicService
-      .getPacketFiles(this._packetId)
+      .getPacketFiles$(this._packetId)
       .pipe(take(1))
       .subscribe();
   }
 
   protected showSignInfo(fileId: number): void {
     this._nopaperService
-      .getFileSignature({ id: fileId })
+      .getFileSignature$({ id: fileId })
       .pipe(take(1))
       .subscribe(() => {
         this._signInfo.open();

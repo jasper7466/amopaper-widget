@@ -17,19 +17,19 @@ export class CrmJsonStorageService {
   private _storageFieldId: number;
   private _activeLeadId: number;
 
-  private _activeLead$ = this._store.select(activeLeadIdSelector);
+  private _activeLead$ = this._store$.select(activeLeadIdSelector);
 
-  constructor(private _amoApiService: AmoApiService, private _store: Store) {
+  constructor(private _amoApiService: AmoApiService, private _store$: Store) {
     this._activeLead$.subscribe((leadId) => (this._activeLeadId = leadId));
   }
 
-  public init(): Observable<void> {
-    return this.getStorageFieldId();
+  public init$(): Observable<void> {
+    return this.getStorageFieldId$();
   }
 
-  private getStorageFieldId(): Observable<void> {
+  private getStorageFieldId$(): Observable<void> {
     return this._amoApiService
-      .getLeadsCustomFieldsInfoByName(storageFieldName)
+      .getLeadsCustomFieldsInfoByName$(storageFieldName)
       .pipe(
         map((fields) => {
           if (fields.length === 0) {
@@ -46,9 +46,9 @@ export class CrmJsonStorageService {
       );
   }
 
-  public getStorage(): Observable<ICrmLeadJsonStorage> {
+  public getStorage$(): Observable<ICrmLeadJsonStorage> {
     return this._amoApiService
-      .getLeadCustomFieldValues(this._activeLeadId, this._storageFieldId)
+      .getLeadCustomFieldValues$(this._activeLeadId, this._storageFieldId)
       .pipe(
         map((response) => {
           if (response.length === 0) {
@@ -71,15 +71,15 @@ export class CrmJsonStorageService {
       );
   }
 
-  public setStorage(payload: Partial<ICrmLeadJsonStorage>): Observable<void> {
-    return this.getStorage().pipe(
+  public setStorage$(payload: Partial<ICrmLeadJsonStorage>): Observable<void> {
+    return this.getStorage$().pipe(
       switchMap((actualState) => {
         const newStateStringified = JSON.stringify({
           ...actualState,
           ...payload,
         });
 
-        return this._amoApiService.setLeadCustomFieldValuesById(
+        return this._amoApiService.setLeadCustomFieldValuesById$(
           this._activeLeadId,
           [{ id: this._storageFieldId, values: [newStateStringified] }]
         );

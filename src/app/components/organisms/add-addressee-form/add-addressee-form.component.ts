@@ -20,7 +20,7 @@ export class AddAddresseeFormComponent {
 
   protected addresseeIdType = ADDRESSEE_ID_TYPE;
 
-  constructor(private _store: Store) {}
+  constructor(private _store$: Store) {}
 
   protected changeSearchSelector(selector: ADDRESSEE_ID_TYPE): void {
     if (this.searchSelector === selector) {
@@ -48,13 +48,13 @@ export class AddAddresseeFormComponent {
   protected submit(): void {
     this.submitEmitter.emit();
 
-    this._store.dispatch(
+    this._store$.dispatch(
       addresseeUpdateAction({
         idType: this.searchSelector,
         idValue: this._value,
       })
     );
 
-    this._store.dispatch(addresseeSubmitAction());
+    this._store$.dispatch(addresseeSubmitAction());
   }
 }

@@ -6,7 +6,7 @@ import { packetTitleSelector } from 'src/app/store/packets/selectors';
 
 @Injectable()
 export class TitleResolverService implements Resolve<string> {
-  constructor(private _store: Store) {}
+  constructor(private _store$: Store) {}
 
   public resolve(
     route: ActivatedRouteSnapshot
@@ -18,7 +18,7 @@ export class TitleResolverService implements Resolve<string> {
       return title;
     }
 
-    this._store
+    this._store$
       .select(packetTitleSelector(+id))
       .pipe(take(1))
       .subscribe((value) => (title = value));

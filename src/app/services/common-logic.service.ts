@@ -12,7 +12,7 @@ import { CrmJsonStorageService } from './sub-services/crm-json-storage.service';
 @Injectable()
 export class CommonLogicService {
   constructor(
-    private _store: Store,
+    private _store$: Store,
     private _crmService: CrmService,
     private _crmTokenService: CrmTokenService,
     private _crmJsonStorageService: CrmJsonStorageService,
@@ -34,10 +34,10 @@ export class CommonLogicService {
     }
 
     this._crmService
-      .getCrmContext()
+      .getCrmContext$()
       .pipe(
-        switchMap(() => this._crmTokenService.getAmoAccessToken()),
-        switchMap(() => this._crmJsonStorageService.init()),
+        switchMap(() => this._crmTokenService.getAmoAccessToken$()),
+        switchMap(() => this._crmJsonStorageService.init$()),
         take(1)
       )
       .subscribe({
@@ -53,12 +53,12 @@ export class CommonLogicService {
    * Создаёт черновик и прикрепляет его к текущей сделке.
    * @returns Идентификатор созданного пакета документов.
    */
-  public createPacketDraft(): Observable<number> {
+  public createPacketDraft$(): Observable<number> {
     let justCreatedPacketId: number;
 
-    return this._nopaperService.postPacket().pipe(
+    return this._nopaperService.postPacket$().pipe(
       tap((packet) => (justCreatedPacketId = packet.id)),
-      switchMap((packet) => this._crmService.attachPacketToLead(packet.id)),
+      switchMap((packet) => this._crmService.attachPacketToLead$(packet.id)),
       map(() => justCreatedPacketId)
     );
   }
@@ -68,23 +68,25 @@ export class CommonLogicService {
    * @param packetId Идентификатор пакета документов.
    * @returns Переданный на вход идентификатор пакета документов.
    */
-  public submitPacketDraft(packetId: number): Observable<number> {
-    return this._nopaperService.submitDraft(packetId).pipe(map(() => packetId));
+  public submitPacketDraft$(packetId: number): Observable<number> {
+    return this._nopaperService
+      .submitDraft$(packetId)
+      .pipe(map(() => packetId));
   }
 
   /**
    * Создаёт черновик пакета документов с последующим его подтверждением.
    * @returns Идентификатор созданного пакета документов.
    */
-  public createAndSubmitPacketDraft(): Observable<number> {
-    return this.createPacketDraft().pipe(
-      switchMap((packetId) => this.submitPacketDraft(packetId))
+  public createAndSubmitPacketDraft$(): Observable<number> {
+    return this.createPacketDraft$().pipe(
+      switchMap((packetId) => this.submitPacketDraft$(packetId))
     );
   }
 
   /** @deprecated */
-  public submitPreview(packetId: number): Observable<void> {
-    return this._nopaperService.submitPreview(packetId);
+  public submitPreview$(packetId: number): Observable<void> {
+    return this._nopaperService.submitPreview$(packetId);
   }
 
   /**
@@ -92,10 +94,10 @@ export class CommonLogicService {
    * @param packetId Идентификатор пакета документов.
    * @returns
    */
-  public deletePacket(packetId: number): Observable<void> {
+  public deletePacket$(packetId: number): Observable<void> {
     return this._nopaperService
-      .deletePacket(packetId)
-      .pipe(switchMap(() => this._crmService.detachPacketFromLead(packetId)));
+      .deletePacket$(packetId)
+      .pipe(switchMap(() => this._crmService.detachPacketFromLead$(packetId)));
   }
 
   /**
@@ -103,18 +105,18 @@ export class CommonLogicService {
    * @param packetId Идентификатор пакета документов.
    * @returns
    */
-  public revokePacket(packetId: number): Observable<void> {
+  public revokePacket$(packetId: number): Observable<void> {
     return this._nopaperService
-      .revokePacket(packetId)
-      .pipe(switchMap(() => this._crmService.detachPacketFromLead(packetId)));
+      .revokePacket$(packetId)
+      .pipe(switchMap(() => this._crmService.detachPacketFromLead$(packetId)));
   }
 
-  public getPacketFiles(packetId: number): Observable<void> {
-    return this._nopaperService.getPacketFilesIds(packetId).pipe(
-      switchMap(() => this._store.select(filesIdsOriginalsSelector)),
+  public getPacketFiles$(packetId: number): Observable<void> {
+    return this._nopaperService.getPacketFilesIds$(packetId).pipe(
+      switchMap(() => this._store$.select(filesIdsOriginalsSelector)),
       take(1),
       switchMap((identifiers) =>
-        this._nopaperService.getFilesByIds(identifiers.map((item) => item.id))
+        this._nopaperService.getFilesByIds$(identifiers.map((item) => item.id))
       )
     );
   }

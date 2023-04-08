@@ -42,11 +42,11 @@ const responseAdapter = (
   throw response;
 };
 
-export function checkByPhoneEndpoint(
+export function checkByPhoneEndpoint$(
   this: ApiService,
   data: IAddressee
 ): Observable<IAddresseeExistence> {
-  return this.post<ICheckByPhoneRequest, ICheckByPhoneResponse>(
+  return this.post$<ICheckByPhoneRequest, ICheckByPhoneResponse>(
     `/profile/fl/check-by-phone-v2`,
     requestAdapter(data)
   ).pipe(

@@ -37,19 +37,19 @@ const pollingIntervalMs = 3000;
 
 @Injectable()
 export class NopaperService {
-  private _packetPollingBreakerById = new Subject<number>();
-  private _packetPollingBreakerAll = new Subject<void>();
+  private _packetPollingBreakerById$ = new Subject<number>();
+  private _packetPollingBreakerAll$ = new Subject<void>();
 
   private _newPacketDataObservables: {
     [K in keyof IPacketCreateData]: Observable<IPacketCreateData[K]>;
   } = {
-    addressee: this._store.select(addresseeSelector),
-    files: this._store.select(sourceFilesSelector),
-    title: this._store.select(newPacketTitleSelector),
+    addressee$: this._store$.select(addresseeSelector),
+    files$: this._store$.select(sourceFilesSelector),
+    title$: this._store$.select(newPacketTitleSelector),
   };
 
   constructor(
-    private _store: Store,
+    private _store$: Store,
     private _nopaperApiService: NopaperApiService,
     private _nopaperApiV2Service: NopaperApiV2Service
   ) {}
@@ -57,12 +57,12 @@ export class NopaperService {
   /**
    * Создаёт черновик пакета документов.
    */
-  public postPacket(): Observable<Pick<IPacketDetails, 'id'>> {
+  public postPacket$(): Observable<Pick<IPacketDetails, 'id'>> {
     return combineLatest(this._newPacketDataObservables).pipe(
       take(1),
       switchMap((data) => this._nopaperApiService.postPacket(data)),
       take(1),
-      tap((response) => this._store.dispatch(setNewPacketIdAction(response)))
+      tap((response) => this._store$.dispatch(setNewPacketIdAction(response)))
     );
   }
 
@@ -73,7 +73,7 @@ export class NopaperService {
    * Переводит пакет в статус `nopaperPrepareFiles`.
    * @param packetId Идентификатор пакета документов.
    */
-  public submitDraft(packetId: number): Observable<void> {
+  public submitDraft$(packetId: number): Observable<void> {
     return this._nopaperApiService.setPacketStepName(
       packetId,
       'nopaperPrepareFiles'
@@ -90,7 +90,7 @@ export class NopaperService {
    * @deprecated
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public submitPreview(packetId: number): Observable<void> {
+  public submitPreview$(packetId: number): Observable<void> {
     throw new Error('submitPreview() method is deprecated');
     // return this.nopaperApiService.setPacketStepName(
     //   packetId,
@@ -108,7 +108,7 @@ export class NopaperService {
    * @deprecated
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public deletePacket(packetId: number): Observable<void> {
+  public deletePacket$(packetId: number): Observable<void> {
     throw new Error('deletePacket() method is deprecated');
     // return this.nopaperApiService.setPacketStepName(packetId, 'nopaperDelete');
   }
@@ -121,7 +121,7 @@ export class NopaperService {
    * Переводит пакет в статус `nopaperSenderCancel`.
    * @param packetId Идентификатор пакета документов.
    */
-  public revokePacket(packetId: number): Observable<void> {
+  public revokePacket$(packetId: number): Observable<void> {
     return this._nopaperApiV2Service.revokePacket(packetId);
   }
 
@@ -132,13 +132,15 @@ export class NopaperService {
    * Результат сохраняется в хранилище.
    * @param packetId Идентификатор пакета документов.
    */
-  public getPacketStepName(
+  public getPacketStepName$(
     packetId: number
   ): Observable<Pick<IPacketDetails, 'id' | 'status'>> {
     return this._nopaperApiService
       .getPacketStepName(packetId)
       .pipe(
-        tap((response) => this._store.dispatch(setPacketStatusAction(response)))
+        tap((response) =>
+          this._store$.dispatch(setPacketStatusAction(response))
+        )
       );
   }
 
@@ -149,14 +151,14 @@ export class NopaperService {
    * Результат сохраняется в хранилище.
    * @param packetId
    */
-  public getPacketDetails(
+  public getPacketDetails$(
     packetId: number
   ): Observable<Omit<IPacketDetails, 'status'>> {
     return this._nopaperApiV2Service
       .getPacketDetails(packetId)
       .pipe(
         tap((response) =>
-          this._store.dispatch(setPacketDetailsAction(response))
+          this._store$.dispatch(setPacketDetailsAction(response))
         )
       );
   }
@@ -168,12 +170,12 @@ export class NopaperService {
    * Результат сохраняется в хранилище.
    * @param packetId Идентификатор пакета документов.
    */
-  public getPacketFilesIds(packetId: number): Observable<IPacketFilesInfo> {
+  public getPacketFilesIds$(packetId: number): Observable<IPacketFilesInfo> {
     return this._nopaperApiService
       .getPacketFilesIds(packetId)
       .pipe(
         tap((response) =>
-          this._store.dispatch(setFilesIdentifiersAction(response))
+          this._store$.dispatch(setFilesIdentifiersAction(response))
         )
       );
   }
@@ -184,10 +186,10 @@ export class NopaperService {
    * Результат сохраняется в хранилище.
    * @param filesIds Массив идентификаторов файлов.
    */
-  public getFilesByIds(filesIds: number[]): Observable<void> {
+  public getFilesByIds$(filesIds: number[]): Observable<void> {
     return this._nopaperApiService.getFilesByIds(filesIds).pipe(
       tap((response) =>
-        this._store.dispatch(setOriginalsFilesAction({ payload: response }))
+        this._store$.dispatch(setOriginalsFilesAction({ payload: response }))
       ),
       switchMap(() => of(void 0))
     );
@@ -199,13 +201,13 @@ export class NopaperService {
    * Результат сохраняется в хранилище.
    * @param fileInfo Идентификатор файла.
    */
-  public getFileSignature(
+  public getFileSignature$(
     fileInfo: Pick<IFileInfo, 'id'>
   ): Observable<IFileSignatures> {
     return this._nopaperApiService
       .getFileSignatures(fileInfo)
       .pipe(
-        tap((response) => this._store.dispatch(setSignaturesAction(response)))
+        tap((response) => this._store$.dispatch(setSignaturesAction(response)))
       );
   }
 
@@ -218,13 +220,13 @@ export class NopaperService {
     timer(1, pollingIntervalMs)
       .pipe(
         tap(() => {
-          this.getPacketStepName(packetId).pipe(take(1)).subscribe();
-          this.getPacketDetails(packetId).pipe(take(1)).subscribe();
+          this.getPacketStepName$(packetId).pipe(take(1)).subscribe();
+          this.getPacketDetails$(packetId).pipe(take(1)).subscribe();
         }),
         takeUntil(
-          this._packetPollingBreakerById.pipe(filter((id) => id === packetId))
+          this._packetPollingBreakerById$.pipe(filter((id) => id === packetId))
         ),
-        takeUntil(this._packetPollingBreakerAll)
+        takeUntil(this._packetPollingBreakerAll$)
       )
       .subscribe();
   }
@@ -234,14 +236,14 @@ export class NopaperService {
    * @param packetId Идентификатор пакета документов.
    */
   public stopPacketPolling(packetId: number): void {
-    this._packetPollingBreakerById.next(packetId);
+    this._packetPollingBreakerById$.next(packetId);
   }
 
   /**
    * Останавливает все поллинги пакетов, которые были запущены.
    */
   public stopPacketsStepPollingAll(): void {
-    this._packetPollingBreakerAll.next();
+    this._packetPollingBreakerAll$.next();
   }
 
   /**
@@ -254,10 +256,10 @@ export class NopaperService {
   /**
    * Получение ссылки на подпись.
    */
-  public getShareLink(packetId: number): Observable<IShareLink> {
+  public getShareLink$(packetId: number): Observable<IShareLink> {
     return this._nopaperApiService.getShareLink(packetId).pipe(
       tap((response) => {
-        this._store.dispatch(setShareLinkAction(response));
+        this._store$.dispatch(setShareLinkAction(response));
       })
     );
   }

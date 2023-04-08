@@ -42,11 +42,11 @@ const responseAdapter = (
   );
 };
 
-export function getFilesByIdsEndpoint(
+export function getFilesByIdsEndpoint$(
   this: ApiService,
   filesIds: number[]
 ): Observable<IPacketFile[]> {
-  return this.post<IGetFilesByIdsRequest, IGetFilesByIdsResponse>(
+  return this.post$<IGetFilesByIdsRequest, IGetFilesByIdsResponse>(
     '/document/file-list',
     requestAdapter(filesIds)
   ).pipe(take(1), switchMap(responseAdapter));

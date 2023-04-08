@@ -11,7 +11,7 @@ export class AppContextEffects {
     private _commonLogic: CommonLogicService
   ) {}
 
-  private _onAppLoadEffect = createEffect(() =>
+  private _onAppLoadEffect$ = createEffect(() =>
     this._actions$.pipe(
       ofType(appLoadAction),
       map(() => this._commonLogic.init()),

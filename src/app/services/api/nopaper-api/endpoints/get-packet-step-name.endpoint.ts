@@ -17,11 +17,11 @@ const responseAdapter = (
   status: response.stepName,
 });
 
-export function getPacketStepNameEndpoint(
+export function getPacketStepNameEndpoint$(
   this: ApiService,
   packetId: number
 ): Observable<TResponse> {
-  return this.get<IGetStepNameResponse>(`/document/status/${packetId}`).pipe(
+  return this.get$<IGetStepNameResponse>(`/document/status/${packetId}`).pipe(
     map((response) => responseAdapter(packetId, response))
   );
 }

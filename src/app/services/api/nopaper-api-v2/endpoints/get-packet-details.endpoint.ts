@@ -25,11 +25,11 @@ const responseAdapter = (
   createTimeUtc: response.createTimeUtc,
 });
 
-export function getPacketDetailsEndpoint(
+export function getPacketDetailsEndpoint$(
   this: ApiService,
   packetId: number
 ): Observable<Omit<IPacketDetails, 'status'>> {
-  return this.get<IGetPacketDetailsResponse>(`/document/${packetId}`).pipe(
+  return this.get$<IGetPacketDetailsResponse>(`/document/${packetId}`).pipe(
     map((response) => responseAdapter(packetId, response))
   );
 }

@@ -15,13 +15,13 @@ import { PostMessageTransportService } from '../transport/post-message-transport
 
 const accessTokenApiFactory = (
   http: HttpClient,
-  store: Store
+  store$: Store
 ): AccessTokenApiService | AccessTokenLocalApiService => {
   if (environment.isLocalTokenServer) {
-    return new AccessTokenLocalApiService(http, store);
+    return new AccessTokenLocalApiService(http, store$);
   }
 
-  return new AccessTokenApiService(http, store);
+  return new AccessTokenApiService(http, store$);
 };
 
 const amoPostApiFactory = (

@@ -12,12 +12,12 @@ const requestAdapter = (
   status: TPacketStatus
 ): IPostStepNameRequest => ({ documentId: packetId, stepSystemName: status });
 
-export function setPacketStepNameEndpoint(
+export function setPacketStepNameEndpoint$(
   this: ApiService,
   packetId: number,
   status: 'nopaperPrepareFiles'
 ): Observable<void> {
-  return this.post<IPostStepNameRequest, void>(
+  return this.post$<IPostStepNameRequest, void>(
     /* eslint-disable @cspell/spellchecker */
     // Именование задано внешним контрактом (changestep -> change-step)
     '/document/changestep',

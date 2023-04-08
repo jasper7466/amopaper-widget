@@ -30,7 +30,7 @@ export class ApiService {
     throw error;
   }
 
-  protected get<Response>(path: string): Observable<Response> {
+  protected get$<Response>(path: string): Observable<Response> {
     return this._http
       .get<Response>(`${this._baseUrl}${path}`, {
         headers: this._headers,
@@ -38,7 +38,7 @@ export class ApiService {
       .pipe(catchError((error) => this.httpErrorHandler(error)));
   }
 
-  protected post<Request, Response>(
+  protected post$<Request, Response>(
     path: string,
     body: Request
   ): Observable<Response> {
@@ -49,7 +49,7 @@ export class ApiService {
       .pipe(catchError((error) => this.httpErrorHandler(error)));
   }
 
-  protected patch<Request, Response>(
+  protected patch$<Request, Response>(
     path: string,
     body: Request
   ): Observable<Response> {
@@ -60,7 +60,7 @@ export class ApiService {
       .pipe(catchError((error) => this.httpErrorHandler(error)));
   }
 
-  protected put<Request, Response>(
+  protected put$<Request, Response>(
     path: string,
     body: Request
   ): Observable<Response> {

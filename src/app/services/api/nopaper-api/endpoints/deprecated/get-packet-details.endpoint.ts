@@ -37,13 +37,13 @@ const responseAdapter = (
 });
 
 /** @deprecated */
-export function getPacketDetailsEndpoint(
+export function getPacketDetailsEndpoint$(
   this: ApiService,
   packetId: number
 ): Observable<Omit<IPacketDetails, 'status'>> {
   throw new Error('getPacketDetailsEndpoint v1 is deprecated.');
 
-  return this.post<IGetPacketDetailsRequest, IGetPacketDetailsResponse>(
+  return this.post$<IGetPacketDetailsRequest, IGetPacketDetailsResponse>(
     `/document/details`,
     { documentId: packetId }
   ).pipe(map((response) => responseAdapter(packetId, response)));

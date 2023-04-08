@@ -24,7 +24,7 @@ interface IPostDraftResponse {
 }
 
 const requestAdapter = (data: IPacketCreateData): IPostDraftRequest | never => {
-  const { addressee, files, title } = data;
+  const { addressee$: addressee, files$: files, title$: title } = data;
 
   const body: IPostDraftRequest = {
     clientFlPhoneNumber: undefined,
@@ -33,7 +33,7 @@ const requestAdapter = (data: IPacketCreateData): IPostDraftRequest | never => {
     title: undefined,
   };
 
-  switch (data.addressee.idType) {
+  switch (data.addressee$.idType) {
     case ADDRESSEE_ID_TYPE.Phone: {
       body.clientFlPhoneNumber = addressee.idValue;
       break;
@@ -68,11 +68,11 @@ const responseAdapter = (
   id: parseInt(response.documentId),
 });
 
-export function createPacketEndpoint(
+export function createPacketEndpoint$(
   this: ApiService,
   data: IPacketCreateData
 ): Observable<Pick<IPacketDetails, 'id'>> {
-  return this.post<IPostDraftRequest, IPostDraftResponse>(
+  return this.post$<IPostDraftRequest, IPostDraftResponse>(
     '/document/create-for-client',
     requestAdapter(data)
   ).pipe(map(responseAdapter));

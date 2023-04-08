@@ -8,7 +8,7 @@ import { setAppActiveLeadIdAction } from '../app-context/actions';
 export class CrmContextEffects {
   constructor(private _actions$: Actions) {}
 
-  private _onUpdateCrmContextEffect = createEffect(() =>
+  private _onUpdateCrmContextEffect$ = createEffect(() =>
     this._actions$.pipe(
       ofType(updateCrmContextAction),
       map((context) => setAppActiveLeadIdAction({ leadId: context.cardId }))

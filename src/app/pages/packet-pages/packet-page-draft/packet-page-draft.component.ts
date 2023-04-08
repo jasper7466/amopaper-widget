@@ -35,7 +35,7 @@ export class PacketPageDraftComponent implements OnInit {
 
   protected removeButtonHandler(): void {
     this._commonLogicService
-      .deletePacket(this._packetId)
+      .deletePacket$(this._packetId)
       .pipe(take(1))
       .subscribe();
     this._routingService.goPacketsListPage();
@@ -44,7 +44,7 @@ export class PacketPageDraftComponent implements OnInit {
   protected submitDraftButtonHandler(): void {
     this.isControlsEnabled = false;
     this._commonLogicService
-      .submitPacketDraft(this._packetId)
+      .submitPacketDraft$(this._packetId)
       .pipe(take(1))
       .subscribe();
   }

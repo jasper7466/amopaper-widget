@@ -11,12 +11,12 @@ export class ModalSignInfoComponent {
   @HostBinding('class.opened') protected isOpened = false;
   @Input() protected isLoading = false;
 
-  protected signatures$ = this._store.select(signatureSelector);
+  protected signatures$ = this._store$.select(signatureSelector);
 
   protected closeTrigger = new EventEmitter<void>();
   protected openTrigger = new EventEmitter<void>();
 
-  constructor(private _store: Store) {}
+  constructor(private _store$: Store) {}
 
   protected okButtonHandler(): void {
     this.closeTrigger.emit();

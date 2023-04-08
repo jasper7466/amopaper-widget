@@ -29,11 +29,11 @@ const responseAdapter = (response: IGetCrmContextResponse): ICrmContext => ({
   isWidgetConfigured: response.settings.widget_active === 'Y',
 });
 
-export function getCrmContextEndpoint(
+export function getCrmContextEndpoint$(
   this: AmoPostApiService
 ): Observable<ICrmContext> {
   return this.postMessageTransportService
-    .request<Record<string, never>, IGetCrmContextResponse>({
+    .request$<Record<string, never>, IGetCrmContextResponse>({
       action: 'getCrmContextRequest',
       backwardAction: 'getCrmContextResponse',
       payload: {},

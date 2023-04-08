@@ -69,11 +69,11 @@ const responseAdapter = (
   return { sender: signatures[0], recipient: signatures[1] };
 };
 
-export function getFileSignaturesEndpoint(
+export function getFileSignaturesEndpoint$(
   this: ApiService,
   fileId: Pick<IFileInfo, 'id'>
 ): Observable<IFileSignatures> {
-  return this.post<IGetFileSignatureRequest, TGetFileSignatureResponse>(
+  return this.post$<IGetFileSignatureRequest, TGetFileSignatureResponse>(
     '/file/signatures',
     requestAdapter(fileId)
   ).pipe(map(responseAdapter));

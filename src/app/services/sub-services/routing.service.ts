@@ -22,7 +22,7 @@ export class RoutingService {
     return parameter;
   }
 
-  public navParts(): Observable<TNavigationPart[]> {
+  public navParts$(): Observable<TNavigationPart[]> {
     return this._router.events.pipe(
       filter(
         (event) => event instanceof NavigationEnd || event instanceof Scroll

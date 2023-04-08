@@ -69,11 +69,11 @@ const responseAdapter = (
   };
 };
 
-export function getPacketFilesIdsEndpoint(
+export function getPacketFilesIdsEndpoint$(
   this: ApiService,
   packetId: number
 ): Observable<IPacketFilesInfo> {
-  return this.post<IGetPacketFilesIdsRequest, IGetPacketFilesIdsResponse>(
+  return this.post$<IGetPacketFilesIdsRequest, IGetPacketFilesIdsResponse>(
     '/document/file-description-v2',
     requestAdapter(packetId)
   ).pipe(map(responseAdapter));

@@ -8,7 +8,7 @@ import { updatePacketsIdsListAction } from '../packets/actions';
 export class CrmLeadContextEffects {
   constructor(private _actions$: Actions) {}
 
-  private _onUpdateLeadJsonStorageEffect = createEffect(() =>
+  private _onUpdateLeadJsonStorageEffect$ = createEffect(() =>
     this._actions$.pipe(
       ofType(updateLeadJsonStorageAction),
       map((storage) =>

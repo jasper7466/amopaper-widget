@@ -23,7 +23,7 @@ export class WidgetPagePacketComponent implements OnInit, OnDestroy {
   protected stepName: TPacketStatus | undefined;
 
   constructor(
-    private _store: Store,
+    private _store$: Store,
     private _route: ActivatedRoute,
     private _router: Router,
     private _routingService: RoutingService,
@@ -93,9 +93,9 @@ export class WidgetPagePacketComponent implements OnInit, OnDestroy {
           this.packetId = parseInt(parameters['id']);
           this._nopaperService.startPacketPolling(this.packetId);
         }),
-        switchMap(() => this._nopaperService.getPacketStepName(this.packetId)),
+        switchMap(() => this._nopaperService.getPacketStepName$(this.packetId)),
         switchMap(() =>
-          this._store.select(packetStepNameSelector(this.packetId))
+          this._store$.select(packetStepNameSelector(this.packetId))
         ),
         takeUntil(this._onDestroyEmitter),
         tap((stepName) => {

@@ -18,7 +18,7 @@ export class NavPathComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this._routingService
-      .navParts()
+      .navParts$()
       .pipe(takeUntil(this._onDestroyEmitter))
       .subscribe((navParts) => (this.navPath = navParts));
   }

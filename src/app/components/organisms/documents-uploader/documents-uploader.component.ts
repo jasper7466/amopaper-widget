@@ -21,14 +21,14 @@ type TItem = {
   styleUrls: ['./documents-uploader.component.css'],
 })
 export class DocumentsUploaderComponent {
-  protected documentsTotalCount$ = this._store.select(
+  protected documentsTotalCount$ = this._store$.select(
     sourceFilesTotalCountSelector
   );
-  protected documentsLoadedCount$ = this._store.select(
+  protected documentsLoadedCount$ = this._store$.select(
     sourceFilesLoadedCountSelector
   );
 
-  protected uploadedDocuments$: Observable<TItem[]> = this._store
+  protected uploadedDocuments$: Observable<TItem[]> = this._store$
     .select(sourceFilesSelector)
     .pipe(
       map((files) =>
@@ -38,9 +38,9 @@ export class DocumentsUploaderComponent {
       )
     );
 
-  constructor(private _store: Store) {}
+  constructor(private _store$: Store) {}
 
   protected clearFilesList(): void {
-    this._store.dispatch(sourceFilesResetAction());
+    this._store$.dispatch(sourceFilesResetAction());
   }
 }

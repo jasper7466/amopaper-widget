@@ -10,9 +10,9 @@ import { FilesService } from 'src/app/services/sub-services/files.service';
   styleUrls: ['./documents-drop-area.component.css'],
 })
 export class DocumentsDropAreaComponent {
-  private _leadId$ = this._store.select(leadIdSelector);
+  private _leadId$ = this._store$.select(leadIdSelector);
 
-  constructor(private _filesService: FilesService, private _store: Store) {}
+  constructor(private _filesService: FilesService, private _store$: Store) {}
 
   protected fileLoadHandler(fileList: FileList): void {
     this._filesService.filesHandler(fileList);

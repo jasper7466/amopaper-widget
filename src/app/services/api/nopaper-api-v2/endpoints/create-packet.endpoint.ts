@@ -33,7 +33,7 @@ interface IPostDraftResponse {
 }
 
 const requestAdapter = (data: IPacketCreateData): IPostDraftRequest | never => {
-  const { addressee, files, title } = data;
+  const { addressee$: addressee, files$: files, title$: title } = data;
 
   const fileInfoList: FileInfo[] = files.map((item) => ({
     fileNameWithExtension: item.name,
@@ -46,7 +46,7 @@ const requestAdapter = (data: IPacketCreateData): IPostDraftRequest | never => {
 
   let recipientInfo: TRecipientInfo;
 
-  switch (data.addressee.idType) {
+  switch (data.addressee$.idType) {
     case ADDRESSEE_ID_TYPE.Phone: {
       recipientInfo = { userPhone: addressee.idValue };
       break;
@@ -72,11 +72,11 @@ const responseAdapter = (
   id: response.documentId,
 });
 
-export function createPacketEndpoint(
+export function createPacketEndpoint$(
   this: ApiService,
   data: IPacketCreateData
 ): Observable<Pick<IPacketDetails, 'id'>> {
-  return this.post<IPostDraftRequest, IPostDraftResponse>(
+  return this.post$<IPostDraftRequest, IPostDraftResponse>(
     '/document',
     requestAdapter(data)
   ).pipe(map(responseAdapter));

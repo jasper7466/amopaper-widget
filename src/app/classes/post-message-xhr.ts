@@ -228,7 +228,7 @@ export class PostMessageXhr implements XMLHttpRequest {
     this._sessionGuid = guid();
 
     this._transport
-      .subscribe<IPostMessageXhrEvent>(this._sessionGuid)
+      .subscribe$<IPostMessageXhrEvent>(this._sessionGuid)
       .pipe(takeUntil(this._disconnectEmitter))
       .subscribe((event) => {
         if (event.type === 'unexpected-error') {

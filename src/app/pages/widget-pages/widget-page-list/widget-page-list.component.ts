@@ -14,12 +14,12 @@ import {
   styleUrls: ['./widget-page-list.component.css'],
 })
 export class WidgetPageListComponent implements OnInit, OnDestroy {
-  protected leadId$ = this._store.select(leadIdSelector);
-  protected packets$ = this._store.select(packetsSelector);
-  protected isPacketsIdsTouched$ = this._store.select(packetsIsTouchedSelector);
+  protected leadId$ = this._store$.select(leadIdSelector);
+  protected packets$ = this._store$.select(packetsSelector);
+  protected isPacketsIdsTouched$ = this._store$.select(packetsIsTouchedSelector);
 
   constructor(
-    private _store: Store,
+    private _store$: Store,
     private _crmService: CrmService,
     private _routingService: RoutingService
   ) {}

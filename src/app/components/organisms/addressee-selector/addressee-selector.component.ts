@@ -18,15 +18,15 @@ export class AddresseeSelectorComponent {
   protected openModalEmitter: EventEmitter<void> = new EventEmitter<void>();
   protected closeModalEmitter: EventEmitter<void> = new EventEmitter<void>();
 
-  protected isAddresseeAdded$ = this._store.select(
+  protected isAddresseeAdded$ = this._store$.select(
     isAddresseeSubmittedSelector
   );
-  protected addressee$ = this._store.select(addresseeSelector);
+  protected addressee$ = this._store$.select(addresseeSelector);
 
-  constructor(private _store: Store) {}
+  constructor(private _store$: Store) {}
 
   protected removeAddressee(): void {
-    this._store.dispatch(resetAddresseeAction());
+    this._store$.dispatch(resetAddresseeAction());
   }
 
   protected showSelectorModal(): void {

@@ -14,11 +14,11 @@ const baseUrl = environment.nopaperBaseTokenUrl;
 
 @Injectable()
 export class AccessTokenApiService extends ApiService {
-  private _xApiKey$ = this._store.select(xApiKeySelector);
-  private _clientUuid$ = this._store.select(clientUuidSelector);
+  private _xApiKey$ = this._store$.select(xApiKeySelector);
+  private _clientUuid$ = this._store$.select(clientUuidSelector);
   private _clientUuid?: string;
 
-  constructor(http: HttpClient, private _store: Store) {
+  constructor(http: HttpClient, private _store$: Store) {
     super(http);
 
     this.baseUrl = baseUrl;
@@ -33,8 +33,8 @@ export class AccessTokenApiService extends ApiService {
     });
   }
 
-  public getAmoAccessToken(): Observable<IGetAmoAccessTokenResponse> {
-    return this.get<IGetAmoAccessTokenResponse>(
+  public getAmoAccessToken$(): Observable<IGetAmoAccessTokenResponse> {
+    return this.get$<IGetAmoAccessTokenResponse>(
       `/amo-crm/authorization/${this._clientUuid}/access-token`
     );
   }

@@ -11,10 +11,10 @@ const baseUrl = environment.localBaseTokenUrl;
 
 @Injectable()
 export class AccessTokenLocalApiService extends ApiService {
-  private _xApiKey$ = this._store.select(xApiKeySelector);
+  private _xApiKey$ = this._store$.select(xApiKeySelector);
   private _xApiKey: string;
 
-  constructor(http: HttpClient, private _store: Store) {
+  constructor(http: HttpClient, private _store$: Store) {
     super(http);
 
     this.baseUrl = baseUrl;
@@ -26,8 +26,8 @@ export class AccessTokenLocalApiService extends ApiService {
     });
   }
 
-  public getAmoAccessToken(): Observable<IGetAmoAccessTokenResponse> {
-    return this.post<{ xApiKey: string }, IGetAmoAccessTokenResponse>(
+  public getAmoAccessToken$(): Observable<IGetAmoAccessTokenResponse> {
+    return this.post$<{ xApiKey: string }, IGetAmoAccessTokenResponse>(
       '/access_token',
       { xApiKey: this._xApiKey }
     );

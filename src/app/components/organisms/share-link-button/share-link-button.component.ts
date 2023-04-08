@@ -23,10 +23,10 @@ export class ShareLinkButtonComponent {
   protected style: ButtonStyleOption = 'solid';
   protected isEnabled = true;
 
-  protected shareLink$ = this._store.select(shareLinkSelector);
+  protected shareLink$ = this._store$.select(shareLinkSelector);
 
   constructor(
-    private _store: Store,
+    private _store$: Store,
     private _nopaperService: NopaperService,
     private _clipboard: Clipboard
   ) {}
@@ -35,7 +35,7 @@ export class ShareLinkButtonComponent {
     this.isEnabled = false;
 
     this._nopaperService
-      .getShareLink(this.packetId)
+      .getShareLink$(this.packetId)
       .pipe(
         switchMap(() => this.shareLink$),
         take(1),

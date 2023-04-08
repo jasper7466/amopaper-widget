@@ -16,7 +16,7 @@ export class PacketPageSenderSignComponent implements OnInit {
   protected packet$: Observable<IPacketDetails>;
 
   constructor(
-    private _store: Store,
+    private _store$: Store,
     private _routingService: RoutingService,
     private _route: ActivatedRoute
   ) {}
@@ -30,7 +30,7 @@ export class PacketPageSenderSignComponent implements OnInit {
 
     this.packetId = parseInt(id);
 
-    this.packet$ = this._store.select(packetSelector(this.packetId));
+    this.packet$ = this._store$.select(packetSelector(this.packetId));
   }
 
   protected backButtonHandler(): void {

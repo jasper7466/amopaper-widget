@@ -23,11 +23,11 @@ export class PacketPagePreviewComponent implements OnInit, OnDestroy {
   protected isAwaiting = true;
 
   protected packet$: Observable<IPacketDetails>;
-  protected filesIds$ = this._store.select(filesIdsOriginalsSelector);
-  protected originalFiles$ = this._store.select(originalFilesSelector);
+  protected filesIds$ = this._store$.select(filesIdsOriginalsSelector);
+  protected originalFiles$ = this._store$.select(originalFilesSelector);
 
   constructor(
-    private _store: Store,
+    private _store$: Store,
     private _routingService: RoutingService,
     private _commonLogicService: CommonLogicService,
     private _route: ActivatedRoute
@@ -42,8 +42,8 @@ export class PacketPagePreviewComponent implements OnInit, OnDestroy {
 
     this._packetId = parseInt(id);
 
-    this.packet$ = this._store.select(packetSelector(this._packetId));
-    this._commonLogicService.getPacketFiles(this._packetId).subscribe();
+    this.packet$ = this._store$.select(packetSelector(this._packetId));
+    this._commonLogicService.getPacketFiles$(this._packetId).subscribe();
 
     this.originalFiles$
       .pipe(
@@ -54,13 +54,13 @@ export class PacketPagePreviewComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this._store.dispatch(clearSignaturesAction());
+    this._store$.dispatch(clearSignaturesAction());
   }
 
   protected submitButtonHandler(): void {
     this.isAwaiting = true;
     this._commonLogicService
-      .submitPreview(this._packetId)
+      .submitPreview$(this._packetId)
       .pipe(take(1))
       .subscribe();
   }
@@ -71,7 +71,7 @@ export class PacketPagePreviewComponent implements OnInit, OnDestroy {
 
   public revokeButtonHandler(): void {
     this._commonLogicService
-      .revokePacket(this._packetId)
+      .revokePacket$(this._packetId)
       .pipe(take(1))
       .subscribe();
     this._routingService.goPacketsListPage();
