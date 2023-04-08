@@ -2,35 +2,55 @@
 
 ## Назначение
 
+---
+
 SPA-виджет для интеграции сервиса Nopaper в интерфейс amoCRM. Работает в паре с [обёрткой](https://github.com/jasper7466/Boilerplate-amoCRM-Widget)
 
-## Режим разработки
+## Развёртывание
 
-- В директории `./auth-dev-server` скопировать и переименовать файл `example.secrets.json` -> `secrets.json`
+---
 
-- Заполнить параметры в соответствии с используемым амо-аккаунтом и приватной интеграцией:
+- Установить зависимости:
 
-  `accountDomain` - домен аккаунта
+        npm install
 
-  `subdomain` - поддомен аккаунта
+- В директорию `local_modules` поместить исходники пакета `pdf-previewer`
+- Установить недостающую зависимость `ng2-pdf-viewer` для локального `pdf-previewer`
 
-  `code` - временный ключ интеграции для получения первой пары токенов
+        npm install --no-save ng2-pdf-viewer
 
-  `x_api_key` - nopaper-api-key
+- Запуск:
 
-  `client_id` - id интеграции
+        npm start
 
-  `client_secret` - секрет интеграции
+## Использование прокси
 
-  `redirect_uri` - адрес для веб-хука о подключении интеграции
+---
+
+Зачем это нужно - [описано тут](./docs/why-use-proxy.doc.md)
 
 - В корне проекта скопировать и переименовать файл `example.proxy.config.json` -> `proxy.config.json`
 - Заполнить параметр `target` в соответствии с используемым амо-аккаунтом
+- Переменную окружения `isAmoDevProxy` установить в значение `true`
+- Для запуска использовать команду
 
-- Запустить локальный сервер авторизации:
+        npm run start-with-proxy
 
-        npm run auth-dev-server
+## Использование локального сервера авторизации
 
-- Запустить приложение:
+---
 
-        npm start
+- Выполнить настройку, как [описано тут](./docs/auth-dev-server.doc.md)
+- Переменную окружения `isLocalTokenServer` установить в значение `true`
+
+## Линтинг
+
+---
+
+Некоторые кастомные правила расположены в директории `./eslint-custom-rules`, поэтому для ручного запуска линтера следует использовать вместо `ng lint` команду:
+
+        npm run lint
+
+Или же к `ng lint` добавить флаг `--rulesdir ./eslint-custom-rules`:
+
+        ng lint --rulesdir ./eslint-custom-rules
