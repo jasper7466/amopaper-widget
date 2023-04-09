@@ -145,13 +145,16 @@
         ],
         // CodeGuide 1.2.10 (1/2): Именование составляющих названия интерфейса в единственном числе
         "prefer-singular-interfaces": "error",
-        // TODO: Включить
+        // TODO: Включить позже ("error")
         // CodeGuide 2.1: Каждое перечисление должно быть определено в отдельном файле
         "prefer-separated-enums": "off",
         // CodeGuide 2.3: Именование перечислений в единственном числе
         "@shopify/typescript/prefer-singular-enums": "error",
         // CodeGuide 3.1: Каждый класс должен располагаться в отдельном файле
-        "max-classes-per-file": ["error", 1]
+        "max-classes-per-file": ["error", 1],
+        // TODO: Включить позже ("error")
+        // CodeGuide 3.2: Каждый интерфейс должен быть определён в отдельном файле
+        "prefer-separated-interfaces": "off"
       }
     },
     {
