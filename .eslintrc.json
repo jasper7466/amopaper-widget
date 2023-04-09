@@ -149,7 +149,9 @@
         // CodeGuide 2.1: Каждое перечисление должно быть определено в отдельном файле
         "prefer-separated-enums": "off",
         // CodeGuide 2.3: Именование перечислений в единственном числе
-        "@shopify/typescript/prefer-singular-enums": "error"
+        "@shopify/typescript/prefer-singular-enums": "error",
+        // CodeGuide 3.1: Каждый класс должен располагаться в отдельном файле
+        "max-classes-per-file": ["error", 1]
       }
     },
     {
