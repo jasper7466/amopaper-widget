@@ -6,14 +6,14 @@ export const filesProcessedKey = 'processed-files';
 // Употребляется во множественном числе
 // eslint-disable-next-line prefer-singular-interfaces
 export interface IProcessedFilesState {
-  identifiers: IPacketFilesInfo;
-  originalFiles: IPacketFile[];
+    identifiers: IPacketFilesInfo;
+    originalFiles: IPacketFile[];
 }
 
 export const initialState: IProcessedFilesState = {
-  identifiers: {
-    originals: [],
-    stamped: [],
-  },
-  originalFiles: [],
+    identifiers: {
+        originals: [],
+        stamped: [],
+    },
+    originalFiles: [],
 };

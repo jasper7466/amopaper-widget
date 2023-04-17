@@ -3,12 +3,12 @@ import { TStatusLabelStatus } from 'src/app/components/atoms/status-label/status
 import { TStatusBannerStatus } from '../../atoms/status-banner/status-banner.component';
 
 @Component({
-  selector: 'app-stage-header',
-  templateUrl: './stage-header.component.html',
-  styleUrls: ['./stage-header.component.css'],
+    selector: 'app-stage-header',
+    templateUrl: './stage-header.component.html',
+    styleUrls: ['./stage-header.component.css'],
 })
 export class StageHeaderComponent {
-  @Input() public statusLabelStatus: TStatusLabelStatus | null = null;
-  @Input() public statusBannerStatus: TStatusBannerStatus | null = null;
-  @Input() public documentsCount: number | null = null;
+    @Input() public statusLabelStatus: TStatusLabelStatus | null = null;
+    @Input() public statusBannerStatus: TStatusBannerStatus | null = null;
+    @Input() public documentsCount: number | null = null;
 }

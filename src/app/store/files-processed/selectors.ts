@@ -5,21 +5,21 @@ export const featureSelector =
   createFeatureSelector<IProcessedFilesState>(filesProcessedKey);
 
 export const originalFilesSelector = createSelector(
-  featureSelector,
-  (state) => state.originalFiles
+    featureSelector,
+    (state) => state.originalFiles
 );
 
 const identifiersSelector = createSelector(
-  featureSelector,
-  (state) => state.identifiers
+    featureSelector,
+    (state) => state.identifiers
 );
 
 export const filesIdsOriginalsSelector = createSelector(
-  identifiersSelector,
-  (state) => state.originals
+    identifiersSelector,
+    (state) => state.originals
 );
 
 export const filesIdsStampedSelector = createSelector(
-  identifiersSelector,
-  (state) => state.stamped
+    identifiersSelector,
+    (state) => state.stamped
 );

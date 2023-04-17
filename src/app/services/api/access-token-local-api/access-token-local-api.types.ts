@@ -1,3 +1,3 @@
 export interface IGetAmoAccessTokenResponse {
-  accessToken: string;
+    accessToken: string;
 }

@@ -27,42 +27,42 @@ import { crmLeadReducer } from './crm-lead-context/reducers';
 import { CrmLeadContextEffects } from './crm-lead-context/effects';
 
 export interface IState {
-  [tokenKey]: ITokenState;
-  [addresseeKey]: IAddresseeState;
-  [appContextKey]: IAppContextState;
-  [crmContextKey]: ICrmContextState;
-  [crmLeadKey]: ICrmLeadState;
-  [filesProcessedKey]: IProcessedFilesState;
-  [filesSourceKey]: ISourceFilesState;
-  [miscKey]: IMiscState;
-  [packetsKey]: IPacketsState;
-  [signaturesKey]: ISignaturesState;
+    [tokenKey]: ITokenState;
+    [addresseeKey]: IAddresseeState;
+    [appContextKey]: IAppContextState;
+    [crmContextKey]: ICrmContextState;
+    [crmLeadKey]: ICrmLeadState;
+    [filesProcessedKey]: IProcessedFilesState;
+    [filesSourceKey]: ISourceFilesState;
+    [miscKey]: IMiscState;
+    [packetsKey]: IPacketsState;
+    [signaturesKey]: ISignaturesState;
 }
 
 export const reducers: ActionReducerMap<IState> = {
-  [tokenKey]: accessTokenReducer,
-  [addresseeKey]: widgetContextReducer,
-  [appContextKey]: appContextReducer,
-  [crmContextKey]: crmContextReducer,
-  [crmLeadKey]: crmLeadReducer,
-  [filesProcessedKey]: processedFilesReducer,
-  [filesSourceKey]: sourceFilesReducer,
-  [miscKey]: miscReducer,
-  [packetsKey]: packetsReducer,
-  [signaturesKey]: signaturesReducer,
+    [tokenKey]: accessTokenReducer,
+    [addresseeKey]: widgetContextReducer,
+    [appContextKey]: appContextReducer,
+    [crmContextKey]: crmContextReducer,
+    [crmLeadKey]: crmLeadReducer,
+    [filesProcessedKey]: processedFilesReducer,
+    [filesSourceKey]: sourceFilesReducer,
+    [miscKey]: miscReducer,
+    [packetsKey]: packetsReducer,
+    [signaturesKey]: signaturesReducer,
 };
 
 export const effects = [
-  AppContextEffects,
-  CrmContextEffects,
-  CrmLeadContextEffects,
+    AppContextEffects,
+    CrmContextEffects,
+    CrmLeadContextEffects,
 ];
 
 export const metaReducers: MetaReducer<IState>[] = !environment.production
-  ? []
-  : [];
+    ? []
+    : [];
 
 @Injectable()
 export class AppEffects {
-  constructor(private _actions$: Actions) {}
+    constructor(private _actions$: Actions) {}
 }

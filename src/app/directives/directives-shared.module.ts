@@ -4,8 +4,8 @@ import { DragAndDropDirective } from './drag-and-drop.directive';
 import { FileBrowserDirective } from './file-browser.directive';
 
 @NgModule({
-  declarations: [DragAndDropDirective, FileBrowserDirective],
-  imports: [CommonModule],
-  exports: [DragAndDropDirective, FileBrowserDirective],
+    declarations: [DragAndDropDirective, FileBrowserDirective],
+    imports: [CommonModule],
+    exports: [DragAndDropDirective, FileBrowserDirective],
 })
 export class DirectivesSharedModule {}

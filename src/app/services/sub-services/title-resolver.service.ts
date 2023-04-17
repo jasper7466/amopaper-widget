@@ -6,23 +6,23 @@ import { packetTitleSelector } from 'src/app/store/packets/selectors';
 
 @Injectable()
 export class TitleResolverService implements Resolve<string> {
-  constructor(private _store$: Store) {}
+    constructor(private _store$: Store) {}
 
-  public resolve(
-    route: ActivatedRouteSnapshot
-  ): string | Observable<string> | Promise<string> {
-    const id = route.paramMap.get('id');
-    let title = '';
+    public resolve(
+        route: ActivatedRouteSnapshot
+    ): string | Observable<string> | Promise<string> {
+        const id = route.paramMap.get('id');
+        let title = '';
 
-    if (!id) {
-      return title;
+        if (!id) {
+            return title;
+        }
+
+        this._store$
+            .select(packetTitleSelector(+id))
+            .pipe(take(1))
+            .subscribe((value) => (title = value));
+
+        return title;
     }
-
-    this._store$
-      .select(packetTitleSelector(+id))
-      .pipe(take(1))
-      .subscribe((value) => (title = value));
-
-    return title;
-  }
 }

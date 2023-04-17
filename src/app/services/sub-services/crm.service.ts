@@ -13,100 +13,100 @@ import { notifications } from 'src/app/constants/notifications';
 const crmJsonStoragePollingInterval = config.crmJsonStoragePollingInterval;
 @Injectable()
 export class CrmService {
-  private _storagePollingBreaker = new EventEmitter<void>();
-  private _context: ReturnType<typeof crmContextSelector>;
+    private _storagePollingBreaker = new EventEmitter<void>();
+    private _context: ReturnType<typeof crmContextSelector>;
 
-  private _context$ = this._store$.select(crmContextSelector);
+    private _context$ = this._store$.select(crmContextSelector);
 
-  constructor(
-    private _store$: Store,
-    private _crmJsonStorageService: CrmJsonStorageService,
-    private _amoPostApiService: AmoPostApiService,
-    private _notificationService: NotificationService
-  ) {
-    this._context$.subscribe((context) => (this._context = context));
-  }
-
-  public checkWidgetStatus(): void | never {
-    if (!this._context) {
-      throw new Error(`${this.constructor.name}: crmContext is not defined.`);
+    constructor(
+        private _store$: Store,
+        private _crmJsonStorageService: CrmJsonStorageService,
+        private _amoPostApiService: AmoPostApiService,
+        private _notificationService: NotificationService
+    ) {
+        this._context$.subscribe((context) => (this._context = context));
     }
 
-    const { isAdminUser, isWidgetActive, isWidgetConfigured } = this._context;
+    public checkWidgetStatus(): void | never {
+        if (!this._context) {
+            throw new Error(`${this.constructor.name}: crmContext is not defined.`);
+        }
 
-    if (!isWidgetActive || !isWidgetConfigured) {
-      if (isAdminUser) {
-        this._notificationService.notify(
-          notifications.widgetNotConfiguredAdmin
-        );
-      } else {
-        this._notificationService.notify(
-          notifications.widgetNotConfiguredAdmin
-        );
-      }
+        const { isAdminUser, isWidgetActive, isWidgetConfigured } = this._context;
+
+        if (!isWidgetActive || !isWidgetConfigured) {
+            if (isAdminUser) {
+                this._notificationService.notify(
+                    notifications.widgetNotConfiguredAdmin
+                );
+            } else {
+                this._notificationService.notify(
+                    notifications.widgetNotConfiguredAdmin
+                );
+            }
+        }
     }
-  }
 
-  private getJsonStorage$(): Observable<void> {
-    return this._crmJsonStorageService.getStorage$().pipe(
-      tap((storageState) =>
-        this._store$.dispatch(updateLeadJsonStorageAction(storageState))
-      ),
-      switchMap(() => of(void 0))
-    );
-  }
-
-  public getCrmContext$(): Observable<void> {
-    return this._amoPostApiService.getCrmContext$().pipe(
-      tap((context) => {
-        this._store$.dispatch(updateCrmContextAction(context));
-      }),
-      switchMap(() => of(void 0))
-    );
-  }
-
-  public startJsonStoragePolling(): void {
-    this.stopJsonStoragePolling();
-
-    timer(1, crmJsonStoragePollingInterval)
-      .pipe(
-        switchMap(() => this.getJsonStorage$()),
-        takeUntil(this._storagePollingBreaker)
-      )
-      .subscribe();
-  }
-
-  public stopJsonStoragePolling(): void {
-    this._storagePollingBreaker.emit();
-  }
-
-  public attachPacketToLead$(packetId: number): Observable<void> {
-    return this._crmJsonStorageService.getStorage$().pipe(
-      switchMap((state) => {
-        if (state.packetsIdsList.includes(packetId)) {
-          return of(void 0);
-        }
-
-        return this._crmJsonStorageService.setStorage$({
-          packetsIdsList: [...state.packetsIdsList, packetId],
-        });
-      })
-    );
-  }
-
-  public detachPacketFromLead$(packetId: number): Observable<void> {
-    return this._crmJsonStorageService.getStorage$().pipe(
-      switchMap((state) => {
-        const filteredIdList = state.packetsIdsList.filter(
-          (id) => id !== packetId
+    private getJsonStorage$(): Observable<void> {
+        return this._crmJsonStorageService.getStorage$().pipe(
+            tap((storageState) =>
+                this._store$.dispatch(updateLeadJsonStorageAction(storageState))
+            ),
+            switchMap(() => of(void 0))
         );
-        if (state.packetsIdsList.length === filteredIdList.length) {
-          return of(void 0);
-        }
-        return this._crmJsonStorageService.setStorage$({
-          packetsIdsList: filteredIdList,
-        });
-      })
-    );
-  }
+    }
+
+    public getCrmContext$(): Observable<void> {
+        return this._amoPostApiService.getCrmContext$().pipe(
+            tap((context) => {
+                this._store$.dispatch(updateCrmContextAction(context));
+            }),
+            switchMap(() => of(void 0))
+        );
+    }
+
+    public startJsonStoragePolling(): void {
+        this.stopJsonStoragePolling();
+
+        timer(1, crmJsonStoragePollingInterval)
+            .pipe(
+                switchMap(() => this.getJsonStorage$()),
+                takeUntil(this._storagePollingBreaker)
+            )
+            .subscribe();
+    }
+
+    public stopJsonStoragePolling(): void {
+        this._storagePollingBreaker.emit();
+    }
+
+    public attachPacketToLead$(packetId: number): Observable<void> {
+        return this._crmJsonStorageService.getStorage$().pipe(
+            switchMap((state) => {
+                if (state.packetsIdsList.includes(packetId)) {
+                    return of(void 0);
+                }
+
+                return this._crmJsonStorageService.setStorage$({
+                    packetsIdsList: [...state.packetsIdsList, packetId],
+                });
+            })
+        );
+    }
+
+    public detachPacketFromLead$(packetId: number): Observable<void> {
+        return this._crmJsonStorageService.getStorage$().pipe(
+            switchMap((state) => {
+                const filteredIdList = state.packetsIdsList.filter(
+                    (id) => id !== packetId
+                );
+                if (state.packetsIdsList.length === filteredIdList.length) {
+                    return of(void 0);
+                }
+                return this._crmJsonStorageService.setStorage$({
+                    packetsIdsList: filteredIdList,
+                });
+            })
+        );
+    }
 }

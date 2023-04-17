@@ -3,8 +3,8 @@ import { crmContextKey } from './index';
 import { createAction, props } from '@ngrx/store';
 
 export const updateCrmContextAction = createAction(
-  `[${crmContextKey}] update CRM context`,
-  props<ICrmContext>()
+    `[${crmContextKey}] update CRM context`,
+    props<ICrmContext>()
 );
 
 // export const setLeadAttachmentsAction = createAction(

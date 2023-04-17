@@ -5,31 +5,31 @@ export const featureSelector =
   createFeatureSelector<ICrmContextState>(crmContextKey);
 
 export const xApiKeySelector = createSelector(
-  featureSelector,
-  (state) => state.context?.xApiKey
+    featureSelector,
+    (state) => state.context?.xApiKey
 );
 
 export const domainSelector = createSelector(
-  featureSelector,
-  (state) => state.context?.domain
+    featureSelector,
+    (state) => state.context?.domain
 );
 
 export const subdomainSelector = createSelector(
-  featureSelector,
-  (state) => state.context?.subdomain
+    featureSelector,
+    (state) => state.context?.subdomain
 );
 
 export const leadIdSelector = createSelector(
-  featureSelector,
-  (state) => state.context?.cardId
+    featureSelector,
+    (state) => state.context?.cardId
 );
 
 export const clientUuidSelector = createSelector(
-  featureSelector,
-  (state) => state.context?.oAuthUuid
+    featureSelector,
+    (state) => state.context?.oAuthUuid
 );
 
 export const crmContextSelector = createSelector(
-  featureSelector,
-  (state) => state.context
+    featureSelector,
+    (state) => state.context
 );

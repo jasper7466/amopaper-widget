@@ -4,19 +4,19 @@ import { IAddresseeExistence } from 'src/app/interfaces/addressee-existence.inte
 import { IAddressee } from 'src/app/interfaces/addressee.interface';
 
 export const addresseeUpdateAction = createAction(
-  `[${addresseeKey}] addressee update`,
-  props<Pick<IAddressee, 'idType' | 'idValue'>>()
+    `[${addresseeKey}] addressee update`,
+    props<Pick<IAddressee, 'idType' | 'idValue'>>()
 );
 
 export const addresseeCheckAction = createAction(`[${addresseeKey}] check`);
 
 export const addresseeSetExistenceAction = createAction(
-  `[${addresseeKey}] set existence`,
+    `[${addresseeKey}] set existence`,
   props<IAddresseeExistence>
 );
 
 export const addresseeSubmitAction = createAction(
-  `[${addresseeKey}] submit`,
+    `[${addresseeKey}] submit`,
   props<IAddresseeExistence>
 );
 

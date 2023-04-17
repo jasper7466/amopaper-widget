@@ -16,56 +16,56 @@ import { PacketPagePreviewComponent } from './pages/packet-pages/packet-page-pre
 import { PacketPagePrepareComponent } from './pages/packet-pages/packet-page-prepare/packet-page-prepare.component';
 
 export const routes: Routes = [
-  {
-    path: '',
-    component: StartupPageComponent,
-    title: 'Nopaper - Инициализация',
-  },
-  { path: 'landing', component: LandingPageComponent },
-  { path: 'notification', component: NotificationPageComponent },
-  {
-    path: 'widget',
-    component: WidgetPageComponent,
-    title: 'Главная',
-    children: [
-      {
+    {
         path: '',
-        redirectTo: 'list',
-        pathMatch: 'full',
-      },
-      { path: 'list', component: WidgetPageListComponent },
-      {
-        path: 'new',
-        component: WidgetPageNewComponent,
-        title: 'Добавление документа',
-      },
-      {
-        path: 'packet/:id',
-        component: WidgetPagePacketComponent,
-        title: TitleResolverService,
+        component: StartupPageComponent,
+        title: 'Nopaper - Инициализация',
+    },
+    { path: 'landing', component: LandingPageComponent },
+    { path: 'notification', component: NotificationPageComponent },
+    {
+        path: 'widget',
+        component: WidgetPageComponent,
+        title: 'Главная',
         children: [
-          { path: 'draft', component: PacketPageDraftComponent },
-          { path: 'prepare', component: PacketPagePrepareComponent },
-          { path: 'preview', component: PacketPagePreviewComponent },
-          { path: 'end', component: PacketPageEndComponent },
-          { path: 'sender-sign', component: PacketPageSenderSignComponent },
-          {
-            path: 'receiver-preview',
-            component: PacketPageReceiverPreviewComponent,
-          },
+            {
+                path: '',
+                redirectTo: 'list',
+                pathMatch: 'full',
+            },
+            { path: 'list', component: WidgetPageListComponent },
+            {
+                path: 'new',
+                component: WidgetPageNewComponent,
+                title: 'Добавление документа',
+            },
+            {
+                path: 'packet/:id',
+                component: WidgetPagePacketComponent,
+                title: TitleResolverService,
+                children: [
+                    { path: 'draft', component: PacketPageDraftComponent },
+                    { path: 'prepare', component: PacketPagePrepareComponent },
+                    { path: 'preview', component: PacketPagePreviewComponent },
+                    { path: 'end', component: PacketPageEndComponent },
+                    { path: 'sender-sign', component: PacketPageSenderSignComponent },
+                    {
+                        path: 'receiver-preview',
+                        component: PacketPageReceiverPreviewComponent,
+                    },
+                ],
+            },
         ],
-      },
-    ],
-  },
+    },
 ];
 
 const routingConfiguration: ExtraOptions = {
-  // onSameUrlNavigation: 'reload',
-  // paramsInheritanceStrategy: 'always',
+    // onSameUrlNavigation: 'reload',
+    // paramsInheritanceStrategy: 'always',
 };
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, routingConfiguration)],
-  exports: [RouterModule],
+    imports: [RouterModule.forRoot(routes, routingConfiguration)],
+    exports: [RouterModule],
 })
 export class AppRoutingModule {}

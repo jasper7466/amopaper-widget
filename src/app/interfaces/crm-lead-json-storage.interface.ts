@@ -1,3 +1,3 @@
 export interface ICrmLeadJsonStorage {
-  packetsIdsList: number[];
+    packetsIdsList: number[];
 }

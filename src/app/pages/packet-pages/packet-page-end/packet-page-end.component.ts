@@ -6,61 +6,61 @@ import { Store } from '@ngrx/store';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalSignInfoComponent } from 'src/app/components/organisms/modal-sign-info/modal-sign-info.component';
 import {
-  filesIdsOriginalsSelector,
-  filesIdsStampedSelector,
+    filesIdsOriginalsSelector,
+    filesIdsStampedSelector,
 } from 'src/app/store/files-processed/selectors';
 import { take } from 'rxjs';
 
 @Component({
-  selector: 'app-packet-page-end',
-  templateUrl: './packet-page-end.component.html',
-  styleUrls: ['./packet-page-end.component.css'],
+    selector: 'app-packet-page-end',
+    templateUrl: './packet-page-end.component.html',
+    styleUrls: ['./packet-page-end.component.css'],
 })
 export class PacketPageEndComponent implements OnInit {
-  @ViewChild(ModalSignInfoComponent) private _signInfo: ModalSignInfoComponent;
+    @ViewChild(ModalSignInfoComponent) private _signInfo: ModalSignInfoComponent;
 
-  private _packetId: number;
+    private _packetId: number;
 
-  protected signedOriginalDocuments$ = this._store$.select(
-    filesIdsOriginalsSelector
-  );
-  protected signedStampDocuments$ = this._store$.select(filesIdsStampedSelector);
+    protected signedOriginalDocuments$ = this._store$.select(
+        filesIdsOriginalsSelector
+    );
+    protected signedStampDocuments$ = this._store$.select(filesIdsStampedSelector);
 
-  constructor(
-    private _store$: Store,
-    private _route: ActivatedRoute,
-    private _router: Router,
-    private _nopaperService: NopaperService,
-    private _commonLogicService: CommonLogicService,
-    private _routingService: RoutingService
-  ) {}
+    constructor(
+        private _store$: Store,
+        private _route: ActivatedRoute,
+        private _router: Router,
+        private _nopaperService: NopaperService,
+        private _commonLogicService: CommonLogicService,
+        private _routingService: RoutingService
+    ) {}
 
-  public ngOnInit(): void {
-    console.log(this._router.url);
-    const id = this._route.parent?.snapshot.paramMap.get('id');
+    public ngOnInit(): void {
+        console.log(this._router.url);
+        const id = this._route.parent?.snapshot.paramMap.get('id');
 
-    if (!id) {
-      throw new Error('Missing "id" parameter in parent path');
+        if (!id) {
+            throw new Error('Missing "id" parameter in parent path');
+        }
+
+        this._packetId = parseInt(id);
+
+        this._commonLogicService
+            .getPacketFiles$(this._packetId)
+            .pipe(take(1))
+            .subscribe();
     }
 
-    this._packetId = parseInt(id);
+    protected showSignInfo(fileId: number): void {
+        this._nopaperService
+            .getFileSignature$({ id: fileId })
+            .pipe(take(1))
+            .subscribe(() => {
+                this._signInfo.open();
+            });
+    }
 
-    this._commonLogicService
-      .getPacketFiles$(this._packetId)
-      .pipe(take(1))
-      .subscribe();
-  }
-
-  protected showSignInfo(fileId: number): void {
-    this._nopaperService
-      .getFileSignature$({ id: fileId })
-      .pipe(take(1))
-      .subscribe(() => {
-        this._signInfo.open();
-      });
-  }
-
-  protected backButtonHandler(): void {
-    this._routingService.goPacketsListPage();
-  }
+    protected backButtonHandler(): void {
+        this._routingService.goPacketsListPage();
+    }
 }

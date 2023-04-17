@@ -5,17 +5,17 @@ import { Observable } from 'rxjs';
 import { ICrmContext } from 'src/app/interfaces/crm-context.interface';
 
 export interface IAmoPostApiService {
-  getCrmContext$: () => Observable<ICrmContext>;
+    getCrmContext$: () => Observable<ICrmContext>;
 }
 @Injectable({
-  providedIn: 'root',
+    providedIn: 'root',
 })
 export class AmoPostApiService implements IAmoPostApiService {
-  constructor(
-    protected postMessageTransportService: PostMessageTransportService
-  ) {}
+    constructor(
+        protected postMessageTransportService: PostMessageTransportService
+    ) {}
 
-  public getCrmContext$ = (): Observable<ICrmContext> => {
-    return getCrmContextEndpoint$.call(this);
-  };
+    public getCrmContext$ = (): Observable<ICrmContext> => {
+        return getCrmContextEndpoint$.call(this);
+    };
 }

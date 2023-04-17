@@ -10,26 +10,26 @@ export type TStatusLabelStatus =
   | 'signed-single';
 
 const statusCaptions: { [key in TStatusLabelStatus]: string } = {
-  unknown: 'Статус неизвестен',
-  draft: 'Черновик',
-  sign: 'Подпишите',
-  'sign-offer': 'Оферта на подпись',
-  pending: 'Ожидают подписи',
-  signed: 'Подписаны',
-  'signed-single': 'Подписано',
+    unknown: 'Статус неизвестен',
+    draft: 'Черновик',
+    sign: 'Подпишите',
+    'sign-offer': 'Оферта на подпись',
+    pending: 'Ожидают подписи',
+    signed: 'Подписаны',
+    'signed-single': 'Подписано',
 };
 
 @Component({
-  selector: 'app-status-label',
-  templateUrl: './status-label.component.html',
-  styleUrls: ['./status-label.component.css'],
+    selector: 'app-status-label',
+    templateUrl: './status-label.component.html',
+    styleUrls: ['./status-label.component.css'],
 })
 export class StatusLabelComponent implements OnChanges {
-  @Input() public status: TStatusLabelStatus = 'unknown';
+    @Input() public status: TStatusLabelStatus = 'unknown';
 
-  public caption = 'Undefined';
+    public caption = 'Undefined';
 
-  public ngOnChanges(): void {
-    this.caption = statusCaptions[this.status];
-  }
+    public ngOnChanges(): void {
+        this.caption = statusCaptions[this.status];
+    }
 }

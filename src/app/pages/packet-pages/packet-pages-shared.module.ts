@@ -11,27 +11,27 @@ import { PipesSharedModule } from 'src/app/pipes/pipes-shared.module';
 import { PdfPreviewWebModule } from 'local_modules/pdf-preview/src/public-api';
 
 @NgModule({
-  declarations: [
-    PacketPageDraftComponent,
-    PacketPageEndComponent,
-    PacketPagePrepareComponent,
-    PacketPagePreviewComponent,
-    PacketPageSenderSignComponent,
-    PacketPageReceiverPreviewComponent,
-  ],
-  imports: [
-    CommonModule,
-    ComponentsSharedModule,
-    PipesSharedModule,
-    PdfPreviewWebModule,
-  ],
-  exports: [
-    PacketPageDraftComponent,
-    PacketPageEndComponent,
-    PacketPagePrepareComponent,
-    PacketPagePreviewComponent,
-    PacketPageSenderSignComponent,
-    PacketPageReceiverPreviewComponent,
-  ],
+    declarations: [
+        PacketPageDraftComponent,
+        PacketPageEndComponent,
+        PacketPagePrepareComponent,
+        PacketPagePreviewComponent,
+        PacketPageSenderSignComponent,
+        PacketPageReceiverPreviewComponent,
+    ],
+    imports: [
+        CommonModule,
+        ComponentsSharedModule,
+        PipesSharedModule,
+        PdfPreviewWebModule,
+    ],
+    exports: [
+        PacketPageDraftComponent,
+        PacketPageEndComponent,
+        PacketPagePrepareComponent,
+        PacketPagePreviewComponent,
+        PacketPageSenderSignComponent,
+        PacketPageReceiverPreviewComponent,
+    ],
 })
 export class PacketPagesSharedModule {}

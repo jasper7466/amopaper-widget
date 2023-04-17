@@ -6,19 +6,19 @@ export const packetsKey = 'packets';
 // Употребляется во множественном числе
 // eslint-disable-next-line prefer-singular-interfaces
 export interface IPacketsState {
-  ids: ICrmLeadJsonStorage['packetsIdsList'];
-  packets: IPacketDetails[];
-  isPacketsIdsTouched: boolean;
+    ids: ICrmLeadJsonStorage['packetsIdsList'];
+    packets: IPacketDetails[];
+    isPacketsIdsTouched: boolean;
 }
 
 export const initialPacketState: Omit<IPacketDetails, 'id'> = {
-  title: 'Без названия',
-  createTimeUtc: undefined,
-  status: undefined,
+    title: 'Без названия',
+    createTimeUtc: undefined,
+    status: undefined,
 };
 
 export const initialState: IPacketsState = {
-  ids: [],
-  packets: [],
-  isPacketsIdsTouched: false,
+    ids: [],
+    packets: [],
+    isPacketsIdsTouched: false,
 };

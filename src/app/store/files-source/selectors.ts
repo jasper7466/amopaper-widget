@@ -5,21 +5,21 @@ export const featureSelector =
   createFeatureSelector<ISourceFilesState>(filesSourceKey);
 
 export const sourceFilesSelector = createSelector(
-  featureSelector,
-  (state) => state.files
+    featureSelector,
+    (state) => state.files
 );
 
 export const sourceFilesTotalCountSelector = createSelector(
-  featureSelector,
-  (state) => state.totalCount
+    featureSelector,
+    (state) => state.totalCount
 );
 
 export const sourceFilesLoadedCountSelector = createSelector(
-  featureSelector,
-  (state) => state.loadedCount
+    featureSelector,
+    (state) => state.loadedCount
 );
 
 export const isSourceFilesCompleteAllSelector = createSelector(
-  featureSelector,
-  (state) => state.isComplete
+    featureSelector,
+    (state) => state.isComplete
 );

@@ -7,45 +7,45 @@ import { Component, Input } from '@angular/core';
 import { Clipboard } from '@angular/cdk/clipboard';
 
 const captions = {
-  initial: 'Скопировать ссылку на подпись КЭП',
-  copied: 'Скопировано',
+    initial: 'Скопировать ссылку на подпись КЭП',
+    copied: 'Скопировано',
 };
 
 @Component({
-  selector: 'app-share-link-button',
-  templateUrl: './share-link-button.component.html',
-  styleUrls: ['./share-link-button.component.css'],
+    selector: 'app-share-link-button',
+    templateUrl: './share-link-button.component.html',
+    styleUrls: ['./share-link-button.component.css'],
 })
 export class ShareLinkButtonComponent {
-  @Input() public packetId: number;
+    @Input() public packetId: number;
 
-  protected caption: string = captions.initial;
-  protected style: ButtonStyleOption = 'solid';
-  protected isEnabled = true;
+    protected caption: string = captions.initial;
+    protected style: ButtonStyleOption = 'solid';
+    protected isEnabled = true;
 
-  protected shareLink$ = this._store$.select(shareLinkSelector);
+    protected shareLink$ = this._store$.select(shareLinkSelector);
 
-  constructor(
-    private _store$: Store,
-    private _nopaperService: NopaperService,
-    private _clipboard: Clipboard
-  ) {}
+    constructor(
+        private _store$: Store,
+        private _nopaperService: NopaperService,
+        private _clipboard: Clipboard
+    ) {}
 
-  protected clickHandler(): void {
-    this.isEnabled = false;
+    protected clickHandler(): void {
+        this.isEnabled = false;
 
-    this._nopaperService
-      .getShareLink$(this.packetId)
-      .pipe(
-        switchMap(() => this.shareLink$),
-        take(1),
-        tap((link) => {
-          this._clipboard.copy(link);
-          this.isEnabled = true;
-          this.caption = captions.copied;
-          this.style = 'blank';
-        })
-      )
-      .subscribe();
-  }
+        this._nopaperService
+            .getShareLink$(this.packetId)
+            .pipe(
+                switchMap(() => this.shareLink$),
+                take(1),
+                tap((link) => {
+                    this._clipboard.copy(link);
+                    this.isEnabled = true;
+                    this.caption = captions.copied;
+                    this.style = 'blank';
+                })
+            )
+            .subscribe();
+    }
 }

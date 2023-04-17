@@ -4,35 +4,35 @@ import { CrmService } from 'src/app/services/sub-services/crm.service';
 import { RoutingService } from 'src/app/services/sub-services/routing.service';
 import { leadIdSelector } from 'src/app/store/crm-context/selectors';
 import {
-  packetsIsTouchedSelector,
-  packetsSelector,
+    packetsIsTouchedSelector,
+    packetsSelector,
 } from 'src/app/store/packets/selectors';
 
 @Component({
-  selector: 'app-widget-page-list',
-  templateUrl: './widget-page-list.component.html',
-  styleUrls: ['./widget-page-list.component.css'],
+    selector: 'app-widget-page-list',
+    templateUrl: './widget-page-list.component.html',
+    styleUrls: ['./widget-page-list.component.css'],
 })
 export class WidgetPageListComponent implements OnInit, OnDestroy {
-  protected leadId$ = this._store$.select(leadIdSelector);
-  protected packets$ = this._store$.select(packetsSelector);
-  protected isPacketsIdsTouched$ = this._store$.select(packetsIsTouchedSelector);
+    protected leadId$ = this._store$.select(leadIdSelector);
+    protected packets$ = this._store$.select(packetsSelector);
+    protected isPacketsIdsTouched$ = this._store$.select(packetsIsTouchedSelector);
 
-  constructor(
-    private _store$: Store,
-    private _crmService: CrmService,
-    private _routingService: RoutingService
-  ) {}
+    constructor(
+        private _store$: Store,
+        private _crmService: CrmService,
+        private _routingService: RoutingService
+    ) {}
 
-  public ngOnInit(): void {
-    this._crmService.startJsonStoragePolling();
-  }
+    public ngOnInit(): void {
+        this._crmService.startJsonStoragePolling();
+    }
 
-  public ngOnDestroy(): void {
-    this._crmService.stopJsonStoragePolling();
-  }
+    public ngOnDestroy(): void {
+        this._crmService.stopJsonStoragePolling();
+    }
 
-  protected clickCreateNewButtonHandler(): void {
-    this._routingService.goCreatePage();
-  }
+    protected clickCreateNewButtonHandler(): void {
+        this._routingService.goCreatePage();
+    }
 }

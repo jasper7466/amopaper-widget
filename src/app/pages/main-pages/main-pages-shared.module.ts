@@ -8,18 +8,18 @@ import { StartupPageComponent } from './startup-page/startup-page.component';
 import { WidgetPageComponent } from './widget-page/widget-page.component';
 
 @NgModule({
-  declarations: [
-    LandingPageComponent,
-    NotificationPageComponent,
-    StartupPageComponent,
-    WidgetPageComponent,
-  ],
-  imports: [CommonModule, ComponentsSharedModule, RouterModule],
-  exports: [
-    LandingPageComponent,
-    NotificationPageComponent,
-    StartupPageComponent,
-    WidgetPageComponent,
-  ],
+    declarations: [
+        LandingPageComponent,
+        NotificationPageComponent,
+        StartupPageComponent,
+        WidgetPageComponent,
+    ],
+    imports: [CommonModule, ComponentsSharedModule, RouterModule],
+    exports: [
+        LandingPageComponent,
+        NotificationPageComponent,
+        StartupPageComponent,
+        WidgetPageComponent,
+    ],
 })
 export class MainPagesSharedModule {}

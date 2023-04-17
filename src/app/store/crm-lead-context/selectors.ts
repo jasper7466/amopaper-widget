@@ -4,6 +4,6 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 export const featureSelector = createFeatureSelector<ICrmLeadState>(crmLeadKey);
 
 export const leadNameSelector = createSelector(
-  featureSelector,
-  (state) => state.name
+    featureSelector,
+    (state) => state.name
 );

@@ -18,26 +18,26 @@ const baseUrl = environment.getNopaperBaseUrl('v1');
 
 @Injectable()
 export class NopaperApiService extends ApiService {
-  private _xApiKey$ = this._store$.select(xApiKeySelector);
+    private _xApiKey$ = this._store$.select(xApiKeySelector);
 
-  constructor(http: HttpClient, private _store$: Store) {
-    super(http);
-    this.baseUrl = baseUrl;
-    this.setHeaders({ 'Content-Type': 'application/json' });
-    this._xApiKey$.subscribe((key) => {
-      this.setHeaders({ 'X-API-Key': `${key}` });
-    });
-  }
+    constructor(http: HttpClient, private _store$: Store) {
+        super(http);
+        this.baseUrl = baseUrl;
+        this.setHeaders({ 'Content-Type': 'application/json' });
+        this._xApiKey$.subscribe((key) => {
+            this.setHeaders({ 'X-API-Key': `${key}` });
+        });
+    }
 
-  public postPacket = createPacketEndpoint$;
-  public checkUserByPhone = checkByPhoneEndpoint$;
-  public getPacketStepName = getPacketStepNameEndpoint$;
-  public getPacketFilesIds = getPacketFilesIdsEndpoint$;
-  public getFilesByIds = getFilesByIdsEndpoint$;
-  public getFileSignatures = getFileSignaturesEndpoint$;
-  public getShareLink = getShareLinkEndpoint$;
-  public setPacketStepName = setPacketStepNameEndpoint$;
+    public postPacket = createPacketEndpoint$;
+    public checkUserByPhone = checkByPhoneEndpoint$;
+    public getPacketStepName = getPacketStepNameEndpoint$;
+    public getPacketFilesIds = getPacketFilesIdsEndpoint$;
+    public getFilesByIds = getFilesByIdsEndpoint$;
+    public getFileSignatures = getFileSignaturesEndpoint$;
+    public getShareLink = getShareLinkEndpoint$;
+    public setPacketStepName = setPacketStepNameEndpoint$;
 
-  /** @deprecated */
-  public getPacketDetails = getPacketDetailsEndpoint$;
+    /** @deprecated */
+    public getPacketDetails = getPacketDetailsEndpoint$;
 }

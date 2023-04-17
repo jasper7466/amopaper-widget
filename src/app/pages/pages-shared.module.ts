@@ -5,17 +5,17 @@ import { PacketPagesSharedModule } from './packet-pages/packet-pages-shared.modu
 import { WidgetPagesSharedModule } from './widget-pages/widget-pages-shared.module';
 
 @NgModule({
-  declarations: [],
-  imports: [
-    CommonModule,
-    MainPagesSharedModule,
-    PacketPagesSharedModule,
-    WidgetPagesSharedModule,
-  ],
-  exports: [
-    MainPagesSharedModule,
-    PacketPagesSharedModule,
-    WidgetPagesSharedModule,
-  ],
+    declarations: [],
+    imports: [
+        CommonModule,
+        MainPagesSharedModule,
+        PacketPagesSharedModule,
+        WidgetPagesSharedModule,
+    ],
+    exports: [
+        MainPagesSharedModule,
+        PacketPagesSharedModule,
+        WidgetPagesSharedModule,
+    ],
 })
 export class PagesSharedModule {}

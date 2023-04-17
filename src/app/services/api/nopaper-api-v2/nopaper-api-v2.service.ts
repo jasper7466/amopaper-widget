@@ -12,18 +12,18 @@ const baseUrl = environment.getNopaperBaseUrl('v2');
 
 @Injectable()
 export class NopaperApiV2Service extends ApiService {
-  private _xApiKey$ = this._store$.select(xApiKeySelector);
+    private _xApiKey$ = this._store$.select(xApiKeySelector);
 
-  constructor(http: HttpClient, private _store$: Store) {
-    super(http);
-    this.baseUrl = baseUrl;
-    this.setHeaders({ 'Content-Type': 'application/json' });
-    this._xApiKey$.subscribe((key) => {
-      this.setHeaders({ 'X-API-Key': `${key}` });
-    });
-  }
+    constructor(http: HttpClient, private _store$: Store) {
+        super(http);
+        this.baseUrl = baseUrl;
+        this.setHeaders({ 'Content-Type': 'application/json' });
+        this._xApiKey$.subscribe((key) => {
+            this.setHeaders({ 'X-API-Key': `${key}` });
+        });
+    }
 
-  public postPacket = createPacketEndpoint$;
-  public getPacketDetails = getPacketDetailsEndpoint$;
-  public revokePacket = revokePacketEndpoint$;
+    public postPacket = createPacketEndpoint$;
+    public getPacketDetails = getPacketDetailsEndpoint$;
+    public revokePacket = revokePacketEndpoint$;
 }

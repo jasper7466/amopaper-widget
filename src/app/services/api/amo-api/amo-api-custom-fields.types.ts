@@ -28,9 +28,9 @@ type TCustomFieldType =
 /* eslint-enable @cspell/spellchecker */
 
 type TCustomFieldEnum = {
-  id: number;
-  value: string;
-  sort: number;
+    id: number;
+    value: string;
+    sort: number;
 };
 
 type TCustomFieldEntityType =
@@ -44,85 +44,85 @@ type TCustomFieldEntityType =
 type TCustomFieldRemind = 'never' | 'day' | 'week' | 'month';
 
 export interface ICustomField extends IEmbeddedItem {
-  id: number;
-  name: string;
-  type: TCustomFieldType;
-  account_id: number;
-  code: string | null;
-  sort: number;
-  is_api_only: boolean;
-  enums: TCustomFieldEnum[] | null;
-  group_id: string | null;
-  required_statuses: unknown[];
-  is_deletable: boolean;
-  is_predefined: boolean;
-  entity_type: TCustomFieldEntityType;
-  remind?: TCustomFieldRemind | null;
-  triggers: unknown[];
-  currency: string | null;
-  hidden_statuses: [];
+    id: number;
+    name: string;
+    type: TCustomFieldType;
+    account_id: number;
+    code: string | null;
+    sort: number;
+    is_api_only: boolean;
+    enums: TCustomFieldEnum[] | null;
+    group_id: string | null;
+    required_statuses: unknown[];
+    is_deletable: boolean;
+    is_predefined: boolean;
+    entity_type: TCustomFieldEntityType;
+    remind?: TCustomFieldRemind | null;
+    triggers: unknown[];
+    currency: string | null;
+    hidden_statuses: [];
 }
 
 // Употребляется во множественном числе
 // eslint-disable-next-line prefer-singular-interfaces
 interface ICustomFieldValues {
-  field_id: number;
-  values: {
+    field_id: number;
+    values: {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    value: any;
-  }[];
+        value: any;
+    }[];
 }
 
 // Употребляется во множественном числе
 // eslint-disable-next-line prefer-singular-interfaces
 export interface IGetCustomFieldsResponse
-  extends IAmoBaseResponse<{ custom_fields: ICustomField[] }> {}
+    extends IAmoBaseResponse<{ custom_fields: ICustomField[] }> {}
 
 export interface IPatchLeadRequest {
-  name: string;
-  price: number;
-  status_id: number;
-  pipeline_id: number;
-  created_by: number;
-  updated_by: number;
-  closed_at: number;
-  created_at: number;
-  updated_at: number;
-  loss_reason_id: number;
-  responsible_user_id: number;
-  custom_fields_values: ICustomFieldValues[];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  _embedded: { [key: string]: any };
-  request_id: string;
+    name: string;
+    price: number;
+    status_id: number;
+    pipeline_id: number;
+    created_by: number;
+    updated_by: number;
+    closed_at: number;
+    created_at: number;
+    updated_at: number;
+    loss_reason_id: number;
+    responsible_user_id: number;
+    custom_fields_values: ICustomFieldValues[];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    _embedded: { [key: string]: any };
+    request_id: string;
 }
 
 export interface IPatchLeadResponse {
-  id: number;
-  updated_at: number;
-  request_id: string;
+    id: number;
+    updated_at: number;
+    request_id: string;
 }
 
 export interface IGetLeadByIdResponse {
-  id: number;
-  name: string;
-  price: number;
-  responsible_user_id: number;
-  group_id: number;
-  status_id: number;
-  pipeline_id: number;
-  loss_reason_id: number;
-  source_id: number;
-  created_by: number;
-  updated_by: number;
-  closed_at: number;
-  created_at: number;
-  updated_at: number;
-  closest_task_at: number;
-  is_deleted: boolean;
-  custom_fields_values: ICustomFieldValues[] | null;
-  score: number | null;
-  account_id: number;
-  is_price_modified_by_robot: boolean;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  _embedded: { [key: string]: any };
+    id: number;
+    name: string;
+    price: number;
+    responsible_user_id: number;
+    group_id: number;
+    status_id: number;
+    pipeline_id: number;
+    loss_reason_id: number;
+    source_id: number;
+    created_by: number;
+    updated_by: number;
+    closed_at: number;
+    created_at: number;
+    updated_at: number;
+    closest_task_at: number;
+    is_deleted: boolean;
+    custom_fields_values: ICustomFieldValues[] | null;
+    score: number | null;
+    account_id: number;
+    is_price_modified_by_robot: boolean;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    _embedded: { [key: string]: any };
 }

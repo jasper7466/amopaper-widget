@@ -5,6 +5,6 @@ export const featureSelector =
   createFeatureSelector<IAppContextState>(appContextKey);
 
 export const activeLeadIdSelector = createSelector(
-  featureSelector,
-  (state) => state.activeLeadId
+    featureSelector,
+    (state) => state.activeLeadId
 );

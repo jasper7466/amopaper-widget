@@ -17,24 +17,24 @@ import { PagesSharedModule } from './pages/pages-shared.module';
 
 registerLocaleData(localeRu, 'ru');
 @NgModule({
-  declarations: [AppComponent],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    StoreModule.forRoot(reducers, {
-      metaReducers,
-    }),
-    StoreDevtoolsModule.instrument({
-      maxAge: 25,
-      logOnly: environment.production,
-    }),
-    EffectsModule.forRoot(effects),
-    StoreRouterConnectingModule.forRoot(),
-    ComponentsSharedModule,
-    PagesSharedModule,
-    ServicesCoreModule,
-  ],
-  providers: [{ provide: LOCALE_ID, useValue: 'ru' }],
-  bootstrap: [AppComponent],
+    declarations: [AppComponent],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        StoreModule.forRoot(reducers, {
+            metaReducers,
+        }),
+        StoreDevtoolsModule.instrument({
+            maxAge: 25,
+            logOnly: environment.production,
+        }),
+        EffectsModule.forRoot(effects),
+        StoreRouterConnectingModule.forRoot(),
+        ComponentsSharedModule,
+        PagesSharedModule,
+        ServicesCoreModule,
+    ],
+    providers: [{ provide: LOCALE_ID, useValue: 'ru' }],
+    bootstrap: [AppComponent],
 })
 export class AppModule {}

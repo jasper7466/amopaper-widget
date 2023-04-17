@@ -9,59 +9,59 @@ import { filesIdsOriginalsSelector } from 'src/app/store/files-processed/selecto
 import { take } from 'rxjs';
 
 @Component({
-  selector: 'app-packet-page-receiver-preview',
-  templateUrl: './packet-page-receiver-preview.component.html',
-  styleUrls: ['./packet-page-receiver-preview.component.css'],
+    selector: 'app-packet-page-receiver-preview',
+    templateUrl: './packet-page-receiver-preview.component.html',
+    styleUrls: ['./packet-page-receiver-preview.component.css'],
 })
 export class PacketPageReceiverPreviewComponent implements OnInit {
-  @ViewChild(ModalSignInfoComponent) private _signInfo: ModalSignInfoComponent;
+    @ViewChild(ModalSignInfoComponent) private _signInfo: ModalSignInfoComponent;
 
-  private _packetId: number;
+    private _packetId: number;
 
-  protected signedOriginalDocuments$ = this._store$.select(
-    filesIdsOriginalsSelector
-  );
+    protected signedOriginalDocuments$ = this._store$.select(
+        filesIdsOriginalsSelector
+    );
 
-  constructor(
-    private _route: ActivatedRoute,
-    private _store$: Store,
-    private _nopaperService: NopaperService,
-    private _routingService: RoutingService,
-    private _commonLogicService: CommonLogicService
-  ) {}
+    constructor(
+        private _route: ActivatedRoute,
+        private _store$: Store,
+        private _nopaperService: NopaperService,
+        private _routingService: RoutingService,
+        private _commonLogicService: CommonLogicService
+    ) {}
 
-  public ngOnInit(): void {
-    const id = this._route.parent?.snapshot.paramMap.get('id');
+    public ngOnInit(): void {
+        const id = this._route.parent?.snapshot.paramMap.get('id');
 
-    if (!id) {
-      throw new Error('Missing "id" parameter in parent path');
+        if (!id) {
+            throw new Error('Missing "id" parameter in parent path');
+        }
+
+        this._packetId = parseInt(id);
+
+        this._commonLogicService
+            .getPacketFiles$(this._packetId)
+            .pipe(take(1))
+            .subscribe();
     }
 
-    this._packetId = parseInt(id);
+    protected showSignInfo(fileId: number): void {
+        this._nopaperService
+            .getFileSignature$({ id: fileId })
+            .pipe(take(1))
+            .subscribe(() => {
+                this._signInfo.open();
+            });
+    }
 
-    this._commonLogicService
-      .getPacketFiles$(this._packetId)
-      .pipe(take(1))
-      .subscribe();
-  }
+    protected backButtonHandler(): void {
+        this._routingService.goPacketsListPage();
+    }
 
-  protected showSignInfo(fileId: number): void {
-    this._nopaperService
-      .getFileSignature$({ id: fileId })
-      .pipe(take(1))
-      .subscribe(() => {
-        this._signInfo.open();
-      });
-  }
-
-  protected backButtonHandler(): void {
-    this._routingService.goPacketsListPage();
-  }
-
-  protected revokeButtonHandler(): void {
-    this._commonLogicService
-      .revokePacket$(this._packetId)
-      .pipe(take(1))
-      .subscribe(() => this._routingService.goPacketsListPage());
-  }
+    protected revokeButtonHandler(): void {
+        this._commonLogicService
+            .revokePacket$(this._packetId)
+            .pipe(take(1))
+            .subscribe(() => this._routingService.goPacketsListPage());
+    }
 }

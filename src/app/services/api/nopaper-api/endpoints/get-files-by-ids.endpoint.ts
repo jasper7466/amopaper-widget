@@ -6,13 +6,13 @@ import { IPacketFile } from 'src/app/interfaces/packet-file.interface';
 // Употребляется во множественном числе
 // eslint-disable-next-line prefer-singular-interfaces
 interface IGetFilesByIdsRequest {
-  documentFileIdList: number[];
+    documentFileIdList: number[];
 }
 
 type TFilesResponseRecord = {
-  documentFileId: number;
-  base64Content: string;
-  fileName: string;
+    documentFileId: number;
+    base64Content: string;
+    fileName: string;
 };
 
 // Употребляется во множественном числе
@@ -20,34 +20,34 @@ type TFilesResponseRecord = {
 interface IGetFilesByIdsResponse extends Array<TFilesResponseRecord> {}
 
 const requestAdapter = (filesIds: number[]): IGetFilesByIdsRequest => ({
-  documentFileIdList: filesIds,
+    documentFileIdList: filesIds,
 });
 
 const responseAdapter = (
-  response: IGetFilesByIdsResponse
+    response: IGetFilesByIdsResponse
 ): Observable<IPacketFile[]> => {
-  const tasks$: Observable<File>[] = [];
+    const tasks$: Observable<File>[] = [];
 
-  for (const file of response) {
-    tasks$.push(base64ToFile(file.base64Content, file.fileName));
-  }
+    for (const file of response) {
+        tasks$.push(base64ToFile(file.base64Content, file.fileName));
+    }
 
-  return forkJoin(tasks$).pipe(
-    map((files) =>
-      files.map((file, index) => ({
-        id: response[index].documentFileId,
-        file: file,
-      }))
-    )
-  );
+    return forkJoin(tasks$).pipe(
+        map((files) =>
+            files.map((file, index) => ({
+                id: response[index].documentFileId,
+                file: file,
+            }))
+        )
+    );
 };
 
 export function getFilesByIdsEndpoint$(
-  this: ApiService,
-  filesIds: number[]
+    this: ApiService,
+    filesIds: number[]
 ): Observable<IPacketFile[]> {
-  return this.post$<IGetFilesByIdsRequest, IGetFilesByIdsResponse>(
-    '/document/file-list',
-    requestAdapter(filesIds)
-  ).pipe(take(1), switchMap(responseAdapter));
+    return this.post$<IGetFilesByIdsRequest, IGetFilesByIdsResponse>(
+        '/document/file-list',
+        requestAdapter(filesIds)
+    ).pipe(take(1), switchMap(responseAdapter));
 }

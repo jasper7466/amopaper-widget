@@ -7,33 +7,33 @@ import { Component, OnInit } from '@angular/core';
 import { IPacketDetails } from 'src/app/interfaces/packet-details.interface';
 
 @Component({
-  selector: 'app-packet-page-sender-sign',
-  templateUrl: './packet-page-sender-sign.component.html',
-  styleUrls: ['./packet-page-sender-sign.component.css'],
+    selector: 'app-packet-page-sender-sign',
+    templateUrl: './packet-page-sender-sign.component.html',
+    styleUrls: ['./packet-page-sender-sign.component.css'],
 })
 export class PacketPageSenderSignComponent implements OnInit {
-  protected packetId: number;
-  protected packet$: Observable<IPacketDetails>;
+    protected packetId: number;
+    protected packet$: Observable<IPacketDetails>;
 
-  constructor(
-    private _store$: Store,
-    private _routingService: RoutingService,
-    private _route: ActivatedRoute
-  ) {}
+    constructor(
+        private _store$: Store,
+        private _routingService: RoutingService,
+        private _route: ActivatedRoute
+    ) {}
 
-  public ngOnInit(): void {
-    const id = this._route.parent?.snapshot.paramMap.get('id');
+    public ngOnInit(): void {
+        const id = this._route.parent?.snapshot.paramMap.get('id');
 
-    if (!id) {
-      throw new Error('Missing "id" parameter in parent path');
+        if (!id) {
+            throw new Error('Missing "id" parameter in parent path');
+        }
+
+        this.packetId = parseInt(id);
+
+        this.packet$ = this._store$.select(packetSelector(this.packetId));
     }
 
-    this.packetId = parseInt(id);
-
-    this.packet$ = this._store$.select(packetSelector(this.packetId));
-  }
-
-  protected backButtonHandler(): void {
-    this._routingService.goPacketsListPage();
-  }
+    protected backButtonHandler(): void {
+        this._routingService.goPacketsListPage();
+    }
 }

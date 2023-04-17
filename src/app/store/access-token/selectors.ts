@@ -4,6 +4,6 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 export const featureSelector = createFeatureSelector<ITokenState>(tokenKey);
 
 export const accessTokenSelector = createSelector(
-  featureSelector,
-  (state) => state.token
+    featureSelector,
+    (state) => state.token
 );

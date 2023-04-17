@@ -14,36 +14,36 @@ import { CrmJsonStorageService } from './crm-json-storage.service';
 import { CrmTokenService } from './crm-token.service';
 
 const windowServiceFactory = (): WindowService | WindowMockService => {
-  if (environment.isStandaloneFrame) {
-    return new WindowMockService();
-  }
+    if (environment.isStandaloneFrame) {
+        return new WindowMockService();
+    }
 
-  return new WindowService();
+    return new WindowService();
 };
 @NgModule({
-  declarations: [],
-  imports: [CommonModule, ApiCoreModule],
-  providers: [
-    CrmService,
-    FilesService,
-    NopaperService,
-    NotificationService,
-    RoutingService,
-    TitleResolverService,
-    {
-      provide: WindowService,
-      useFactory: windowServiceFactory,
-    },
-    CrmJsonStorageService,
-    CrmTokenService,
-  ],
+    declarations: [],
+    imports: [CommonModule, ApiCoreModule],
+    providers: [
+        CrmService,
+        FilesService,
+        NopaperService,
+        NotificationService,
+        RoutingService,
+        TitleResolverService,
+        {
+            provide: WindowService,
+            useFactory: windowServiceFactory,
+        },
+        CrmJsonStorageService,
+        CrmTokenService,
+    ],
 })
 export class SubServicesCoreModule {
-  constructor(@Optional() @SkipSelf() parentModule: SubServicesCoreModule) {
-    if (parentModule) {
-      throw new Error(
-        'ServicesCoreModule is already loaded. Import it in the AppModule only'
-      );
+    constructor(@Optional() @SkipSelf() parentModule: SubServicesCoreModule) {
+        if (parentModule) {
+            throw new Error(
+                'ServicesCoreModule is already loaded. Import it in the AppModule only'
+            );
+        }
     }
-  }
 }

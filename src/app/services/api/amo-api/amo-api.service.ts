@@ -17,73 +17,73 @@ import { IPatchLeadResponse } from './amo-api-custom-fields.types';
 const baseUrlCompiler: (domain: string) => string = environment.getAmoBaseUrl;
 
 @Injectable({
-  providedIn: AmoApiModule,
+    providedIn: AmoApiModule,
 })
 export class AmoApiService extends ApiService {
-  constructor(
+    constructor(
     @Inject(postMessageHttpClientToken) http: HttpClient,
-    private _store$: Store
-  ) {
-    super(http);
+        private _store$: Store
+    ) {
+        super(http);
 
-    this.setHeaders({ 'Content-Type': 'application/json' });
+        this.setHeaders({ 'Content-Type': 'application/json' });
 
-    this._store$.select(accessTokenSelector).subscribe((token) => {
-      this.setHeaders({ Authorization: `Bearer ${token}` });
-    });
+        this._store$.select(accessTokenSelector).subscribe((token) => {
+            this.setHeaders({ Authorization: `Bearer ${token}` });
+        });
 
-    this._store$.select(domainSelector).subscribe((domain) => {
-      if (domain) {
-        this.baseUrl = baseUrlCompiler(domain);
-      }
-    });
-  }
+        this._store$.select(domainSelector).subscribe((domain) => {
+            if (domain) {
+                this.baseUrl = baseUrlCompiler(domain);
+            }
+        });
+    }
 
-  public getLeadsCustomFieldsInfoByName$(
-    fieldName: string
-  ): Observable<ICrmCustomFieldInfo[]> {
-    return getEntityCustomFieldsAllEndpoint$
-      .call(this, 'leads')
-      .pipe(
-        map((response) => response.filter((item) => item.name === fieldName))
-      );
-  }
+    public getLeadsCustomFieldsInfoByName$(
+        fieldName: string
+    ): Observable<ICrmCustomFieldInfo[]> {
+        return getEntityCustomFieldsAllEndpoint$
+            .call(this, 'leads')
+            .pipe(
+                map((response) => response.filter((item) => item.name === fieldName))
+            );
+    }
 
-  public getLeadCustomFieldValues$(
-    leadId: number,
-    fieldId: number
-  ): Observable<ICrmCustomFieldValues[]> {
-    return getLeadEndpoint$.call(this, leadId).pipe(
-      map((response) => {
-        if (response.custom_fields_values === null) {
-          return [];
-        }
+    public getLeadCustomFieldValues$(
+        leadId: number,
+        fieldId: number
+    ): Observable<ICrmCustomFieldValues[]> {
+        return getLeadEndpoint$.call(this, leadId).pipe(
+            map((response) => {
+                if (response.custom_fields_values === null) {
+                    return [];
+                }
 
-        return response.custom_fields_values
-          .map((item) => ({
-            id: item.field_id,
-            values: item.values.map((item) => item.value),
-          }))
-          .filter((item) => item.id === fieldId);
-      })
-    );
-  }
+                return response.custom_fields_values
+                    .map((item) => ({
+                        id: item.field_id,
+                        values: item.values.map((item) => item.value),
+                    }))
+                    .filter((item) => item.id === fieldId);
+            })
+        );
+    }
 
-  public setLeadCustomFieldValuesById$(
-    leadId: number,
-    values: ICrmCustomFieldValues[]
-  ): Observable<IPatchLeadResponse> {
-    return patchLeadEndpoint$.call(this, leadId, {
-      custom_fields_values: values.map((item) => ({
-        field_id: item.id,
-        values: item.values.map((item) => ({ value: item })),
-      })),
-    });
-  }
+    public setLeadCustomFieldValuesById$(
+        leadId: number,
+        values: ICrmCustomFieldValues[]
+    ): Observable<IPatchLeadResponse> {
+        return patchLeadEndpoint$.call(this, leadId, {
+            custom_fields_values: values.map((item) => ({
+                field_id: item.id,
+                values: item.values.map((item) => ({ value: item })),
+            })),
+        });
+    }
 
-  public getLeadName$(leadId: number): Observable<string> {
-    return getLeadEndpoint$
-      .call(this, leadId)
-      .pipe(map((response) => response.name));
-  }
+    public getLeadName$(leadId: number): Observable<string> {
+        return getLeadEndpoint$
+            .call(this, leadId)
+            .pipe(map((response) => response.name));
+    }
 }

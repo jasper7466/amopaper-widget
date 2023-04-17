@@ -7,16 +7,16 @@ import { WidgetPagePacketComponent } from './widget-page-packet/widget-page-pack
 import { AppRoutingModule } from 'src/app/app-routing.module';
 
 @NgModule({
-  declarations: [
-    WidgetPageListComponent,
-    WidgetPageNewComponent,
-    WidgetPagePacketComponent,
-  ],
-  imports: [CommonModule, ComponentsSharedModule, AppRoutingModule],
-  exports: [
-    WidgetPageListComponent,
-    WidgetPageNewComponent,
-    WidgetPagePacketComponent,
-  ],
+    declarations: [
+        WidgetPageListComponent,
+        WidgetPageNewComponent,
+        WidgetPagePacketComponent,
+    ],
+    imports: [CommonModule, ComponentsSharedModule, AppRoutingModule],
+    exports: [
+        WidgetPageListComponent,
+        WidgetPageNewComponent,
+        WidgetPagePacketComponent,
+    ],
 })
 export class WidgetPagesSharedModule {}

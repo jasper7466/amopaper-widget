@@ -14,51 +14,51 @@ import { AmoPostApiService } from './amo-post-api/amo-post-api.service';
 import { PostMessageTransportService } from '../transport/post-message-transport.service';
 
 const accessTokenApiFactory = (
-  http: HttpClient,
-  store$: Store
+    http: HttpClient,
+    store$: Store
 ): AccessTokenApiService | AccessTokenLocalApiService => {
-  if (environment.isLocalTokenServer) {
-    return new AccessTokenLocalApiService(http, store$);
-  }
+    if (environment.isLocalTokenServer) {
+        return new AccessTokenLocalApiService(http, store$);
+    }
 
-  return new AccessTokenApiService(http, store$);
+    return new AccessTokenApiService(http, store$);
 };
 
 const amoPostApiFactory = (
-  postMessageTransport: PostMessageTransportService
+    postMessageTransport: PostMessageTransportService
 ): AmoPostApiService | AmoPostApiMockService => {
-  if (environment.isStandaloneFrame) {
-    return new AmoPostApiMockService();
-  }
+    if (environment.isStandaloneFrame) {
+        return new AmoPostApiMockService();
+    }
 
-  return new AmoPostApiService(postMessageTransport);
+    return new AmoPostApiService(postMessageTransport);
 };
 
 @NgModule({
-  declarations: [],
-  imports: [CommonModule, HttpClientModule, AmoApiModule],
-  providers: [
-    NopaperApiService,
-    NopaperApiV2Service,
-    PostMessageTransportService,
-    {
-      provide: AccessTokenApiService,
-      useFactory: accessTokenApiFactory,
-      deps: [HttpClient, Store],
-    },
-    {
-      provide: AmoPostApiService,
-      useFactory: amoPostApiFactory,
-      deps: [PostMessageTransportService],
-    },
-  ],
+    declarations: [],
+    imports: [CommonModule, HttpClientModule, AmoApiModule],
+    providers: [
+        NopaperApiService,
+        NopaperApiV2Service,
+        PostMessageTransportService,
+        {
+            provide: AccessTokenApiService,
+            useFactory: accessTokenApiFactory,
+            deps: [HttpClient, Store],
+        },
+        {
+            provide: AmoPostApiService,
+            useFactory: amoPostApiFactory,
+            deps: [PostMessageTransportService],
+        },
+    ],
 })
 export class ApiCoreModule {
-  constructor(@Optional() @SkipSelf() parentModule: ServicesCoreModule) {
-    if (parentModule) {
-      throw new Error(
-        'ServicesCoreModule is already loaded. Import it in the AppModule only'
-      );
+    constructor(@Optional() @SkipSelf() parentModule: ServicesCoreModule) {
+        if (parentModule) {
+            throw new Error(
+                'ServicesCoreModule is already loaded. Import it in the AppModule only'
+            );
+        }
     }
-  }
 }

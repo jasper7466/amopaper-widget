@@ -1,3 +1,3 @@
 export interface IShareLink {
-  link: string;
+    link: string;
 }

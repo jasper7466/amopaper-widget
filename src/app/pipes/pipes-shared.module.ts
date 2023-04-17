@@ -5,8 +5,8 @@ import { StepToLabelStatusPipe } from './step-label-status.pipe';
 import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
-  declarations: [DeclensionPipe, StepToLabelStatusPipe],
-  imports: [CommonModule, NgxMaskModule.forRoot()],
-  exports: [DeclensionPipe, StepToLabelStatusPipe, NgxMaskModule],
+    declarations: [DeclensionPipe, StepToLabelStatusPipe],
+    imports: [CommonModule, NgxMaskModule.forRoot()],
+    exports: [DeclensionPipe, StepToLabelStatusPipe, NgxMaskModule],
 })
 export class PipesSharedModule {}

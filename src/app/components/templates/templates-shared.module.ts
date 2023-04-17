@@ -6,18 +6,18 @@ import { MainContentWrapperComponent } from './main-content-wrapper/main-content
 import { ModalComponent } from './modal/modal.component';
 
 @NgModule({
-  declarations: [
-    DocumentsListComponent,
-    FooterComponent,
-    MainContentWrapperComponent,
-    ModalComponent,
-  ],
-  imports: [CommonModule],
-  exports: [
-    DocumentsListComponent,
-    FooterComponent,
-    MainContentWrapperComponent,
-    ModalComponent,
-  ],
+    declarations: [
+        DocumentsListComponent,
+        FooterComponent,
+        MainContentWrapperComponent,
+        ModalComponent,
+    ],
+    imports: [CommonModule],
+    exports: [
+        DocumentsListComponent,
+        FooterComponent,
+        MainContentWrapperComponent,
+        ModalComponent,
+    ],
 })
 export class TemplatesSharedModule {}

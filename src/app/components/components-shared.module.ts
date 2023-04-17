@@ -6,19 +6,19 @@ import { OrganismsSharedModule } from './organisms/organisms-shared.module';
 import { TemplatesSharedModule } from './templates/templates-shared.module';
 
 @NgModule({
-  declarations: [],
-  imports: [
-    CommonModule,
-    AtomsSharedModule,
-    MoleculesSharedModule,
-    OrganismsSharedModule,
-    TemplatesSharedModule,
-  ],
-  exports: [
-    AtomsSharedModule,
-    MoleculesSharedModule,
-    OrganismsSharedModule,
-    TemplatesSharedModule,
-  ],
+    declarations: [],
+    imports: [
+        CommonModule,
+        AtomsSharedModule,
+        MoleculesSharedModule,
+        OrganismsSharedModule,
+        TemplatesSharedModule,
+    ],
+    exports: [
+        AtomsSharedModule,
+        MoleculesSharedModule,
+        OrganismsSharedModule,
+        TemplatesSharedModule,
+    ],
 })
 export class ComponentsSharedModule {}

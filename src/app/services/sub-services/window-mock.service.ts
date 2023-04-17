@@ -3,7 +3,7 @@ import { IWindowService } from './window.service';
 
 @Injectable()
 export class WindowMockService implements IWindowService {
-  public isFramed(): boolean {
-    return true;
-  }
+    public isFramed(): boolean {
+        return true;
+    }
 }

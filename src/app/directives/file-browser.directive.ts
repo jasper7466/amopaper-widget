@@ -1,31 +1,31 @@
 import {
-  Directive,
-  ElementRef,
-  EventEmitter,
-  HostListener,
-  Output,
+    Directive,
+    ElementRef,
+    EventEmitter,
+    HostListener,
+    Output,
 } from '@angular/core';
 
 @Directive({
-  selector: '[appFileBrowser]',
+    selector: '[appFileBrowser]',
 })
 export class FileBrowserDirective {
-  @Output() protected changedEmitter = new EventEmitter<FileList>();
+    @Output() protected changedEmitter = new EventEmitter<FileList>();
 
-  constructor(private _hostReference: ElementRef) {}
+    constructor(private _hostReference: ElementRef) {}
 
-  @HostListener('change', ['$event']) private onChange(
-    event: InputEvent
-  ): void {
-    event.preventDefault();
-    event.stopPropagation();
+    @HostListener('change', ['$event']) private onChange(
+        event: InputEvent
+    ): void {
+        event.preventDefault();
+        event.stopPropagation();
 
-    const files = (<HTMLInputElement>event.target).files;
+        const files = (<HTMLInputElement>event.target).files;
 
-    if (files?.length) {
-      this.changedEmitter.emit(files);
+        if (files?.length) {
+            this.changedEmitter.emit(files);
+        }
+
+        this._hostReference.nativeElement.value = '';
     }
-
-    this._hostReference.nativeElement.value = '';
-  }
 }

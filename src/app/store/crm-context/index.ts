@@ -14,11 +14,11 @@ export const crmContextKey = 'crm-context';
 // };
 
 export interface ICrmContextState {
-  context: ICrmContext | null;
-  // attachments: LeadAttachment[];
+    context: ICrmContext | null;
+    // attachments: LeadAttachment[];
 }
 
 export const initialState: ICrmContextState = {
-  context: null,
-  // attachments: [],
+    context: null,
+    // attachments: [],
 };

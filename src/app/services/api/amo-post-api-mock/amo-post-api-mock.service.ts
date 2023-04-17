@@ -6,17 +6,17 @@ import secrets from '../../../../../auth-dev-server/secrets.json';
 
 @Injectable()
 export class AmoPostApiMockService implements IAmoPostApiService {
-  public getCrmContext$(): Observable<ICrmContext> {
-    return of<ICrmContext>({
-      isCard: true,
-      cardId: 1,
-      domain: secrets.accountDomain,
-      subdomain: secrets.subdomain,
-      oAuthUuid: secrets.integration.client_id,
-      xApiKey: secrets.x_api_key,
-      isAdminUser: true,
-      isWidgetActive: true,
-      isWidgetConfigured: true,
-    }).pipe(delay(2000));
-  }
+    public getCrmContext$(): Observable<ICrmContext> {
+        return of<ICrmContext>({
+            isCard: true,
+            cardId: 1,
+            domain: secrets.accountDomain,
+            subdomain: secrets.subdomain,
+            oAuthUuid: secrets.integration.client_id,
+            xApiKey: secrets.x_api_key,
+            isAdminUser: true,
+            isWidgetActive: true,
+            isWidgetConfigured: true,
+        }).pipe(delay(2000));
+    }
 }

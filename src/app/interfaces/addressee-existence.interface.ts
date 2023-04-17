@@ -1,3 +1,3 @@
 export interface IAddresseeExistence {
-  isExists: boolean;
+    isExists: boolean;
 }

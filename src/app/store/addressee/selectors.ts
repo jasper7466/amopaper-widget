@@ -5,10 +5,10 @@ export const featureSelector =
   createFeatureSelector<IAddresseeState>(addresseeKey);
 
 export const addresseeSelector = createSelector(featureSelector, (state) => ({
-  ...state,
+    ...state,
 }));
 
 export const isAddresseeSubmittedSelector = createSelector(
-  featureSelector,
-  (state) => state.isSubmitted
+    featureSelector,
+    (state) => state.isSubmitted
 );

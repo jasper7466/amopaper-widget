@@ -8,43 +8,43 @@ type TDocumentDataNames =
   | 'NOP_TAB_NOPAPER_SEND_SIGN_DOCUMENTS';
 
 interface IGetPacketDetailsRequest {
-  documentId: number;
-  documentDataNames?: TDocumentDataNames[];
+    documentId: number;
+    documentDataNames?: TDocumentDataNames[];
 }
 
 type TDocumentData = {
-  name: string;
-  data: { [key: string]: unknown };
+    name: string;
+    data: { [key: string]: unknown };
 };
 
 interface IGetPacketDetailsResponse {
-  documentData: TDocumentData[];
-  isOwner: boolean;
-  title: string;
-  stepId: number;
-  workflowId: number;
-  dateCreate: string;
-  availableStatuses: unknown[];
+    documentData: TDocumentData[];
+    isOwner: boolean;
+    title: string;
+    stepId: number;
+    workflowId: number;
+    dateCreate: string;
+    availableStatuses: unknown[];
 }
 
 const responseAdapter = (
-  packetId: number,
-  response: IGetPacketDetailsResponse
+    packetId: number,
+    response: IGetPacketDetailsResponse
 ): Omit<IPacketDetails, 'status'> => ({
-  id: packetId,
-  title: response.title,
-  createTimeUtc: response.dateCreate,
+    id: packetId,
+    title: response.title,
+    createTimeUtc: response.dateCreate,
 });
 
 /** @deprecated */
 export function getPacketDetailsEndpoint$(
-  this: ApiService,
-  packetId: number
+    this: ApiService,
+    packetId: number
 ): Observable<Omit<IPacketDetails, 'status'>> {
-  throw new Error('getPacketDetailsEndpoint v1 is deprecated.');
+    throw new Error('getPacketDetailsEndpoint v1 is deprecated.');
 
-  return this.post$<IGetPacketDetailsRequest, IGetPacketDetailsResponse>(
-    `/document/details`,
-    { documentId: packetId }
-  ).pipe(map((response) => responseAdapter(packetId, response)));
+    return this.post$<IGetPacketDetailsRequest, IGetPacketDetailsResponse>(
+        `/document/details`,
+        { documentId: packetId }
+    ).pipe(map((response) => responseAdapter(packetId, response)));
 }
