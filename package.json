@@ -12,7 +12,8 @@
     "publish-gh": "angular-cli-ghpages --dir=dist/amopaper-widget",
     "deploy-gh": "npm run build-gh && npm run publish-gh",
     "auth-dev-server": "node ./auth-dev-server/index.js",
-    "lint": "ng lint --rulesdir ./eslint-custom-rules"
+    "es-lint": "ng lint --rulesdir ./eslint-custom-rules",
+    "es-lint-fix": "ng lint --rulesdir ./eslint-custom-rules --fix"
   },
   "private": true,
   "dependencies": {
