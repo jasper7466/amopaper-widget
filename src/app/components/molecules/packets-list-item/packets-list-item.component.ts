@@ -9,7 +9,8 @@ import { RoutingService } from 'src/app/services/sub-services/routing.service';
     styleUrls: ['./packets-list-item.component.css'],
 })
 export class PacketsListItemComponent implements OnDestroy, OnChanges {
-    @Input() public packet: IPacketDetails;
+    @Input()
+    public packet: IPacketDetails;
 
     constructor(
         private _routingService: RoutingService,

@@ -8,5 +8,6 @@ export type TStatusBannerStatus = 'pending' | 'signed' | '';
     styleUrls: ['./status-banner.component.css'],
 })
 export class StatusBannerComponent {
-    @Input() public status: TStatusBannerStatus | null = null;
+    @Input()
+    public status: TStatusBannerStatus | null = null;
 }

@@ -6,6 +6,7 @@ import { Component, Input } from '@angular/core';
     styleUrls: ['./document-count-label.component.css'],
 })
 export class DocumentCountLabelComponent {
-    @Input() public count: number;
+    @Input()
+    public count: number;
     protected caption = 'untitled';
 }

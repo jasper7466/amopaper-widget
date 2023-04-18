@@ -17,7 +17,8 @@ const captions = {
     styleUrls: ['./share-link-button.component.css'],
 })
 export class ShareLinkButtonComponent {
-    @Input() public packetId: number;
+    @Input()
+    public packetId: number;
 
     protected caption: string = captions.initial;
     protected style: ButtonStyleOption = 'solid';

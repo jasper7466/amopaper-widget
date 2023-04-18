@@ -17,7 +17,8 @@ import { take } from 'rxjs';
     styleUrls: ['./packet-page-end.component.css'],
 })
 export class PacketPageEndComponent implements OnInit {
-    @ViewChild(ModalSignInfoComponent) private _signInfo: ModalSignInfoComponent;
+    @ViewChild(ModalSignInfoComponent)
+    private _signInfo: ModalSignInfoComponent;
 
     private _packetId: number;
 

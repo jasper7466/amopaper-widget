@@ -14,7 +14,8 @@ import { take } from 'rxjs';
     styleUrls: ['./packet-page-receiver-preview.component.css'],
 })
 export class PacketPageReceiverPreviewComponent implements OnInit {
-    @ViewChild(ModalSignInfoComponent) private _signInfo: ModalSignInfoComponent;
+    @ViewChild(ModalSignInfoComponent)
+    private _signInfo: ModalSignInfoComponent;
 
     private _packetId: number;
 

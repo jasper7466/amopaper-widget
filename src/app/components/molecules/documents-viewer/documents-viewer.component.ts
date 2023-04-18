@@ -6,5 +6,6 @@ import { Component, Input } from '@angular/core';
     styleUrls: ['./documents-viewer.component.css'],
 })
 export class DocumentsViewerComponent {
-    @Input() public caption: string;
+    @Input()
+    public caption: string;
 }

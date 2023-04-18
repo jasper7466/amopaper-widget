@@ -8,12 +8,18 @@ type TTooltip = 'tooltip' | null;
     styleUrls: ['./input.component.css'],
 })
 export class InputComponent {
-    @Input() public label = '';
-    @Input() public placeholder = '';
-    @Input() public tooltipOption: TTooltip = null;
-    @Input() public mask = '';
-    @Input() public type = 'text';
-    @Input() public maskPrefix = '';
+    @Input()
+    public label = '';
+    @Input()
+    public placeholder = '';
+    @Input()
+    public tooltipOption: TTooltip = null;
+    @Input()
+    public mask = '';
+    @Input()
+    public type = 'text';
+    @Input()
+    public maskPrefix = '';
 
     @Output()
     protected keyUp = new EventEmitter<string>();

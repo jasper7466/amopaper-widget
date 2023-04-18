@@ -10,11 +10,13 @@ import {
     selector: '[appFileBrowser]',
 })
 export class FileBrowserDirective {
-    @Output() protected changedEmitter = new EventEmitter<FileList>();
+    @Output()
+    protected changedEmitter = new EventEmitter<FileList>();
 
     constructor(private _hostReference: ElementRef) {}
 
-    @HostListener('change', ['$event']) private onChange(
+    @HostListener('change', ['$event'])
+    private onChange(
         event: InputEvent
     ): void {
         event.preventDefault();

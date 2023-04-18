@@ -12,7 +12,8 @@ import { ADDRESSEE_ID_TYPE } from 'src/app/interfaces/addressee.interface';
     styleUrls: ['./add-addressee-form.component.css'],
 })
 export class AddAddresseeFormComponent {
-    @Output() protected submitEmitter = new EventEmitter<void>();
+    @Output()
+    protected submitEmitter = new EventEmitter<void>();
 
     protected searchSelector: ADDRESSEE_ID_TYPE = ADDRESSEE_ID_TYPE.VatId;
     protected isSubmitEnabled = false;

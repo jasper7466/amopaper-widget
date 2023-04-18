@@ -14,10 +14,14 @@ import { takeUntil } from 'rxjs';
     styleUrls: ['./modal.component.css'],
 })
 export class ModalComponent implements OnInit, OnDestroy {
-    @HostBinding('class.opened') protected isOpened = false;
-    @Input() protected isClosable = true;
-    @Input() public openTrigger: EventEmitter<void>;
-    @Input() public closeTrigger: EventEmitter<void>;
+    @HostBinding('class.opened')
+    protected isOpened = false;
+    @Input()
+    protected isClosable = true;
+    @Input()
+    public openTrigger: EventEmitter<void>;
+    @Input()
+    public closeTrigger: EventEmitter<void>;
 
     private _onDestroyEmitter = new EventEmitter<void>();
 

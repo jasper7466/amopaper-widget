@@ -10,11 +10,16 @@ import { downloadFile } from 'src/app/utils/download-file.util';
     styleUrls: ['./documents-list-item.component.css'],
 })
 export class DocumentsListItemComponent {
-    @Input() public fileId?: number;
-    @Input() public file?: File;
-    @Input() public signStatus: TStatusLabelStatus | null = null;
-    @Input() public fileName?: string;
-    @Output() protected showSignInfoEmitter = new EventEmitter<number>();
+    @Input()
+    public fileId?: number;
+    @Input()
+    public file?: File;
+    @Input()
+    public signStatus: TStatusLabelStatus | null = null;
+    @Input()
+    public fileName?: string;
+    @Output()
+    protected showSignInfoEmitter = new EventEmitter<number>();
 
     private _file: File;
 

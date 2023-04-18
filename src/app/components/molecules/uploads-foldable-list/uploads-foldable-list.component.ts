@@ -6,9 +6,12 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
     styleUrls: ['./uploads-foldable-list.component.css'],
 })
 export class UploadsFoldableListComponent {
-    @Input() public loadedCount: number;
-    @Input() public totalCount: number;
-    @Output() protected clearEmitter = new EventEmitter<void>();
+    @Input()
+    public loadedCount: number;
+    @Input()
+    public totalCount: number;
+    @Output()
+    protected clearEmitter = new EventEmitter<void>();
 
     protected isFolded = false;
 

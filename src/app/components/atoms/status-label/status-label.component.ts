@@ -25,7 +25,8 @@ const statusCaptions: { [key in TStatusLabelStatus]: string } = {
     styleUrls: ['./status-label.component.css'],
 })
 export class StatusLabelComponent implements OnChanges {
-    @Input() public status: TStatusLabelStatus = 'unknown';
+    @Input()
+    public status: TStatusLabelStatus = 'unknown';
 
     public caption = 'Undefined';
 

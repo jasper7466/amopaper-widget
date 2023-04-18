@@ -13,7 +13,8 @@ import { ModalComponent } from '../../templates/modal/modal.component';
     styleUrls: ['./addressee-selector.component.css'],
 })
 export class AddresseeSelectorComponent {
-    @ViewChild(ModalComponent) protected modal: ModalComponent | undefined;
+    @ViewChild(ModalComponent)
+    protected modal: ModalComponent | undefined;
 
     protected openModalEmitter: EventEmitter<void> = new EventEmitter<void>();
     protected closeModalEmitter: EventEmitter<void> = new EventEmitter<void>();
