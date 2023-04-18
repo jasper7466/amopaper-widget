@@ -17,7 +17,12 @@
                 "plugin:@angular-eslint/recommended",
                 "plugin:@angular-eslint/template/process-inline-templates"
             ],
-            "plugins": ["unicorn", "@shopify", "rxjs", "decorator-position"],
+            "plugins": [
+                "unicorn",
+                "@shopify",
+                "rxjs",
+                "decorator-position"
+            ],
             "rules": {
                 "@typescript-eslint/no-empty-interface": "off",
                 "@typescript-eslint/no-inferrable-types": "off",
@@ -153,7 +158,10 @@
                 // CodeGuide 2.3: Именование перечислений в единственном числе
                 "@shopify/typescript/prefer-singular-enums": "error",
                 // CodeGuide 3.1: Каждый класс должен располагаться в отдельном файле
-                "max-classes-per-file": ["error", 1],
+                "max-classes-per-file": [
+                    "error",
+                    1
+                ],
                 // TODO: Включить позже ("error")
                 // CodeGuide 3.2: Каждый интерфейс должен быть определён в отдельном файле
                 "prefer-separated-interfaces": "off",
@@ -190,7 +198,33 @@
                         // Игнор из-за вероятной некорректной работы правила
                         "ignoredNodes": ["CallExpression"]
                     }
+                ],
+                /* CodeGuide 7.1 (1/2): Элементы массивов в декораторе модулей должны быть с новой строки (no-inline)
+                 * (дополнено: массивы с одним элементом - inline)
+                 * (расширено на все массивы в коде)
+                 */
+                "array-element-newline": [
+                    "error",
+                    {
+                        "ArrayExpression": { "minItems": 1 },
+                        "ArrayPattern": { "minItems": 3 }
+                    }
+                ],
+                "array-bracket-newline": [
+                    "error",
+                    {
+                        "multiline": true
+                    }
+                ],
+                /* CodeGuide 3.4 (2/2): Висящая запятая в списке аргументов методов/конструкторов
+                 * CodeGuide 7.1 (2/2): Висящая запятая в массивах декораторов модулей
+                 * (расширено на все многострочные конструкции в коде)
+                 */
+                "comma-dangle": [
+                    "error",
+                    "always-multiline"
                 ]
+                // ---
             }
         },
         {
