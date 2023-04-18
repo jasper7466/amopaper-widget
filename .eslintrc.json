@@ -17,7 +17,7 @@
                 "plugin:@angular-eslint/recommended",
                 "plugin:@angular-eslint/template/process-inline-templates"
             ],
-            "plugins": ["unicorn", "@shopify", "rxjs"],
+            "plugins": ["unicorn", "@shopify", "rxjs", "decorator-position"],
             "rules": {
                 "@typescript-eslint/no-empty-interface": "off",
                 "@typescript-eslint/no-inferrable-types": "off",
@@ -161,8 +161,36 @@
                 "@typescript-eslint/explicit-function-return-type": "error",
                 // CodeGuide 4.6: Не использовать упрощённые конструкции if/else/while
                 "curly": "error",
+                // CodeGuide 5.1: Декоратор поля класса на отдельной строке
+                "decorator-position/decorator-position": [
+                    "error",
+                    {
+                        "properties": "above",
+                        "methods": "above"
+                    }
+                ],
                 // CodeGuide 6.1: Отступ: 4 пробела
-                "indent": ["error", 4]
+                // Используются 2 правила, т.к. "@typescript-eslint/indent", вероятно, имеет проблемы
+                "indent": [
+                    "error",
+                    4,
+                    {
+                        "SwitchCase": 1,
+                        "MemberExpression": 1,
+                        "CallExpression": { "arguments": 1 }
+                    }
+                ],
+                "@typescript-eslint/indent": [
+                    "error",
+                    4,
+                    {
+                        "SwitchCase": 1,
+                        "MemberExpression": 1,
+                        "CallExpression": { "arguments": 1 },
+                        // Игнор из-за вероятной некорректной работы правила
+                        "ignoredNodes": ["CallExpression"]
+                    }
+                ]
             }
         },
         {
