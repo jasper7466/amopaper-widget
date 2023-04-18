@@ -6,20 +6,20 @@ export const featureSelector =
 
 export const sourceFilesSelector = createSelector(
     featureSelector,
-    (state) => state.files
+    (state) => state.files,
 );
 
 export const sourceFilesTotalCountSelector = createSelector(
     featureSelector,
-    (state) => state.totalCount
+    (state) => state.totalCount,
 );
 
 export const sourceFilesLoadedCountSelector = createSelector(
     featureSelector,
-    (state) => state.loadedCount
+    (state) => state.loadedCount,
 );
 
 export const isSourceFilesCompleteAllSelector = createSelector(
     featureSelector,
-    (state) => state.isComplete
+    (state) => state.isComplete,
 );

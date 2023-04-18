@@ -6,7 +6,7 @@ import { ICrmCustomFieldInfo } from 'src/app/interfaces/crm-custom-field.interfa
 type TEntity = 'leads' | 'companies';
 
 const responseAdapter = (
-    response: IGetCustomFieldsResponse
+    response: IGetCustomFieldsResponse,
 ): ICrmCustomFieldInfo[] => {
     return response._embedded.custom_fields.map((item) => ({
         id: item.id,
@@ -16,21 +16,21 @@ const responseAdapter = (
 
 export function getEntityCustomFieldsAllEndpoint$(
     this: ApiService,
-    entityType: TEntity
+    entityType: TEntity,
 ): Observable<ICrmCustomFieldInfo[]> {
     return this.get$<IGetCustomFieldsResponse>(
-        `/${entityType}/custom_fields`
+        `/${entityType}/custom_fields`,
     ).pipe(
         expand((response) =>
             response._links.next
                 ? // TODO: для работы через прокси в режиме разработки
             // ? this.get$<GetCustomFieldsResponse>(response._links.next.href)
                 this.get$<IGetCustomFieldsResponse>(
-                    `/${entityType}/custom_fields?page=${++response._page}`
+                    `/${entityType}/custom_fields?page=${++response._page}`,
                 )
-                : EMPTY
+                : EMPTY,
         ),
         map(responseAdapter),
-        reduce((accumulator, current) => accumulator.concat(current))
+        reduce((accumulator, current) => accumulator.concat(current)),
     );
 }

@@ -24,7 +24,7 @@ const requestAdapter = (filesIds: number[]): IGetFilesByIdsRequest => ({
 });
 
 const responseAdapter = (
-    response: IGetFilesByIdsResponse
+    response: IGetFilesByIdsResponse,
 ): Observable<IPacketFile[]> => {
     const tasks$: Observable<File>[] = [];
 
@@ -37,17 +37,17 @@ const responseAdapter = (
             files.map((file, index) => ({
                 id: response[index].documentFileId,
                 file: file,
-            }))
-        )
+            })),
+        ),
     );
 };
 
 export function getFilesByIdsEndpoint$(
     this: ApiService,
-    filesIds: number[]
+    filesIds: number[],
 ): Observable<IPacketFile[]> {
     return this.post$<IGetFilesByIdsRequest, IGetFilesByIdsResponse>(
         '/document/file-list',
-        requestAdapter(filesIds)
+        requestAdapter(filesIds),
     ).pipe(take(1), switchMap(responseAdapter));
 }

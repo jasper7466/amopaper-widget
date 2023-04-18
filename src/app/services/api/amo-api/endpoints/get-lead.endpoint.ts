@@ -4,7 +4,7 @@ import { ApiService } from '../../api.service';
 
 export function getLeadEndpoint$(
     this: ApiService,
-    id: number
+    id: number,
 ): Observable<IGetLeadByIdResponse> {
     return this.get$(`/leads/${id}`);
 }

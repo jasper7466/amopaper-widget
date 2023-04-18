@@ -25,7 +25,7 @@ export class RoutingService {
     public navParts$(): Observable<TNavigationPart[]> {
         return this._router.events.pipe(
             filter(
-                (event) => event instanceof NavigationEnd || event instanceof Scroll
+                (event) => event instanceof NavigationEnd || event instanceof Scroll,
             ),
             map(() => {
                 let route = this._route;
@@ -54,7 +54,7 @@ export class RoutingService {
                     navParts.push({ title, routerLink });
                 }
                 return navParts;
-            })
+            }),
         );
     }
 
@@ -75,7 +75,10 @@ export class RoutingService {
     }
 
     public goPacketPage(id: number): void {
-        this._router.navigate(['widget/packet', id]);
+        this._router.navigate([
+            'widget/packet',
+            id,
+        ]);
     }
 
     public goNotificationPage(): void {
@@ -88,7 +91,7 @@ export class RoutingService {
 
     public goMatchedStepPacketPage(
         packetStatus: TPacketStatus | undefined,
-        id: number
+        id: number,
     ): void {
         const basePath = `widget/packet/${id}/`;
         let destination = '';
@@ -128,7 +131,7 @@ export class RoutingService {
             case 'nopaperSignRefusedRead':
             default:
                 throw new Error(
-                    `${this.constructor.name}: Corresponding page for status "${packetStatus}" does not exist.`
+                    `${this.constructor.name}: Corresponding page for status "${packetStatus}" does not exist.`,
                 );
         }
 

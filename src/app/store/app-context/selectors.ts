@@ -6,5 +6,5 @@ export const featureSelector =
 
 export const activeLeadIdSelector = createSelector(
     featureSelector,
-    (state) => state.activeLeadId
+    (state) => state.activeLeadId,
 );

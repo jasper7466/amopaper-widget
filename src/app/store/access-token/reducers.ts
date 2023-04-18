@@ -4,5 +4,5 @@ import { updateAccessTokenAction } from './actions';
 
 export const accessTokenReducer = createReducer(
     initialState,
-    on(updateAccessTokenAction, (state, { token }) => ({ ...state, token }))
+    on(updateAccessTokenAction, (state, { token }) => ({ ...state, token })),
 );

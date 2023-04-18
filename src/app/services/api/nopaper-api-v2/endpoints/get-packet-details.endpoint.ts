@@ -18,7 +18,7 @@ interface IGetPacketDetailsResponse {
 }
 const responseAdapter = (
     packetId: number,
-    response: IGetPacketDetailsResponse
+    response: IGetPacketDetailsResponse,
 ): Omit<IPacketDetails, 'status'> => ({
     id: packetId,
     title: response.title,
@@ -27,9 +27,9 @@ const responseAdapter = (
 
 export function getPacketDetailsEndpoint$(
     this: ApiService,
-    packetId: number
+    packetId: number,
 ): Observable<Omit<IPacketDetails, 'status'>> {
     return this.get$<IGetPacketDetailsResponse>(`/document/${packetId}`).pipe(
-        map((response) => responseAdapter(packetId, response))
+        map((response) => responseAdapter(packetId, response)),
     );
 }

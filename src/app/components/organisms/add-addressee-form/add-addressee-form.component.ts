@@ -53,7 +53,7 @@ export class AddAddresseeFormComponent {
             addresseeUpdateAction({
                 idType: this.searchSelector,
                 idValue: this._value,
-            })
+            }),
         );
 
         this._store$.dispatch(addresseeSubmitAction());

@@ -20,7 +20,7 @@ export class PacketPageReceiverPreviewComponent implements OnInit {
     private _packetId: number;
 
     protected signedOriginalDocuments$ = this._store$.select(
-        filesIdsOriginalsSelector
+        filesIdsOriginalsSelector,
     );
 
     constructor(
@@ -28,7 +28,7 @@ export class PacketPageReceiverPreviewComponent implements OnInit {
         private _store$: Store,
         private _nopaperService: NopaperService,
         private _routingService: RoutingService,
-        private _commonLogicService: CommonLogicService
+        private _commonLogicService: CommonLogicService,
     ) {}
 
     public ngOnInit(): void {

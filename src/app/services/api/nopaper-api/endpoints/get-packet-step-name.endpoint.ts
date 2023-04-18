@@ -11,7 +11,7 @@ type TResponse = Pick<IPacketDetails, 'id' | 'status'>;
 
 const responseAdapter = (
     packetId: number,
-    response: IGetStepNameResponse
+    response: IGetStepNameResponse,
 ): Pick<IPacketDetails, 'id' | 'status'> => ({
     id: packetId,
     status: response.stepName,
@@ -19,9 +19,9 @@ const responseAdapter = (
 
 export function getPacketStepNameEndpoint$(
     this: ApiService,
-    packetId: number
+    packetId: number,
 ): Observable<TResponse> {
     return this.get$<IGetStepNameResponse>(`/document/status/${packetId}`).pipe(
-        map((response) => responseAdapter(packetId, response))
+        map((response) => responseAdapter(packetId, response)),
     );
 }

@@ -5,5 +5,5 @@ export const featureSelector = createFeatureSelector<ICrmLeadState>(crmLeadKey);
 
 export const leadNameSelector = createSelector(
     featureSelector,
-    (state) => state.name
+    (state) => state.name,
 );

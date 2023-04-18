@@ -9,7 +9,7 @@ export class TitleResolverService implements Resolve<string> {
     constructor(private _store$: Store) {}
 
     public resolve(
-        route: ActivatedRouteSnapshot
+        route: ActivatedRouteSnapshot,
     ): string | Observable<string> | Promise<string> {
         const id = route.paramMap.get('id');
         let title = '';

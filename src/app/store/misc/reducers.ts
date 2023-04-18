@@ -19,5 +19,5 @@ export const miscReducer = createReducer(
     on(setShareLinkAction, (state, { link }) => ({
         ...state,
         shareLink: link,
-    }))
+    })),
 );

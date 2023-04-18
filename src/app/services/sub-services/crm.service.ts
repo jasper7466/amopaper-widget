@@ -22,7 +22,7 @@ export class CrmService {
         private _store$: Store,
         private _crmJsonStorageService: CrmJsonStorageService,
         private _amoPostApiService: AmoPostApiService,
-        private _notificationService: NotificationService
+        private _notificationService: NotificationService,
     ) {
         this._context$.subscribe((context) => (this._context = context));
     }
@@ -37,11 +37,11 @@ export class CrmService {
         if (!isWidgetActive || !isWidgetConfigured) {
             if (isAdminUser) {
                 this._notificationService.notify(
-                    notifications.widgetNotConfiguredAdmin
+                    notifications.widgetNotConfiguredAdmin,
                 );
             } else {
                 this._notificationService.notify(
-                    notifications.widgetNotConfiguredAdmin
+                    notifications.widgetNotConfiguredAdmin,
                 );
             }
         }
@@ -50,9 +50,9 @@ export class CrmService {
     private getJsonStorage$(): Observable<void> {
         return this._crmJsonStorageService.getStorage$().pipe(
             tap((storageState) =>
-                this._store$.dispatch(updateLeadJsonStorageAction(storageState))
+                this._store$.dispatch(updateLeadJsonStorageAction(storageState)),
             ),
-            switchMap(() => of(void 0))
+            switchMap(() => of(void 0)),
         );
     }
 
@@ -61,7 +61,7 @@ export class CrmService {
             tap((context) => {
                 this._store$.dispatch(updateCrmContextAction(context));
             }),
-            switchMap(() => of(void 0))
+            switchMap(() => of(void 0)),
         );
     }
 
@@ -71,7 +71,7 @@ export class CrmService {
         timer(1, crmJsonStoragePollingInterval)
             .pipe(
                 switchMap(() => this.getJsonStorage$()),
-                takeUntil(this._storagePollingBreaker)
+                takeUntil(this._storagePollingBreaker),
             )
             .subscribe();
     }
@@ -88,9 +88,12 @@ export class CrmService {
                 }
 
                 return this._crmJsonStorageService.setStorage$({
-                    packetsIdsList: [...state.packetsIdsList, packetId],
+                    packetsIdsList: [
+                        ...state.packetsIdsList,
+                        packetId,
+                    ],
                 });
-            })
+            }),
         );
     }
 
@@ -98,7 +101,7 @@ export class CrmService {
         return this._crmJsonStorageService.getStorage$().pipe(
             switchMap((state) => {
                 const filteredIdList = state.packetsIdsList.filter(
-                    (id) => id !== packetId
+                    (id) => id !== packetId,
                 );
                 if (state.packetsIdsList.length === filteredIdList.length) {
                     return of(void 0);
@@ -106,7 +109,7 @@ export class CrmService {
                 return this._crmJsonStorageService.setStorage$({
                     packetsIdsList: filteredIdList,
                 });
-            })
+            }),
         );
     }
 }

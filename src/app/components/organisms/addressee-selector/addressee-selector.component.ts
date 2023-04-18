@@ -20,7 +20,7 @@ export class AddresseeSelectorComponent {
     protected closeModalEmitter: EventEmitter<void> = new EventEmitter<void>();
 
     protected isAddresseeAdded$ = this._store$.select(
-        isAddresseeSubmittedSelector
+        isAddresseeSubmittedSelector,
     );
     protected addressee$ = this._store$.select(addresseeSelector);
 

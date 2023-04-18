@@ -11,5 +11,5 @@ export const crmLeadReducer = createReducer(
     on(updateLeadJsonStorageAction, (state, payload) => ({
         ...state,
         jsonStorage: payload,
-    }))
+    })),
 );

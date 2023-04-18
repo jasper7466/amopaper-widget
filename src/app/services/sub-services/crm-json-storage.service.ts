@@ -42,7 +42,7 @@ export class CrmJsonStorageService {
                     return fields[0].id;
                 }),
                 tap((id) => (this._storageFieldId = id)),
-                switchMap(() => of(void 0))
+                switchMap(() => of(void 0)),
             );
     }
 
@@ -67,7 +67,7 @@ export class CrmJsonStorageService {
                         ...initialStorageState,
                         ...JSON.parse(response[0].values[0]),
                     };
-                })
+                }),
             );
     }
 
@@ -81,10 +81,10 @@ export class CrmJsonStorageService {
 
                 return this._amoApiService.setLeadCustomFieldValuesById$(
                     this._activeLeadId,
-                    [{ id: this._storageFieldId, values: [newStateStringified] }]
+                    [{ id: this._storageFieldId, values: [newStateStringified] }],
                 );
             }),
-            switchMap(() => of(void 0))
+            switchMap(() => of(void 0)),
         );
     }
 }

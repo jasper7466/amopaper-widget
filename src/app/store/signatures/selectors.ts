@@ -6,5 +6,5 @@ export const featureSelector =
 
 export const signatureSelector = createSelector(
     featureSelector,
-    (state) => state.signatures
+    (state) => state.signatures,
 );

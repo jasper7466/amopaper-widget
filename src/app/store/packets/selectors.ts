@@ -5,16 +5,16 @@ export const featureSelector = createFeatureSelector<IPacketsState>(packetsKey);
 
 export const packetsSelector = createSelector(
     featureSelector,
-    (state) => state.packets
+    (state) => state.packets,
 );
 
 export const packetsIdsSelector = createSelector(featureSelector, (state) =>
-    state.packets.map((item) => item.id)
+    state.packets.map((item) => item.id),
 );
 
 export const packetsIsTouchedSelector = createSelector(
     featureSelector,
-    (state) => state.isPacketsIdsTouched
+    (state) => state.isPacketsIdsTouched,
 );
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type

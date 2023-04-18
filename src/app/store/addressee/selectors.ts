@@ -10,5 +10,5 @@ export const addresseeSelector = createSelector(featureSelector, (state) => ({
 
 export const isAddresseeSubmittedSelector = createSelector(
     featureSelector,
-    (state) => state.isSubmitted
+    (state) => state.isSubmitted,
 );

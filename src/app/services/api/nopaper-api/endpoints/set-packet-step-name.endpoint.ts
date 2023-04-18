@@ -9,19 +9,19 @@ interface IPostStepNameRequest {
 
 const requestAdapter = (
     packetId: number,
-    status: TPacketStatus
+    status: TPacketStatus,
 ): IPostStepNameRequest => ({ documentId: packetId, stepSystemName: status });
 
 export function setPacketStepNameEndpoint$(
     this: ApiService,
     packetId: number,
-    status: 'nopaperPrepareFiles'
+    status: 'nopaperPrepareFiles',
 ): Observable<void> {
     return this.post$<IPostStepNameRequest, void>(
     /* eslint-disable @cspell/spellchecker */
     // Именование задано внешним контрактом (changestep -> change-step)
         '/document/changestep',
         /* eslint-enable @cspell/spellchecker */
-        requestAdapter(packetId, status)
+        requestAdapter(packetId, status),
     );
 }

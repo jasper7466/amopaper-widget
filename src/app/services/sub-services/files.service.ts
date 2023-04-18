@@ -35,7 +35,7 @@ export class FilesService {
         }
 
         this._store$.dispatch(
-            sourceFilesAddAction({ payload: [...filesMetadata] })
+            sourceFilesAddAction({ payload: [...filesMetadata] }),
         );
     }
 

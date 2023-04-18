@@ -6,20 +6,20 @@ export const featureSelector =
 
 export const originalFilesSelector = createSelector(
     featureSelector,
-    (state) => state.originalFiles
+    (state) => state.originalFiles,
 );
 
 const identifiersSelector = createSelector(
     featureSelector,
-    (state) => state.identifiers
+    (state) => state.identifiers,
 );
 
 export const filesIdsOriginalsSelector = createSelector(
     identifiersSelector,
-    (state) => state.originals
+    (state) => state.originals,
 );
 
 export const filesIdsStampedSelector = createSelector(
     identifiersSelector,
-    (state) => state.stamped
+    (state) => state.stamped,
 );

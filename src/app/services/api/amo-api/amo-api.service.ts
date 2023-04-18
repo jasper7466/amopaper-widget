@@ -22,7 +22,7 @@ const baseUrlCompiler: (domain: string) => string = environment.getAmoBaseUrl;
 export class AmoApiService extends ApiService {
     constructor(
     @Inject(postMessageHttpClientToken) http: HttpClient,
-        private _store$: Store
+        private _store$: Store,
     ) {
         super(http);
 
@@ -40,18 +40,18 @@ export class AmoApiService extends ApiService {
     }
 
     public getLeadsCustomFieldsInfoByName$(
-        fieldName: string
+        fieldName: string,
     ): Observable<ICrmCustomFieldInfo[]> {
         return getEntityCustomFieldsAllEndpoint$
             .call(this, 'leads')
             .pipe(
-                map((response) => response.filter((item) => item.name === fieldName))
+                map((response) => response.filter((item) => item.name === fieldName)),
             );
     }
 
     public getLeadCustomFieldValues$(
         leadId: number,
-        fieldId: number
+        fieldId: number,
     ): Observable<ICrmCustomFieldValues[]> {
         return getLeadEndpoint$.call(this, leadId).pipe(
             map((response) => {
@@ -65,13 +65,13 @@ export class AmoApiService extends ApiService {
                         values: item.values.map((item) => item.value),
                     }))
                     .filter((item) => item.id === fieldId);
-            })
+            }),
         );
     }
 
     public setLeadCustomFieldValuesById$(
         leadId: number,
-        values: ICrmCustomFieldValues[]
+        values: ICrmCustomFieldValues[],
     ): Observable<IPatchLeadResponse> {
         return patchLeadEndpoint$.call(this, leadId, {
             custom_fields_values: values.map((item) => ({

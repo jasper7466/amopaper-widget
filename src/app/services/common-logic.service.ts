@@ -18,7 +18,7 @@ export class CommonLogicService {
         private _crmJsonStorageService: CrmJsonStorageService,
         private _nopaperService: NopaperService,
         private _routingService: RoutingService,
-        private _windowService: WindowService
+        private _windowService: WindowService,
     ) {}
 
     /**
@@ -38,7 +38,7 @@ export class CommonLogicService {
             .pipe(
                 switchMap(() => this._crmTokenService.getAmoAccessToken$()),
                 switchMap(() => this._crmJsonStorageService.init$()),
-                take(1)
+                take(1),
             )
             .subscribe({
                 next: () => {
@@ -59,7 +59,7 @@ export class CommonLogicService {
         return this._nopaperService.postPacket$().pipe(
             tap((packet) => (justCreatedPacketId = packet.id)),
             switchMap((packet) => this._crmService.attachPacketToLead$(packet.id)),
-            map(() => justCreatedPacketId)
+            map(() => justCreatedPacketId),
         );
     }
 
@@ -80,7 +80,7 @@ export class CommonLogicService {
    */
     public createAndSubmitPacketDraft$(): Observable<number> {
         return this.createPacketDraft$().pipe(
-            switchMap((packetId) => this.submitPacketDraft$(packetId))
+            switchMap((packetId) => this.submitPacketDraft$(packetId)),
         );
     }
 
@@ -116,8 +116,8 @@ export class CommonLogicService {
             switchMap(() => this._store$.select(filesIdsOriginalsSelector)),
             take(1),
             switchMap((identifiers) =>
-                this._nopaperService.getFilesByIds$(identifiers.map((item) => item.id))
-            )
+                this._nopaperService.getFilesByIds$(identifiers.map((item) => item.id)),
+            ),
         );
     }
 }

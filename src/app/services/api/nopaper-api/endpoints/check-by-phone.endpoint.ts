@@ -29,7 +29,7 @@ const requestAdapter = (data: IAddressee): ICheckByPhoneRequest | never => {
 };
 
 const responseAdapter = (
-    response: ICheckByPhoneResponse | HttpErrorResponse
+    response: ICheckByPhoneResponse | HttpErrorResponse,
 ): IAddresseeExistence | never => {
     if (!(response instanceof HttpErrorResponse)) {
         return { isExists: true };
@@ -44,13 +44,13 @@ const responseAdapter = (
 
 export function checkByPhoneEndpoint$(
     this: ApiService,
-    data: IAddressee
+    data: IAddressee,
 ): Observable<IAddresseeExistence> {
     return this.post$<ICheckByPhoneRequest, ICheckByPhoneResponse>(
         `/profile/fl/check-by-phone-v2`,
-        requestAdapter(data)
+        requestAdapter(data),
     ).pipe(
         map(responseAdapter),
-        catchError((error) => of(responseAdapter(error)))
+        catchError((error) => of(responseAdapter(error))),
     );
 }

@@ -29,18 +29,18 @@ export class PostMessageTransportService {
     public subscribe$<T extends Indexed<any>>(action: string): Observable<T> {
         return (this._inbox$ as Observable<MessageEvent<IPostMessage<T>>>).pipe(
             filter((event) => event.data.action === action),
-            map((event) => event.data.payload)
+            map((event) => event.data.payload),
         );
     }
 
     /** Отправка запроса и подписка на ответ. */
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     public request$<Request extends Indexed<any>, Response extends Indexed<any>>(
-        request: Required<IPostMessage<Request>>
+        request: Required<IPostMessage<Request>>,
     ): Observable<Response> {
         return defer(() => {
             const observable$ = this.subscribe$<Response>(
-                request.backwardAction
+                request.backwardAction,
             ).pipe(take(1));
             this.post<Request>(request);
             return observable$;
@@ -54,7 +54,7 @@ export class PostMessageTransportService {
         Response extends Indexed<unknown>
     >(
         request: Required<IPostMessage<Request>>,
-        msTimeout: number
+        msTimeout: number,
     ): Observable<Response> {
         return this.request$<Request, Response>(request).pipe(timeout(msTimeout));
     }

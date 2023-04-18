@@ -12,13 +12,13 @@ import { HttpErrorHandlingInterceptor } from 'src/app/interceptors/http-error-ha
 import { environment } from 'src/environments/environment';
 
 export const postMessageHttpClientToken = new InjectionToken<HttpClient>(
-    'POST MESSAGE HTTP CLIENT TOKEN'
+    'POST MESSAGE HTTP CLIENT TOKEN',
 );
 
 const postMessageHttpClientFactory = (
     transport: PostMessageTransportService,
     injector: EnvironmentInjector,
-    regularHttpClient: HttpClient
+    regularHttpClient: HttpClient,
 ): HttpClient => {
     if (environment.isAmoDevProxy) {
         return regularHttpClient;
@@ -45,7 +45,11 @@ const postMessageHttpClientFactory = (
         {
             provide: postMessageHttpClientToken,
             useFactory: postMessageHttpClientFactory,
-            deps: [PostMessageTransportService, EnvironmentInjector, HttpClient],
+            deps: [
+                PostMessageTransportService,
+                EnvironmentInjector,
+                HttpClient,
+            ],
         },
     ],
 })

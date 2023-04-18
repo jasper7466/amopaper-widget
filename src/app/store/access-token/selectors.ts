@@ -5,5 +5,5 @@ export const featureSelector = createFeatureSelector<ITokenState>(tokenKey);
 
 export const accessTokenSelector = createSelector(
     featureSelector,
-    (state) => state.token
+    (state) => state.token,
 );

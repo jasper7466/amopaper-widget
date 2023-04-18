@@ -15,7 +15,7 @@ import { PostMessageTransportService } from '../transport/post-message-transport
 
 const accessTokenApiFactory = (
     http: HttpClient,
-    store$: Store
+    store$: Store,
 ): AccessTokenApiService | AccessTokenLocalApiService => {
     if (environment.isLocalTokenServer) {
         return new AccessTokenLocalApiService(http, store$);
@@ -25,7 +25,7 @@ const accessTokenApiFactory = (
 };
 
 const amoPostApiFactory = (
-    postMessageTransport: PostMessageTransportService
+    postMessageTransport: PostMessageTransportService,
 ): AmoPostApiService | AmoPostApiMockService => {
     if (environment.isStandaloneFrame) {
         return new AmoPostApiMockService();
@@ -36,7 +36,11 @@ const amoPostApiFactory = (
 
 @NgModule({
     declarations: [],
-    imports: [CommonModule, HttpClientModule, AmoApiModule],
+    imports: [
+        CommonModule,
+        HttpClientModule,
+        AmoApiModule,
+    ],
     providers: [
         NopaperApiService,
         NopaperApiV2Service,
@@ -44,7 +48,10 @@ const amoPostApiFactory = (
         {
             provide: AccessTokenApiService,
             useFactory: accessTokenApiFactory,
-            deps: [HttpClient, Store],
+            deps: [
+                HttpClient,
+                Store,
+            ],
         },
         {
             provide: AmoPostApiService,
@@ -57,7 +64,7 @@ export class ApiCoreModule {
     constructor(@Optional() @SkipSelf() parentModule: ServicesCoreModule) {
         if (parentModule) {
             throw new Error(
-                'ServicesCoreModule is already loaded. Import it in the AppModule only'
+                'ServicesCoreModule is already loaded. Import it in the AppModule only',
             );
         }
     }

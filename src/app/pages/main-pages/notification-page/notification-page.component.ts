@@ -12,7 +12,7 @@ export class NotificationPageComponent {
 
     constructor(
         private _notificationService: NotificationService,
-        private _routingService: RoutingService
+        private _routingService: RoutingService,
     ) {}
 
     protected reset(): void {

@@ -30,7 +30,7 @@ export class PacketPagePreviewComponent implements OnInit, OnDestroy {
         private _store$: Store,
         private _routingService: RoutingService,
         private _commonLogicService: CommonLogicService,
-        private _route: ActivatedRoute
+        private _route: ActivatedRoute,
     ) {}
 
     public ngOnInit(): void {
@@ -48,7 +48,7 @@ export class PacketPagePreviewComponent implements OnInit, OnDestroy {
         this.originalFiles$
             .pipe(
                 filter((files) => files.length > 0),
-                take(1)
+                take(1),
             )
             .subscribe(() => (this.isAwaiting = false));
     }

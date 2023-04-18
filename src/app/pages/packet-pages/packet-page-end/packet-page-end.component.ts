@@ -23,7 +23,7 @@ export class PacketPageEndComponent implements OnInit {
     private _packetId: number;
 
     protected signedOriginalDocuments$ = this._store$.select(
-        filesIdsOriginalsSelector
+        filesIdsOriginalsSelector,
     );
     protected signedStampDocuments$ = this._store$.select(filesIdsStampedSelector);
 
@@ -33,7 +33,7 @@ export class PacketPageEndComponent implements OnInit {
         private _router: Router,
         private _nopaperService: NopaperService,
         private _commonLogicService: CommonLogicService,
-        private _routingService: RoutingService
+        private _routingService: RoutingService,
     ) {}
 
     public ngOnInit(): void {

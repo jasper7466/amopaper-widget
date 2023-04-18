@@ -12,7 +12,11 @@ import { AppRoutingModule } from 'src/app/app-routing.module';
         WidgetPageNewComponent,
         WidgetPagePacketComponent,
     ],
-    imports: [CommonModule, ComponentsSharedModule, AppRoutingModule],
+    imports: [
+        CommonModule,
+        ComponentsSharedModule,
+        AppRoutingModule,
+    ],
     exports: [
         WidgetPageListComponent,
         WidgetPageNewComponent,

@@ -16,7 +16,7 @@ export class DeclensionPipe implements PipeTransform {
         value: number,
         onePiece: string,
         twoPieces: string,
-        fewPieces: string
+        fewPieces: string,
     ): string {
         value = Math.abs(value) % 100;
 

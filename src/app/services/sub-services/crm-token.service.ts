@@ -8,7 +8,7 @@ import { updateAccessTokenAction } from 'src/app/store/access-token/actions';
 export class CrmTokenService {
     constructor(
         private _store$: Store,
-        private _accessTokenApiService: AccessTokenApiService
+        private _accessTokenApiService: AccessTokenApiService,
     ) {}
 
     /**
@@ -20,9 +20,9 @@ export class CrmTokenService {
     public getAmoAccessToken$(): Observable<void> {
         return this._accessTokenApiService.getAmoAccessToken$().pipe(
             tap(({ accessToken }) =>
-                this._store$.dispatch(updateAccessTokenAction({ token: accessToken }))
+                this._store$.dispatch(updateAccessTokenAction({ token: accessToken })),
             ),
-            switchMap(() => of(void 0))
+            switchMap(() => of(void 0)),
         );
     }
 }

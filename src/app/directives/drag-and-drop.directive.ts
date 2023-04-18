@@ -24,7 +24,7 @@ export class DragAndDropDirective {
 
     @HostListener('dragover', ['$event'])
     protected onDragOver(
-        event: DragEvent
+        event: DragEvent,
     ): void {
         event.preventDefault();
         event.stopPropagation();
@@ -33,7 +33,7 @@ export class DragAndDropDirective {
 
     @HostListener('dragleave', ['$event'])
     protected onDragLeave(
-        event: DragEvent
+        event: DragEvent,
     ): void {
         event.preventDefault();
         event.stopPropagation();

@@ -67,17 +67,17 @@ const requestAdapter = (data: IPacketCreateData): IPostDraftRequest | never => {
 };
 
 const responseAdapter = (
-    response: IPostDraftResponse
+    response: IPostDraftResponse,
 ): Pick<IPacketDetails, 'id'> => ({
     id: response.documentId,
 });
 
 export function createPacketEndpoint$(
     this: ApiService,
-    data: IPacketCreateData
+    data: IPacketCreateData,
 ): Observable<Pick<IPacketDetails, 'id'>> {
     return this.post$<IPostDraftRequest, IPostDraftResponse>(
         '/document',
-        requestAdapter(data)
+        requestAdapter(data),
     ).pipe(map(responseAdapter));
 }

@@ -21,7 +21,7 @@ export class WidgetPageListComponent implements OnInit, OnDestroy {
     constructor(
         private _store$: Store,
         private _crmService: CrmService,
-        private _routingService: RoutingService
+        private _routingService: RoutingService,
     ) {}
 
     public ngOnInit(): void {

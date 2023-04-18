@@ -14,7 +14,11 @@ import { WidgetPageComponent } from './widget-page/widget-page.component';
         StartupPageComponent,
         WidgetPageComponent,
     ],
-    imports: [CommonModule, ComponentsSharedModule, RouterModule],
+    imports: [
+        CommonModule,
+        ComponentsSharedModule,
+        RouterModule,
+    ],
     exports: [
         LandingPageComponent,
         NotificationPageComponent,

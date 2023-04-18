@@ -7,7 +7,7 @@ export const crmContextReducer = createReducer(
     on(updateCrmContextAction, (state, payload) => ({
         ...state,
         context: payload,
-    }))
+    })),
     // on(setLeadAttachmentsAction, (state, { attachments }) => ({
     //   ...state,
     //   attachments,

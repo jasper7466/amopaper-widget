@@ -19,5 +19,5 @@ export const appContextReducer = createReducer(
     on(setAppActiveLeadIdAction, (state, { leadId }) => ({
         ...state,
         activeLeadId: leadId,
-    }))
+    })),
 );

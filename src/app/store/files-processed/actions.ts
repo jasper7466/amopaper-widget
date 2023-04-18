@@ -5,10 +5,10 @@ import { IPacketFile } from 'src/app/interfaces/packet-file.interface';
 
 export const setFilesIdentifiersAction = createAction(
     `[${filesProcessedKey}] set processed files identifiers action`,
-    props<IPacketFilesInfo>()
+    props<IPacketFilesInfo>(),
 );
 
 export const setOriginalsFilesAction = createAction(
     `[${filesProcessedKey}] set original processed files action`,
-    props<{ payload: IPacketFile[] }>()
+    props<{ payload: IPacketFile[] }>(),
 );

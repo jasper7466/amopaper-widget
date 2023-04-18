@@ -27,7 +27,7 @@ export class WidgetPagePacketComponent implements OnInit, OnDestroy {
         private _route: ActivatedRoute,
         private _router: Router,
         private _routingService: RoutingService,
-        private _nopaperService: NopaperService
+        private _nopaperService: NopaperService,
     ) {}
 
     public ngOnInit(): void {
@@ -53,9 +53,9 @@ export class WidgetPagePacketComponent implements OnInit, OnDestroy {
                 filter(
                     (event) =>
                         event instanceof NavigationStart &&
-            event.navigationTrigger === 'popstate'
+            event.navigationTrigger === 'popstate',
                 ),
-                tap(() => this._routingService.goPacketsListPage())
+                tap(() => this._routingService.goPacketsListPage()),
             )
             .subscribe();
     }
@@ -73,9 +73,9 @@ export class WidgetPagePacketComponent implements OnInit, OnDestroy {
                 tap(() => {
                     this._routingService.goMatchedStepPacketPage(
                         this.stepName,
-                        this.packetId
+                        this.packetId,
                     );
-                })
+                }),
             )
             .subscribe();
     }
@@ -95,16 +95,16 @@ export class WidgetPagePacketComponent implements OnInit, OnDestroy {
                 }),
                 switchMap(() => this._nopaperService.getPacketStepName$(this.packetId)),
                 switchMap(() =>
-                    this._store$.select(packetStepNameSelector(this.packetId))
+                    this._store$.select(packetStepNameSelector(this.packetId)),
                 ),
                 takeUntil(this._onDestroyEmitter),
                 tap((stepName) => {
                     this.stepName = stepName;
                     this._routingService.goMatchedStepPacketPage(
                         this.stepName,
-                        this.packetId
+                        this.packetId,
                     );
-                })
+                }),
             )
             .subscribe();
     }

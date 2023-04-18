@@ -29,7 +29,7 @@ export class ShareLinkButtonComponent {
     constructor(
         private _store$: Store,
         private _nopaperService: NopaperService,
-        private _clipboard: Clipboard
+        private _clipboard: Clipboard,
     ) {}
 
     protected clickHandler(): void {
@@ -45,7 +45,7 @@ export class ShareLinkButtonComponent {
                     this.isEnabled = true;
                     this.caption = captions.copied;
                     this.style = 'blank';
-                })
+                }),
             )
             .subscribe();
     }

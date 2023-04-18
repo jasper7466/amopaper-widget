@@ -22,10 +22,10 @@ type TItem = {
 })
 export class DocumentsUploaderComponent {
     protected documentsTotalCount$ = this._store$.select(
-        sourceFilesTotalCountSelector
+        sourceFilesTotalCountSelector,
     );
     protected documentsLoadedCount$ = this._store$.select(
-        sourceFilesLoadedCountSelector
+        sourceFilesLoadedCountSelector,
     );
 
     protected uploadedDocuments$: Observable<TItem[]> = this._store$
@@ -34,8 +34,8 @@ export class DocumentsUploaderComponent {
             map((files) =>
                 files.map((item) => ({
                     fileName: item.name,
-                }))
-            )
+                })),
+            ),
         );
 
     constructor(private _store$: Store) {}

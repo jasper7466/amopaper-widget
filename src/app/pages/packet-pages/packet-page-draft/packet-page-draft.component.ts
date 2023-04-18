@@ -16,7 +16,7 @@ export class PacketPageDraftComponent implements OnInit {
     constructor(
         private _route: ActivatedRoute,
         private _commonLogicService: CommonLogicService,
-        private _routingService: RoutingService
+        private _routingService: RoutingService,
     ) {}
 
     public ngOnInit(): void {

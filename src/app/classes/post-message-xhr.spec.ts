@@ -171,7 +171,7 @@ describe('PostMessageXhr', () => {
                 instance.setRequestHeader('header-2', 'value-2');
                 instance.setRequestHeader('header-1', 'value-1-2');
                 expect(instance['_config']['headers']['header-1']).toBe(
-                    'value-1-1, value-1-2'
+                    'value-1-1, value-1-2',
                 );
                 expect(instance['_config']['headers']['header-2']).toBe('value-2');
                 expect(Object.keys(instance['_config']['headers']).length).toBe(2);

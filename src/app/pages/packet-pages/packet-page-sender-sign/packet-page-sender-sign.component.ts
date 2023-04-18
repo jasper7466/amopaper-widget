@@ -18,7 +18,7 @@ export class PacketPageSenderSignComponent implements OnInit {
     constructor(
         private _store$: Store,
         private _routingService: RoutingService,
-        private _route: ActivatedRoute
+        private _route: ActivatedRoute,
     ) {}
 
     public ngOnInit(): void {

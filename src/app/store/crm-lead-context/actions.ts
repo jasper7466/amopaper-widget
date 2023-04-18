@@ -4,10 +4,10 @@ import { ICrmLeadJsonStorage } from 'src/app/interfaces/crm-lead-json-storage.in
 
 export const updateLeadNameAction = createAction(
     `[${crmLeadKey}] update lead name`,
-    props<{ name: string }>()
+    props<{ name: string }>(),
 );
 
 export const updateLeadJsonStorageAction = createAction(
     `[${crmLeadKey}] update json storage state`,
-    props<ICrmLeadJsonStorage>()
+    props<ICrmLeadJsonStorage>(),
 );

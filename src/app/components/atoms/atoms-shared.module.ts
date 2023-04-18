@@ -32,7 +32,11 @@ import { IconDocumentComponent } from './icon-document/icon-document.component';
         IconDownloadComponent,
         IconDocumentComponent,
     ],
-    imports: [CommonModule, TemplatesSharedModule, PipesSharedModule],
+    imports: [
+        CommonModule,
+        TemplatesSharedModule,
+        PipesSharedModule,
+    ],
     exports: [
         ArrowComponent,
         ButtonComponent,

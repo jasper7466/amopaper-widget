@@ -35,7 +35,7 @@ export class AccessTokenApiService extends ApiService {
 
     public getAmoAccessToken$(): Observable<IGetAmoAccessTokenResponse> {
         return this.get$<IGetAmoAccessTokenResponse>(
-            `/amo-crm/authorization/${this._clientUuid}/access-token`
+            `/amo-crm/authorization/${this._clientUuid}/access-token`,
         );
     }
 }

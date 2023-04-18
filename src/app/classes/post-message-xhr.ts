@@ -91,7 +91,7 @@ export class PostMessageXhr implements XMLHttpRequest {
         }
 
         this.raiseError(
-            "The value may only be set if the object's state is UNSENT or OPENED."
+            "The value may only be set if the object's state is UNSENT or OPENED.",
         );
     }
     public get withCredentials(): boolean {
@@ -176,7 +176,7 @@ export class PostMessageXhr implements XMLHttpRequest {
         url: string | URL,
         async: boolean = true,
         username?: string | null,
-        password?: string | null
+        password?: string | null,
     ): void {
         this.abort();
 
@@ -215,11 +215,11 @@ export class PostMessageXhr implements XMLHttpRequest {
     }
 
     public send(
-        body?: Document | XMLHttpRequestBodyInit | null | undefined
+        body?: Document | XMLHttpRequestBodyInit | null | undefined,
     ): void {
         if (this._state.readyState !== this.OPENED || this._sendFlag) {
             this.raiseError(
-                "Failed to execute 'send'. The object's state must be OPENED."
+                "Failed to execute 'send'. The object's state must be OPENED.",
             );
         }
 
@@ -265,7 +265,7 @@ export class PostMessageXhr implements XMLHttpRequest {
     public setRequestHeader(name: string, value: string): void {
         if (this.readyState !== this.OPENED || this._sendFlag) {
             this.raiseError(
-                'Failed to execute "setRequestHeader". The object\'s state must be OPENED.'
+                'Failed to execute "setRequestHeader". The object\'s state must be OPENED.',
             );
         }
 
@@ -280,7 +280,7 @@ export class PostMessageXhr implements XMLHttpRequest {
         type: K,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         listener: (this: XMLHttpRequest, event: XMLHttpRequestEventMap[K]) => any,
-        options?: boolean | AddEventListenerOptions | undefined
+        options?: boolean | AddEventListenerOptions | undefined,
     ): void {
         if (options !== undefined) {
             this.raiseError('Adding event listener with options not implemented.');
@@ -290,7 +290,7 @@ export class PostMessageXhr implements XMLHttpRequest {
             (item) =>
                 item.type === type &&
         item.callback === listener &&
-        item.addedBy === LISTENER_ADDING_METHOD.method
+        item.addedBy === LISTENER_ADDING_METHOD.method,
         );
 
         if (existingListener) {
@@ -311,7 +311,7 @@ export class PostMessageXhr implements XMLHttpRequest {
         type: K,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         listener: (this: XMLHttpRequest, event: XMLHttpRequestEventMap[K]) => any,
-        options?: boolean | EventListenerOptions | undefined
+        options?: boolean | EventListenerOptions | undefined,
     ): void {
         if (options !== undefined) {
             this.raiseError('Removing event listener with options not implemented.');
@@ -322,7 +322,7 @@ export class PostMessageXhr implements XMLHttpRequest {
                     item.type === type &&
           item.callback === listener &&
           item.addedBy === LISTENER_ADDING_METHOD.method
-                )
+                ),
         );
 
         this.updateEventsToTrack();
@@ -334,7 +334,7 @@ export class PostMessageXhr implements XMLHttpRequest {
 
     public set onreadystatechange(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        value: ((this: XMLHttpRequest, event: Event) => any) | null
+        value: ((this: XMLHttpRequest, event: Event) => any) | null,
     ) {
         this.setListenerAsProperty('readystatechange', value);
     }
@@ -346,7 +346,7 @@ export class PostMessageXhr implements XMLHttpRequest {
 
     public set onabort(
         value: // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        ((this: XMLHttpRequest, event: ProgressEvent<EventTarget>) => any) | null
+        ((this: XMLHttpRequest, event: ProgressEvent<EventTarget>) => any) | null,
     ) {
         this.setListenerAsProperty('abort', value);
     }
@@ -357,7 +357,7 @@ export class PostMessageXhr implements XMLHttpRequest {
 
     public set onerror(
         value: // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        ((this: XMLHttpRequest, event: ProgressEvent<EventTarget>) => any) | null
+        ((this: XMLHttpRequest, event: ProgressEvent<EventTarget>) => any) | null,
     ) {
         this.setListenerAsProperty('error', value);
     }
@@ -368,7 +368,7 @@ export class PostMessageXhr implements XMLHttpRequest {
 
     public set onload(
         value: // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        ((this: XMLHttpRequest, event: ProgressEvent<EventTarget>) => any) | null
+        ((this: XMLHttpRequest, event: ProgressEvent<EventTarget>) => any) | null,
     ) {
         this.setListenerAsProperty('load', value);
     }
@@ -379,7 +379,7 @@ export class PostMessageXhr implements XMLHttpRequest {
 
     public set onloadend(
         value: // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        ((this: XMLHttpRequest, event: ProgressEvent<EventTarget>) => any) | null
+        ((this: XMLHttpRequest, event: ProgressEvent<EventTarget>) => any) | null,
     ) {
         this.setListenerAsProperty('loadend', value);
     }
@@ -390,7 +390,7 @@ export class PostMessageXhr implements XMLHttpRequest {
 
     public set onloadstart(
         value: // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        ((this: XMLHttpRequest, event: ProgressEvent<EventTarget>) => any) | null
+        ((this: XMLHttpRequest, event: ProgressEvent<EventTarget>) => any) | null,
     ) {
         this.setListenerAsProperty('loadstart', value);
     }
@@ -401,7 +401,7 @@ export class PostMessageXhr implements XMLHttpRequest {
 
     public set onprogress(
         value: // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        ((this: XMLHttpRequest, event: ProgressEvent<EventTarget>) => any) | null
+        ((this: XMLHttpRequest, event: ProgressEvent<EventTarget>) => any) | null,
     ) {
         this.setListenerAsProperty('progress', value);
     }
@@ -412,7 +412,7 @@ export class PostMessageXhr implements XMLHttpRequest {
 
     public set ontimeout(
         value: // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        ((this: XMLHttpRequest, event: ProgressEvent<EventTarget>) => any) | null
+        ((this: XMLHttpRequest, event: ProgressEvent<EventTarget>) => any) | null,
     ) {
         this.setListenerAsProperty('timeout', value);
     }
@@ -437,7 +437,7 @@ export class PostMessageXhr implements XMLHttpRequest {
 
     public eventListeners?(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        eventName?: string | undefined
+        eventName?: string | undefined,
     ): EventListenerOrEventListenerObject[] {
         this.raiseError('Method "eventListeners()" not implemented.');
     }
@@ -453,7 +453,7 @@ export class PostMessageXhr implements XMLHttpRequest {
     private setListenerAsProperty<K extends keyof XMLHttpRequestEventMap>(
         type: K,
         listener: // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        ((this: XMLHttpRequest, event: XMLHttpRequestEventMap[K]) => any) | null
+        ((this: XMLHttpRequest, event: XMLHttpRequestEventMap[K]) => any) | null,
     ): void {
         if (listener === null) {
             this._listenersList = this._listenersList.filter(
@@ -461,14 +461,14 @@ export class PostMessageXhr implements XMLHttpRequest {
                     !(
                         item.addedBy === LISTENER_ADDING_METHOD.property &&
             item.type === type
-                    )
+                    ),
             );
             return;
         }
 
         const existingListener = this._listenersList.find(
             (item) =>
-                item.addedBy === LISTENER_ADDING_METHOD.property && item.type === type
+                item.addedBy === LISTENER_ADDING_METHOD.property && item.type === type,
         );
 
         if (existingListener) {
@@ -487,13 +487,13 @@ export class PostMessageXhr implements XMLHttpRequest {
 
     /** Вспомогательный метод для геттеров обработчиков событий через свойства. */
     private getListenerAsProperty<K extends keyof XMLHttpRequestEventMap>(
-        type: K
+        type: K,
     ): // eslint-disable-next-line @typescript-eslint/no-explicit-any
         | ((this: XMLHttpRequest, event: Event | ProgressEvent<EventTarget>) => any)
         | null {
         const existingListener = this._listenersList.find(
             (item) =>
-                item.addedBy === LISTENER_ADDING_METHOD.property && item.type === type
+                item.addedBy === LISTENER_ADDING_METHOD.property && item.type === type,
         );
         return existingListener ? existingListener.callback : null;
     }
@@ -501,7 +501,7 @@ export class PostMessageXhr implements XMLHttpRequest {
     /** Вспомогательный метод обновления списка событий для отслеживания. */
     private updateEventsToTrack(): void {
         const eventsToTrack = new Set<keyof XMLHttpRequestEventMap>(
-            trackAlwaysEvents
+            trackAlwaysEvents,
         );
 
         for (const listener of this._listenersList) {

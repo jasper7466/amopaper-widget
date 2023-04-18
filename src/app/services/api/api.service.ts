@@ -40,7 +40,7 @@ export class ApiService {
 
     protected post$<Request, Response>(
         path: string,
-        body: Request
+        body: Request,
     ): Observable<Response> {
         return this._http
             .post<Response>(`${this._baseUrl}${path}`, body, {
@@ -51,7 +51,7 @@ export class ApiService {
 
     protected patch$<Request, Response>(
         path: string,
-        body: Request
+        body: Request,
     ): Observable<Response> {
         return this._http
             .patch<Response>(`${this._baseUrl}${path}`, body, {
@@ -62,7 +62,7 @@ export class ApiService {
 
     protected put$<Request, Response>(
         path: string,
-        body: Request
+        body: Request,
     ): Observable<Response> {
         return this._http
             .put<Response>(`${this._baseUrl}${path}`, body, {

@@ -24,5 +24,5 @@ export const widgetContextReducer = createReducer(
     })),
     on(resetAddresseeAction, () => ({
         ...initialState,
-    }))
+    })),
 );

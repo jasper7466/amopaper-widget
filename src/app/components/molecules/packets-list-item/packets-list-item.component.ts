@@ -14,7 +14,7 @@ export class PacketsListItemComponent implements OnDestroy, OnChanges {
 
     constructor(
         private _routingService: RoutingService,
-        private _nopaperService: NopaperService
+        private _nopaperService: NopaperService,
     ) {}
 
     public ngOnChanges(): void {

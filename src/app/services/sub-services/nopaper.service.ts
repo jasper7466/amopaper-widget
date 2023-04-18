@@ -51,7 +51,7 @@ export class NopaperService {
     constructor(
         private _store$: Store,
         private _nopaperApiService: NopaperApiService,
-        private _nopaperApiV2Service: NopaperApiV2Service
+        private _nopaperApiV2Service: NopaperApiV2Service,
     ) {}
 
     /**
@@ -62,7 +62,7 @@ export class NopaperService {
             take(1),
             switchMap((data) => this._nopaperApiService.postPacket(data)),
             take(1),
-            tap((response) => this._store$.dispatch(setNewPacketIdAction(response)))
+            tap((response) => this._store$.dispatch(setNewPacketIdAction(response))),
         );
     }
 
@@ -76,7 +76,7 @@ export class NopaperService {
     public submitDraft$(packetId: number): Observable<void> {
         return this._nopaperApiService.setPacketStepName(
             packetId,
-            'nopaperPrepareFiles'
+            'nopaperPrepareFiles',
         );
     }
 
@@ -133,14 +133,14 @@ export class NopaperService {
    * @param packetId Идентификатор пакета документов.
    */
     public getPacketStepName$(
-        packetId: number
+        packetId: number,
     ): Observable<Pick<IPacketDetails, 'id' | 'status'>> {
         return this._nopaperApiService
             .getPacketStepName(packetId)
             .pipe(
                 tap((response) =>
-                    this._store$.dispatch(setPacketStatusAction(response))
-                )
+                    this._store$.dispatch(setPacketStatusAction(response)),
+                ),
             );
     }
 
@@ -152,14 +152,14 @@ export class NopaperService {
    * @param packetId
    */
     public getPacketDetails$(
-        packetId: number
+        packetId: number,
     ): Observable<Omit<IPacketDetails, 'status'>> {
         return this._nopaperApiV2Service
             .getPacketDetails(packetId)
             .pipe(
                 tap((response) =>
-                    this._store$.dispatch(setPacketDetailsAction(response))
-                )
+                    this._store$.dispatch(setPacketDetailsAction(response)),
+                ),
             );
     }
 
@@ -175,8 +175,8 @@ export class NopaperService {
             .getPacketFilesIds(packetId)
             .pipe(
                 tap((response) =>
-                    this._store$.dispatch(setFilesIdentifiersAction(response))
-                )
+                    this._store$.dispatch(setFilesIdentifiersAction(response)),
+                ),
             );
     }
 
@@ -189,9 +189,9 @@ export class NopaperService {
     public getFilesByIds$(filesIds: number[]): Observable<void> {
         return this._nopaperApiService.getFilesByIds(filesIds).pipe(
             tap((response) =>
-                this._store$.dispatch(setOriginalsFilesAction({ payload: response }))
+                this._store$.dispatch(setOriginalsFilesAction({ payload: response })),
             ),
-            switchMap(() => of(void 0))
+            switchMap(() => of(void 0)),
         );
     }
 
@@ -202,12 +202,12 @@ export class NopaperService {
    * @param fileInfo Идентификатор файла.
    */
     public getFileSignature$(
-        fileInfo: Pick<IFileInfo, 'id'>
+        fileInfo: Pick<IFileInfo, 'id'>,
     ): Observable<IFileSignatures> {
         return this._nopaperApiService
             .getFileSignatures(fileInfo)
             .pipe(
-                tap((response) => this._store$.dispatch(setSignaturesAction(response)))
+                tap((response) => this._store$.dispatch(setSignaturesAction(response))),
             );
     }
 
@@ -224,9 +224,9 @@ export class NopaperService {
                     this.getPacketDetails$(packetId).pipe(take(1)).subscribe();
                 }),
                 takeUntil(
-                    this._packetPollingBreakerById$.pipe(filter((id) => id === packetId))
+                    this._packetPollingBreakerById$.pipe(filter((id) => id === packetId)),
                 ),
-                takeUntil(this._packetPollingBreakerAll$)
+                takeUntil(this._packetPollingBreakerAll$),
             )
             .subscribe();
     }
@@ -260,7 +260,7 @@ export class NopaperService {
         return this._nopaperApiService.getShareLink(packetId).pipe(
             tap((response) => {
                 this._store$.dispatch(setShareLinkAction(response));
-            })
+            }),
         );
     }
 }

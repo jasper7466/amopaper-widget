@@ -7,10 +7,10 @@ export const setAppInitAction = createAction(`[${appContextKey}] initialized`);
 
 export const setAppActivePacketIdAction = createAction(
     `[${appContextKey}] set active packet`,
-    props<{ packetId: number }>()
+    props<{ packetId: number }>(),
 );
 
 export const setAppActiveLeadIdAction = createAction(
     `[${appContextKey}] set active lead`,
-    props<{ leadId: number }>()
+    props<{ leadId: number }>(),
 );

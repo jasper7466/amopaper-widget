@@ -11,5 +11,5 @@ export const processedFilesReducer = createReducer(
     on(setOriginalsFilesAction, (state, { payload }) => ({
         ...state,
         originalFiles: payload,
-    }))
+    })),
 );

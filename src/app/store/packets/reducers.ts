@@ -45,7 +45,7 @@ export const packetsReducer = createReducer(
 
         if (indexToUpdate === -1) {
             throw new Error(
-                `setPacketStatusAction: Packet #${id} does not exist in store.`
+                `setPacketStatusAction: Packet #${id} does not exist in store.`,
             );
         }
 
@@ -71,7 +71,7 @@ export const packetsReducer = createReducer(
 
         if (indexToUpdate === -1) {
             throw new Error(
-                `setPacketDetailsAction: Packet #${id} does not exist in store.`
+                `setPacketDetailsAction: Packet #${id} does not exist in store.`,
             );
         }
 
@@ -97,5 +97,5 @@ export const packetsReducer = createReducer(
             ...state,
             packets: updatedPacketsList,
         };
-    })
+    }),
 );

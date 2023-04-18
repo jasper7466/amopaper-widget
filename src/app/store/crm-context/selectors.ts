@@ -6,30 +6,30 @@ export const featureSelector =
 
 export const xApiKeySelector = createSelector(
     featureSelector,
-    (state) => state.context?.xApiKey
+    (state) => state.context?.xApiKey,
 );
 
 export const domainSelector = createSelector(
     featureSelector,
-    (state) => state.context?.domain
+    (state) => state.context?.domain,
 );
 
 export const subdomainSelector = createSelector(
     featureSelector,
-    (state) => state.context?.subdomain
+    (state) => state.context?.subdomain,
 );
 
 export const leadIdSelector = createSelector(
     featureSelector,
-    (state) => state.context?.cardId
+    (state) => state.context?.cardId,
 );
 
 export const clientUuidSelector = createSelector(
     featureSelector,
-    (state) => state.context?.oAuthUuid
+    (state) => state.context?.oAuthUuid,
 );
 
 export const crmContextSelector = createSelector(
     featureSelector,
-    (state) => state.context
+    (state) => state.context,
 );

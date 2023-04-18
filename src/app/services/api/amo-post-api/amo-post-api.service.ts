@@ -12,7 +12,7 @@ export interface IAmoPostApiService {
 })
 export class AmoPostApiService implements IAmoPostApiService {
     constructor(
-        protected postMessageTransportService: PostMessageTransportService
+        protected postMessageTransportService: PostMessageTransportService,
     ) {}
 
     public getCrmContext$ = (): Observable<ICrmContext> => {

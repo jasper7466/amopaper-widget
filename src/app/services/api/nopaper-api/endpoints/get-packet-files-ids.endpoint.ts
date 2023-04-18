@@ -37,7 +37,7 @@ const requestAdapter = (packetId: number): IGetPacketFilesIdsRequest => ({
 });
 
 const responseAdapter = (
-    response: IGetPacketFilesIdsResponse
+    response: IGetPacketFilesIdsResponse,
 ): IPacketFilesInfo => {
     const {
         signDocumentList,
@@ -60,8 +60,14 @@ const responseAdapter = (
         ? fileInfoMapper([ofertaWithStamp])
         : [];
 
-    const originals = [...originalOfferId, ...originalFilesIds];
-    const stamped = [...stampedOfferId, ...stampedFilesIds];
+    const originals = [
+        ...originalOfferId,
+        ...originalFilesIds,
+    ];
+    const stamped = [
+        ...stampedOfferId,
+        ...stampedFilesIds,
+    ];
 
     return {
         originals,
@@ -71,10 +77,10 @@ const responseAdapter = (
 
 export function getPacketFilesIdsEndpoint$(
     this: ApiService,
-    packetId: number
+    packetId: number,
 ): Observable<IPacketFilesInfo> {
     return this.post$<IGetPacketFilesIdsRequest, IGetPacketFilesIdsResponse>(
         '/document/file-description-v2',
-        requestAdapter(packetId)
+        requestAdapter(packetId),
     ).pipe(map(responseAdapter));
 }

@@ -39,13 +39,13 @@ type TSignatureInfo = {
 type TGetFileSignatureResponse = [TSignatureInfo, TSignatureInfo];
 
 const requestAdapter = (
-    data: Pick<IFileInfo, 'id'>
+    data: Pick<IFileInfo, 'id'>,
 ): IGetFileSignatureRequest => ({
     documentFileId: data.id,
 });
 
 const responseAdapter = (
-    response: TGetFileSignatureResponse
+    response: TGetFileSignatureResponse,
 ): IFileSignatures | never => {
     if (response.length < 2) {
         throw new Error('Expected 2 items but got fewer');
@@ -71,10 +71,10 @@ const responseAdapter = (
 
 export function getFileSignaturesEndpoint$(
     this: ApiService,
-    fileId: Pick<IFileInfo, 'id'>
+    fileId: Pick<IFileInfo, 'id'>,
 ): Observable<IFileSignatures> {
     return this.post$<IGetFileSignatureRequest, TGetFileSignatureResponse>(
         '/file/signatures',
-        requestAdapter(fileId)
+        requestAdapter(fileId),
     ).pipe(map(responseAdapter));
 }

@@ -5,10 +5,10 @@ export const featureSelector = createFeatureSelector<IMiscState>(miscKey);
 
 export const newPacketTitleSelector = createSelector(
     featureSelector,
-    (state) => state.packetTitle
+    (state) => state.packetTitle,
 );
 
 export const shareLinkSelector = createSelector(
     featureSelector,
-    (state) => state.shareLink
+    (state) => state.shareLink,
 );

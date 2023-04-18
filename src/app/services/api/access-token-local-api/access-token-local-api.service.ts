@@ -29,7 +29,7 @@ export class AccessTokenLocalApiService extends ApiService {
     public getAmoAccessToken$(): Observable<IGetAmoAccessTokenResponse> {
         return this.post$<{ xApiKey: string }, IGetAmoAccessTokenResponse>(
             '/access_token',
-            { xApiKey: this._xApiKey }
+            { xApiKey: this._xApiKey },
         );
     }
 }

@@ -4,7 +4,7 @@ import { getContentType } from './get-content-type.util';
 
 export const base64ToFile = (
     base64: string,
-    filename: string
+    filename: string,
 ): Observable<File> => {
     const mime = getContentType(filename);
     const url = `data:${mime};base64,${base64}`;
@@ -12,6 +12,6 @@ export const base64ToFile = (
     return fromFetch(url).pipe(
         switchMap((response) => response.arrayBuffer()),
         take(1),
-        map((buffer) => new File([buffer], filename, { type: mime }))
+        map((buffer) => new File([buffer], filename, { type: mime })),
     );
 };

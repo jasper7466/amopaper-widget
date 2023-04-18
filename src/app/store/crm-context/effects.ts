@@ -11,7 +11,7 @@ export class CrmContextEffects {
     private _onUpdateCrmContextEffect$ = createEffect(() =>
         this._actions$.pipe(
             ofType(updateCrmContextAction),
-            map((context) => setAppActiveLeadIdAction({ leadId: context.cardId }))
-        )
+            map((context) => setAppActiveLeadIdAction({ leadId: context.cardId })),
+        ),
     );
 }

@@ -16,7 +16,7 @@ export class HttpErrorHandlingInterceptor implements HttpInterceptor {
     public intercept(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
         request: HttpRequest<any>,
-        next: HttpHandler
+        next: HttpHandler,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ): Observable<HttpEvent<any>> {
         return next.handle(request).pipe(
@@ -28,7 +28,7 @@ export class HttpErrorHandlingInterceptor implements HttpInterceptor {
                     }`,
                 });
                 return throwError(() => error);
-            })
+            }),
         );
     }
 }

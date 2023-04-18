@@ -30,7 +30,7 @@ const responseAdapter = (response: IGetCrmContextResponse): ICrmContext => ({
 });
 
 export function getCrmContextEndpoint$(
-    this: AmoPostApiService
+    this: AmoPostApiService,
 ): Observable<ICrmContext> {
     return this.postMessageTransportService
         .request$<Record<string, never>, IGetCrmContextResponse>({

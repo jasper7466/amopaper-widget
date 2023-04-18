@@ -22,7 +22,10 @@ const windowServiceFactory = (): WindowService | WindowMockService => {
 };
 @NgModule({
     declarations: [],
-    imports: [CommonModule, ApiCoreModule],
+    imports: [
+        CommonModule,
+        ApiCoreModule,
+    ],
     providers: [
         CrmService,
         FilesService,
@@ -42,7 +45,7 @@ export class SubServicesCoreModule {
     constructor(@Optional() @SkipSelf() parentModule: SubServicesCoreModule) {
         if (parentModule) {
             throw new Error(
-                'ServicesCoreModule is already loaded. Import it in the AppModule only'
+                'ServicesCoreModule is already loaded. Import it in the AppModule only',
             );
         }
     }

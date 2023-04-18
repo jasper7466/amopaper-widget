@@ -12,8 +12,8 @@ export class CrmLeadContextEffects {
         this._actions$.pipe(
             ofType(updateLeadJsonStorageAction),
             map((storage) =>
-                updatePacketsIdsListAction({ payload: storage.packetsIdsList })
-            )
-        )
+                updatePacketsIdsListAction({ payload: storage.packetsIdsList }),
+            ),
+        ),
     );
 }

@@ -1,15 +1,11 @@
 import { IFileRecord, initialState } from './index';
 import { createReducer, on } from '@ngrx/store';
-import {
-    sourceFilesResetAction,
-    sourceFilesAddAction,
-    sourceFileCompleteAction,
-} from './actions';
+import { sourceFilesResetAction, sourceFilesAddAction, sourceFileCompleteAction } from './actions';
 
 export const sourceFilesReducer = createReducer(
     initialState,
     on(sourceFilesAddAction, (state, { payload }) => {
-        const newFilesInfo: IFileRecord[] = payload.map((item) => ({
+        const newFilesInfo: IFileRecord[] = payload.map(item => ({
             id: item.id,
             name: item.name,
             size: item.size,
@@ -19,13 +15,16 @@ export const sourceFilesReducer = createReducer(
 
         return {
             ...state,
-            files: [...state.files, ...newFilesInfo],
+            files: [
+                ...state.files,
+                ...newFilesInfo,
+            ],
             totalCount: state.files.length + payload.length,
             isComplete: false,
         };
     }),
     on(sourceFileCompleteAction, (state, { id, base64 }) => {
-        const fileIndex = state.files.findIndex((file) => file.id === id);
+        const fileIndex = state.files.findIndex(file => file.id === id);
 
         if (fileIndex === -1) {
             throw new Error(`File with id ${id} does not exist`);
@@ -49,5 +48,5 @@ export const sourceFilesReducer = createReducer(
     }),
     on(sourceFilesResetAction, () => {
         return { ...initialState };
-    })
+    }),
 );

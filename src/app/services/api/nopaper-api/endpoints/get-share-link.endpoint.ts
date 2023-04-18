@@ -12,10 +12,10 @@ const responseAdapter = (response: IGetShareLinkResponse): IShareLink => ({
 
 export function getShareLinkEndpoint$(
     this: ApiService,
-    packetId: number
+    packetId: number,
 ): Observable<IShareLink> {
     return this.post$<Record<string, never>, IGetShareLinkResponse>(
         `/document/${packetId}/generate-link`,
-        {}
+        {},
     ).pipe(map((response) => responseAdapter(response)));
 }

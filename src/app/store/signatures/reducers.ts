@@ -8,5 +8,5 @@ export const signaturesReducer = createReducer(
     on(setSignaturesAction, (state, payload) => ({
         ...state,
         signatures: payload,
-    }))
+    })),
 );

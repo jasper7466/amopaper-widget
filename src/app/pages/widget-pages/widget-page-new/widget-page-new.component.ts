@@ -21,10 +21,10 @@ export class WidgetPageNewComponent implements OnInit, OnDestroy {
     private _onDestroyEmitter = new EventEmitter<void>();
 
     protected isAddresseeAdded$ = this._store$.select(
-        isAddresseeSubmittedSelector
+        isAddresseeSubmittedSelector,
     );
     protected isAllFilesLoaded$ = this._store$.select(
-        isSourceFilesCompleteAllSelector
+        isSourceFilesCompleteAllSelector,
     );
 
     protected isControlsEnabled = false;
@@ -33,14 +33,14 @@ export class WidgetPageNewComponent implements OnInit, OnDestroy {
     constructor(
         private _store$: Store,
         private _commonLogicService: CommonLogicService,
-        private _routingService: RoutingService
+        private _routingService: RoutingService,
     ) {}
 
     public ngOnInit(): void {
         this.isAddresseeAdded$
             .pipe(
                 combineLatestWith(this.isAllFilesLoaded$),
-                takeUntil(this._onDestroyEmitter)
+                takeUntil(this._onDestroyEmitter),
             )
             .subscribe(([isAddresseeAdded, isAllFilesLoaded]) => {
                 this.isControlsEnabled = isAddresseeAdded && isAllFilesLoaded;

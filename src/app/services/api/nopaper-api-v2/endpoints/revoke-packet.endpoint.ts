@@ -3,10 +3,10 @@ import { ApiService } from './../../api.service';
 
 export function revokePacketEndpoint$(
     this: ApiService,
-    packetId: number
+    packetId: number,
 ): Observable<void> {
     return this.put$<Record<string, never>, void>(
         `/document/${packetId}/revoke`,
-        {}
+        {},
     );
 }

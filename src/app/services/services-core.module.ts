@@ -5,14 +5,17 @@ import { CommonLogicService } from './common-logic.service';
 
 @NgModule({
     declarations: [],
-    imports: [CommonModule, SubServicesCoreModule],
+    imports: [
+        CommonModule,
+        SubServicesCoreModule,
+    ],
     providers: [CommonLogicService],
 })
 export class ServicesCoreModule {
     constructor(@Optional() @SkipSelf() parentModule: ServicesCoreModule) {
         if (parentModule) {
             throw new Error(
-                'ServicesCoreModule is already loaded. Import it in the AppModule only'
+                'ServicesCoreModule is already loaded. Import it in the AppModule only',
             );
         }
     }
