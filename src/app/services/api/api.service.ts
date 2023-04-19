@@ -1,9 +1,5 @@
-import { Observable, catchError } from 'rxjs';
-import {
-    HttpClient,
-    HttpErrorResponse,
-    HttpHeaders,
-} from '@angular/common/http';
+import { Observable, catchError, of } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 
 export class ApiService {
     private _baseUrl: string;
@@ -21,7 +17,10 @@ export class ApiService {
     }
 
     protected setHeaders(headers: { [key: string]: string | string[] }): void {
-        for (const [header, value] of Object.entries(headers)) {
+        for (const [
+            header,
+            value,
+        ] of Object.entries(headers)) {
             this._headers = this._headers.set(header, value);
         }
     }
@@ -35,7 +34,15 @@ export class ApiService {
             .get<Response>(`${this._baseUrl}${path}`, {
                 headers: this._headers,
             })
-            .pipe(catchError((error: unknown) => this.httpErrorHandler(error)));
+            .pipe(
+                catchError((error: unknown) => {
+                    if (error instanceof HttpErrorResponse) {
+                        return this.httpErrorHandler(error);
+                    } else {
+                        throw error;
+                    }
+                }),
+            );
     }
 
     protected post$<Request, Response>(
@@ -46,7 +53,15 @@ export class ApiService {
             .post<Response>(`${this._baseUrl}${path}`, body, {
                 headers: this._headers,
             })
-            .pipe(catchError((error: unknown) => this.httpErrorHandler(error)));
+            .pipe(
+                catchError((error: unknown) => {
+                    if (error instanceof HttpErrorResponse) {
+                        this.httpErrorHandler(error);
+                    }
+
+                    throw error;
+                }),
+            );
     }
 
     protected patch$<Request, Response>(
@@ -57,17 +72,30 @@ export class ApiService {
             .patch<Response>(`${this._baseUrl}${path}`, body, {
                 headers: this._headers,
             })
-            .pipe(catchError((error: unknown) => this.httpErrorHandler(error)));
+            .pipe(
+                catchError((error: unknown) => {
+                    if (error instanceof HttpErrorResponse) {
+                        this.httpErrorHandler(error);
+                    }
+
+                    throw error;
+                }),
+            );
     }
 
-    protected put$<Request, Response>(
-        path: string,
-        body: Request,
-    ): Observable<Response> {
+    protected put$<Request, Response>(path: string, body: Request): Observable<Response> {
         return this._http
             .put<Response>(`${this._baseUrl}${path}`, body, {
                 headers: this._headers,
             })
-            .pipe(catchError((error: unknown) => this.httpErrorHandler(error)));
+            .pipe(
+                catchError((error: unknown) => {
+                    if (error instanceof HttpErrorResponse) {
+                        this.httpErrorHandler(error);
+                    }
+
+                    throw error;
+                }),
+            );
     }
 }
