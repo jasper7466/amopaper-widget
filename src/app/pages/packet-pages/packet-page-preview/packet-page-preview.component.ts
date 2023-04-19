@@ -34,23 +34,25 @@ export class PacketPagePreviewComponent implements OnInit, OnDestroy {
     ) {}
 
     public ngOnInit(): void {
-        const id = this._route.parent?.snapshot.paramMap.get('id');
+        this._route.parent?.paramMap.pipe(take(1)).subscribe(parameters => {
+            const id = parameters.get('id');
 
-        if (!id) {
-            throw new Error('Missing "id" parameter in parent path');
-        }
+            if (!id) {
+                throw new Error('Missing "id" parameter in parent path');
+            }
 
-        this._packetId = parseInt(id);
+            this._packetId = parseInt(id);
 
-        this.packet$ = this._store$.select(packetSelector(this._packetId));
-        this._commonLogicService.getPacketFiles$(this._packetId).subscribe();
+            this.packet$ = this._store$.select(packetSelector(this._packetId));
+            this._commonLogicService.getPacketFiles$(this._packetId).subscribe();
 
-        this.originalFiles$
-            .pipe(
-                filter((files) => files.length > 0),
-                take(1),
-            )
-            .subscribe(() => (this.isAwaiting = false));
+            this.originalFiles$
+                .pipe(
+                    filter(files => files.length > 0),
+                    take(1),
+                )
+                .subscribe(() => (this.isAwaiting = false));
+        });
     }
 
     public ngOnDestroy(): void {
@@ -59,10 +61,7 @@ export class PacketPagePreviewComponent implements OnInit, OnDestroy {
 
     protected submitButtonHandler(): void {
         this.isAwaiting = true;
-        this._commonLogicService
-            .submitPreview$(this._packetId)
-            .pipe(take(1))
-            .subscribe();
+        this._commonLogicService.submitPreview$(this._packetId).pipe(take(1)).subscribe();
     }
 
     public cancelButtonHandler(): void {
@@ -70,16 +69,13 @@ export class PacketPagePreviewComponent implements OnInit, OnDestroy {
     }
 
     public revokeButtonHandler(): void {
-        this._commonLogicService
-            .revokePacket$(this._packetId)
-            .pipe(take(1))
-            .subscribe();
+        this._commonLogicService.revokePacket$(this._packetId).pipe(take(1)).subscribe();
         this._routingService.goPacketsListPage();
     }
 
     protected downloadFile(file: File): void {
-    // TODO: Open or download???
-    // downloadFile(file);
+        // TODO: Open or download???
+        // downloadFile(file);
         openFile(file);
     }
 }

@@ -12,21 +12,9 @@ export type TNavigationPart = {
 export class RoutingService {
     constructor(private _router: Router, private _route: ActivatedRoute) {}
 
-    public getParentParameter(parameterName: string): string | never {
-        const parameter = this._route.parent?.snapshot.paramMap.get(parameterName);
-
-        if (!parameter) {
-            throw new Error('Missing "id" parameter in parent path');
-        }
-
-        return parameter;
-    }
-
     public navParts$(): Observable<TNavigationPart[]> {
         return this._router.events.pipe(
-            filter(
-                (event) => event instanceof NavigationEnd || event instanceof Scroll,
-            ),
+            filter(event => event instanceof NavigationEnd || event instanceof Scroll),
             map(() => {
                 let route = this._route;
 
@@ -36,7 +24,7 @@ export class RoutingService {
 
                 return route;
             }),
-            map((route) => {
+            map(route => {
                 const routes = route.snapshot.pathFromRoot;
                 const navParts: TNavigationPart[] = [];
 
@@ -48,7 +36,7 @@ export class RoutingService {
                     }
 
                     const routerLink = route.pathFromRoot
-                        .map((route) => route.url.toString().split(','))
+                        .map(route => route.url.toString().split(','))
                         .flat();
 
                     navParts.push({ title, routerLink });

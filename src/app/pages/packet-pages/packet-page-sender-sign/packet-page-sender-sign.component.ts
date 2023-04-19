@@ -1,7 +1,7 @@
 import { packetSelector } from 'src/app/store/packets/selectors';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, take } from 'rxjs';
 import { RoutingService } from 'src/app/services/sub-services/routing.service';
 import { Component, OnInit } from '@angular/core';
 import { IPacketDetails } from 'src/app/interfaces/packet-details.interface';
@@ -22,15 +22,17 @@ export class PacketPageSenderSignComponent implements OnInit {
     ) {}
 
     public ngOnInit(): void {
-        const id = this._route.parent?.snapshot.paramMap.get('id');
+        this._route.parent?.paramMap.pipe(take(1)).subscribe(parameters => {
+            const id = parameters.get('id');
 
-        if (!id) {
-            throw new Error('Missing "id" parameter in parent path');
-        }
+            if (!id) {
+                throw new Error('Missing "id" parameter in parent path');
+            }
 
-        this.packetId = parseInt(id);
+            this.packetId = parseInt(id);
 
-        this.packet$ = this._store$.select(packetSelector(this.packetId));
+            this.packet$ = this._store$.select(packetSelector(this.packetId));
+        });
     }
 
     protected backButtonHandler(): void {

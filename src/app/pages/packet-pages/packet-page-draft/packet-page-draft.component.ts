@@ -20,13 +20,15 @@ export class PacketPageDraftComponent implements OnInit {
     ) {}
 
     public ngOnInit(): void {
-        const id = this._route.parent?.snapshot.paramMap.get('id');
+        this._route.parent?.paramMap.pipe(take(1)).subscribe(parameters => {
+            const id = parameters.get('id');
 
-        if (!id) {
-            throw new Error('Missing "id" parameter in parent path');
-        }
+            if (!id) {
+                throw new Error('Missing "id" parameter in parent path');
+            }
 
-        this._packetId = parseInt(id);
+            this._packetId = parseInt(id);
+        });
     }
 
     protected backButtonHandler(): void {
@@ -34,10 +36,7 @@ export class PacketPageDraftComponent implements OnInit {
     }
 
     protected removeButtonHandler(): void {
-        this._commonLogicService
-            .deletePacket$(this._packetId)
-            .pipe(take(1))
-            .subscribe();
+        this._commonLogicService.deletePacket$(this._packetId).pipe(take(1)).subscribe();
         this._routingService.goPacketsListPage();
     }
 

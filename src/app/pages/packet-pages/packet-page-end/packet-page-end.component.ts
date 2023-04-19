@@ -22,9 +22,7 @@ export class PacketPageEndComponent implements OnInit {
 
     private _packetId: number;
 
-    protected signedOriginalDocuments$ = this._store$.select(
-        filesIdsOriginalsSelector,
-    );
+    protected signedOriginalDocuments$ = this._store$.select(filesIdsOriginalsSelector);
     protected signedStampDocuments$ = this._store$.select(filesIdsStampedSelector);
 
     constructor(
@@ -37,19 +35,20 @@ export class PacketPageEndComponent implements OnInit {
     ) {}
 
     public ngOnInit(): void {
-        console.log(this._router.url);
-        const id = this._route.parent?.snapshot.paramMap.get('id');
+        this._route.parent?.paramMap.pipe(take(1)).subscribe(parameters => {
+            const id = parameters.get('id');
 
-        if (!id) {
-            throw new Error('Missing "id" parameter in parent path');
-        }
+            if (!id) {
+                throw new Error('Missing "id" parameter in parent path');
+            }
 
-        this._packetId = parseInt(id);
+            this._packetId = parseInt(id);
 
-        this._commonLogicService
-            .getPacketFiles$(this._packetId)
-            .pipe(take(1))
-            .subscribe();
+            this._commonLogicService
+                .getPacketFiles$(this._packetId)
+                .pipe(take(1))
+                .subscribe();
+        });
     }
 
     protected showSignInfo(fileId: number): void {
