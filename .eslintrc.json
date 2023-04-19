@@ -13,6 +13,7 @@
             "extends": [
                 "eslint:recommended",
                 "plugin:@cspell/recommended",
+                "plugin:rxjs/recommended",
                 "plugin:@typescript-eslint/recommended",
                 "plugin:@angular-eslint/recommended",
                 "plugin:@angular-eslint/template/process-inline-templates"
@@ -42,6 +43,9 @@
                         "style": "kebab-case"
                     }
                 ],
+                // Unspecified: RxJs
+                "rxjs/ban-observables": "error",
+                "rxjs/ban-operators": "error",
                 // Unspecified: Проверка орфографии
                 "@cspell/spellchecker": [
                     "warn",
