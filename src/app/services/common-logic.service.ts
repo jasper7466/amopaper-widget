@@ -45,7 +45,7 @@ export class CommonLogicService {
                     this._crmService.checkWidgetStatus();
                     this._routingService.goPacketsListPage();
                 },
-                error: (error) => console.log(error),
+                error: (error: unknown) => console.log(error),
             });
     }
 

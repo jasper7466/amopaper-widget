@@ -51,6 +51,6 @@ export function checkByPhoneEndpoint$(
         requestAdapter(data),
     ).pipe(
         map(responseAdapter),
-        catchError((error) => of(responseAdapter(error))),
+        catchError((error: unknown) => of(responseAdapter(error))),
     );
 }

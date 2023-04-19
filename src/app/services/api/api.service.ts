@@ -35,7 +35,7 @@ export class ApiService {
             .get<Response>(`${this._baseUrl}${path}`, {
                 headers: this._headers,
             })
-            .pipe(catchError((error) => this.httpErrorHandler(error)));
+            .pipe(catchError((error: unknown) => this.httpErrorHandler(error)));
     }
 
     protected post$<Request, Response>(
@@ -46,7 +46,7 @@ export class ApiService {
             .post<Response>(`${this._baseUrl}${path}`, body, {
                 headers: this._headers,
             })
-            .pipe(catchError((error) => this.httpErrorHandler(error)));
+            .pipe(catchError((error: unknown) => this.httpErrorHandler(error)));
     }
 
     protected patch$<Request, Response>(
@@ -57,7 +57,7 @@ export class ApiService {
             .patch<Response>(`${this._baseUrl}${path}`, body, {
                 headers: this._headers,
             })
-            .pipe(catchError((error) => this.httpErrorHandler(error)));
+            .pipe(catchError((error: unknown) => this.httpErrorHandler(error)));
     }
 
     protected put$<Request, Response>(
@@ -68,6 +68,6 @@ export class ApiService {
             .put<Response>(`${this._baseUrl}${path}`, body, {
                 headers: this._headers,
             })
-            .pipe(catchError((error) => this.httpErrorHandler(error)));
+            .pipe(catchError((error: unknown) => this.httpErrorHandler(error)));
     }
 }
