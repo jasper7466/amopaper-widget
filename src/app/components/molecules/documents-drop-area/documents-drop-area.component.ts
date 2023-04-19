@@ -18,14 +18,15 @@ export class DocumentsDropAreaComponent {
         this._filesService.filesHandler(fileList);
     }
 
-    protected loadFromLeadButtonHandler(): void {
-        this._leadId$
-            .pipe(
-                take(1),
-                filter(leadId => typeof leadId === 'number'),
-                map(leadId => leadId as number),
-                // switchMap((leadId) => this.crmService.getLeadAttachments(leadId))
-            )
-            .subscribe();
-    }
+    // TODO: Issue #3
+    // protected loadFromLeadButtonHandler(): void {
+    //     this._leadId$
+    //         .pipe(
+    //             take(1),
+    //             filter(leadId => typeof leadId === 'number'),
+    //             map(leadId => leadId as number),
+    //             // switchMap((leadId) => this.crmService.getLeadAttachments(leadId))
+    //         )
+    //         .subscribe();
+    // }
 }

@@ -1,35 +1,34 @@
 <form
-  class="documents-drop-area"
-  appDragAndDrop
-  fileOverClass="documents-drop-area_file-over"
-  (fileDropped)="fileLoadHandler($event)"
->
-  <label for="fileInputId" #fileLabelRef>
-    <input
-      hidden
-      type="file"
-      multiple
-      id="fileInputId"
-      #fileInputRef
-      appFileBrowser
-      (changedEmitter)="fileLoadHandler($event)"
-    />
-  </label>
-  <app-button
-    class="documents__upload-button"
-    iconOption="upload"
-    styleOption="skeleton"
-    sizeOption="custom"
-    (onClick)="fileInputRef.click()"
-    >Загрузите</app-button
-  >
-  &nbsp;или перенесите сюда
-  <app-button
+    class="documents-drop-area"
+    appDragAndDrop
+    fileOverClass="documents-drop-area_file-over"
+    (fileDropped)="fileLoadHandler($event)">
+    <label for="fileInputId" #fileLabelRef>
+        <input
+            hidden
+            type="file"
+            multiple
+            id="fileInputId"
+            #fileInputRef
+            appFileBrowser
+            (changedEmitter)="fileLoadHandler($event)" />
+    </label>
+    <app-button
+        class="documents__upload-button"
+        iconOption="upload"
+        styleOption="skeleton"
+        sizeOption="custom"
+        (onClick)="fileInputRef.click()"
+        >Загрузите</app-button
+    >
+    &nbsp;или перенесите сюда
+    <!-- TODO: Issue #3 -->
+    <!-- <app-button
     class="documents__from-lead-button"
     iconOption="plus"
     styleOption="skeleton"
     sizeOption="custom"
     (onClick)="loadFromLeadButtonHandler()"
     >Из сделки</app-button
-  >
+  > -->
 </form>
