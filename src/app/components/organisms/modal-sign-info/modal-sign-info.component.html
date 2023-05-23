@@ -1,0 +1,25 @@
+<app-modal [closeTrigger]="closeTrigger" [openTrigger]="openTrigger">
+  <div class="sign-info__main-content">
+    <p class="sign-info__header">Информация о подписи</p>
+    <div class="sign-info__signs-wrapper">
+      <app-preloader
+        class="sign-info__preloader"
+        animationOption="rotation"
+        *ngIf="isLoading"
+      ></app-preloader>
+
+      <ng-container *ngFor="let signature; in: signatures$ | async">
+        <app-sing-info-item
+          *ngIf="signatures$ | async"
+          [signature]="(signatures$ | async)!.sender"
+        ></app-sing-info-item>
+        <app-sing-info-item
+          [signature]="(signatures$ | async)!.recipient"
+        ></app-sing-info-item>
+      </ng-container>
+    </div>
+  </div>
+  <div class="sing-info__footer">
+    <app-button (click)="okButtonHandler()">Хорошо</app-button>
+  </div>
+</app-modal>

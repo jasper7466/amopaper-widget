@@ -1,0 +1,38 @@
+<app-subtitle class="add-addressee__title">Добавление получателя</app-subtitle>
+<ul class="add-addressee__search-selector">
+  <li class="add-addressee__search-selector-option">
+    <input type="radio" name="addBy" id="byVatId" value="byVatId" checked />
+    <label for="byVatId" (click)="changeSearchSelector(addresseeIdType.VatId)"
+      >ИНН</label
+    >
+  </li>
+  <li class="add-addressee__search-selector-option">
+    <input type="radio" name="addBy" id="byPhone" value="byPhone" />
+    <label for="byPhone" (click)="changeSearchSelector(addresseeIdType.Phone)"
+      >Телефон</label
+    >
+  </li>
+</ul>
+<div>
+  <app-input
+    *ngIf="searchSelector === addresseeIdType.VatId"
+    (keyUp)="searchInputKeyUp($event)"
+    class="add-addressee__search-input"
+    placeholder="ИНН"
+    maskPrefix="№ "
+    mask="000000000000"
+  ></app-input>
+  <app-input
+    *ngIf="searchSelector === addresseeIdType.Phone"
+    (keyUp)="searchInputKeyUp($event)"
+    class="add-addressee__search-input"
+    placeholder="Телефон"
+    maskPrefix="+7 "
+    mask="(000) 000-00-00"
+  ></app-input>
+  <div class="add-addressee__footer">
+    <app-button [isEnabled]="isSubmitEnabled" (onClick)="submit()"
+      >Добавить</app-button
+    >
+  </div>
+</div>

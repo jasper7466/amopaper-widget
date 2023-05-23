@@ -1,0 +1,25 @@
+<div class="addressee__header">
+  <app-subtitle>Получатель</app-subtitle>
+  <app-button
+    [isEnabled]="(isAddresseeAdded$ | async) === false"
+    class="addressee__add-button"
+    styleOption="skeleton"
+    colorOption="regular"
+    iconOption="plus"
+    sizeOption="custom"
+    (onClick)="showSelectorModal()"
+    >Добавить</app-button
+  >
+</div>
+<app-addressee-nameplate
+  *ngIf="isAddresseeAdded$ | async"
+  (clickRemoveButton)="removeAddressee()"
+  [name]="(addressee$ | async)!.name"
+  [idValue]="(addressee$ | async)!.idValue"
+  [idType]="(addressee$ | async)!.idType"
+></app-addressee-nameplate>
+<app-modal [openTrigger]="openModalEmitter" [closeTrigger]="closeModalEmitter">
+  <app-add-addressee-form
+    (onSubmit)="hideSelectorModal()"
+  ></app-add-addressee-form>
+</app-modal>

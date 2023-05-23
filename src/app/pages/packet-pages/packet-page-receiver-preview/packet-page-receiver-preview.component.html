@@ -1,0 +1,35 @@
+<app-main-content-wrapper>
+  <app-stage-header
+    class="content__stage-header"
+    statusBannerStatus="pending"
+    statusLabelStatus="pending"
+    >Документы на подпись</app-stage-header
+  >
+
+  <app-addressee-viewer></app-addressee-viewer>
+
+  <app-documents-viewer caption="Документы">
+    <app-documents-list-item
+      *ngFor="let file of signedOriginalDocuments$ | async"
+      [fileId]="file.id"
+      [fileName]="file.name"
+      signStatus="signed"
+      (showSignInfoEmitter)="showSignInfo($event)"
+    ></app-documents-list-item>
+  </app-documents-viewer>
+</app-main-content-wrapper>
+
+<app-footer>
+  <app-button class="left-side" (onClick)="backButtonHandler()"
+    >Назад</app-button
+  >
+  <app-button
+    class="right-side"
+    colorOption="danger"
+    styleOption="blank"
+    (onClick)="revokeButtonHandler()"
+    >Отозвать</app-button
+  >
+</app-footer>
+
+<app-modal-sign-info></app-modal-sign-info>

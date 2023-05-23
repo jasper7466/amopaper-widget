@@ -1,0 +1,68 @@
+.addressee__wrapper {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-areas:
+    "avatar name remove-button"
+    "avatar vat-id remove-button";
+  grid-auto-rows: auto 1fr;
+  grid-template-columns: auto 1fr;
+  column-gap: 16px;
+  row-gap: 2px;
+  height: 70px;
+  padding: 14px 16px;
+  margin-bottom: var(--spacing-3xl-40px);
+  border: 1px solid var(--line-color-gray);
+  border-radius: 4px;
+
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.addressee__wrapper > .addressee__remove-button {
+  display: none;
+}
+
+.addressee__wrapper_interactive:hover {
+  --this-bg-color: var(--bg-color-row-hover);
+  background-color: var(--this-bg-color);
+  cursor: pointer;
+}
+
+.addressee__wrapper:hover > .addressee__remove-button {
+  display: block;
+}
+
+.addressee__avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  grid-area: avatar;
+  width: 32px;
+  height: 32px;
+  margin: 0;
+  border-radius: 100%;
+  border: 1px solid var(--label-color-pending);
+  background-color: var(--bg-color-error);
+}
+
+.addressee__name {
+  grid-area: name;
+  margin: 0;
+}
+
+.addressee__id {
+  grid-area: vat-id;
+  margin: 0;
+  color: var(--txt-color-tertiary);
+}
+
+.addressee__remove-button {
+  grid-area: remove-button;
+  --this-main-color: var(--icon-color-secondary);
+  --this-border-hover-color: var(--primary-color-accent);
+  --this-border-active-color: var(--stroke-color-danger);
+}
+
+.addressee__remove-button:hover {
+  cursor: pointer;
+}

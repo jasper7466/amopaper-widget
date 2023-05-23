@@ -1,0 +1,41 @@
+<span class="list__status">
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <circle cx="12" cy="12" r="10" fill="#42C28C" />
+    <path d="M7 11L10.8 15L18 8" stroke="white" stroke-width="2" />
+  </svg>
+
+  <button class="list__fold-button" (click)="fold()">
+    <p>Загружено {{ loadedCount }} из {{ totalCount }}</p>
+    <svg
+      class="list__fold-arrow"
+      [ngClass]="{ 'list__fold-arrow_folded': isFolded }"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M8 10L12 14L16 10" stroke="#BABFCB" stroke-width="2" />
+    </svg>
+  </button>
+  <app-button
+    class="list__remove-all-button"
+    colorOption="custom"
+    styleOption="skeleton"
+    sizeOption="custom"
+    (onClick)="clear()"
+    >Удалить все</app-button
+  >
+</span>
+<div
+  class="list__fold-content"
+  [ngClass]="{ 'list__fold-content_folded': isFolded }"
+>
+  <ng-content></ng-content>
+</div>

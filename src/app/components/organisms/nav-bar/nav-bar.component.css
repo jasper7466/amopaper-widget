@@ -1,0 +1,11 @@
+:host {
+  display: flex;
+  align-items: center;
+  min-height: 60px;
+  padding: 0;
+  background-color: var(--bg-color-underlay);
+}
+
+.nav-bar__back-button {
+  margin-right: 32px;
+}

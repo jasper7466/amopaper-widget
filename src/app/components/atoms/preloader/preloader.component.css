@@ -1,0 +1,15 @@
+:host {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--spacing-6xl-64px);
+  width: var(--spacing-6xl-64px);
+}
+
+.preloader__outline {
+}
+
+.preloader__icon {
+  position: absolute;
+}

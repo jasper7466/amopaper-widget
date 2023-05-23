@@ -1,0 +1,30 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs-4px);
+}
+
+.input__label {
+  --line-height: 20px;
+
+  display: flex;
+  align-items: center;
+  height: var(--line-height);
+  column-gap: var(--spacing-s-8px);
+
+  font-size: 14px;
+  line-height: var(--line-height);
+  color: var(--txt-color-secondary);
+}
+
+/* .input__tooltip {
+} */
+
+.input__field {
+  box-sizing: border-box;
+  width: 100%;
+  height: var(--spacing-3xl-40px);
+  padding: 10px 16px;
+  border-radius: 4px;
+  border: 1px solid var(--label-color-draft);
+}

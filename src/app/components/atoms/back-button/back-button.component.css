@@ -1,0 +1,19 @@
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  width: 24px;
+  border-radius: 100%;
+  border: 2px solid #BABFCB;
+  cursor: pointer;
+}
+
+:host > .arrow {
+  margin-right: 1px;
+}
+
+:host:hover > .arrow {
+  margin-right: 3px;
+  transition: ease-in .05s;
+}

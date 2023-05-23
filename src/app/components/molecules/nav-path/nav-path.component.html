@@ -1,0 +1,12 @@
+<ul class="nav-path">
+  <li class="nav-path__item" *ngFor="let part of navPath">
+    <app-arrow
+      class="nav-path__item-arrow"
+      direction="left"
+      color="gray"
+    ></app-arrow>
+    <a class="nav-path__item-link" [routerLink]="part.routerLink">{{
+      part.title
+    }}</a>
+  </li>
+</ul>

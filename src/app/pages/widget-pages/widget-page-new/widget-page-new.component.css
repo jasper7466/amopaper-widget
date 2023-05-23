@@ -1,0 +1,26 @@
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  animation: fadeIn 0.2s ease;
+}
+
+.preloader {
+  margin: auto;
+}
+
+.title-input {
+  padding-top: var(--spacing-2xl-32px);
+  padding-bottom: var(--spacing-2xl-32px);
+  border-top: 1px solid var(--line-color-gray);
+}

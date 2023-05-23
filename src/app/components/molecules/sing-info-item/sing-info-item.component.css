@@ -1,0 +1,156 @@
+@keyframes unfoldAnimation {
+  0% {
+    max-height: 0;
+    overflow: hidden;
+  }
+  99% {
+    max-height: 50vh;
+    overflow: hidden;
+  }
+  100% {
+    max-height: auto;
+    overflow: auto;
+  }
+}
+
+@keyframes foldAnimation {
+  0% {
+    max-height: 50vh;
+    overflow: hidden;
+  }
+  100% {
+    max-height: 0;
+    overflow: hidden;
+  }
+}
+
+:host {
+  --this-animation-duration: 0.3s;
+  --this-animation-function: ease-in-out;
+}
+
+.sign-info__status-plate {
+  display: grid;
+  align-items: center;
+  grid-template-areas:
+    "signer-name status-label fold-button"
+    "signer-vat-id . .";
+  grid-template-columns: 1fr min-content min-content;
+  grid-template-rows: min-content min-content;
+  column-gap: var(--spacing-xl-24px);
+  row-gap: var(--spacing-s-8px);
+  min-height: 80px;
+  padding-top: var(--spacing-l-16px);
+  padding-right: var(--spacing-m-12px);
+  border-top: 1px solid var(--line-color-gray);
+
+  cursor: pointer;
+}
+
+.sign-info__signer-name {
+  grid-area: signer-name;
+  margin: 0;
+
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--txt-color-secondary);
+}
+
+.sign-info__signer-vat-id {
+  grid-area: signer-vat-id;
+  margin: 0;
+
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--txt-color-tertiary);
+}
+
+.sign-info__status-label {
+  grid-area: status-label;
+}
+
+.sign-info__fold-button {
+  grid-area: fold-button;
+
+  transition: var(--this-transition);
+  transition: var(--this-animation-duration) var(--this-animation-function);
+}
+
+.sign-info__fold-button_folded {
+  transform: rotate(-180deg);
+}
+
+.sign-info__fold-area {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-l-16px);
+  overflow-y: hidden;
+
+  animation-name: unfoldAnimation;
+  animation-duration: var(--this-animation-duration);
+  animation-timing-function: var(--this-animation-function);
+  animation-fill-mode: forwards;
+}
+
+.sign-info__fold-area_folded {
+  max-height: 0;
+  animation-name: foldAnimation;
+  animation-duration: var(--this-animation-duration);
+  animation-timing-function: var(--this-animation-function);
+  animation-fill-mode: forwards;
+}
+
+.sign-info__table {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.sign-info__table-row {
+  min-height: 46px;
+}
+
+.sign-info__table-cell {
+  width: 50%;
+  padding: var(--spacing-m-12px) var(--spacing-l-16px);
+  border: 1px solid var(--line-color-gray);
+  border-left: none;
+  border-bottom: none;
+  word-wrap: break-word;
+  text-align: left;
+  vertical-align: top;
+
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.sign-info__table-cell:last-child {
+  border-right: none;
+}
+
+.sign-info__table-cell_header {
+  font-weight: 400;
+  color: var(--txt-color-secondary);
+}
+
+.sign-info__table-cell_data {
+  font-weight: 500;
+}
+
+.sign-info__technical-data {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-m-12px);
+  height: 46px;
+  padding: 0 var(--spacing-m-12px);
+  border: 1px solid var(--line-color-gray);
+  border-radius: 4px;
+
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--primary-color-regular);
+  cursor: pointer;
+}

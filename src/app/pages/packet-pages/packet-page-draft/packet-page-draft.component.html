@@ -1,0 +1,21 @@
+<app-banner-draft class="banner" animationOption="rotation"></app-banner-draft>
+<app-footer>
+  <app-button class="left-side" (onClick)="submitDraftButtonHandler()"
+    >Далее</app-button
+  >
+  <app-button
+    class="left-side"
+    styleOption="blank"
+    (onClick)="backButtonHandler()"
+    [isEnabled]="this.isControlsEnabled"
+    >Назад</app-button
+  >
+  <app-button
+    class="right-side"
+    (onClick)="removeButtonHandler()"
+    styleOption="blank"
+    colorOption="danger"
+    [isEnabled]="this.isControlsEnabled"
+    >Отозвать</app-button
+  >
+</app-footer>

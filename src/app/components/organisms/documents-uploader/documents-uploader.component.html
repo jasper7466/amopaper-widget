@@ -1,0 +1,20 @@
+<app-subtitle class="documents__title">Документы</app-subtitle>
+
+<app-documents-drop-area></app-documents-drop-area>
+
+<app-uploads-foldable-list
+  class="documents__list"
+  *ngIf="documentsTotalCount$ | async"
+  [loadedCount]="(documentsLoadedCount$ | async) || 0"
+  [totalCount]="(documentsTotalCount$ | async) || 0"
+  (onClear)="clearFilesList()"
+>
+  <app-documents-list>
+    <app-documents-list-item
+      *ngFor="let document of uploadedDocuments$ | async"
+      [fileName]="document.fileName"
+      [signStatus]="document.signStatus || null"
+      [fileId]="document.fileId"
+    ></app-documents-list-item>
+  </app-documents-list>
+</app-uploads-foldable-list>

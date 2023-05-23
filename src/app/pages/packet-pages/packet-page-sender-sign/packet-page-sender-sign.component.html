@@ -1,0 +1,25 @@
+<app-main-content-wrapper>
+  <app-stage-header
+    [statusLabelStatus]="(packet$ | async)?.status! | toLabelStatus"
+  >
+    {{ (packet$ | async)?.title }}
+  </app-stage-header>
+</app-main-content-wrapper>
+
+<app-banner-awaiting
+  class="banner"
+  animationOption="rotation"
+></app-banner-awaiting>
+<app-footer>
+  <app-share-link-button
+    class="left-side"
+    [packetId]="packetId"
+  ></app-share-link-button>
+
+  <app-button
+    class="right-side"
+    styleOption="skeleton"
+    (onClick)="backButtonHandler()"
+    >Назад</app-button
+  >
+</app-footer>

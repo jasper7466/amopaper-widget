@@ -1,0 +1,23 @@
+<div
+  class="notification-page__wrapper"
+  [ngClass]="{
+    'notification-page__wrapper_info': this.context.type === 'info',
+    'notification-page__wrapper_error': this.context.type === 'error'
+  }"
+>
+  <div class="notification-page__content">
+    <p class="notification-page__title">Что-то пошло не так...</p>
+    <h1>{{ this.context.title }}</h1>
+    <p>Тип уведомления: {{ this.context.type }}</p>
+    <p>Подробности: {{ this.context.details }}</p>
+    <p>Рекомендации: {{ this.context.hint }}</p>
+    <app-button
+      class="notification-page__button"
+      sizeOption="medium"
+      styleOption="skeleton"
+      [colorOption]="'regular'"
+      (onClick)="reset()"
+      >Перезагрузить</app-button
+    >
+  </div>
+</div>

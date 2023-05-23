@@ -1,0 +1,45 @@
+<app-main-content-wrapper>
+  <app-stage-header statusLabelStatus="draft"
+    >Добавление документа
+  </app-stage-header>
+
+  <ng-container *ngIf="!isAwaiting">
+    <app-addressee-selector></app-addressee-selector>
+    <app-documents-uploader></app-documents-uploader>
+    <app-input
+      class="title-input"
+      label="Название пакета документов"
+      (keyUp)="titleInputKeyUpHandler($event)"
+    ></app-input>
+  </ng-container>
+
+  <app-preloader
+    *ngIf="isAwaiting"
+    class="preloader"
+    animationOption="rotation"
+  ></app-preloader>
+</app-main-content-wrapper>
+
+<app-footer>
+  <app-button
+    class="left-side"
+    [isEnabled]="this.isControlsEnabled"
+    (onClick)="nextButtonHandler()"
+    >Далее</app-button
+  >
+  <app-button
+    class="left-side"
+    [isEnabled]="this.isControlsEnabled"
+    (onClick)="saveButtonHandler()"
+    styleOption="blank"
+    colorOption="regular"
+    >Сохранить черновик</app-button
+  >
+  <app-button
+    class="right-side"
+    (onClick)="cancelButtonHandler()"
+    styleOption="skeleton"
+    colorOption="regular"
+    >Отмена</app-button
+  >
+</app-footer>

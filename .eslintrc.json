@@ -1,0 +1,240 @@
+{
+    "root": true,
+    "ignorePatterns": ["projects/**/*"],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": 2019,
+        "project": "./tsconfig.json",
+        "sourceType": "module"
+    },
+    "overrides": [
+        {
+            "files": ["*.ts"],
+            "extends": [
+                "eslint:recommended",
+                "plugin:@cspell/recommended",
+                "plugin:rxjs/recommended",
+                "plugin:@typescript-eslint/recommended",
+                "plugin:@angular-eslint/recommended",
+                "plugin:@angular-eslint/template/process-inline-templates"
+            ],
+            "plugins": [
+                "unicorn",
+                "@shopify",
+                "rxjs",
+                "decorator-position"
+            ],
+            "rules": {
+                "@typescript-eslint/no-empty-interface": "off",
+                "@typescript-eslint/no-inferrable-types": "off",
+                "@angular-eslint/directive-selector": [
+                    "error",
+                    {
+                        "type": "attribute",
+                        "prefix": "app",
+                        "style": "camelCase"
+                    }
+                ],
+                "@angular-eslint/component-selector": [
+                    "error",
+                    {
+                        "type": "element",
+                        "prefix": "app",
+                        "style": "kebab-case"
+                    }
+                ],
+                // Unspecified: RxJs
+                "rxjs/ban-observables": "error",
+                "rxjs/ban-operators": "error",
+                // Unspecified: Проверка орфографии
+                "@cspell/spellchecker": [
+                    "warn",
+                    {
+                        // Авто-исправление ошибок если подобран только один вариант исправления
+                        "autoFix": false,
+                        // Количество вариантов исправления
+                        "numSuggestions": 1,
+                        // Генерировать варианты для исправления
+                        "generateSuggestions": false,
+                        // Не проверять имена импортов (import, require)
+                        "ignoreImports": true,
+                        // Не проверять импортированные переменные, структуры и типы
+                        "ignoreImportProperties": true,
+                        // Проверять идентификаторы (имена переменных, функций, классов)
+                        "checkIdentifiers": true,
+                        // Проверять строки
+                        "checkStrings": true,
+                        // Проверять шаблонные строки
+                        "checkStringTemplates": true,
+                        // Проверять JSX
+                        "checkJSXText": true,
+                        // Проверять комментарии
+                        "checkComments": true,
+                        // Путь к пользовательскому словарю (лучше настраивать словари в .cspell.json)
+                        "customWordListFile": "",
+                        // Вывод журнала отладки
+                        "debugMode": false
+                    }
+                ],
+                "@typescript-eslint/naming-convention": [
+                    "error",
+                    // CodeGuide 1.2.2: Именование классов в "PascalCase"
+                    {
+                        "selector": ["class"],
+                        "format": ["PascalCase"]
+                    },
+                    // CodeGuide 1.2.4: Именование public/protected-свойств классов в "camelCase"
+                    {
+                        "selector": ["classProperty"],
+                        "modifiers": ["public"],
+                        "format": ["camelCase"]
+                    },
+                    {
+                        "selector": ["classProperty"],
+                        "modifiers": ["protected"],
+                        "format": ["camelCase"]
+                    },
+                    // CodeGuide 1.2.5: Приватные свойства должны начинаться с символа подчёркивания
+                    {
+                        "selector": [
+                            "property",
+                            "parameterProperty",
+                            "accessor"
+                        ],
+                        "modifiers": ["private"],
+                        "prefix": ["_"],
+                        "format": ["camelCase"]
+                    },
+                    // CodeGuide 1.2.6: Именование методов классов в "camelCase"
+                    {
+                        "selector": ["classMethod"],
+                        "format": ["camelCase"]
+                    },
+                    // CodeGuide 1.2.7 (1/2): Именование параметров методов класса и аргументов функций в "camelCase"
+                    {
+                        "selector": ["parameter"],
+                        "format": ["camelCase"]
+                    },
+                    // CodeGuide 1.2.10 (2/2): Именование интерфейсов с префиксом "I"
+                    {
+                        "selector": ["interface"],
+                        "prefix": ["I"],
+                        "format": ["PascalCase"]
+                    },
+                    // Unspecified: Именование переменных в "camelCase"
+                    {
+                        "selector": ["variable"],
+                        "format": ["camelCase"]
+                    },
+                    // Unspecified: Именование констант в "camelCase"
+                    {
+                        "selector": ["variable"],
+                        "modifiers": ["const"],
+                        "format": ["camelCase"]
+                    }
+                ],
+                // CodeGuide 1.2.3: Поля класса должны иметь модификатор доступа
+                "@typescript-eslint/explicit-member-accessibility": [
+                    "error",
+                    {
+                        "accessibility": "explicit",
+                        "overrides": {
+                            "constructors": "no-public"
+                        }
+                    }
+                ],
+                // CodeGuide 1.2.7 (2/2): Обязательная типизация аргументов функций/методов
+                "@typescript-eslint/typedef": [
+                    "error",
+                    {
+                        "parameter": true
+                    }
+                ],
+                // CodeGuide 1.2.8: Не использовать сокращения в именовании сущностей и файлов
+                "unicorn/prevent-abbreviations": "error",
+                // CodeGuide 1.2.12: Именовать все асинхронные сущности в "финской" нотации
+                "rxjs/finnish": "error",
+                // CodeGuide 1.2.10 (1/2): Именование составляющих названия интерфейса в единственном числе
+                "prefer-singular-interfaces": "error",
+                // TODO: Включить позже ("error")
+                // CodeGuide 2.1: Каждое перечисление должно быть определено в отдельном файле
+                "prefer-separated-enums": "off",
+                // CodeGuide 2.3: Именование перечислений в единственном числе
+                "@shopify/typescript/prefer-singular-enums": "error",
+                // CodeGuide 3.1: Каждый класс должен располагаться в отдельном файле
+                "max-classes-per-file": [
+                    "error",
+                    1
+                ],
+                // TODO: Включить позже ("error")
+                // CodeGuide 3.2: Каждый интерфейс должен быть определён в отдельном файле
+                "prefer-separated-interfaces": "off",
+                // CodeGuide 4.5: Обязательная типизация возвращаемого значения функций/методов
+                "@typescript-eslint/explicit-function-return-type": "error",
+                // CodeGuide 4.6: Не использовать упрощённые конструкции if/else/while
+                "curly": "error",
+                // CodeGuide 5.1: Декоратор поля класса на отдельной строке
+                "decorator-position/decorator-position": [
+                    "error",
+                    {
+                        "properties": "above",
+                        "methods": "above"
+                    }
+                ],
+                // CodeGuide 6.1: Отступ: 4 пробела
+                // Используются 2 правила, т.к. "@typescript-eslint/indent", вероятно, имеет проблемы
+                "indent": [
+                    "error",
+                    4,
+                    {
+                        "SwitchCase": 1,
+                        "MemberExpression": 1,
+                        "CallExpression": { "arguments": 1 }
+                    }
+                ],
+                "@typescript-eslint/indent": [
+                    "error",
+                    4,
+                    {
+                        "SwitchCase": 1,
+                        "MemberExpression": 1,
+                        "CallExpression": { "arguments": 1 },
+                        // Игнор из-за вероятной некорректной работы правила
+                        "ignoredNodes": ["CallExpression"]
+                    }
+                ],
+                /* CodeGuide 7.1 (1/2): Элементы массивов в декораторе модулей должны быть с новой строки (no-inline)
+                 * (дополнено: массивы с одним элементом - inline)
+                 * (расширено на все массивы в коде)
+                 */
+                "array-element-newline": [
+                    "error",
+                    {
+                        "ArrayExpression": { "minItems": 1 },
+                        "ArrayPattern": { "minItems": 3 }
+                    }
+                ],
+                "array-bracket-newline": [
+                    "error",
+                    {
+                        "multiline": true
+                    }
+                ],
+                /* CodeGuide 3.4 (2/2): Висящая запятая в списке аргументов методов/конструкторов
+                 * CodeGuide 7.1 (2/2): Висящая запятая в массивах декораторов модулей
+                 * (расширено на все многострочные конструкции в коде)
+                 */
+                "comma-dangle": [
+                    "error",
+                    "always-multiline"
+                ]
+                // ---
+            }
+        },
+        {
+            "files": ["*.html"],
+            "extends": ["plugin:@angular-eslint/template/recommended"],
+            "rules": {}
+        }
+    ]
+}

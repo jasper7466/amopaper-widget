@@ -1,0 +1,18 @@
+<label *ngIf="label" class="input__label"
+  >{{ label }}
+  <app-tooltip
+    *ngIf="tooltipOption !== null"
+    class="input__tooltip"
+  ></app-tooltip>
+</label>
+<input
+  class="input__field"
+  [placeholder]="placeholder"
+  [type]="type"
+  [prefix]="maskPrefix"
+  [mask]="mask"
+  [showMaskTyped]="true"
+  [dropSpecialCharacters]="false"
+  (keyup)="inputKeyUpHandler(inputLocalReference.value)"
+  #inputLocalReference
+/>

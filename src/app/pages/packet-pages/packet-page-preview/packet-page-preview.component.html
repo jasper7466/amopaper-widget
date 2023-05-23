@@ -1,0 +1,55 @@
+<app-main-content-wrapper>
+  <app-stage-header
+    [statusLabelStatus]="(packet$ | async)?.status! | toLabelStatus"
+    [documentsCount]="(filesIds$ | async)?.length || null"
+  >
+    {{ (packet$ | async)?.title }}
+  </app-stage-header>
+
+  <ng-container *ngIf="!isAwaiting">
+    <app-subtitle class="subtitle"
+      >Файлы для предварительного просмотра</app-subtitle
+    >
+
+    <npp-pdf-viewer>
+      <npp-pdf-view-element
+        *ngFor="let file of originalFiles$ | async"
+        [source]="file.file"
+      ></npp-pdf-view-element>
+    </npp-pdf-viewer>
+  </ng-container>
+
+  <app-preloader
+    *ngIf="isAwaiting"
+    class="preloader"
+    animationOption="rotation"
+  ></app-preloader>
+</app-main-content-wrapper>
+
+<app-footer>
+  <app-button
+    class="left-side"
+    iconOption="sign"
+    [isEnabled]="false"
+    (onClick)="submitButtonHandler()"
+    >Подписать и отправить</app-button
+  >
+
+  <app-button
+    class="left-side"
+    (onClick)="revokeButtonHandler()"
+    styleOption="blank"
+    colorOption="danger"
+    [isEnabled]="!isAwaiting"
+    >Отозвать</app-button
+  >
+
+  <app-button
+    class="right-side"
+    [isEnabled]="!isAwaiting"
+    (onClick)="cancelButtonHandler()"
+    styleOption="skeleton"
+    colorOption="regular"
+    >Отмена</app-button
+  >
+</app-footer>

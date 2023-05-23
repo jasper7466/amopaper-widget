@@ -1,27 +1,56 @@
 # AmopaperWidget
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.0.
+## Назначение
 
-## Development server
+---
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+SPA-виджет для интеграции сервиса Nopaper в интерфейс amoCRM. Работает в паре с [обёрткой](https://github.com/jasper7466/Boilerplate-amoCRM-Widget)
 
-## Code scaffolding
+## Развёртывание
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+---
 
-## Build
+-   Установить зависимости:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+          npm install
 
-## Running unit tests
+-   В директорию `local_modules` поместить исходники пакета `pdf-previewer`
+-   Установить недостающую зависимость `ng2-pdf-viewer` для локального `pdf-previewer`
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+          npm install --no-save ng2-pdf-viewer
 
-## Running end-to-end tests
+-   Запуск:
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+          npm start
 
-## Further help
+## Использование прокси
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+---
+
+Зачем это нужно - [описано тут](./docs/why-use-proxy.doc.md)
+
+-   В корне проекта скопировать и переименовать файл `example.proxy.config.json` -> `proxy.config.json`
+-   Заполнить параметр `target` в соответствии с используемым амо-аккаунтом
+-   Переменную окружения `isAmoDevProxy` установить в значение `true`
+-   Для запуска использовать команду
+
+          npm run start-with-proxy
+
+## Использование локального сервера авторизации
+
+---
+
+-   Выполнить настройку, как [описано тут](./docs/auth-dev-server.doc.md)
+-   Переменную окружения `isLocalTokenServer` установить в значение `true`
+
+## Линтинг
+
+---
+
+Некоторые кастомные правила расположены в директории `./eslint-custom-rules`, поэтому для ручного запуска линтера следует использовать вместо `ng lint` команду:
+
+        npm run es-lint
+
+Или же к `ng lint` добавить флаг `--rulesdir ./eslint-custom-rules`:
+
+        ng lint --rulesdir ./eslint-custom-rules

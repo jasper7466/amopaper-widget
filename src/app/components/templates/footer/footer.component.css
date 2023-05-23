@@ -1,0 +1,18 @@
+:host {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  padding-top: 40px;
+  margin-top: auto;
+  border-top: 2px solid var(--line-color-gray);
+}
+
+.footer__left-side {
+  display: flex;
+  gap: var(--spacing-xs-4px);
+}
+
+.footer__right-side {
+  display: flex;
+  margin-left: auto;
+}

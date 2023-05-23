@@ -1,0 +1,110 @@
+.button {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  height: 24px;
+  border-radius: 4px;
+  padding: 0;
+  background-color: unset;
+  border: 2px solid;
+
+  --this-font-size: 14px;
+  font-size: var(--this-font-size);
+  line-height: 20px;
+
+  cursor: inherit;
+}
+
+.button:disabled {
+  pointer-events: none;
+  --this-main-color: var(--label-color-draft);
+}
+
+.button_color_regular:enabled {
+  --this-main-color: var(--primary-color-regular);
+  --this-border-color: var(--stroke-color-regular);
+  --this-main-hover-color: var(--primary-color-regular-hover);
+  --this-main-active-color: var(--primary-color-regular-active);
+  --this-border-hover-color: var(--stroke-color-regular-hover);
+  --this-border-active-color: var(--stroke-color-regular-active);
+}
+
+.button_color_danger:enabled {
+  --this-main-color: var(--primary-color-accent);
+  --this-border-color: var(--stroke-color-danger);
+  --this-main-hover-color: var(--primary-color-accent-hover);
+  --this-main-active-color: var(--primary-color-accent-active);
+  --this-border-hover-color: var(--primary-color-accent);
+  --this-border-active-color: var(--primary-color-accent);
+}
+
+.button_style_solid {
+  --this-text-color: var(--this-bg-color);
+  background-color: var(--this-main-color);
+  border-color: var(--this-main-color);
+  color: var(--this-text-color);
+}
+
+.button_style_solid:hover:enabled {
+  --this-main-color: var(--this-main-hover-color);
+}
+
+.button_style_solid:active:enabled {
+  --this-main-color: var(--this-main-active-color);
+}
+
+.button_style_blank {
+  --this-icon-fill-color: var(--this-bg-color);
+  --this-text-color: var(--this-main-color);
+  background-color: var(--this-bg-color);
+  border-color: var(--this-border-color);
+  color: var(--this-text-color);
+}
+
+.button_style_blank:hover:enabled {
+  --this-border-color: var(--this-border-hover-color);
+}
+
+.button_style_blank:active:enabled {
+  --this-border-color: var(--this-border-active-color);
+}
+
+.button_style_skeleton {
+  --this-icon-fill-color: var(--this-bg-color);
+  --this-text-color: var(--this-main-color);
+  background-color: var(--this-bg-color);
+  border-color: var(--this-bg-color);
+  color: var(--this-text-color);
+}
+
+.button_style_skeleton:hover:enabled {
+  --this-text-color: var(--this-border-hover-color);
+}
+
+.button_style_skeleton:active:enabled {
+  --this-text-color: var(--this-border-active-color);
+}
+
+.button__icon {
+  height: var(--this-font-size);
+  width: var(--this-font-size);
+}
+
+.button__icon_large {
+  height: calc(var(--this-font-size) * 1.5);
+  width: calc(var(--this-font-size) * 1.5);
+}
+
+.button__icon > path {
+  fill: var(--this-text-color);
+}
+
+.button__icon_fillable > path {
+  fill: var(--this-icon-fill-color);
+  stroke: var(--this-text-color);
+}
+
+.button_size_medium {
+  padding: 6px 12px;
+  height: 40px;
+}

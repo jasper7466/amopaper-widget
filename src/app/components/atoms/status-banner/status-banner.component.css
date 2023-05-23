@@ -1,0 +1,24 @@
+.status-banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  padding: 7px 16px;
+  height: 30px;
+  border: 1px solid var(--txt-color-primary);
+  border-radius: 4px;
+}
+
+.status-banner_pending {
+  border-color: #faf5ff;
+  background-color: #faf5ff;
+}
+
+.status-banner_signed {
+  border-color: #c7eddd;
+  background: #f5fcf9;
+}
+
+.status-banner__text {
+  margin: 0;
+}

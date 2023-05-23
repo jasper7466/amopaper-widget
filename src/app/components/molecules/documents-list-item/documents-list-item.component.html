@@ -1,0 +1,27 @@
+<div
+  class="documents-list-item__plate"
+  [ngClass]="{ 'documents-list-item__plate_clickable': file || fileId }"
+  (click)="plateClick()"
+>
+  <app-icon-document
+    class="documents-list-item__document-icon"
+  ></app-icon-document>
+  <p class="documents-list-item__filename">{{ file?.name || fileName }}</p>
+  <app-status-label
+    *ngIf="signStatus"
+    class="documents-list-item__status-label"
+    [status]="signStatus"
+  ></app-status-label>
+  <app-icon-download
+    *ngIf="file || fileId"
+    class="documents-list-item__download-icon"
+  ></app-icon-download>
+</div>
+<button
+  class="documents-list-item__details-button"
+  *ngIf="signStatus === 'signed'"
+  (click)="showSignInfo()"
+>
+  Информация о подписи
+  <app-arrow direction="right" color="primary"></app-arrow>
+</button>

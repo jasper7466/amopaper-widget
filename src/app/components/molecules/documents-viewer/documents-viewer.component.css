@@ -1,0 +1,16 @@
+:host {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding-top: 24px;
+  padding-bottom: 40px;
+  /* border-bottom: 2px solid var(--line-color-gray); */
+}
+
+.documents__title {
+  margin-bottom: var(--spacing-xl-24px);
+}
+
+.documents__list {
+  padding-bottom: var(--spacing-2xl-32px);
+}

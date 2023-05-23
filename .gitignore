@@ -40,3 +40,13 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Auth dev-server credentials
+/auth-dev-server/secrets.json
+
+# Dev-server proxy config
+proxy.config.json
+
+# Local npm-packages
+local_modules/*
+!local_modules/.gitkeep

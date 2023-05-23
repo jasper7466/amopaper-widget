@@ -1,0 +1,95 @@
+@keyframes unfoldAnimation {
+  0% {
+    max-height: 0;
+    overflow: hidden;
+  }
+  99% {
+    max-height: 50vh;
+    overflow: hidden;
+  }
+  100% {
+    max-height: 50vh;
+    overflow: auto;
+  }
+}
+
+@keyframes foldAnimation {
+  0% {
+    max-height: 50vh;
+    overflow: hidden;
+  }
+  100% {
+    max-height: 0;
+    overflow: hidden;
+  }
+}
+
+:host {
+  --this-animation-duration: 0.3s;
+  --this-animation-function: ease-in-out;
+}
+
+.list__status {
+  display: flex;
+  align-items: center;
+  height: var(--spacing-4xl-48px);
+  padding: 0 var(--spacing-l-16px);
+  gap: var(--spacing-m-12px);
+
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.list__remove-all-button {
+  margin-left: auto;
+  --this-main-color: var(--txt-color-tertiary);
+  --this-border-hover-color: var(--primary-color-accent);
+  --this-border-active-color: var(--stroke-color-danger);
+}
+
+.list__fold-button {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  gap: var(--spacing-xs-4px);
+  background-color: inherit;
+  border-style: none;
+  cursor: pointer;
+}
+
+.list__fold-arrow {
+  transition: var(--this-transition);
+  transition: var(--this-animation-duration) var(--this-animation-function);
+}
+
+.list__fold-arrow_folded {
+  transform: rotate(-180deg);
+}
+
+.list__fold-arrow > path {
+  stroke: var(--txt-color-secondary);
+}
+
+.list__fold-content {
+  animation-name: unfoldAnimation;
+  animation-duration: var(--this-animation-duration);
+  animation-timing-function: var(--this-animation-function);
+  animation-fill-mode: forwards;
+}
+
+.list__fold-content_folded {
+  max-height: 0;
+  animation-name: foldAnimation;
+  animation-duration: var(--this-animation-duration);
+  animation-timing-function: var(--this-animation-function);
+  animation-fill-mode: forwards;
+}
+
+.list__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs-4px);
+
+  padding: 0;
+}

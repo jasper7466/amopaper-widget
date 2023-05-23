@@ -1,0 +1,39 @@
+:host {
+  max-height: 80vw;
+}
+
+.sign-info__main-content {
+  padding: var(--spacing-xl-24px) var(--spacing-2xl-32px);
+}
+
+.sign-info__preloader {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.sign-info__header {
+  box-sizing: border-box;
+  margin: 0;
+  padding-bottom: var(--spacing-xl-24px);
+
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+  color: var(--txt-color-primary);
+}
+
+.sign-info__signs-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xl-32px);
+}
+
+.sing-info__footer {
+  margin-top: 10px;
+  padding: var(--spacing-xl-24px) var(--spacing-2xl-32px);
+  border-top: 1px solid var(--line-color-gray);
+}

@@ -1,0 +1,22 @@
+<div
+  class="addressee__wrapper"
+  [ngClass]="{ addressee__wrapper_interactive: clickRemoveButton.observed }"
+>
+  <div class="addressee__avatar">{{ name[0] }}</div>
+
+  <p class="addressee__name">{{ name }}</p>
+  <p class="addressee__id" *ngIf="idType === addresseeIdType.Phone">
+    {{ idValue || "" | mask : "+0 (000) 000-00-00" }}
+  </p>
+  <p class="addressee__id" *ngIf="idType === addresseeIdType.VatId">
+    {{ idValue }}
+  </p>
+  <app-button
+    *ngIf="clickRemoveButton.observed"
+    (onClick)="removeButtonClickHandler()"
+    class="addressee__remove-button"
+    styleOption="skeleton"
+    colorOption="custom"
+    iconOption="trash"
+  ></app-button>
+</div>

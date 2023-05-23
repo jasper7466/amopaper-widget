@@ -1,0 +1,6 @@
+:host {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--txt-color-tertiary);
+  margin: 0;
+}

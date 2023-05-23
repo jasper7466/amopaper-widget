@@ -1,0 +1,41 @@
+.label {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  padding: 1px 8px;
+  border-radius: 4px;
+  height: 20px;
+  width: max-content;
+
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.label_unknown {
+  border: 1px solid var(--txt-color-primary);
+  background-color: var(--bg-color-main);
+}
+
+.label_draft {
+  background-color: var(--label-color-draft);
+}
+
+.label_sign {
+  background-color: var(--label-color-sign);
+}
+
+.label_sign-offer {
+  background-color: var(--label-color-sign);
+}
+
+.label_pending {
+  background-color: var(--label-color-pending);
+}
+
+.label_signed {
+  background-color: var(--label-color-signed);
+}
+
+.label_signed-single {
+  background-color: var(--label-color-signed-single);
+}

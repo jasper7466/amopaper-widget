@@ -1,0 +1,58 @@
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+:host {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  animation: fadeIn 0.2s ease;
+}
+
+:host(.opened) {
+  display: block;
+}
+
+:host .modal__underlay {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  background-color: black;
+  opacity: 0.2;
+}
+
+.modal__close-button {
+  padding: 0;
+  position: absolute;
+  right: var(--spacing-m-12px);
+  top: var(--spacing-m-12px);
+  background-color: var(--this-bg-color);
+  border-style: none;
+}
+
+.modal__close-button:hover > svg > path {
+  stroke: var(--stroke-color-regular);
+}
+
+.modal__container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 720px;
+  background-color: var(--bg-color-main);
+  opacity: 1;
+  max-height: 90%;
+  overflow-y: auto;
+}

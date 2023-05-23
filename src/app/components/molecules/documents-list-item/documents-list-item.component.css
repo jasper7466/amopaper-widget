@@ -1,0 +1,71 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-s-8px);
+
+  font-size: 14px;
+  line-height: 20px;
+
+  --transition: ease-in 0.1s;
+}
+
+.documents-list-item__plate {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-areas:
+    "document-icon filename download-icon"
+    ". status-label download-icon";
+  grid-template-columns: min-content 1fr min-content;
+  grid-template-rows: min-content min-content min-content;
+  column-gap: var(--spacing-m-12px);
+  min-height: var(--spacing-4xl-48px);
+  padding: var(--spacing-m-12px) var(--spacing-l-16px);
+  border: 1px solid var(--line-color-gray);
+  border-radius: 4px;
+}
+
+.documents-list-item__plate_clickable:hover {
+  background-color: var(--line-color-gray);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.documents-list-item__plate_clickable:hover
+  .documents-list-item__download-icon {
+  opacity: 0.5;
+  transition: var(--transition);
+}
+
+.documents-list-item__document-icon {
+  grid-area: document-icon;
+  align-self: start;
+}
+
+.documents-list-item__download-icon {
+  grid-area: download-icon;
+  opacity: 0;
+  align-self: center;
+  transition: var(--transition);
+}
+
+.documents-list-item__filename {
+  grid-area: filename;
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+
+.documents-list-item__status-label {
+  grid-area: status-label;
+  margin-top: var(--spacing-s-8px);
+}
+
+.documents-list-item__details-button {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--spacing-xl-24px);
+  border-style: none;
+  background-color: var(--this-bg-color);
+  cursor: pointer;
+  color: var(--txt-color-tertiary);
+}

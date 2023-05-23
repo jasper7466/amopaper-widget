@@ -1,0 +1,3 @@
+[build]
+  publish = "./dist/amopaper-widget/"
+  command = "npm run build"
